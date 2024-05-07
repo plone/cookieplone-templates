@@ -1,5 +1,14 @@
+const fs = require('fs');
+const projectRootPath = __dirname;
+
+let coreLocation;
+if (fs.existsSync(`${projectRootPath}/core`))
+  coreLocation = `${projectRootPath}/core`;
+else if (fs.existsSync(`${projectRootPath}/../../core`))
+  coreLocation = `${projectRootPath}/../../core`;
+
 module.exports = {
-  extends: './core/packages/volto/.eslintrc',
+  extends: `${coreLocation}/packages/volto/.eslintrc`,
   rules: {
     'import/no-unresolved': 1,
   },
@@ -7,9 +16,12 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
-          ['@plone/volto', './core/packages/volto/src'],
-          ['@plone/volto-slate', './core/packages/volto-slate/src'],
-          ['@plone/registry', './core/packages/registry/src'],
+          ['@plone/volto', `${coreLocation}/packages/volto/src`],
+          [
+            '@plone/volto-slate',
+            `${coreLocation}/core/packages/volto-slate/src`,
+          ],
+          ['@plone/registry', `${coreLocation}/packages/registry/src`],
           [
             '{{ cookiecutter.npm_package_name }}',
             './packages/{{ cookiecutter.frontend_addon_name }}/src',
