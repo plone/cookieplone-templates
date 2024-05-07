@@ -1,0 +1,24 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="{{ cookiecutter.python_package_name }}"
+    >
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include
+      package="Products.CMFCore"
+      file="permissions.zcml"
+      />
+
+  <include file="dependencies.zcml" />
+  <include file="profiles.zcml" />
+
+  <include package=".controlpanel" />
+  <include package=".indexers" />
+  {%- if cookiecutter.feature_headless == '1' %}
+  <include package=".serializers" />
+  {%- endif %}
+  <include package=".vocabularies" />
+
+</configure>

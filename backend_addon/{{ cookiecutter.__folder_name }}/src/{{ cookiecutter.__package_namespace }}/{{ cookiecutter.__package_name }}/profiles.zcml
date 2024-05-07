@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="{{ cookiecutter.python_package_name }}"
+    >
+
+  <genericsetup:registerProfile
+      name="default"
+      title="{{ cookiecutter.title }}: Install"
+      description="Package to configure a new {{ cookiecutter.title }} site"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="{{ cookiecutter.title }}: Uninstall"
+      description="Uninstall {{ cookiecutter.title }} setup."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      />
+
+  <!-- Hide Uninstall Profile-->
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="{{ cookiecutter.python_package_name }}"
+      />
+
+
+  <include package=".upgrades" />
+
+</configure>
