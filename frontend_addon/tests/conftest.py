@@ -20,10 +20,11 @@ def context() -> dict:
         "frontend_addon_name": "volto-addon",
         "title": "Volto Add-on",
         "description": "Add new features to your Volto Project.",
-        "github_organization": "collective",
-        "npm_package_name": "@plone-collective/volto-addon",
         "author": "Plone Collective",
         "email": "collective@plone.org",
+        "github_organization": "collective",
+        "npm_package_name": "@plone-collective/volto-addon",
+        "volto_version": "18.0.0-alpha.31"
     }
 
 
