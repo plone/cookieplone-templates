@@ -107,13 +107,13 @@ acceptance-backend-start: ## Start backend acceptance server
 	docker run -it --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
 
 .PHONY: ci-acceptance-backend-start
-ci-acceptance-backend-start: ## Start acceptance server in CI (no terminal attached)
+ci-acceptance-backend-start: ## Start backend acceptance server in headless mode for CI
 	docker run -i --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
 
 .PHONY: acceptance-test
 acceptance-test: ## Start Cypress in interactive mode
 	pnpm --filter @plone/volto exec cypress open --config-file $(CURRENT_DIR)/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
 
-.PHONY: acceptance-headless-test
-acceptance-headless-test: ## Run cypress tests in headless mode for CI
+.PHONY: ci-acceptance-test
+ci-acceptance-test: ## Run cypress tests in headless mode for CI
 	pnpm --filter @plone/volto exec cypress run --config-file $(CURRENT_DIR)/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
