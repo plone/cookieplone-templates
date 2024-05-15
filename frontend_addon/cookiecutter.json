@@ -6,10 +6,11 @@
   "email": "collective@plone.org",
   "github_organization": "collective",
   "npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
+  "volto_version": "{{ 'Yes' | latest_volto }}",
   "__folder_name": "{{ cookiecutter.frontend_addon_name }}",
   "__gha_enable": true,
   "__version_package": "1.0.0-alpha.0",
-  "__version_plone_volto": "18.0.0-alpha.25",
+  "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_plone_components": "1.7.0",
   "__version_plone_scripts": "^3.6.1",
   "__version_mrs_developer": "^2.2.0",
@@ -33,9 +34,12 @@
     "description": "A short description of your addon",
     "github_organization": "GitHub Username or Organization",
     "npm_package_name": "Package name on NPM",
+    "volto_version": "Volto version",
     "author": "Author",
     "email": "Author E-mail"
   },
   "_copy_without_render": [],
-  "_extensions": []
+  "_extensions": [
+    "cookieplone.filters.latest_volto"
+  ]
 }

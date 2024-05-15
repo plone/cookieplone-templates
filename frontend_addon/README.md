@@ -40,6 +40,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `github_organization` | Used for GitHub repositories.                                                                                                             | **collective**                |
 | `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
+| `volto_version` | Volto version to be used. | **18.0.0-alpha.30**    |
 
 
 ## Code Quality Assurance 🧐
