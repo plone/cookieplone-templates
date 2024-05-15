@@ -137,8 +137,8 @@ jobs:
         with:
           working-directory: frontend_addon/volto-addon
           run: |
-            make start-test-acceptance-server-ci &
-            make start-test-acceptance-frontend &
+            make ci-acceptance-backend-start &
+            make acceptance-frontend-prod-start &
           # your step-level and job-level environment variables are available to your commands as-is
           # npm install will count towards the wait-for timeout
           # whenever possible, move unrelated scripts to a different step
@@ -165,4 +165,4 @@ jobs:
       - name: Run acceptance tests
         working-directory: frontend_addon/volto-addon
         run: |
-          make test-acceptance-headless
+          make ci-acceptance-test
