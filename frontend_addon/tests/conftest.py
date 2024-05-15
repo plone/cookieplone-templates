@@ -24,7 +24,7 @@ def context() -> dict:
         "email": "collective@plone.org",
         "github_organization": "collective",
         "npm_package_name": "@plone-collective/volto-addon",
-        "volto_version": "18.0.0-alpha.30"
+        "volto_version": "18.0.0-alpha.31"
     }
 
 
