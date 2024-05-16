@@ -46,6 +46,14 @@ test: bin/cookieplone ## Test all cookiecutters
 	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test ;)
 	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test ;)
 
+.PHONY: test-pdb
+test-pdb: bin/cookieplone ## Test all cookiecutters (and stop on error)
+	@echo "$(GREEN)==> Test all cookiecutters (and stop on error)$(RESET)"
+	bin/python3 -m pytest tests -x --pdb
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test-pdb ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test-pdb ;)
+
+
 .PHONY: report-context
 report-context: bin/cookieplone ## Generate a report of all context options
 	@echo "$(GREEN)==> Generate a report of all context options$(RESET)"

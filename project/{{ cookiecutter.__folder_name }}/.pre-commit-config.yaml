@@ -1,0 +1,16 @@
+repos:
+  - repo: https://github.com/ddanier/sub-pre-commit.git
+    rev: v{{ cookiecutter.__pre_commit_version }}  # MUST match your pre-commit version
+    hooks:
+      - id: sub-pre-commit
+        alias: backend
+        name: "pre-commit for backend/"
+        args: ["-p", "backend/src/ploneorg.brasil"]
+        files: "^backend/src/ploneorg.brasil/.*"
+        stages: ["commit"]
+      - id: sub-pre-commit
+        alias: frontend
+        name: "pre-commit for frontend"
+        args: ["-p", "frontend"]
+        files: "^frontend/.*"
+        stages: ["commit"]

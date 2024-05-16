@@ -38,13 +38,6 @@ def context(cookieplone_root) -> dict:
     }
 
 
-@pytest.fixture(scope="session")
-def context_unittest(context) -> dict:
-    """Cookiecutter context."""
-    new_context = deepcopy(context)
-    new_context["python_test_framework"] = "unittest"
-    return new_context
-
 
 @pytest.fixture(scope="session")
 def context_devops_cache(context) -> dict:
@@ -102,12 +95,6 @@ def bad_context() -> dict:
 def cutter_result(cookies_session, context):
     """Cookiecutter result."""
     return cookies_session.bake(extra_context=context)
-
-
-@pytest.fixture(scope="session")
-def cutter_result_unittest(cookies_session, context_unittest):
-    """Cookiecutter result."""
-    return cookies_session.bake(extra_context=context_unittest)
 
 
 @pytest.fixture(scope="session")

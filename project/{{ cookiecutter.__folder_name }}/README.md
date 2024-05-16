@@ -1,6 +1,6 @@
 # {{ cookiecutter.title }} 🚀
 
-[![Built with Cookiecutter Plone Starter](https://img.shields.io/badge/built%20with-Cookiecutter%20Plone%20Starter-0083be.svg?logo=cookiecutter)](https://github.com/plone/cookiecutter-plone/)
+[![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookieplone-0083be.svg?logo=cookiecutter)](https://github.com/plone/cookiecutter-plone/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Backend Tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/backend.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/backend.yml)
 [![Frontend Tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/frontend.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/frontend.yml)
@@ -38,19 +38,19 @@ make install
 1. Create a new Plone site on your first run:
 
 ```shell
-make create-site
+make backend-create-site
 ```
 
 2. Start the Backend at [http://localhost:8080/](http://localhost:8080/):
 
 ```shell
-make start-backend
+make backend-start
 ```
 
 3. In a new terminal, start the Frontend at [http://localhost:3000/](http://localhost:3000/):
 
 ```shell
-make start-frontend
+make frontend-start
 ```
 
 Voila! Your Plone site should be live and kicking! 🎉
@@ -92,7 +92,7 @@ This monorepo consists of three distinct sections: `backend`, `frontend`, and `d
 To automatically format your code and ensure it adheres to quality standards, execute:
 
 ```shell
-make format
+make check
 ```
 
 Linters can be run individually within the `backend` or `frontend` folders.

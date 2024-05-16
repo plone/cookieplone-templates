@@ -2,9 +2,12 @@
 
 import subprocess
 import sys
+from collections import OrderedDict
 from pathlib import Path
 
 from cookieplone.utils import console, files
+
+context: OrderedDict = {{cookiecutter}}
 
 # PATH OF CONTENT TO BE REMOVED
 TO_REMOVE_PATHS = {
@@ -48,10 +51,11 @@ def initialize_git():
 
 def main():
     """Final fixes."""
-    keep_headless = int("{{ cookiecutter.feature_headless }}")
+    keep_headless = int(context.get("feature_headless"))
     if not keep_headless:
         remove_files("feature_headless")
-    initialize_git()
+    if int(context.get("__backend_addon_git_initialize")):
+        initialize_git()
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
 

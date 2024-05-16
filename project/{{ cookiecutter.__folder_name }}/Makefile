@@ -9,9 +9,12 @@ MAKEFLAGS+=--warn-undefined-variables
 MAKEFLAGS+=--no-builtin-rules
 
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+GIT_FOLDER=$(BACKEND_FOLDER)/.git
 
 PROJECT_NAME={{ cookiecutter.project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
+
+PRE_COMMIT = pipx run --spec "pre-commit=={{ cookiecutter.__pre_commit_version }}"
 
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
@@ -21,7 +24,7 @@ RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
 .PHONY: all
-all: build
+all: install
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -29,49 +32,57 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: install-frontend
-install-frontend:  ## Install React Frontend
+###########################################
+# Frontend
+###########################################
+.PHONY: frontend-install
+frontend-install:  ## Install React Frontend
 	$(MAKE) -C "./frontend/" install
 
-.PHONY: build-frontend
-build-frontend:  ## Build React Frontend
+.PHONY: frontend-build
+frontend-build:  ## Build React Frontend
 	$(MAKE) -C "./frontend/" build
 
-.PHONY: start-frontend
-start-frontend:  ## Start React Frontend
+.PHONY: frontend-start
+frontend-start:  ## Start React Frontend
 	$(MAKE) -C "./frontend/" start
 
-.PHONY: install-backend
-install-backend:  ## Create virtualenv and install Plone
-	$(MAKE) -C "./backend/" build-dev
-	$(MAKE) create-site
+.PHONY: frontend-test
+frontend-test:  ## Test frontend codebase
+	@echo "Test frontend"
+	$(MAKE) -C "./frontend/" test
 
-.PHONY: build-backend
-build-backend:  ## Build Backend
-	$(MAKE) -C "./backend/" build-dev
+###########################################
+# Backend
+###########################################
+.PHONY: backend-install
+backend-install:  ## Create virtualenv and install Plone
+	$(MAKE) -C "./backend/" install
+	$(MAKE) backend-create-site
 
-.PHONY: create-site
-create-site: ## Create a Plone site with default content
+.PHONY: backend-build
+backend-build:  ## Build Backend
+	$(MAKE) -C "./backend/" install
+
+.PHONY: backend-create-site
+backend-create-site: ## Create a Plone site with default content
 	$(MAKE) -C "./backend/" create-site
 
-.PHONY: start-backend
-start-backend: ## Start Plone Backend
+.PHONY: backend-start
+backend-start: ## Start Plone Backend
 	$(MAKE) -C "./backend/" start
+
+.PHONY: backend-test
+backend-test:  ## Test backend codebase
+	@echo "Test backend"
+	$(MAKE) -C "./backend/" test
 
 .PHONY: install
 install:  ## Install
 	@echo "Install Backend & Frontend"
+	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	$(MAKE) install-backend
 	$(MAKE) install-frontend
-
-# TODO production build
-
-.PHONY: build
-build:  ## Build in development mode
-	@echo "Build"
-	$(MAKE) build-backend
-	$(MAKE) install-frontend
-
 
 .PHONY: start
 start:  ## Start
@@ -85,11 +96,11 @@ clean:  ## Clean installation
 	$(MAKE) -C "./backend/" clean
 	$(MAKE) -C "./frontend/" clean
 
-.PHONY: format
-format:  ## Format codebase
-	@echo "Format codebase"
-	$(MAKE) -C "./backend/" format
-	$(MAKE) -C "./frontend/" format
+.PHONY: check
+check:  ## Lint and Format codebase
+	@echo "Lint and Format codebase"
+	$(MAKE) -C "./backend/" check
+	$(MAKE) -C "./frontend/" check
 
 .PHONY: i18n
 i18n:  ## Update locales
@@ -97,18 +108,8 @@ i18n:  ## Update locales
 	$(MAKE) -C "./backend/" i18n
 	$(MAKE) -C "./frontend/" i18n
 
-.PHONY: test-backend
-test-backend:  ## Test backend codebase
-	@echo "Test backend"
-	$(MAKE) -C "./backend/" test
-
-.PHONY: test-frontend
-test-frontend:  ## Test frontend codebase
-	@echo "Test frontend"
-	$(MAKE) -C "./frontend/" test
-
 .PHONY: test
-test:  test-backend test-frontend ## Test codebase
+test:  backend-test frontend-test ## Test codebase
 
 .PHONY: build-images
 build-images:  ## Build docker images

@@ -1,17 +1,21 @@
 """Post generation hook."""
 
-from collections import OrderedDict  # noQA
+from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.utils import console, files
 
-context = {{cookiecutter}}
+context: OrderedDict = {{cookiecutter}}
 
 
-SUB_PROJECT_REMOVE = [".github"]
+BACKEND_ADDON_REMOVE = [
+    ".github",
+    ".git"
+]
 
+FRONTEND_ADDON_REMOVE = [".github"]
 
 DEVOPS_TO_REMOVE = {
     "ansible": [
@@ -51,15 +55,18 @@ def generate_backend_addon(context, output_dir):
     # Go to backend/src/
     output_dir = output_dir / "backend" / "src"
     folder_name = context.get("python_package_name")
+    # Do not initialize the repository
+    context["__backend_addon_git_initialize"] = "0"
     generator.generate_subtemplate(
-        "backend_addon", output_dir, folder_name, context, SUB_PROJECT_REMOVE
+        "backend_addon", output_dir, folder_name, context, BACKEND_ADDON_REMOVE
     )
+    files.remove_files(output_dir / folder_name, BACKEND_ADDON_REMOVE)
 
 
 def generate_frontend_addon(context, output_dir):
     """Run volto generator."""
     generator.generate_subtemplate(
-        "frontend_addon", output_dir, "frontend", context, SUB_PROJECT_REMOVE
+        "frontend_addon", output_dir, "frontend", context, FRONTEND_ADDON_REMOVE
     )
 
 

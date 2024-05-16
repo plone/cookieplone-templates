@@ -15,10 +15,6 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-# Set distributions still in development
-DISTRIBUTIONS="{{ cookiecutter.__package_name }}"
-ALLOWED_DISTRIBUTIONS="{{ cookiecutter.__package_name }}"
-
 PLONE6=6.0-latest
 
 # Python checks

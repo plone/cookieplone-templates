@@ -16,17 +16,12 @@ RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-
+REPO_ROOT=../
 PLONE_VERSION=$$(cat version.txt)
 
-CODE_QUALITY_VERSION=2.1
 ifndef LOG_LEVEL
 	LOG_LEVEL=INFO
 endif
-CURRENT_USER=$$(whoami)
-USER_INFO=$$(id -u ${CURRENT_USER})
-LINT=docker run --rm -e LOG_LEVEL="${LOG_LEVEL}" -v "${BACKEND_FOLDER}":/github/workspace plone/code-quality:${CODE_QUALITY_VERSION} check
-FORMAT=docker run --rm --user="${USER_INFO}" -e LOG_LEVEL="${LOG_LEVEL}" -v "${BACKEND_FOLDER}":/github/workspace plone/code-quality:${CODE_QUALITY_VERSION} format
 
 IMAGE_NAME={{ cookiecutter.__container_image_prefix }}-backend
 IMAGE_TAG=latest
@@ -84,15 +79,15 @@ clean-test: ## remove test and coverage artifacts
 	rm -f .coverage
 	rm -fr htmlcov/
 
-bin/pip:
+bin/pipx:
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
 	$(PYTHON) -m venv .
-	bin/pip install -U "pip" "wheel" "cookiecutter" "mxdev"
+	bin/pip install -U "pip" "wheel" "pipx" "mxdev"
 
 .PHONY: config
 config: bin/pip  ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
-	bin/cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+	bin/pipx run cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 
 # i18n
 bin/i18ndude: bin/pip
@@ -113,33 +108,10 @@ build-dev: config ## pip install Plone packages
 	bin/mxdev -c mx.ini
 	bin/pip install -r requirements-mxdev.txt
 
-.PHONY: format
-format: ## Format the codebase according to our standards
-	@echo "$(GREEN)==> Format codebase$(RESET)"
-	$(FORMAT)
-
-.PHONY: lint
-lint: lint-isort lint-black lint-flake8 lint-zpretty ## check code style
-
-.PHONY: lint-black
-lint-black: ## validate black formating
-	$(LINT) black
-
-.PHONY: lint-flake8
-lint-flake8: ## validate black formating
-	$(LINT) flake8
-
-.PHONY: lint-isort
-lint-isort: ## validate using isort
-	$(LINT) isort
-
-.PHONY: lint-pyroma
-lint-pyroma: ## validate using pyroma
-	$(LINT) pyroma
-
-.PHONY: lint-zpretty
-lint-zpretty: ## validate ZCML/XML using zpretty
-	$(LINT) zpretty
+.PHONY: check
+check: ## Format the codebase according to our standards
+	@echo "$(GREEN)==> Lint and Format codebase$(RESET)"
+	$(MAKE) -C $(REPO_ROOT) check
 
 .PHONY: test
 test: ## run tests
