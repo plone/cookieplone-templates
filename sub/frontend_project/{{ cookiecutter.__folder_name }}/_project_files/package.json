@@ -33,8 +33,7 @@
   },
   "dependencies": {
     "@plone/volto": "workspace:*",
-    "@plone/registry": "workspace:*",
-    "volto-addon": "workspace:*"
+    "@plone/registry": "workspace:*"
   },
   "devDependencies": {
     "mrs-developer": "^2.2.0"
