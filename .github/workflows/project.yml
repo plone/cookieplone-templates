@@ -40,5 +40,5 @@ jobs:
       # Test
       - name: Run tests
         run: |
-          cd plone_addon
+          cd project
           python -m pytest tests
