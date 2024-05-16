@@ -1,0 +1,48 @@
+name: Plone Frontend Project CI
+on:
+  push:
+    paths:
+      - "sub/frontend_project/**"
+      - ".github/workflows/sub_frontend_project.yml"
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+  PYTHON_VERSION: "3.10"
+
+jobs:
+
+  generation:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+      # git checkout
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      # python setup
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      # python install
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Test
+      - name: Run tests
+        run: |
+          cd sub/frontend_project
+          python -m pytest tests

@@ -17,36 +17,21 @@ def variable_pattern():
 def context() -> dict:
     """Cookiecutter context."""
     return {
-        "frontend_addon_name": "volto-addon",
-        "title": "Volto Add-on",
-        "description": "Add new features to your Volto Project.",
+        "title": "Frontend project",
         "author": "Plone Collective",
         "email": "collective@plone.org",
-        "github_organization": "collective",
-        "npm_package_name": "@plone-collective/volto-addon",
         "volto_version": "18.0.0-alpha.31",
     }
-
-
-@pytest.fixture(scope="session")
-def context_no_npm_organization(context) -> dict:
-    """Cookiecutter context without a NPM organization."""
-    new_context = deepcopy(context)
-    new_context["npm_package_name"] = "volto-addon"
-    return new_context
 
 
 @pytest.fixture(scope="session")
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
-        "frontend_addon_name": "volto addon",
-        "title": "Volto Add-on",
-        "description": "Add new features to your Volto Project.",
-        "github_organization": "collective",
-        "npm_package_name": "plone-collective/volto-addon",
+        "title": "Frontend project",
         "author": "Plone Collective",
         "email": "collective@plone.org",
+        "volto_version": "---",
     }
 
 

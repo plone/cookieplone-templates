@@ -35,12 +35,14 @@ format: bin/cookieplone ## Format code
 	bin/isort hooks .scripts
 	$(MAKE) -C "./backend_addon/" format
 	$(MAKE) -C "./frontend_addon/" format
+	$(MAKE) -C "./sub/frontend_project/" format
 
 .PHONY: test
 test: bin/cookieplone ## Test all cookiecutters
 	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
 	$(MAKE) -C "./backend_addon/" test
 	$(MAKE) -C "./frontend_addon/" test
+	$(MAKE) -C "./sub/frontend_project/" test
 
 .PHONY: report-context
 report-context: bin/cookieplone ## Generate a report of all context options
