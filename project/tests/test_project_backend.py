@@ -4,7 +4,6 @@ import pytest
 
 BACKEND_FILES = [
     ".dockerignore",
-    ".gitattributes",
     ".gitignore",
     "Dockerfile.acceptance",
     "Dockerfile",
@@ -28,14 +27,14 @@ def test_backend_top_level_files(cutter_result, filename: str):
 
 BACKEND_PACKAGE_FILES_PYTEST = [
     "src/ploneorgbr/setup.py",
-    "src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/configure.zcml",
-    "src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/dependencies.zcml",
-    "src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/permissions.zcml",
-    "src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/profiles.zcml",
-    "src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/testing.py",
-    "src/ploneorgbr/tests/conftest.py",
-    "src/ploneorgbr/tests/setup/test_setup_install.py",
-    "src/ploneorgbr/tests/setup/test_setup_uninstall.py",
+    "src/plonegov/ploneorgbr/configure.zcml",
+    "src/plonegov/ploneorgbr/dependencies.zcml",
+    "src/plonegov/ploneorgbr/permissions.zcml",
+    "src/plonegov/ploneorgbr/profiles.zcml",
+    "src/plonegov/ploneorgbr/testing.py",
+    "tests/conftest.py",
+    "tests/setup/test_setup_install.py",
+    "tests/setup/test_setup_uninstall.py",
 ]
 
 
@@ -48,9 +47,10 @@ def test_backend_package_files_pytest(cutter_result, filename: str):
 
 
 FILES_TO_BE_REMOVED = [
-    "src/plonegov.ploneorgbr/.github",
-    "src/plonegov.ploneorgbr/.git",
+    ".github",
+    ".git",
 ]
+
 
 @pytest.mark.parametrize("filename", FILES_TO_BE_REMOVED)
 def test_backend_package_files_removed(cutter_result, filename: str):

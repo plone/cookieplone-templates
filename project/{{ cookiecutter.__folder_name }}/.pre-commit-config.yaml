@@ -5,8 +5,8 @@ repos:
       - id: sub-pre-commit
         alias: backend
         name: "pre-commit for backend/"
-        args: ["-p", "backend/src/ploneorg.brasil"]
-        files: "^backend/src/ploneorg.brasil/.*"
+        args: ["-p", "backend/"]
+        files: "^backend/.*"
         stages: ["commit"]
       - id: sub-pre-commit
         alias: frontend

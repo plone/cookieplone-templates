@@ -3,8 +3,8 @@
 import pytest
 
 CACHE_FILES = [
-    "backend/src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",
-    "backend/src/plonegov.ploneorgbr/src/plonegov/ploneorgbr/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",
+    "backend/src/plonegov/ploneorgbr/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",
+    "backend/src/plonegov/ploneorgbr/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",
     "devops/varnish/Dockerfile",
     "devops/varnish/etc/varnish.vcl",
 ]

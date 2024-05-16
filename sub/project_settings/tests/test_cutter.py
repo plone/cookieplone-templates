@@ -27,13 +27,13 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 @pytest.mark.parametrize(
     "file_path",
     [
-        "backend/src/project.title/src/project/title/locales/__init__.py",
-        "backend/src/project.title/src/project/title/locales/en/LC_MESSAGES/project.title.po",
-        "backend/src/project.title/src/project/title/locales/project.title.pot",
-        "backend/src/project.title/src/project/title/locales/update.py",
-        "backend/src/project.title/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.IMailSchema.xml",  # noQA
-        "backend/src/project.title/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.ISiteSchema.xml",  # noQA
-        "backend/src/project.title/src/project/title/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",
+        "backend/src/project/title/locales/__init__.py",
+        "backend/src/project/title/locales/en/LC_MESSAGES/project.title.po",
+        "backend/src/project/title/locales/project.title.pot",
+        "backend/src/project/title/locales/update.py",
+        "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.IMailSchema.xml",  # noQA
+        "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.ISiteSchema.xml",  # noQA
+        "backend/src/project/title/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",
         "frontend/.dockerignore",
         "frontend/Dockerfile",
         "frontend/packages/volto-project-title/src/index.js",

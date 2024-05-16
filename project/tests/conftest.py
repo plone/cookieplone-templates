@@ -38,7 +38,6 @@ def context(cookieplone_root) -> dict:
     }
 
 
-
 @pytest.fixture(scope="session")
 def context_devops_cache(context) -> dict:
     """Cookiecutter context."""

@@ -10,10 +10,7 @@ from cookieplone.utils import console, files
 context: OrderedDict = {{cookiecutter}}
 
 
-BACKEND_ADDON_REMOVE = [
-    ".github",
-    ".git"
-]
+BACKEND_ADDON_REMOVE = [".github", ".git"]
 
 FRONTEND_ADDON_REMOVE = [".github"]
 
@@ -52,9 +49,8 @@ def prepare_devops(context: OrderedDict, output_dir: Path):
 
 def generate_backend_addon(context, output_dir):
     """Run Plone Addon generator."""
-    # Go to backend/src/
-    output_dir = output_dir / "backend" / "src"
-    folder_name = context.get("python_package_name")
+    output_dir = output_dir
+    folder_name = "backend"
     # Do not initialize the repository
     context["__backend_addon_git_initialize"] = "0"
     generator.generate_subtemplate(

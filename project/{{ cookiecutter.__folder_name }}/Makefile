@@ -9,12 +9,12 @@ MAKEFLAGS+=--warn-undefined-variables
 MAKEFLAGS+=--no-builtin-rules
 
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-GIT_FOLDER=$(BACKEND_FOLDER)/.git
+GIT_FOLDER=$(CURRENT_DIR)/.git
 
 PROJECT_NAME={{ cookiecutter.project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
-PRE_COMMIT = pipx run --spec "pre-commit=={{ cookiecutter.__pre_commit_version }}"
+PRE_COMMIT=pipx run --spec 'pre-commit=={{ cookiecutter.__pre_commit_version }}' pre-commit
 
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
@@ -81,14 +81,14 @@ backend-test:  ## Test backend codebase
 install:  ## Install
 	@echo "Install Backend & Frontend"
 	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
-	$(MAKE) install-backend
-	$(MAKE) install-frontend
+	$(MAKE) backend-install
+	$(MAKE) frontend-install
 
 .PHONY: start
 start:  ## Start
 	@echo "Starting application"
-	$(MAKE) start-backend
-	$(MAKE) start-frontend
+	$(MAKE) backend-start
+	$(MAKE) frontend-start
 
 .PHONY: clean
 clean:  ## Clean installation
@@ -99,8 +99,7 @@ clean:  ## Clean installation
 .PHONY: check
 check:  ## Lint and Format codebase
 	@echo "Lint and Format codebase"
-	$(MAKE) -C "./backend/" check
-	$(MAKE) -C "./frontend/" check
+	$(PRE_COMMIT) run -a
 
 .PHONY: i18n
 i18n:  ## Update locales
