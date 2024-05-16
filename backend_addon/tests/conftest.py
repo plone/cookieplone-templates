@@ -66,12 +66,19 @@ PKG_SRC_FEATURE_HEADLESS = [
 
 
 @pytest.fixture(scope="session")
+def cookieplone_root() -> dict:
+    """Cookieplone root dir."""
+    parent = Path().cwd().resolve().parent
+    return parent
+
+
+@pytest.fixture(scope="session")
 def variable_pattern():
     return re.compile("{{( ?cookiecutter)[.](.*?)}}")
 
 
 @pytest.fixture(scope="session")
-def context() -> dict:
+def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
         "title": "Addon",
@@ -81,6 +88,7 @@ def context() -> dict:
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "feature_headless": "1",
+        "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
 

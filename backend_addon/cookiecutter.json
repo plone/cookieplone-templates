@@ -37,5 +37,7 @@
     "cookieplone.filters.pascal_case",
     "cookieplone.filters.package_name",
     "cookieplone.filters.package_namespace"
-  ]
+  ],
+  "__cookieplone_repository_path": "",
+  "__cookieplone_template": ""
 }

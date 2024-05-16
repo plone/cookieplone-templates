@@ -9,6 +9,9 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
+TOP_LEVEL_TEMPLATES = backend_addon frontend_addon project
+SUB_TEMPLATES = cache frontend_project project_settings
+
 .PHONY: all
 all: bin/cookieplone
 
@@ -31,18 +34,17 @@ bin/cookieplone: ## Create virtualenv and install dependencies
 .PHONY: format
 format: bin/cookieplone ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	bin/black hooks .scripts
-	bin/isort hooks .scripts
-	$(MAKE) -C "./backend_addon/" format
-	$(MAKE) -C "./frontend_addon/" format
-	$(MAKE) -C "./sub/frontend_project/" format
+	bin/black hooks .scripts tests
+	bin/isort hooks .scripts tests
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" format ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" format ;)
 
 .PHONY: test
 test: bin/cookieplone ## Test all cookiecutters
 	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
-	$(MAKE) -C "./backend_addon/" test
-	$(MAKE) -C "./frontend_addon/" test
-	$(MAKE) -C "./sub/frontend_project/" test
+	bin/python3 -m pytest tests
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test ;)
 
 .PHONY: report-context
 report-context: bin/cookieplone ## Generate a report of all context options

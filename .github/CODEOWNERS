@@ -1,2 +1,6 @@
 /backend_addon/ @ericof
 /frontend_addon/ @sneridagh
+/project/ @ericof
+/sub/cache/ @ericof
+/sub/frontend_project/ @sneridagh
+/sub/project_settings/ @sneridagh
