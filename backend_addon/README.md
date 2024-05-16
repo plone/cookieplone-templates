@@ -5,7 +5,7 @@
 
 # Cookieplone Backend Add-on
 
-Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Backend Add-on](https://github.com/plone/cookieplone-templates/backend_addon) is intended to be used by Plone developers to create new addon packages.
+Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Backend Add-on](https://github.com/plone/cookieplone-templates/backend_addon) is intended to be used by Plone developers to create new add-on packages.
 
 ## Getting Started 🏁
 
@@ -20,12 +20,12 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 ```shell
 pip install pipx
 ```
-### Generate Your Plone Addon 🎉
+
+### Generate Your Plone Add-on 🎉
 
 ```shell
 pipx run cookieplone backend_addon
 ```
-
 
 ## Project Generation Options
 
@@ -33,17 +33,17 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `title`  | Your addon's human-readable name, capitals and spaces allowed.                                                                                     | **Plone Blog**                |
-| `description`         | Describes your addon and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
+| `title`  | Your add-on's human-readable name, capitals and spaces allowed.                                                                                     | **Plone Blog**                |
+| `description`         | Describes your add-on and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
 | `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | **Our Company**               |
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `github_organization` | Used for GitHub and Docker repositories.                                                                                                             | **collective**                |
 | `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces or special characters are allowed. | **collective.blog**    |
 
-
 ## Code Quality Assurance 🧐
 
-Your package comes equipped with linters to ensure code quality. Run the following to automatically format your code:
+Your package comes equipped with linters to ensure code quality.
+Run the following to automatically format your code:
 
 ```shell
 make format
@@ -56,6 +56,7 @@ Generate translation files with ease:
 ```shell
 make i18n
 ```
+
 ## License 📜
 
 This project is licensed under the [MIT License](/LICENSE).

@@ -20,12 +20,12 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 ```shell
 pip install pipx
 ```
+
 ### Generate Your Plone Add-on 🎉
 
 ```shell
 pipx run cookieplone frontend_addon
 ```
-
 
 ## Project Generation Options
 
@@ -42,7 +42,6 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
 | `volto_version` | Volto version to be used. | **18.0.0-alpha.31**    |
 
-
 ## Code Quality Assurance 🧐
 
 Your package comes equipped with linters to ensure code quality. Run the following to automatically format your code:
@@ -58,6 +57,7 @@ Generate translation files with ease:
 ```shell
 make i18n
 ```
+
 ## License 📜
 
 This project is licensed under the [MIT License](/LICENSE).
