@@ -43,7 +43,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 ## Code Quality Assurance 🧐
 
 Your package comes equipped with linters to ensure code quality.
-Run the following to automatically format your code:
+Run the following command to automatically format your code:
 
 ```shell
 make format

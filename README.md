@@ -15,11 +15,11 @@
 
 ## About
 
-Powered by [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone" ), a collection of templates intended to be used by Plone integrators.
+Powered by [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone"), this project is a collection of templates intended to be used by Plone integrators.
 
 ## Prerequisites
 
-- **[pipx](https://pipx.pypa.io/ "Link to the website of pipx")**: A tool for installing and running Python applications.
+- **[pipx](https://pipx.pypa.io/stable/ "Link to the website of pipx")**: A tool for installing and running Python applications.
 
 ## Installation 💾
 
@@ -31,7 +31,7 @@ pip install pipx
 
 ## Choose a template 🛠️
 
-Run the `cookieplone` command to select a template:
+Select a template with the following command:
 
 ```shell
 pipx run cookieplone
