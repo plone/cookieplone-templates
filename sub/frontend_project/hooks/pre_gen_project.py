@@ -1,9 +1,10 @@
 """Pre generation hook."""
 
 import sys
+from collections import OrderedDict  # noQA
 from pathlib import Path
 from textwrap import dedent
-from collections import OrderedDict  # noQA
+
 from cookieplone import data
 from cookieplone.utils import console, validators
 

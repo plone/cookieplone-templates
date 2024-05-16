@@ -9,10 +9,10 @@ from cookieplone.utils import console, files
 context = {{cookiecutter}}
 
 
-TO_REMOVE = [
-    ".github",
-    "packages/volto-addon"
-]
+LOCAL_FILES_FOLDER_NAME = "_project_files"
+
+
+TO_REMOVE = [".github", "packages/volto-addon"]
 
 
 def generate_addon(context, output_dir):
@@ -21,12 +21,22 @@ def generate_addon(context, output_dir):
     output_dir = output_dir.parent
     context["frontend_addon_name"] = "volto-addon"
     generator.generate_subtemplate(
-        "volto_addon", output_dir, folder_name, context, TO_REMOVE
+        "../../frontend_addon", output_dir, folder_name, context, TO_REMOVE
     )
+
 
 def cleanup(context, output_dir):
     """Remove references to volto-addon."""
-    pass
+    project_files_folder = output_dir / LOCAL_FILES_FOLDER_NAME
+    project_files: list[Path] = [path for path in project_files_folder.glob("*")]
+    filenames = [path.name for path in project_files]
+    # Remove old files
+    files.remove_files(output_dir, filenames)
+    for path in project_files:
+        name = path.name
+        path.rename(output_dir / name)
+    # Remove templates folder
+    files.remove_files(output_dir, [LOCAL_FILES_FOLDER_NAME])
 
 
 def main():
@@ -50,6 +60,7 @@ def main():
         msg=msg,
         url="https://plone.org/",
     )
+
 
 if __name__ == "__main__":
     main()
