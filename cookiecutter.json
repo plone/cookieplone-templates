@@ -3,12 +3,12 @@
     "backend_addon": {
       "path": "./backend_addon",
       "title": "Backend Add-on for Plone",
-      "description": "Creates a new Python package to be used with Plone"
+      "description": "Create a new Python package to be used with Plone"
     },
     "frontend_addon": {
       "path": "./frontend_addon",
       "title": "Frontend Add-on for Plone",
-      "description": "Creates a new Node package to be used with Volto"
+      "description": "Create a new Node package to be used with Volto"
     }
   }
 }
