@@ -5,7 +5,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files, git
+from cookieplone.utils import console, files, git, plone
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -96,6 +96,7 @@ def main():
     output_dir = Path().cwd()
 
     initialize_git = bool(int(context.get("__project_git_initialize")))
+    backend_format = bool(int(context.get("__backend_addon_format")))
     # Cleanup / Git
     actions = [
         [
@@ -135,6 +136,11 @@ def main():
         new_context = deepcopy(context)
         console.print(f" -> {title}")
         func(new_context, output_dir)
+
+    # Run format
+    if backend_format:
+        backend_folder = output_dir / "backend"
+        plone.format_python_codebase(backend_folder)
 
     # Do a second run add newly created files
     if initialize_git:

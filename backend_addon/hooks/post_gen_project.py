@@ -4,7 +4,7 @@ from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
 
-from cookieplone.utils import console, files, git
+from cookieplone.utils import console, files, git, plone
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -34,6 +34,7 @@ def main():
     output_dir = Path().cwd()
     remove_headless = not int(context.get("feature_headless"))
     initialize_git = bool(int(context.get("__backend_addon_git_initialize")))
+    backend_format = bool(int(context.get("__backend_addon_format")))
     # Cleanup / Git
     actions = [
         [
@@ -53,6 +54,10 @@ def main():
         new_context = deepcopy(context)
         console.print(f" -> {title}")
         func(new_context, output_dir)
+
+    # Run format
+    if backend_format:
+        plone.format_python_codebase(output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

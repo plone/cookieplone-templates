@@ -69,6 +69,7 @@
   "__devops_varnish_version": "7.4",
   "__devops_db_version": "14",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
+  "__backend_addon_format": "1",
   "__backend_addon_git_initialize": "0",
   "__frontend_addon_git_initialize": "0",
   "__project_git_initialize": "1",
