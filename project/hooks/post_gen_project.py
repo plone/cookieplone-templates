@@ -138,7 +138,8 @@ def main():
 
     # Do a second run add newly created files
     if initialize_git:
-        handle_git_initialization(context, output_dir)
+        repo = git.repo_from_path(output_dir)
+        repo.git.add(output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
