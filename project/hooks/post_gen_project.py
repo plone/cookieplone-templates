@@ -95,6 +95,7 @@ def main():
     """Final fixes."""
     output_dir = Path().cwd()
 
+    initialize_git = bool(int(context.get("__project_git_initialize")))
     # Cleanup / Git
     actions = [
         [
@@ -109,8 +110,8 @@ def main():
         ],
         [
             handle_git_initialization,
-            "Remove GHA deployment files",
-            bool(int(context.get("__project_git_initialize"))),
+            "Initialize Git repository",
+            initialize_git,
         ],
     ]
     for func, title, enabled in actions:
@@ -134,6 +135,10 @@ def main():
         new_context = deepcopy(context)
         console.print(f" -> {title}")
         func(new_context, output_dir)
+
+    # Do a second run add newly created files
+    if initialize_git:
+        handle_git_initialization(context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

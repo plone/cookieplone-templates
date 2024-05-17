@@ -1,8 +1,9 @@
 """Test cookiecutter generation with all features enabled."""
 
+from pathlib import Path
+
 import pytest
 
-from pathlib import Path
 from .conftest import PKG_SRC_FEATURE_HEADLESS, PKG_SRC_FILES, ROOT_FILES
 
 

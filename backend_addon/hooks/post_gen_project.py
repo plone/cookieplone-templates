@@ -1,11 +1,10 @@
 """Post generation hook."""
 
-from copy import deepcopy
 from collections import OrderedDict
+from copy import deepcopy
 from pathlib import Path
 
 from cookieplone.utils import console, files, git
-
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -16,6 +15,7 @@ FEATURES_TO_REMOVE = {
         "serializers",
     ]
 }
+
 
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
     package_namespace = context.get("__package_namespace")

@@ -102,6 +102,7 @@ def context_no_headless(context) -> dict:
     new_context["feature_headless"] = "0"
     return new_context
 
+
 @pytest.fixture(scope="session")
 def context_no_git(context) -> dict:
     """Cookiecutter context without Git repository."""
