@@ -25,6 +25,7 @@ ROOT_FILES = [
     "pyproject.toml",
     "README.md",
     "requirements.txt",
+    "scripts/create_site.py",
     "setup.py",
     "tox.ini",
 ]
@@ -88,6 +89,7 @@ def context(cookieplone_root) -> dict:
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "feature_headless": "1",
+        "__backend_addon_git_initialize": "1",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
@@ -98,6 +100,14 @@ def context_no_headless(context) -> dict:
     new_context = deepcopy(context)
     new_context["python_package_name"] = "collective.addonredux"
     new_context["feature_headless"] = "0"
+    return new_context
+
+@pytest.fixture(scope="session")
+def context_no_git(context) -> dict:
+    """Cookiecutter context without Git repository."""
+    new_context = deepcopy(context)
+    new_context["python_package_name"] = "collective.addonnogit"
+    new_context["__backend_addon_git_initialize"] = "0"
     return new_context
 
 

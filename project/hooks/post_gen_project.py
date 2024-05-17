@@ -5,12 +5,16 @@ from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files
+from cookieplone.utils import console, files, git
 
 context: OrderedDict = {{cookiecutter}}
 
 
-BACKEND_ADDON_REMOVE = [".github", ".git"]
+BACKEND_ADDON_REMOVE = [
+    ".github",
+    ".git",
+    ".meta.toml",
+]
 
 FRONTEND_ADDON_REMOVE = [".github"]
 
@@ -35,24 +39,27 @@ DEVOPS_TO_REMOVE = {
 }
 
 
-def prepare_devops(context: OrderedDict, output_dir: Path):
-    """Clean up devops."""
-    keep_ansible = int(context.get("devops_ansible"))
-    keep_gha_manual_deploy = int(context.get("devops_gha_deploy"))
-    to_remove = []
-    if not keep_ansible:
-        to_remove.extend(DEVOPS_TO_REMOVE["ansible"])
-    if not keep_gha_manual_deploy:
-        to_remove.extend(DEVOPS_TO_REMOVE["gha"])
-    files.remove_files(output_dir, to_remove)
+def handle_devops_ansible(context: OrderedDict, output_dir: Path):
+    """Clean up ansible."""
+    files.remove_files(output_dir, DEVOPS_TO_REMOVE["ansible"])
+
+
+def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
+    """Clean up ansible."""
+    files.remove_files(output_dir, DEVOPS_TO_REMOVE["gha"])
+
+
+def handle_git_initialization(context: OrderedDict, output_dir: Path):
+    """Initialize a GIT repository for the project codebase."""
+    git.initialize_repository(output_dir)
 
 
 def generate_backend_addon(context, output_dir):
     """Run Plone Addon generator."""
     output_dir = output_dir
     folder_name = "backend"
-    # Do not initialize the repository
-    context["__backend_addon_git_initialize"] = "0"
+    # Headless
+    context["feature_headless"] = "1"
     generator.generate_subtemplate(
         "backend_addon", output_dir, folder_name, context, BACKEND_ADDON_REMOVE
     )
@@ -87,6 +94,32 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
+
+    # Cleanup / Git
+    actions = [
+        [
+            handle_devops_ansible,
+            "Remove Ansible files",
+            not int(context.get("devops_ansible")),
+        ],
+        [
+            handle_devops_gha_deploy,
+            "Remove GHA deployment files",
+            not int(context.get("devops_gha_deploy")),
+        ],
+        [
+            handle_git_initialization,
+            "Remove GHA deployment files",
+            bool(int(context.get("__project_git_initialize"))),
+        ],
+    ]
+    for func, title, enabled in actions:
+        if not int(enabled):
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
+
     subtemplates = context.get("__cookieplone_subtemplates", [])
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
@@ -102,8 +135,6 @@ def main():
         console.print(f" -> {title}")
         func(new_context, output_dir)
 
-    # Run devops
-    prepare_devops(context, output_dir)
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
 

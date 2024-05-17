@@ -1,5 +1,5 @@
 from AccessControl.SecurityManagement import newSecurityManager
-from {{ cookiecutter.python_package_name }}.interfaces import I{{ cookiecutter.__python_package_name_upper }}Layer
+from {{ cookiecutter.python_package_name }}.interfaces import IBrowserLayer
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.factory import addPloneSite
 from Testing.makerequest import makerequest
@@ -27,13 +27,11 @@ def asbool(s):
 
 DELETE_EXISTING = asbool(os.getenv("DELETE_EXISTING"))
 
-app = makerequest(app)  # noQA
+app = makerequest(globals()["app"])
 
 request = app.REQUEST
 
-ifaces = [
-    I{{ cookiecutter.__python_package_name_upper }}Layer,
-] + list(directlyProvidedBy(request))
+ifaces = [IBrowserLayer] + list(directlyProvidedBy(request))
 
 directlyProvides(request, *ifaces)
 
@@ -47,11 +45,10 @@ payload = {
     "profile_id": _DEFAULT_PROFILE,
     "extension_ids": [
         "{{ cookiecutter.python_package_name }}:default",
-        "{{ cookiecutter.python_package_name }}:initial",
     ],
     "setup_content": False,
     "default_language": "{{ cookiecutter.__profile_language }}",
-    "portal_timezone": "America/Sao_Paulo",
+    "portal_timezone": "UTC",
 }
 
 if site_id in app.objectIds() and DELETE_EXISTING:

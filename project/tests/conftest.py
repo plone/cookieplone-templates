@@ -33,6 +33,7 @@ def context(cookieplone_root) -> dict:
         "frontend_addon_name": "volto-ploneorgbr",
         "language_code": "en",
         "github_organization": "plonegovbr",
+        "__project_git_initialize": "1",
         "container_registry": "github",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
@@ -43,6 +44,14 @@ def context_devops_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
     new_context["devops_cache"] = "1"
+    return new_context
+
+
+@pytest.fixture(scope="session")
+def context_no_git(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["__project_git_initialize"] = "0"
     return new_context
 
 

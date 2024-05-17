@@ -12,7 +12,7 @@ RUN <<EOT
     set -e
     bin/pip install mxdev
     mv requirements-docker.txt requirements.txt
-    sed -i 's/-e src\/{{cookiecutter.python_package_name}}\[test\]/src\/{{cookiecutter.python_package_name}}/g' mx.ini
+    sed -i 's/-e .\[test\]/src\/./g' mx.ini
     bin/mxdev -c mx.ini
     bin/pip install -r requirements-mxdev.txt
     bin/python /compile_mo.py

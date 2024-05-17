@@ -48,3 +48,19 @@ def test_root_folders(cutter_result, folder_name: str):
     """Test folders were created."""
     folder = cutter_result.project_path / folder_name
     assert folder.is_dir()
+
+
+def test_git_initialization(cutter_result):
+    from cookieplone.utils import git
+
+    path = cutter_result.project_path
+    repo = git.repo_from_path(path)
+    assert Path(repo.working_dir) == path
+
+
+def test_git_initialization_not_set(cookies, context_no_git):
+    from cookieplone.utils import git
+
+    cutter_result = cookies.bake(extra_context=context_no_git)
+    path = cutter_result.project_path
+    assert git.check_path_is_repository(path) is False

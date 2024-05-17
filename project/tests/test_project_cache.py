@@ -31,3 +31,34 @@ def test_project_no_cache(cutter_result_devops_no_cache, filepath: str):
     folder = cutter_result_devops_no_cache.project_path
     path = folder / filepath
     assert path.exists() is False
+
+
+CACHE_CONFIGURATION = [
+    [
+        "backend/src/plonegov/ploneorgbr/profiles/default/metadata.xml",
+        "plone.app.caching:default",
+    ],
+    [
+        "backend/src/plonegov/ploneorgbr/profiles/default/metadata.xml",
+        "plone.app.caching:with-caching-proxy",
+    ],
+    ["backend/src/plonegov/ploneorgbr/dependencies.zcml", "plone.app.caching"],
+]
+
+
+@pytest.mark.parametrize("filepath,content", CACHE_CONFIGURATION)
+def test_project_no_cache_no_config(
+    cutter_result_devops_no_cache, filepath: str, content: str
+):
+    """Test Cache-related configurations are not present."""
+    folder = cutter_result_devops_no_cache.project_path
+    file_content = (folder / filepath).read_text()
+    assert content not in file_content
+
+
+@pytest.mark.parametrize("filepath,content", CACHE_CONFIGURATION)
+def test_project_no_cache_config(cutter_result, filepath: str, content: str):
+    """Test Cache-related configurations are not present."""
+    folder = cutter_result.project_path
+    file_content = (folder / filepath).read_text()
+    assert content in file_content

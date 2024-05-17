@@ -51,10 +51,12 @@ bin/pip bin/tox bin/mxdev:
 	bin/pip install -U "pip" "wheel" "cookiecutter" "mxdev" "tox" "pre-commit"
 	if [ -d $(GIT_FOLDER) ]; then bin/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 
-.PHONY: config
-config: bin/pip  ## Create instance configuration
+instance/etc/zope.ini: bin/pip  ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
 	bin/cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+
+.PHONY: config
+config: instance/etc/zope.ini
 
 .PHONY: build-dev
 build-dev: config ## pip install Plone packages
@@ -65,10 +67,8 @@ build-dev: config ## pip install Plone packages
 .PHONY: install
 install: build-dev ## Install Plone 6.0
 
-
 .PHONY: build
 build: build-dev ## Install Plone 6.0
-
 
 .PHONY: clean
 clean: ## Remove old virtualenv and creates a new one
@@ -80,8 +80,12 @@ start: ## Start a Plone instance on localhost:8080
 	PYTHONWARNINGS=ignore ./bin/runwsgi instance/etc/zope.ini
 
 .PHONY: console
-console: ## Start a zope console
+console: instance/etc/zope.ini ## Start a zope console
 	PYTHONWARNINGS=ignore ./bin/zconsole debug instance/etc/zope.conf
+
+.PHONY: create-site
+create-site: instance/etc/zope.ini ## Create a new site from scratch
+	PYTHONWARNINGS=ignore ./bin/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 .PHONY: format
 format: bin/tox ## Format the codebase according to our standards
@@ -100,7 +104,7 @@ bin/i18ndude: bin/pip
 .PHONY: i18n
 i18n: bin/i18ndude ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	bin/update_dist_locale
+	bin/update_locale
 
 # Tests
 .PHONY: test

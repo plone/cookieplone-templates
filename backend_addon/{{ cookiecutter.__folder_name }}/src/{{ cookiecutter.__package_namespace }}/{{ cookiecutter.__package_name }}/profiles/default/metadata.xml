@@ -2,6 +2,9 @@
 <metadata>
   <version>{{ cookiecutter.__profile_version }}</version>
   <dependencies>
-    <!-- <dependency>profile-plone.volto:default</dependency> -->
+  {%- if cookiecutter.feature_headless == '1' %}
+    <dependency>profile-plone.restapi:default</dependency>
+    <dependency>profile-plone.volto:default</dependency>
+  {%- endif %}
   </dependencies>
 </metadata>

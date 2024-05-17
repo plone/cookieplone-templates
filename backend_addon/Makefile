@@ -12,6 +12,11 @@ YELLOW=`tput setaf 3`
 .PHONY: all
 all: build
 
+TEMPLATE = $(shell basename $(CURRENT_DIR))
+ADDON_FOLDER_NAME = collective.addon
+BASE_FOLDER = ../
+BIN_FOLDER = ${BASE_FOLDER}/bin
+
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -21,24 +26,29 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf collective.addon
+	rm -rf volto-addon
 
-../bin/cookieplone:  ## cookieplone installation
-	$(MAKE) -C ".." bin/cookieplone
+$(BIN_FOLDER)/cookieplone:  ## cookieplone installation
+	$(MAKE) -C $(BASE_FOLDER) bin/cookieplone
 
 .PHONY: format
-format: ../bin/cookieplone ## Format code
+format: $(BIN_FOLDER)/cookieplone ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	../bin/black hooks tests
-	../bin/isort hooks tests
+	$(BIN_FOLDER)/black hooks tests
+	$(BIN_FOLDER)/isort hooks tests
 
 .PHONY: generate
-generate:  ../bin/cookieplone ## Create a sample package
+generate:  $(BIN_FOLDER)/cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf collective.addon
-	../bin/cookieplone . --no-input
+	rm -rf $(ADDON_FOLDER_NAME)
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) $(BIN_FOLDER)/cookieplone $(TEMPLATE) --no_input
 
 .PHONY: test
-test: ../bin/cookieplone ## Create a sample package and tests it
-	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	../bin/python -m pytest tests
+test: $(BIN_FOLDER)/cookieplone ## Create a sample package and tests it
+	@echo "$(GREEN)==> Test template$(RESET)"
+	$(BIN_FOLDER)/python -m pytest tests
+
+.PHONY: test-pdb
+test-pdb: $(BIN_FOLDER)/cookieplone ## Stop on the first failed test
+	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
+	$(BIN_FOLDER)/python -m pytest tests -x --pdb
