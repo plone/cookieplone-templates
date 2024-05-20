@@ -36,6 +36,7 @@
     "1",
     "0"
   ],
+  "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
