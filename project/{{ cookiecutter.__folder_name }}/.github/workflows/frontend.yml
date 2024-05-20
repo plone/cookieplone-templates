@@ -20,20 +20,20 @@ jobs:
   meta:
     runs-on: ubuntu-latest
     outputs:
-      BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
-      VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
+      BASE_TAG: {{"${{ steps.vars.outputs.BASE_TAG }}"}}
+      VOLTO_VERSION: {{ "${{ steps.vars.outputs.VOLTO_VERSION }}" }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Compute several vars needed for the build
         id: vars
         run: |
-          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo 'BASE_TAG=sha-$(git rev-parse --short HEAD)' >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
       - name: Test vars
         run: |
-          echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
-          echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
+          echo 'BASE_TAG={{"${{ steps.vars.outputs.BASE_TAG }}"}}'
+          echo 'VOLTO_VERSION={{"${{ steps.vars.outputs.VOLTO_VERSION }}"}}'
 
   code-analysis:
     runs-on: ubuntu-latest
@@ -62,38 +62,38 @@ jobs:
       - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
         name: Setup pnpm cache
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: {{"${{ env.STORE_PATH }}"}}
+          key: {{"${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"}}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            {{"${{ runner.os }}"}}-pnpm-store-
 
       - name: Install dependencies
         run: make install
 
       - name: Linting
         id: lint
-        if: ${{ success() || failure() }}
+        if: {{ "${{ success() || failure() }}" }}
         run: make lint
 
       - name: i18n sync
         id: i18n
-        if: ${{ success() || failure() }}
+        if: {{ "${{ success() || failure() }}" }}
         run: make ci-i18n
 
       - name: Unit Tests
         id: unit
-        if: ${{ success() || failure() }}
+        if: {{ "${{ success() || failure() }}" }}
         run: make test
 
       - name: Report
-        if: ${{ success() || failure() }}
+        if: {{ "${{ success() || failure() }}" }}
         run: |
           echo '# Code Analysis' >> $GITHUB_STEP_SUMMARY
           echo '| Test | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
-          echo '| Lint | ${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
-          echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
-          echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
+          {{ "echo '| Lint | ${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY " }}
 
   release:
     runs-on: ubuntu-latest
