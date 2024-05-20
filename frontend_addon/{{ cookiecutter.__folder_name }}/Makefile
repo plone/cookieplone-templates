@@ -50,7 +50,7 @@ i18n: ## Sync i18n
 
 .PHONY: ci-i18n
 ci-i18n: ## Check if i18n is not synced
-	pnpm i18n && git diff -G'^[^\"POT]' --exit-code
+	pnpm --filter $(ADDON_NAME) i18n && git diff -G'^[^\"POT]' --exit-code
 
 .PHONY: format
 format: ## Format codebase
