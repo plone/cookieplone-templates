@@ -36,6 +36,7 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
         "backend/src/project/title/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",
         "frontend/.dockerignore",
         "frontend/Dockerfile",
+        "frontend/Makefile",
         "frontend/packages/volto-project-title/src/index.js",
     ],
 )
