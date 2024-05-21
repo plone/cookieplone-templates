@@ -1,62 +1,30 @@
 # syntax=docker/dockerfile:1
-FROM node:{{ cookiecutter.__node_version }}-slim as base
-FROM base as builder
+ARG VOLTO_VERSION
+# TODO: Replace with
+# FROM plone/frontend-builder:${VOLTO_VERSION}
+# when the main image is ready
+FROM ghcr.io/kitconcept/frontend-builder:${VOLTO_VERSION} as builder
 
-RUN <<EOT
-    set -e
-    apt update
-    apt install -y --no-install-recommends python3 build-essential
-    mkdir /app
-    chown -R node:node /app
-    rm -rf /var/lib/apt/lists/*
+COPY --chown=node packages/volto-sneridagh-dev /app/packages/volto-sneridagh-dev
+COPY --chown=node volto.config.js /app/
+COPY --chown=node package.json /app/package.json.temp
+
+RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
+     python3 -c "import json; data = json.load(open('package.json.temp')); deps = data['dependencies']; data['dependencies'].update(deps); json.dump(data, open('package.json', 'w'), indent=2)"
+     rm package.json.temp
+     pnpm install
+     pnpm build
+     pnpm install --prod
 EOT
 
-COPY --chown=node . /build/
-RUN corepack enable
-
-USER node
-WORKDIR /build
-RUN <<EOT
-    set -e
-    make install
-    yarn build
-EOT
-
-FROM base
+# TODO: Replace with
+# FROM plone/frontend-prod-config:${VOLTO_VERSION}
+# when the main image is ready
+FROM ghcr.io/kitconcept/frontend-prod-config:${VOLTO_VERSION}
 
 LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
       org.label-schema.name="{{ cookiecutter.project_slug }}-frontend" \
       org.label-schema.description="{{ cookiecutter.title }} frontend image." \
       org.label-schema.vendor="{{ cookiecutter.author }}"
 
-# Install busybox and wget
-RUN <<EOT
-    set -e
-    apt update
-    apt install -y --no-install-recommends busybox wget
-    busybox --install -s
-    rm -rf /var/lib/apt/lists/*
-    mkdir /app
-    chown -R node:node /app
-EOT
-
-# Run the image with user node
-USER node
-
-# Copy
-COPY --from=builder /build/ /app/
-
-# Set working directory to /app
-WORKDIR /app
-
-# Expose default Express port
-EXPOSE 3000
-
-# Set healthcheck to port 3000
-HEALTHCHECK --interval=10s --timeout=5s --start-period=30s CMD [ -n "$LISTEN_PORT" ] || LISTEN_PORT=3000 ; wget -q http://127.0.0.1:"$LISTEN_PORT" -O - || exit 1
-
-# Entrypoint would be yarn
-ENTRYPOINT [ "yarn" ]
-
-# And the image will run in production mode
-CMD ["start:prod"]
+COPY --from=builder /app/ /app/

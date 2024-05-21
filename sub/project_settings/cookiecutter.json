@@ -9,6 +9,10 @@
   "language_code": "en",
   "volto_version": "{{ 'Yes' | latest_volto }}",
   "github_organization": "collective",
+  "container_registry": ["github", "docker_hub", "gitlab"],
+  "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
+  "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
+  "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__package_name": "{{ cookiecutter.python_package_name | package_name }}",
   "__package_namespace": "{{ cookiecutter.python_package_name | package_namespace }}",
@@ -17,8 +21,7 @@
   "__profile_language": "{{ cookiecutter.language_code|gs_language_code }}",
   "__locales_language": "{{ cookiecutter.language_code|locales_language_code }}",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
-  "_copy_without_render": [
-  ],
+  "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.use_prerelease_versions",
     "cookieplone.filters.node_version_for_volto",
