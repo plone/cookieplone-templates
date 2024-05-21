@@ -18,7 +18,7 @@
     "build": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
     "i18n": "pnpm --filter {{ cookiecutter.npm_package_name }} i18n",
-    "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test",
+    "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
     "lint": "eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
