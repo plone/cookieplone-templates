@@ -74,13 +74,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - uses: pnpm/action-setup@v3
-        name: Install pnpm
-        with:
-          version: 9
-          # We don't want to install until later,
-          # when the cache and Cypress are in place
-          run_install: false
+      - name: Enable corepack
+        run: corepack enable
 
       - name: Get pnpm store directory
         shell: bash
@@ -110,7 +105,7 @@ jobs:
       - name: Run unit tests
         working-directory: frontend_addon/volto-addon
         run: |
-          make test-ci
+          make ci-test
 
       - name: Run i18n tests
         working-directory: frontend_addon/volto-addon
