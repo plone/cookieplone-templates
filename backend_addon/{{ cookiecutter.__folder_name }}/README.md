@@ -12,8 +12,7 @@
 
 This package contains a simple volto configuration.
 
-Installation
-------------
+## Installation
 
 Install {{ cookiecutter.python_package_name }} with `pip`:
 
