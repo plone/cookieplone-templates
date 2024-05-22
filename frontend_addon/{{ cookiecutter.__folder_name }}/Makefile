@@ -19,6 +19,9 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
+GIT_FOLDER=$(CURRENT_DIR)/.git
+PRE_COMMIT=pipx run --spec 'pre-commit=={{cookiecutter.__version_pre_commit}}' pre-commit
+
 PLONE_VERSION=6
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
@@ -33,6 +36,8 @@ help: ## Show this help
 
 .PHONY: install
 install: ## Installs the add-on in a development environment
+	@echo "$(GREEN)Install$(RESET)"
+	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	pnpm dlx mrs-developer missdev --no-config --fetch-https
 	pnpm i
 
