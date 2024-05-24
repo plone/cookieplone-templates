@@ -5,7 +5,7 @@ ARG VOLTO_VERSION
 # when the main image is ready
 FROM ghcr.io/kitconcept/frontend-builder:${VOLTO_VERSION} as builder
 
-COPY --chown=node packages/volto-sneridagh-dev /app/packages/volto-sneridagh-dev
+COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
 COPY --chown=node volto.config.js /app/
 COPY --chown=node package.json /app/package.json.temp
 
