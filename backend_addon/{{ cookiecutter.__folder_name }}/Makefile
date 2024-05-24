@@ -35,6 +35,8 @@ endif
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 GIT_FOLDER=$(BACKEND_FOLDER)/.git
+VENV_FOLDER=$(BACKEND_FOLDER)/.venv
+BIN_FOLDER=$(VENV_FOLDER)/bin
 
 
 all: build
@@ -45,15 +47,15 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-bin/pip bin/tox bin/mxdev:
+$(BIN_FOLDER)/pip $(BIN_FOLDER)/tox $(BIN_FOLDER)/mxdev:
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
-	$(PYTHON) -m venv .
-	bin/pip install -U "pip" "wheel" "cookiecutter" "mxdev" "tox" "pre-commit"
-	if [ -d $(GIT_FOLDER) ]; then bin/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
+	$(PYTHON) -m venv $(VENV_FOLDER)
+	$(BIN_FOLDER)/pip install -U "pip" "wheel" "cookiecutter" "mxdev" "tox" "pre-commit"
+	if [ -d $(GIT_FOLDER) ]; then $(BIN_FOLDER)/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 
-instance/etc/zope.ini: bin/pip  ## Create instance configuration
+instance/etc/zope.ini: $(BIN_FOLDER)/pip  ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
-	bin/cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+	$(BIN_FOLDER)/cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 
 .PHONY: config
 config: instance/etc/zope.ini
@@ -61,8 +63,8 @@ config: instance/etc/zope.ini
 .PHONY: build-dev
 build-dev: config ## pip install Plone packages
 	@echo "$(GREEN)==> Setup Build$(RESET)"
-	bin/mxdev -c mx.ini
-	bin/pip install -r requirements-mxdev.txt
+	$(BIN_FOLDER)/mxdev -c mx.ini
+	$(BIN_FOLDER)/pip install -r requirements-mxdev.txt
 
 .PHONY: install
 install: build-dev ## Install Plone 6.0
@@ -73,44 +75,44 @@ build: build-dev ## Install Plone 6.0
 .PHONY: clean
 clean: ## Remove old virtualenv and creates a new one
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
-	rm -rf bin lib lib64 include share etc var inituser pyvenv.cfg .installed.cfg instance .tox .pytest_cache
+	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .pytest_cache
 
 .PHONY: start
 start: ## Start a Plone instance on localhost:8080
-	PYTHONWARNINGS=ignore ./bin/runwsgi instance/etc/zope.ini
+	PYTHONWARNINGS=ignore ./$(BIN_FOLDER)/runwsgi instance/etc/zope.ini
 
 .PHONY: console
 console: instance/etc/zope.ini ## Start a zope console
-	PYTHONWARNINGS=ignore ./bin/zconsole debug instance/etc/zope.conf
+	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
 create-site: instance/etc/zope.ini ## Create a new site from scratch
-	PYTHONWARNINGS=ignore ./bin/zconsole run instance/etc/zope.conf ./scripts/create_site.py
+	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 .PHONY: format
-format: bin/tox ## Format the codebase according to our standards
+format: $(BIN_FOLDER)/tox ## Format the codebase according to our standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
-	bin/tox -e format
+	$(BIN_FOLDER)/tox -e format
 
 .PHONY: lint
 lint: ## check code style
-	bin/tox -e lint
+	$(BIN_FOLDER)/tox -e lint
 
 # i18n
-bin/i18ndude: bin/pip
+$(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
 	@echo "$(GREEN)==> Install translation tools$(RESET)"
-	bin/pip install i18ndude
+	$(BIN_FOLDER)/pip install i18ndude
 
 .PHONY: i18n
-i18n: bin/i18ndude ## Update locales
+i18n: $(BIN_FOLDER)/i18ndude ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	bin/update_locale
+	$(BIN_FOLDER)/update_locale
 
 # Tests
 .PHONY: test
-test: bin/tox ## run tests
-	bin/tox -e test
+test: $(BIN_FOLDER)/tox ## run tests
+	$(BIN_FOLDER)/tox -e test
 
 .PHONY: test-coverage
-test-coverage: bin/tox ## run tests with coverage
-	bin/tox -e coverage
+test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
+	$(BIN_FOLDER)/tox -e coverage
