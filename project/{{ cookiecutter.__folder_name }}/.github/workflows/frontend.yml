@@ -46,13 +46,8 @@ jobs:
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
 
-      - uses: pnpm/action-setup@{{ cookiecutter.__gha_version_setup_pnpm }}
-        name: Install pnpm
-        with:
-          version: 9
-          # We don't want to install until later,
-          # when the cache is in place
-          run_install: false
+      - name: Enable corepack
+        run: corepack enable
 
       - name: Get pnpm store directory
         shell: bash

@@ -51,6 +51,10 @@ build: ## Build a production bundle for distribution of the project with the add
 i18n: ## Sync i18n
 	pnpm --filter $(ADDON_NAME) i18n
 
+.PHONY: ci-i18n
+ci-i18n: ## Check if i18n is not synced
+	pnpm --filter $(ADDON_NAME) i18n && git diff -G'^[^\"POT]' --exit-code
+
 .PHONY: format
 format: ## Format codebase
 	pnpm lint:fix
@@ -61,7 +65,7 @@ format: ## Format codebase
 lint: ## Lint, or catch and remove problems, in code base
 	pnpm lint
 	pnpm prettier
-	pnpm stylelint
+	pnpm stylelint --allow-empty-input
 
 .PHONY: release
 release: ## Release the add-on on npmjs.org
