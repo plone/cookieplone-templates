@@ -50,7 +50,7 @@ help: ## This help message
 $(BIN_FOLDER)/pip $(BIN_FOLDER)/tox $(BIN_FOLDER)/pipx $(BIN_FOLDER)/uv $(BIN_FOLDER)/mxdev:
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
 	$(PYTHON) -m venv $(VENV_FOLDER)
-	$(BIN_FOLDER)/pip install -U "pip" "uv" "wheel" "pipx" "mxdev" "tox" "pre-commit"
+	$(BIN_FOLDER)/pip install -U "pip" "uv" "wheel" "pipx" "tox" "pre-commit"
 	if [ -d $(GIT_FOLDER) ]; then $(BIN_FOLDER)/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 
 instance/etc/zope.ini: $(BIN_FOLDER)/pip  ## Create instance configuration
@@ -63,7 +63,7 @@ config: instance/etc/zope.ini
 .PHONY: build-dev
 build-dev: config ## pip install Plone packages
 	@echo "$(GREEN)==> Setup Build$(RESET)"
-	$(BIN_FOLDER)/mxdev -c mx.ini
+	$(BIN_FOLDER)/pipx run mxdev -c mx.ini
 	$(BIN_FOLDER)/uv pip install -r requirements-mxdev.txt
 
 .PHONY: install

@@ -39,12 +39,14 @@ pipx run cookieplone
 
 ```text
 [1/1] Select a template
-  1 - Backend Add-on for Plone
-  2 - Frontend Add-on
+  1 - A Plone Project
+  2 - Backend Add-on for Plone
+  3 - Frontend Add-on
 ```
 
 | Template | Description |  |
 | --------- | --------- | --------- |
+| `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read More](./project/README.md) |
 | `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read More](./backend_addon/README.md) |
 | `Frontend Add-on for Plone`  | Create a new Node package to be used with Volto. | [Read More](./frontend_addon/README.md) |
 
