@@ -125,7 +125,7 @@ make install
 Start the backend.
 
 ```shell
-make start-backend-docker
+make backend-start-docker
 ```
 
 In a separate terminal session, start the frontend.

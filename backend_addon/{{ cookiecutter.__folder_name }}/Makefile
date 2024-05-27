@@ -15,8 +15,6 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-PLONE6=6.0-latest
-
 # Python checks
 PYTHON?=python3
 
@@ -61,41 +59,37 @@ instance/etc/zope.ini: $(BIN_FOLDER)/pip  ## Create instance configuration
 config: instance/etc/zope.ini
 
 .PHONY: build-dev
-build-dev: config ## pip install Plone packages
+build-dev: config ## Install Plone packages
 	@echo "$(GREEN)==> Setup Build$(RESET)"
 	$(BIN_FOLDER)/pipx run mxdev -c mx.ini
 	$(BIN_FOLDER)/uv pip install -r requirements-mxdev.txt
 
 .PHONY: install
-install: build-dev ## Install Plone 6.0
+install: build-dev ## Install Plone
 
 .PHONY: build
-build: build-dev ## Install Plone 6.0
+build: build-dev ## Install Plone
 
 .PHONY: clean
-clean: ## Remove old virtualenv and creates a new one
+clean: ## Cleanup environment
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
-	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .pytest_cache
+	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .venv .pytest_cache
 
 .PHONY: start
 start: ## Start a Plone instance on localhost:8080
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/runwsgi instance/etc/zope.ini
 
 .PHONY: console
-console: instance/etc/zope.ini ## Start a zope console
+console: instance/etc/zope.ini ## Start a console into a Plone instance
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
 create-site: instance/etc/zope.ini ## Create a new site from scratch
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
-.PHONY: format
-format: $(BIN_FOLDER)/tox ## Format the codebase according to our standards
+.PHONY: check
+check: $(BIN_FOLDER)/tox ## Check (and fix) codebase according to our standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
-	$(BIN_FOLDER)/tox -e format
-
-.PHONY: lint
-lint: ## check code style
 	$(BIN_FOLDER)/tox -e lint
 
 # i18n

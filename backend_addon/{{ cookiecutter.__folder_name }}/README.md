@@ -4,13 +4,7 @@
 
 ## Features
 
-### Content Types
-
-- TBD
-
-### Initial content
-
-This package contains a simple volto configuration.
+TODO: List our awesome features
 
 ## Installation
 
