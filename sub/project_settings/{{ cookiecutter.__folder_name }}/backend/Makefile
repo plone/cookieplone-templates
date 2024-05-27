@@ -15,6 +15,9 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
+IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
+IMAGE_TAG=latest
+
 PLONE6=6.0-latest
 
 # Python checks
@@ -32,7 +35,10 @@ ifeq ($(PYTHON_VERSION_OK),0)
   $(error "Need python $(PYTHON_VERSION) >= $(PYTHON_VERSION_MIN)")
 endif
 
+PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+PLONE_VERSION=$(shell cat $(BACKEND_FOLDER)/version.txt)
+EXAMPLE_CONTENT_FOLDER=${BACKEND_FOLDER}/src/{{ cookiecutter.__package_namespace }}/{{ cookiecutter.__package_name }}/setuphandlers/examplecontent
 
 GIT_FOLDER=$(BACKEND_FOLDER)/.git
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
@@ -89,6 +95,13 @@ console: instance/etc/zope.ini ## Start a zope console
 create-site: instance/etc/zope.ini ## Create a new site from scratch
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
+# Example Content
+.PHONY: update-example-content
+update-example-content: $(BIN_FOLDER)/tox ## Export example content inside package
+	@echo "$(GREEN)==> Export example content into $(EXAMPLE_CONTENT_FOLDER) $(RESET)"
+	if [ -d $(EXAMPLE_CONTENT_FOLDER)/content ]; then rm -r $(EXAMPLE_CONTENT_FOLDER)/* ;fi
+	$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
+
 .PHONY: format
 format: $(BIN_FOLDER)/tox ## Format the codebase according to our standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
@@ -116,3 +129,8 @@ test: $(BIN_FOLDER)/tox ## run tests
 .PHONY: test-coverage
 test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
 	$(BIN_FOLDER)/tox -e coverage
+
+# Build Docker image
+.PHONY: build-image
+build-image:  ## Build Docker Images
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)

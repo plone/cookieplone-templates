@@ -1,5 +1,4 @@
 ---
-version: '3.8'
 name: {{ cookiecutter.__devops_compose_name }}
 
 services:
@@ -55,10 +54,13 @@ services:
       - traefik.http.services.svc-varnish.loadbalancer.server.port=80
     depends_on:
       - backend
+
 {%- endif %}
   frontend:
     build:
       context: ./frontend
+      args:
+        - VOLTO_VERSION=${VOLTO_VERSION}
     environment:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
     depends_on:
@@ -91,6 +93,8 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        - PLONE_VERSION=${PLONE_VERSION}
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_NAME:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:

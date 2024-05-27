@@ -13,6 +13,11 @@ dependencies_mappings = [
 ]
 dependencies_ignores = "['plone.app.iterate', 'plone.app.upgrade', 'plone.volto', 'zestreleaser.towncrier', 'zest.releaser', 'pytest-cov']"
 
+[gitignore]
+extra_lines = """
+.lock
+"""
+
 [tox]
 test_runner = "pytest"
 test_path = "/tests"

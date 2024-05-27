@@ -14,6 +14,9 @@ GIT_FOLDER=$(CURRENT_DIR)/.git
 PROJECT_NAME={{ cookiecutter.project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
+VOLTO_VERSION = $(shell cat frontend/mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
+PLONE_VERSION=$(shell cat backend/version.txt)
+
 PRE_COMMIT=pipx run --spec 'pre-commit=={{ cookiecutter.__pre_commit_version }}' pre-commit
 
 # We like colors
@@ -22,6 +25,8 @@ RED=`tput setaf 1`
 GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
+
+VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION)
 
 .PHONY: all
 all: install
@@ -67,6 +72,10 @@ backend-build:  ## Build Backend
 .PHONY: backend-create-site
 backend-create-site: ## Create a Plone site with default content
 	$(MAKE) -C "./backend/" create-site
+
+.PHONY: backend-update-example-content
+backend-update-example-content: ## Export example content inside package
+	$(MAKE) -C "./backend/" update-example-content
 
 .PHONY: backend-start
 backend-start: ## Start Plone Backend
@@ -120,7 +129,7 @@ build-images:  ## Build docker images
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
-	@docker compose -f docker-compose.yml up -d --build
+	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://{{ cookiecutter.project_slug }}.localhost"
 
 .PHONY: start-stack

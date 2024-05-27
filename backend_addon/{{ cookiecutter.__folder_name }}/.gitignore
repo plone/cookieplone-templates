@@ -40,7 +40,7 @@ var/
 /sources/
 /venv/
 .installed.txt
-
+.lock
 
 ##
 # Add extra configuration options in .meta.toml:

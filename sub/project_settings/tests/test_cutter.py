@@ -1,6 +1,6 @@
 """Test cookiecutter generation with all features enabled."""
 
-from pathlib import Path
+import json
 
 import pytest
 
@@ -24,23 +24,54 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
             assert match is None, msg
 
 
-@pytest.mark.parametrize(
-    "file_path",
-    [
-        "backend/src/project/title/locales/__init__.py",
-        "backend/src/project/title/locales/en/LC_MESSAGES/project.title.po",
-        "backend/src/project/title/locales/project.title.pot",
-        "backend/src/project/title/locales/update.py",
-        "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.IMailSchema.xml",  # noQA
-        "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.ISiteSchema.xml",  # noQA
-        "backend/src/project/title/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",
-        "frontend/.dockerignore",
-        "frontend/Dockerfile",
-        "frontend/Makefile",
-        "frontend/packages/volto-project-title/src/index.js",
-    ],
-)
+GENERATED_FILES = [
+    "backend/.dockerignore",
+    "backend/constraints.txt",
+    "backend/Dockerfile.acceptance",
+    "backend/Dockerfile",
+    "backend/Makefile",
+    "backend/requirements-docker.txt",
+    "backend/scripts/create_site.py",
+    "backend/setup.py",
+    "backend/src/project/title/locales/__init__.py",
+    "backend/src/project/title/locales/en/LC_MESSAGES/project.title.po",
+    "backend/src/project/title/locales/project.title.pot",
+    "backend/src/project/title/locales/update.py",
+    "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.IMailSchema.xml",  # noQA
+    "backend/src/project/title/profiles/default/registry/plone.base.interfaces.controlpanel.ISiteSchema.xml",  # noQA
+    "backend/src/project/title/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",
+    "backend/src/project/title/profiles/initial/metadata.xml",
+    "backend/src/project/title/setuphandlers/examplecontent/.gitkeep",
+    "backend/src/project/title/setuphandlers/examplecontent/content/__metadata__.json",
+    "backend/src/project/title/setuphandlers/examplecontent/content/a58ccead718140c1baa98d43595fc3e6/data.json",
+    "backend/src/project/title/setuphandlers/examplecontent/content/a58ccead718140c1baa98d43595fc3e6/image/plone-foundation.png",
+    "backend/src/project/title/setuphandlers/examplecontent/content/a720393b3c0240e5bd27c43fcd2cfd1e/data.json",
+    "backend/src/project/title/setuphandlers/examplecontent/content/plone_site_root/data.json",
+    "backend/src/project/title/setuphandlers/examplecontent/discussions.json",
+    "backend/src/project/title/setuphandlers/examplecontent/portlets.json",
+    "backend/src/project/title/setuphandlers/examplecontent/principals.json",
+    "backend/src/project/title/setuphandlers/examplecontent/redirects.json",
+    "backend/src/project/title/setuphandlers/examplecontent/relations.json",
+    "backend/src/project/title/setuphandlers/examplecontent/translations.json",
+    "backend/src/project/title/setuphandlers/initial.py",
+    "frontend/.dockerignore",
+    "frontend/Dockerfile",
+    "frontend/Makefile",
+    "frontend/packages/volto-project-title/src/index.js",
+]
+
+
+@pytest.mark.parametrize("file_path", GENERATED_FILES)
 def test_created_files(cutter_result, file_path: str):
     path = (cutter_result.project_path / file_path).resolve()
     assert path.exists()
     assert path.is_file()
+
+
+@pytest.mark.parametrize(
+    "file_path", [f for f in GENERATED_FILES if f.endswith(".json")]
+)
+def test_json_files_are_valid(cutter_result, file_path: str):
+    path = (cutter_result.project_path / file_path).resolve()
+    result = json.loads(path.read_text())
+    assert isinstance(result, (dict, list))

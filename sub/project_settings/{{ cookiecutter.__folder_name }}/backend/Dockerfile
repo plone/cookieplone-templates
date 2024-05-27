@@ -4,18 +4,22 @@ FROM plone/server-builder:${PLONE_VERSION} as builder
 
 WORKDIR /app
 
+
 # Add local code
-COPY . .
+COPY scripts/ scripts/
+COPY . src
 
 # Install local requirements and pre-compile mo files
 RUN <<EOT
     set -e
-    bin/pip install mxdev
-    mv requirements-docker.txt requirements.txt
-    sed -i 's/-e .\[test\]/src\/./g' mx.ini
-    bin/mxdev -c mx.ini
-    bin/pip install -r requirements-mxdev.txt
-    bin/python /compile_mo.py
+    bin/pip install mxdev uv
+    mv src/requirements-docker.txt src/requirements.txt
+    sed -i 's/-e .\[test\]/./g' src/mx.ini
+    cd /app/src
+    ../bin/mxdev -c mx.ini
+    ../bin/uv pip install -r requirements-mxdev.txt
+    ../bin/python /compile_mo.py
+    cd /app
     rm -Rf src/
 EOT
 
