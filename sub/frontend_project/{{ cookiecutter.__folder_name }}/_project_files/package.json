@@ -2,7 +2,7 @@
   "name": "project-dev",
   "version": "1.0.0-alpha.0",
   "description": "A new project with Plone & Volto",
-  "author": "Plone Foundation",
+  "author": "{{ cookiecutter.author }}",
   "homepage": "https://plone.org",
   "license": "MIT",
   "keywords": [

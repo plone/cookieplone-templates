@@ -95,19 +95,25 @@ def main():
     """Final fixes."""
     output_dir = Path().cwd()
 
-    initialize_git = bool(int(context.get("__project_git_initialize")))
-    backend_format = bool(int(context.get("__backend_addon_format")))
+    initialize_git = bool(
+        int(context.get("__project_git_initialize"))
+    )  # {{ cookiecutter.__project_git_initialize }}
+    backend_format = bool(
+        int(context.get("__backend_addon_format"))
+    )  # {{ cookiecutter.__backend_addon_format }}
     # Cleanup / Git
     actions = [
         [
             handle_devops_ansible,
             "Remove Ansible files",
-            not int(context.get("devops_ansible")),
+            not int(context.get("devops_ansible")),  # {{ cookiecutter.devops_ansible }}
         ],
         [
             handle_devops_gha_deploy,
             "Remove GHA deployment files",
-            not int(context.get("devops_gha_deploy")),
+            not int(
+                context.get("devops_gha_deploy")
+            ),  # {{ cookiecutter.devops_gha_deploy }}
         ],
         [
             handle_git_initialization,
@@ -122,7 +128,9 @@ def main():
         console.print(f" -> {title}")
         func(new_context, output_dir)
 
-    subtemplates = context.get("__cookieplone_subtemplates", [])
+    subtemplates = context.get(
+        "__cookieplone_subtemplates", []
+    )  # {{ cookiecutter.__cookieplone_subtemplates }}
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
         # Convert sub/cache -> prepare_sub_cache

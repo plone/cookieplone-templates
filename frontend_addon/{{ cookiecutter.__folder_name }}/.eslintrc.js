@@ -23,7 +23,7 @@ module.exports = {
           ],
           ['@plone/registry', `${coreLocation}/packages/registry/src`],
           [
-            '{{ cookiecutter.npm_package_name }}',
+            '{{ cookiecutter.__npm_package_name }}',
             './packages/{{ cookiecutter.frontend_addon_name }}/src',
           ],
         ],

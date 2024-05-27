@@ -1,6 +1,5 @@
 """Pytest configuration."""
 
-import re
 from copy import deepcopy
 from pathlib import Path
 from typing import List
@@ -71,11 +70,6 @@ def cookieplone_root() -> dict:
     """Cookieplone root dir."""
     parent = Path().cwd().resolve().parent
     return parent
-
-
-@pytest.fixture(scope="session")
-def variable_pattern():
-    return re.compile("{{( ?cookiecutter)[.](.*?)}}")
 
 
 @pytest.fixture(scope="session")

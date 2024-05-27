@@ -1,5 +1,5 @@
 {
-  "name": "{{ cookiecutter.npm_package_name }}",
+  "name": "{{ cookiecutter.__npm_package_name }}",
   "version": "{{ cookiecutter.__version_package }}",
   "description": "{{ cookiecutter.description }}",
   "main": "src/index.js",

@@ -52,7 +52,7 @@ setup(
         "setuptools",
         "Plone",
         "plone.api",
-        {%- if cookiecutter.feature_headless == '1' %}
+        {%- if cookiecutter.__feature_headless == '1' %}
         "plone.restapi",
         "plone.volto",
         {%- endif %}
