@@ -47,7 +47,7 @@ You can use some of its options to avoid repeatedly entering the same values.
 
 #### `--no_input`
 
-You can use the [`--no_input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make the cookieplone not prompt for parameters and only use `cookiecutter.json` file content.
+You can use the [`--no_input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make cookieplone not prompt for parameters and only use `cookiecutter.json` file content.
 
 
 #### `--replay` and `--replay-file`

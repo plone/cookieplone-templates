@@ -77,7 +77,7 @@ install: build-dev ## Install Plone
 build: build-dev ## Install Plone
 
 .PHONY: clean
-clean: ## Cleanup environment
+clean: ## Clean environment
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
 	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .venv .pytest_cache
 
@@ -101,7 +101,7 @@ update-example-content: $(BIN_FOLDER)/tox ## Export example content inside packa
 	$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
 
 .PHONY: check
-check: $(BIN_FOLDER)/tox ## Check (and fix) codebase according to our standards
+check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	$(BIN_FOLDER)/tox -e lint
 

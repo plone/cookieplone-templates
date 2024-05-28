@@ -71,7 +71,7 @@ install: build-dev ## Install Plone
 build: build-dev ## Install Plone
 
 .PHONY: clean
-clean: ## Cleanup environment
+clean: ## Clean environment
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
 	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .venv .pytest_cache
 
@@ -88,7 +88,7 @@ create-site: instance/etc/zope.ini ## Create a new site from scratch
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 .PHONY: check
-check: $(BIN_FOLDER)/tox ## Check (and fix) codebase according to our standards
+check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	$(BIN_FOLDER)/tox -e lint
 
