@@ -10,32 +10,12 @@
   "volto_version": "{{ 'Yes' | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
-  "language_code": [
-    "en",
-    "de",
-    "es",
-    "pt-br",
-    "nl",
-    "fi"
-  ],
+  "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
   "github_organization": "collective",
-  "container_registry": [
-    "github",
-    "docker_hub",
-    "gitlab"
-  ],
-  "devops_cache": [
-    "1",
-    "0"
-  ],
-  "devops_ansible": [
-    "1",
-    "0"
-  ],
-  "devops_gha_deploy": [
-    "1",
-    "0"
-  ],
+  "container_registry": ["github", "docker_hub", "gitlab"],
+  "devops_cache": ["1", "0"],
+  "devops_ansible": ["1", "0"],
+  "devops_gha_deploy": ["1", "0"],
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
@@ -61,7 +41,7 @@
   "__gha_version_docker_qemu": "v3",
   "__gha_version_docker_buildx": "v3",
   "__gha_version_docker_login": "v3",
-  "__gha_version_docker_build_push": "v4",
+  "__gha_version_docker_build_push": "v5",
   "__devops_host": "{{ cookiecutter.hostname | extract_host }}",
   "__devops_compose_name": "{{ cookiecutter.project_slug | replace('.','-') | replace('_','-') }}",
   "__devops_stack_name": "{{ cookiecutter.hostname | replace('.','-') | replace('_','-') }}",
