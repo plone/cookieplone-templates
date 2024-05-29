@@ -1,4 +1,4 @@
-"""Test cookiecutter generation withoyt headeless feature."""
+"""Test cookiecutter generation without headless feature."""
 
 import pytest
 
