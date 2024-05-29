@@ -124,7 +124,11 @@ test: $(BIN_FOLDER)/tox ## run tests
 test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
 	$(BIN_FOLDER)/tox -e coverage
 
-# Build Docker image
+# Build Docker images
 .PHONY: build-image
 build-image:  ## Build Docker Images
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+
+.PHONY: acceptance-image-build
+acceptance-image-build:  ## Build Docker Images
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)

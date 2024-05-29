@@ -16,6 +16,8 @@ RUN <<EOT
     mv src/requirements-docker.txt src/requirements.txt
     sed -i 's/-e .\[test\]/./g' src/mx.ini
     cd /app/src
+    # remove potentially existing virtualenv from local build
+    rm -rf .venv
     ../bin/mxdev -c mx.ini
     ../bin/uv pip install -r requirements-mxdev.txt
     ../bin/python /compile_mo.py
