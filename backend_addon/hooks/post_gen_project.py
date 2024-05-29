@@ -32,9 +32,15 @@ def handle_git_initialization(context: OrderedDict, output_dir: Path):
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    remove_headless = not int(context.get("feature_headless"))
-    initialize_git = bool(int(context.get("__backend_addon_git_initialize")))
-    backend_format = bool(int(context.get("__backend_addon_format")))
+    remove_headless = not int(
+        context.get("feature_headless")
+    )  # {{ cookiecutter.__feature_headless }}
+    initialize_git = bool(
+        int(context.get("__backend_addon_git_initialize"))
+    )  # {{ cookiecutter.__backend_addon_git_initialize }}
+    backend_format = bool(
+        int(context.get("__backend_addon_format"))
+    )  # {{ cookiecutter.__backend_addon_format }}
     # Cleanup / Git
     actions = [
         [

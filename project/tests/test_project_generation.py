@@ -11,6 +11,7 @@ import pytest
         ".editorconfig",
         ".gitignore",
         ".vscode/settings.json",
+        "dependabot.yml",
         "CHANGELOG.md",
         "Makefile",
         "README.md",

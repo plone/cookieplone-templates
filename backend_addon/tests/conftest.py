@@ -1,6 +1,5 @@
 """Pytest configuration."""
 
-import re
 from copy import deepcopy
 from pathlib import Path
 from typing import List
@@ -74,11 +73,6 @@ def cookieplone_root() -> dict:
 
 
 @pytest.fixture(scope="session")
-def variable_pattern():
-    return re.compile("{{( ?cookiecutter)[.](.*?)}}")
-
-
-@pytest.fixture(scope="session")
 def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
@@ -100,6 +94,15 @@ def context_no_headless(context) -> dict:
     new_context = deepcopy(context)
     new_context["python_package_name"] = "collective.addonredux"
     new_context["feature_headless"] = "0"
+    return new_context
+
+
+@pytest.fixture(scope="session")
+def context_distribution(context) -> dict:
+    """Cookiecutter context with distribution enabled."""
+    new_context = deepcopy(context)
+    new_context["python_package_name"] = "plonedistribution.myplone"
+    new_context["__feature_distribution"] = "1"
     return new_context
 
 

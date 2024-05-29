@@ -4,13 +4,7 @@
 
 ## Features
 
-### Content Types
-
-- TBD
-
-### Initial content
-
-This package contains a simple volto configuration.
+TODO: List our awesome features
 
 ## Installation
 
@@ -33,3 +27,7 @@ make create_site
 ## License
 
 The project is licensed under GPLv2.
+
+## Credits and Acknowledgements 🙏
+
+Crafted with care by **{{ cookiecutter.__generator_signature }}**. A special thanks to all contributors and supporters!

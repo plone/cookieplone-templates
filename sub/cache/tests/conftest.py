@@ -1,16 +1,9 @@
 """Pytest configuration."""
 
-import re
-from copy import deepcopy
 from pathlib import Path
 from typing import List
 
 import pytest
-
-
-@pytest.fixture(scope="session")
-def variable_pattern():
-    return re.compile("{{( ?cookiecutter)[.](.*?)}}")
 
 
 @pytest.fixture(scope="session")

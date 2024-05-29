@@ -2,6 +2,7 @@
 .gitattributes
 bin
 Dockerfile
+Dockerfile.acceptance
 include
 instance
 instance.yaml
@@ -10,3 +11,4 @@ lib64
 Makefile
 pyvenv.cfg
 var
+.venv

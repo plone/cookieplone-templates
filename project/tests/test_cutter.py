@@ -1,13 +1,9 @@
 """Test cookiecutter generation."""
 
-import re
 from pathlib import Path
 from typing import List
 
 import pytest
-
-PATTERN = "{{( ?cookiecutter)[.](.*?)}}"
-RE_OBJ = re.compile(PATTERN)
 
 
 def build_files_list(root_dir: Path) -> List[Path]:
@@ -24,12 +20,12 @@ def test_default_configuration(cookies, context: dict):
     assert result.project_path.is_dir()
 
 
-def test_variable_substitution(cutter_result):
+def test_variable_substitution(cutter_result, variable_pattern):
     """Check if no file was unprocessed."""
     paths = build_files_list(cutter_result.project_path)
     for path in paths:
         for line in open(path, "r"):
-            match = RE_OBJ.search(line)
+            match = variable_pattern.search(line)
             msg = f"cookiecutter variable not replaced in {path}"
             assert match is None, msg
 

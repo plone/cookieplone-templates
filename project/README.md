@@ -3,9 +3,9 @@
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Plone Starter 🌟
+# Cookieplone Plone Project 🌟
 
-Welcome to **Cookieplone Plone Starter**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
+Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
 
 ## Features ✨
 
@@ -45,13 +45,13 @@ Cookieplone will ask a lot of questions.
 You can use some of its options to avoid repeatedly entering the same values.
 
 
-#### `--no-input`
+#### `--no_input`
 
-You can use the [`--no-input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make the cookiecutter not prompt for parameters and only use `cookiecutter.json` file content.
+You can use the [`--no_input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make cookieplone not prompt for parameters and only use `cookiecutter.json` file content.
 
 
 #### `--replay` and `--replay-file`
-You can use the options [`--replay`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-replay) and [`--replay-file`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-replay-file) to not prompt for parameters and only use information entered previously or from a specified file.
+You can use the option [`--replay-file`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-replay-file) to not prompt for parameters and only use information entered previously or from a specified file.
 See [Replay Project Generation](https://cookiecutter.readthedocs.io/en/latest/advanced/replay.html) in the cookiecutter documentation for more information.
 
 ### Initial Build
@@ -65,21 +65,21 @@ make install
 Backend:
 
 ```shell
-make start-backend
+make backend-start
 ```
 
 Frontend:
 
 ```shell
-make start-frontend
+make frontend-start
 ```
 
 ### Rebuild After Changes
 
 ```shell
-make build
-make start-backend
-make start-frontend
+make install
+make backend-start
+make frontend-start
 ```
 
 ## Project Generation Options 🛠️

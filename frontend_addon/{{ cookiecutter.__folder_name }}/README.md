@@ -1,8 +1,8 @@
-# {{ cookiecutter.title }} ({{ cookiecutter.npm_package_name }})
+# {{ cookiecutter.title }} ({{ cookiecutter.__npm_package_name }})
 
 {{ cookiecutter.description }}
 
-[![npm](https://img.shields.io/npm/v/{{ cookiecutter.npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.npm_package_name }})
+[![npm](https://img.shields.io/npm/v/{{ cookiecutter.__npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.__npm_package_name }})
 [![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://{{ cookiecutter.github_organization }}.github.io/{{ cookiecutter.frontend_addon_name }}/)
 [![Code analysis checks](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/code.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/code.yml)
 [![Unit tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/unit.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/unit.yml)
@@ -22,19 +22,19 @@ Create a new Volto project (you can skip this step if you already have one):
 
 ```
 npm install -g yo @plone/generator-volto
-yo @plone/volto my-volto-project --addon {{ cookiecutter.npm_package_name }}
+yo @plone/volto my-volto-project --addon {{ cookiecutter.__npm_package_name }}
 cd my-volto-project
 ```
 
-Add `{{ cookiecutter.npm_package_name }}` to your package.json:
+Add `{{ cookiecutter.__npm_package_name }}` to your package.json:
 
 ```JSON
 "addons": [
-    "{{ cookiecutter.npm_package_name }}"
+    "{{ cookiecutter.__npm_package_name }}"
 ],
 
 "dependencies": {
-    "{{ cookiecutter.npm_package_name }}": "*"
+    "{{ cookiecutter.__npm_package_name }}": "*"
 }
 ```
 
@@ -52,24 +52,24 @@ yarn start
 
 ### Volto 18 and later
 
-Add `{{ cookiecutter.npm_package_name }}` to your `package.json`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
 
 ```json
 "dependencies": {
-    "{{ cookiecutter.npm_package_name }}": "*"
+    "{{ cookiecutter.__npm_package_name }}": "*"
 }
 ```
 
-Add `{{ cookiecutter.npm_package_name }}` to your `volto.config.js`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
 
 ```javascript
-const addons = ['{{ cookiecutter.npm_package_name }}'];
+const addons = ['{{ cookiecutter.__npm_package_name }}'];
 ```
 
 If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
 
 ```javascript
-const theme = '{{ cookiecutter.npm_package_name }}';
+const theme = '{{ cookiecutter.__npm_package_name }}';
 ```
 
 ## Test installation
@@ -125,7 +125,7 @@ make install
 Start the backend.
 
 ```shell
-make start-backend-docker
+make backend-start-docker
 ```
 
 In a separate terminal session, start the frontend.
@@ -191,3 +191,7 @@ make test-acceptance
 ## License
 
 The project is licensed under the MIT license.
+
+## Credits and Acknowledgements 🙏
+
+Crafted with care by **{{ cookiecutter.__generator_signature }}**. A special thanks to all contributors and supporters!
