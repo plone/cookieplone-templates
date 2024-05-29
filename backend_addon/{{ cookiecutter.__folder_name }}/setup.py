@@ -22,7 +22,9 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: Addon",
+        {%- if cookiecutter.__feature_distribution == '1' %}
         "Framework :: Plone :: Distribution",
+        {%- endif %}
         "Framework :: Plone :: 6.0",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.8",
@@ -50,7 +52,7 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "setuptools",
-        "Plone",
+        "Products.CMFPlone",
         "plone.api",
         {%- if cookiecutter.__feature_headless == '1' %}
         "plone.restapi",

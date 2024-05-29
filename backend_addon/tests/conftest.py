@@ -98,6 +98,15 @@ def context_no_headless(context) -> dict:
 
 
 @pytest.fixture(scope="session")
+def context_distribution(context) -> dict:
+    """Cookiecutter context with distribution enabled."""
+    new_context = deepcopy(context)
+    new_context["python_package_name"] = "plonedistribution.myplone"
+    new_context["__feature_distribution"] = "1"
+    return new_context
+
+
+@pytest.fixture(scope="session")
 def context_no_git(context) -> dict:
     """Cookiecutter context without Git repository."""
     new_context = deepcopy(context)

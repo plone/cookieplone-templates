@@ -10,6 +10,7 @@
     "0"
   ],
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
+  "__feature_distribution": "0",
   "__package_name": "{{ cookiecutter.python_package_name | package_name }}",
   "__package_namespace": "{{ cookiecutter.python_package_name | package_namespace }}",
   "__folder_name": "{{ cookiecutter.python_package_name }}",
