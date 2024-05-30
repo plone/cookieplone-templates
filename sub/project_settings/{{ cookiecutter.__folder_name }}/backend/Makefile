@@ -129,6 +129,11 @@ test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
 build-image:  ## Build Docker Images
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
+# Acceptance tests
+.PHONY: acceptance-backend-start
+acceptance-backend-start: ## Start backend acceptance server
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="kitconcept.site:default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,kitconcept.site" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
+
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)

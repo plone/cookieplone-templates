@@ -153,29 +153,61 @@ stack-rm:  ## Local Stack: Remove Services and Volumes
 	@docker volume rm $(PROJECT_NAME)_vol-site-data
 
 ## Acceptance
-.PHONY: build-acceptance-servers
-build-acceptance-servers: ## Build Acceptance Servers
+.PHONY: acceptance-backend-dev-start
+acceptance-backend-dev-start: ## Build Acceptance Servers
 	@echo "Build acceptance backend"
-	@docker build backend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-backend:acceptance -f backend/Dockerfile.acceptance
-	@echo "Build acceptance frontend"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-frontend:acceptance -f frontend/Dockerfile
+	$(MAKE) -C "./backend/" acceptance-backend-start
 
-.PHONY: start-acceptance-servers
-start-acceptance-servers: build-acceptance-servers ## Start Acceptance Servers
-	@echo "Start acceptance backend"
-	@docker run --rm -p 55001:55001 --name {{ cookiecutter.project_slug }}-backend-acceptance -d {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-backend:acceptance
+.PHONY: acceptance-frontend-dev-start
+acceptance-frontend-dev-start: ## Build Acceptance Servers
+	@echo "Build acceptance backend"
+	$(MAKE) -C "./frontend/" acceptance-frontend-dev-start
+
+.PHONY: acceptance-test
+acceptance-test: ## Start Acceptance tests in interactive mode
+	@echo "Build acceptance backend"
+	$(MAKE) -C "./frontend/" acceptance-test
+
+# Build Docker images
+.PHONY: acceptance-frontend-image-build
+acceptance-frontend-image-build: ## Build Acceptance frontend server image
+	@echo "Build acceptance frontend"
+	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+
+.PHONY: acceptance-backend-image-build
+acceptance-backend-image-build: ## Build Acceptance backend server image
+	@echo "Build acceptance backend"
+	@docker build backend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+
+.PHONY: acceptance-images-build
+acceptance-images-build: ## Build Acceptance frontend/backend images
+	$(MAKE) acceptance-backend-image-build
+	$(MAKE) acceptance-frontend-image-build
+
+.PHONY: acceptance-frontend-container-start
+acceptance-frontend-container-start: ## Start Acceptance frontend container
 	@echo "Start acceptance frontend"
 	@docker run --rm -p 3000:3000 --name {{ cookiecutter.project_slug }}-frontend-acceptance --link {{ cookiecutter.project_slug }}-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-frontend:acceptance
 
-.PHONY: stop-acceptance-servers
-stop-acceptance-servers: ## Stop Acceptance Servers
+.PHONY: acceptance-backend-container-start
+acceptance-backend-container-start: ## Start Acceptance backend container
+	@echo "Start acceptance backend"
+	@docker run --rm -p 55001:55001 --name {{ cookiecutter.project_slug }}-backend-acceptance -d {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-backend:acceptance
+
+.PHONY: acceptance-containers-start
+acceptance-containers-start: ## Start Acceptance containers
+	$(MAKE) acceptance-backend-container-start
+	$(MAKE) acceptance-frontend-container-start
+
+.PHONY: acceptance-containers-stop
+acceptance-containers-stop: ## Stop Acceptance containers
 	@echo "Stop acceptance containers"
 	@docker stop {{ cookiecutter.project_slug }}-frontend-acceptance
 	@docker stop {{ cookiecutter.project_slug }}-backend-acceptance
 
-.PHONY: run-acceptance-tests
-run-acceptance-tests: ## Run Acceptance tests
-	$(MAKE) start-acceptance-servers
-	npx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
+.PHONY: ci-acceptance-test
+ci-acceptance-test: ## Run Acceptance tests in ci mode
+	$(MAKE) acceptance-containers-start
+	pnpm dlx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
 	$(MAKE) -C "./frontend/" test-acceptance-headless
-	$(MAKE) stop-acceptance-servers
+	$(MAKE) acceptance-containers-stop
