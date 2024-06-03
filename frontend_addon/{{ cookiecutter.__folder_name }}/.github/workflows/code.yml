@@ -5,6 +5,7 @@ on:
       - "*.js"
       - "*.json"
       - "*.yaml"
+      - "*.yml"
       - "packages/**"
 
 env:
