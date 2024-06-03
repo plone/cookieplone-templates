@@ -85,7 +85,7 @@ jobs:
 
           log-output-if: failure
 
-      - run: make test-acceptance-headless
+      - run: make ci-acceptance-test
 
       # Upload Cypress screenshots
       - uses: actions/upload-artifact@{{ cookiecutter.__gha_version_upload_artifact }}
