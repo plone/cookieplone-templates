@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
 
-      - name: Use Node.js
+      - name: Use Node.js {{ "${{ env.NODE_VERSION }}" }}
         uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
