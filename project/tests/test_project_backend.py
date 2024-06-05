@@ -72,7 +72,6 @@ BACKEND_HEADLESS_FILE_CHECKS = [
     ["setup.py", "plone.restapi"],
     ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.volto"],
     ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.restapi"],
-    ["src/plonegov/ploneorgbr/profiles/default/metadata.xml", "plone.restapi:default"],
     ["src/plonegov/ploneorgbr/profiles/default/metadata.xml", "plone.volto:default"],
 ]
 
