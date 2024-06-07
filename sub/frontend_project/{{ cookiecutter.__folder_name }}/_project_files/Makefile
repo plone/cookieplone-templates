@@ -23,8 +23,6 @@ PLONE_VERSION=6
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
-ADDON_NAME='{{ cookiecutter.__npm_package_name }}'
-
 .PHONY: help
 help: ## Show this help
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
@@ -44,14 +42,6 @@ start: ## Starts Volto, allowing reloading of the add-on during development
 .PHONY: build
 build: ## Build a production bundle for distribution of the project with the add-on
 	pnpm build
-
-.PHONY: i18n
-i18n: ## Sync i18n
-	pnpm --filter $(ADDON_NAME) i18n
-
-.PHONY: ci-i18n
-ci-i18n: ## Check if i18n is not synced
-	pnpm --filter $(ADDON_NAME) i18n && git diff -G'^[^\"POT]' --exit-code
 
 .PHONY: format
 format: ## Format codebase
