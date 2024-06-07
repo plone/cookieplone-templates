@@ -7,6 +7,7 @@ on:
       - "*.yaml"
       - "cypress/**"
       - "packages/**"
+      - ".github/workflows/acceptance.yml"
 
 env:
   NODE_VERSION: {{ cookiecutter.__gha_version_node }}
@@ -19,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
 
-      - name: Use Node.js
+      - name: Use Node.js {{ "${{ env.NODE_VERSION }}" }}
         uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
@@ -59,8 +60,8 @@ jobs:
         name: Start Servers
         with:
           run: |
-            make start-test-acceptance-server-ci &
-            make start-test-acceptance-frontend &
+            make ci-acceptance-backend-start &
+            make acceptance-frontend-prod-start &
           # your step-level and job-level environment variables are available to your commands as-is
           # npm install will count towards the wait-for timeout
           # whenever possible, move unrelated scripts to a different step
@@ -84,7 +85,7 @@ jobs:
 
           log-output-if: failure
 
-      - run: make test-acceptance-headless
+      - run: make ci-acceptance-test
 
       # Upload Cypress screenshots
       - uses: actions/upload-artifact@{{ cookiecutter.__gha_version_upload_artifact }}

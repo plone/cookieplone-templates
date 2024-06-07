@@ -11,7 +11,7 @@
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__version_package": "1.0.0-alpha.0",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
-  "__version_plone_components": "1.7.0",
+  "__version_plone_components": "workspace:*",
   "__version_plone_scripts": "^3.6.1",
   "__version_mrs_developer": "^2.2.0",
   "__version_pnpm": "9.1.1",
