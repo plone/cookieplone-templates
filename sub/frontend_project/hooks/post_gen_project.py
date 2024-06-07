@@ -1,12 +1,12 @@
 """Post generation hook."""
 
-from collections import OrderedDict  # noQA
+from collections import OrderedDict
 from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.utils import console, files
 
-context = {{cookiecutter}}
+context: OrderedDict = {{cookiecutter}}
 
 
 LOCAL_FILES_FOLDER_NAME = "_project_files"

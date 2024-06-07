@@ -1,3 +1,3 @@
 # Contributors
 
-- {{ cookiecutter.github_organization }} [{{ cookiecutter.email }}]
+- {{ cookiecutter.author }} [{{ cookiecutter.email }}]

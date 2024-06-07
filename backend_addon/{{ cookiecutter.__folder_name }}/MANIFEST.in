@@ -1,7 +1,9 @@
-graft src/{{ cookiecutter.github_organization }}
+graft src/{{ cookiecutter.__package_namespace }}
 graft docs
 graft news
 graft tests
+graft scripts
+include *.acceptance
 include .coveragerc
 include .dockerignore
 include .editorconfig

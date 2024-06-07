@@ -16,7 +16,7 @@
 
   <include package=".controlpanel" />
   <include package=".indexers" />
-  {%- if cookiecutter.feature_headless == '1' %}
+  {%- if cookiecutter.__feature_headless == '1' %}
   <include package=".serializers" />
   {%- endif %}
   <include package=".vocabularies" />

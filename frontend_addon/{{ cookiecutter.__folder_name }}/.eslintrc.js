@@ -1,11 +1,22 @@
 const fs = require('fs');
 const projectRootPath = __dirname;
+const AddonConfigurationRegistry = require('@plone/registry/src/addon-registry');
 
 let coreLocation;
 if (fs.existsSync(`${projectRootPath}/core`))
   coreLocation = `${projectRootPath}/core`;
 else if (fs.existsSync(`${projectRootPath}/../../core`))
   coreLocation = `${projectRootPath}/../../core`;
+
+const registry = new AddonConfigurationRegistry(
+  `${coreLocation}/packages/volto`,
+);
+
+// Extends ESlint configuration for adding the aliases to `src` directories in Volto addons
+const addonAliases = Object.keys(registry.packages).map((o) => [
+  o,
+  registry.packages[o].modulePath,
+]);
 
 module.exports = {
   extends: `${coreLocation}/packages/volto/.eslintrc`,
@@ -23,9 +34,10 @@ module.exports = {
           ],
           ['@plone/registry', `${coreLocation}/packages/registry/src`],
           [
-            '{{ cookiecutter.npm_package_name }}',
+            '{{ cookiecutter.__npm_package_name }}',
             './packages/{{ cookiecutter.frontend_addon_name }}/src',
           ],
+          ...addonAliases,
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       },

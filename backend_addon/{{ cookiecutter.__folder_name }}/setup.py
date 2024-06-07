@@ -22,7 +22,9 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: Addon",
+        {%- if cookiecutter.__feature_distribution == '1' %}
         "Framework :: Plone :: Distribution",
+        {%- endif %}
         "Framework :: Plone :: 6.0",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.8",
@@ -50,10 +52,11 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "setuptools",
-        "Plone",
+        "Products.CMFPlone",
         "plone.api",
-        {%- if cookiecutter.feature_headless == '1' %}
+        {%- if cookiecutter.__feature_headless == '1' %}
         "plone.restapi",
+        "plone.volto",
         {%- endif %}
     ],
     extras_require={
@@ -64,13 +67,13 @@ setup(
             "plone.restapi[test]",
             "pytest",
             "pytest-cov",
-            "pytest-plone>=0.2.0",
+            "pytest-plone>=0.5.0",
         ],
     },
     entry_points="""
     [z3c.autoinclude.plugin]
     target = plone
     [console_scripts]
-    update_dist_locale = {{ cookiecutter.python_package_name }}.locales.update:update_locale
+    update_locale = {{ cookiecutter.python_package_name }}.locales.update:update_locale
     """,
 )

@@ -16,7 +16,7 @@ context = {
     "author": "{{ cookiecutter.author }}",
     "email": "{{ cookiecutter.email }}",
     "github_organization": "{{ cookiecutter.github_organization }}",
-    "npm_package_name": "{{ cookiecutter.npm_package_name }}",
+    "npm_package_name": "{{ cookiecutter.__npm_package_name }}",
 }
 
 

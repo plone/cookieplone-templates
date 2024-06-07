@@ -1,5 +1,5 @@
 {
-  "name": "{{ cookiecutter.npm_package_name }}-dev",
+  "name": "{{ cookiecutter.__npm_package_name }}-dev",
   "version": "{{ cookiecutter.__version_package }}",
   "description": "{{ cookiecutter.description }}",
   "author": "{{ cookiecutter.author }}",
@@ -13,29 +13,29 @@
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "start": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto start",
+    "start": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto start",
     "start:prod": "pnpm --filter @plone/volto start:prod",
-    "build": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
+    "build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
-    "i18n": "pnpm --filter {{ cookiecutter.npm_package_name }} i18n",
+    "i18n": "pnpm --filter {{ cookiecutter.__npm_package_name }} i18n",
     "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
-    "lint": "eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "prettier:fix": "prettier --write 'packages/**/src/**/*.{js,jsx,ts,tsx}' ",
     "stylelint": "stylelint 'packages/**/src/**/*.{css,scss,less}' --allow-empty-input",
     "stylelint:fix": "stylelint 'packages/**/src/**/*.{css,scss,less}' --fix --allow-empty-input",
-    "dry-release": "pnpm --filter {{ cookiecutter.npm_package_name }} dry-release",
-    "release": "pnpm --filter {{ cookiecutter.npm_package_name }} release",
-    "release-major-alpha": "pnpm --filter {{ cookiecutter.npm_package_name }} release-major-alpha",
-    "release-alpha": "pnpm --filter {{ cookiecutter.npm_package_name }} release-alpha",
-    "storybook": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
-    "build-storybook": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
+    "dry-release": "pnpm --filter {{ cookiecutter.__npm_package_name }} dry-release",
+    "release": "pnpm --filter {{ cookiecutter.__npm_package_name }} release",
+    "release-major-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-major-alpha",
+    "release-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-alpha",
+    "storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
+    "build-storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
   },
   "dependencies": {
     "@plone/volto": "workspace:*",
     "@plone/registry": "workspace:*",
-    "{{ cookiecutter.npm_package_name }}": "workspace:*"
+    "{{ cookiecutter.__npm_package_name }}": "workspace:*"
   },
   "devDependencies": {
     "mrs-developer": "{{ cookiecutter.__version_mrs_developer }}"

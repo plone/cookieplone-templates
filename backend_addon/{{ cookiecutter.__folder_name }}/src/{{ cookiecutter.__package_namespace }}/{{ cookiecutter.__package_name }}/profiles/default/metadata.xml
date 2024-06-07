@@ -1,7 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <metadata>
   <version>{{ cookiecutter.__profile_version }}</version>
   <dependencies>
-    <!-- <dependency>profile-plone.volto:default</dependency> -->
+  {%- if cookiecutter.__feature_headless == '1' %}
+    <dependency>profile-plone.volto:default</dependency>
+  {%- endif %}
   </dependencies>
 </metadata>

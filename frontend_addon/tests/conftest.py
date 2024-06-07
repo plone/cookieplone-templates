@@ -1,6 +1,5 @@
 """Pytest configuration."""
 
-import re
 from copy import deepcopy
 from pathlib import Path
 from typing import List
@@ -9,12 +8,14 @@ import pytest
 
 
 @pytest.fixture(scope="session")
-def variable_pattern():
-    return re.compile("{{( ?cookiecutter)[.](.*?)}}")
+def cookieplone_root() -> dict:
+    """Cookieplone root dir."""
+    parent = Path().cwd().resolve().parent
+    return parent
 
 
 @pytest.fixture(scope="session")
-def context() -> dict:
+def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
         "frontend_addon_name": "volto-addon",
@@ -25,6 +26,7 @@ def context() -> dict:
         "github_organization": "collective",
         "npm_package_name": "@plone-collective/volto-addon",
         "volto_version": "18.0.0-alpha.31",
+        "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
 

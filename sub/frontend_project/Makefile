@@ -12,6 +12,7 @@ YELLOW=`tput setaf 3`
 .PHONY: all
 all: build
 
+BIN_FOLDER = "../../bin"
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -23,22 +24,22 @@ help: ## This help message
 clean: ## Clean
 	rm -rf volto-addon
 
-../../bin/cookieplone:  ## cookieplone installation
-	$(MAKE) -C ".." bin/cookieplone
+$(BIN_FOLDER)/cookieplone:  ## cookieplone installation
+	$(MAKE) -C "../.." bin/cookieplone
 
 .PHONY: format
-format: ../../bin/cookieplone ## Format code
+format: $(BIN_FOLDER)/cookieplone ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	../../bin/black hooks tests
-	../../bin/isort hooks tests
+	$(BIN_FOLDER)/black hooks tests
+	$(BIN_FOLDER)/isort hooks tests
 
 .PHONY: generate
-generate:  ../../bin/cookieplone ## Create a sample package
+generate:  $(BIN_FOLDER)/cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	rm -rf volto-addon
-	../../bin/cookiecutter . --no-input
+	$(BIN_FOLDER)/cookiecutter . --no-input
 
 .PHONY: test
-test: ../../bin/cookieplone ## Create a sample package and tests it
+test: $(BIN_FOLDER)/cookieplone ## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	../../bin/python -m pytest tests
+	$(BIN_FOLDER)/python -m pytest tests

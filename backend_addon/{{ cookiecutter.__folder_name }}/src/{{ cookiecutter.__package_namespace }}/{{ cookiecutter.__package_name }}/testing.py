@@ -16,7 +16,7 @@ class Layer(PloneSandboxLayer):
         # Load any other ZCML that is required for your tests.
         # The z3c.autoinclude feature is disabled in the Plone fixture base
         # layer.
-        {%- if cookiecutter.feature_headless == '1' %}
+        {%- if cookiecutter.__feature_headless == '1' %}
         import plone.restapi
 
         self.loadZCML(package=plone.restapi)

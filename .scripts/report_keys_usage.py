@@ -18,7 +18,14 @@ last_commit = repo.head.commit
 
 report_filename = f"{date.today()}-{last_commit.hexsha[:7]}-usage.json"
 
-folders = ["backend_addon", "frontend_addon"]
+folders = [
+    "backend_addon",
+    "frontend_addon",
+    "project",
+    "sub/cache",
+    "sub/frontend_project",
+    "sub/project_settings",
+]
 ignore = [
     "__prompts__",
 ]

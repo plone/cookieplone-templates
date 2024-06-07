@@ -1,8 +1,8 @@
-# {{ cookiecutter.title }} ({{ cookiecutter.npm_package_name }})
+# {{ cookiecutter.title }} ({{ cookiecutter.__npm_package_name }})
 
 {{ cookiecutter.description }}
 
-[![npm](https://img.shields.io/npm/v/{{ cookiecutter.npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.npm_package_name }})
+[![npm](https://img.shields.io/npm/v/{{ cookiecutter.__npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.__npm_package_name }})
 [![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://{{ cookiecutter.github_organization }}.github.io/{{ cookiecutter.frontend_addon_name }}/)
 [![Code analysis checks](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/code.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/code.yml)
 [![Unit tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/unit.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}/actions/workflows/unit.yml)
@@ -22,19 +22,19 @@ Create a new Volto project (you can skip this step if you already have one):
 
 ```
 npm install -g yo @plone/generator-volto
-yo @plone/volto my-volto-project --addon {{ cookiecutter.npm_package_name }}
+yo @plone/volto my-volto-project --addon {{ cookiecutter.__npm_package_name }}
 cd my-volto-project
 ```
 
-Add `{{ cookiecutter.npm_package_name }}` to your package.json:
+Add `{{ cookiecutter.__npm_package_name }}` to your package.json:
 
 ```JSON
 "addons": [
-    "{{ cookiecutter.npm_package_name }}"
+    "{{ cookiecutter.__npm_package_name }}"
 ],
 
 "dependencies": {
-    "{{ cookiecutter.npm_package_name }}": "*"
+    "{{ cookiecutter.__npm_package_name }}": "*"
 }
 ```
 
@@ -52,24 +52,24 @@ yarn start
 
 ### Volto 18 and later
 
-Add `{{ cookiecutter.npm_package_name }}` to your `package.json`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
 
 ```json
 "dependencies": {
-    "{{ cookiecutter.npm_package_name }}": "*"
+    "{{ cookiecutter.__npm_package_name }}": "*"
 }
 ```
 
-Add `{{ cookiecutter.npm_package_name }}` to your `volto.config.js`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
 
 ```javascript
-const addons = ['{{ cookiecutter.npm_package_name }}'];
+const addons = ['{{ cookiecutter.__npm_package_name }}'];
 ```
 
 If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
 
 ```javascript
-const theme = '{{ cookiecutter.npm_package_name }}';
+const theme = '{{ cookiecutter.__npm_package_name }}';
 ```
 
 ## Test installation
@@ -95,21 +95,27 @@ For this reason, it only works with pnpm and Volto 18 (currently in alpha).
 Run `make help` to list the available commands.
 
 ```text
-help                                 Show this help
-install                              Installs the dev environment using mrs-developer
-i18n                                 Sync i18n
-format                               Format codebase
-lint                                 Lint Codebase
-test                                 Run unit tests
-test-ci                              Run unit tests in CI
-storybook-start                      Start Storybook server on port 6006
-storybook-build                      Build Storybook
-start-backend-docker                 Starts a Docker-based backend for developing
-start-test-acceptance-frontend-dev   Start acceptance frontend in dev mode
-start-test-acceptance-frontend       Start acceptance frontend in prod mode
-start-test-acceptance-server         Start acceptance server
-test-acceptance                      Start Cypress in interactive mode
-test-acceptance-headless             Run cypress tests in headless mode for CI
+help                             Show this help
+install                          Installs the add-on in a development environment
+start                            Starts Volto, allowing reloading of the add-on during development
+build                            Build a production bundle for distribution of the project with the add-on
+i18n                             Sync i18n
+ci-i18n                          Check if i18n is not synced
+format                           Format codebase
+lint                             Lint, or catch and remove problems, in code base
+release                          Release the add-on on npmjs.org
+release-dry-run                  Dry-run the release of the add-on on npmjs.org
+test                             Run unit tests
+ci-test                          Run unit tests in CI
+backend-docker-start             Starts a Docker-based backend for development
+storybook-start                  Start Storybook server on port 6006
+storybook-build                  Build Storybook
+acceptance-frontend-dev-start    Start acceptance frontend in development mode
+acceptance-frontend-prod-start   Start acceptance frontend in production mode
+acceptance-backend-start         Start backend acceptance server
+ci-acceptance-backend-start      Start backend acceptance server in headless mode for CI
+acceptance-test                  Start Cypress in interactive mode
+ci-acceptance-test               Run cypress tests in headless mode for CI
 ```
 
 ### Development environment set up
@@ -125,13 +131,13 @@ make install
 Start the backend.
 
 ```shell
-make start-backend-docker
+make backend-docker-start
 ```
 
 In a separate terminal session, start the frontend.
 
 ```shell
-pnpm start
+make start
 ```
 
 ### Lint code
@@ -173,21 +179,25 @@ Run each of these steps in separate terminal sessions.
 In the first session, start the frontend in development mode.
 
 ```shell
-make start-test-acceptance-frontend-dev
+make acceptance-frontend-dev-start
 ```
 
 In the second session, start the backend acceptance server.
 
 ```shell
-make start-test-acceptance-server
+make acceptance-backend-start
 ```
 
 In the third session, start the Cypress interactive test runner.
 
 ```shell
-make test-acceptance
+make acceptance-test
 ```
 
 ## License
 
 The project is licensed under the MIT license.
+
+## Credits and Acknowledgements 🙏
+
+Crafted with care by **{{ cookiecutter.__generator_signature }}**. A special thanks to all contributors and supporters!

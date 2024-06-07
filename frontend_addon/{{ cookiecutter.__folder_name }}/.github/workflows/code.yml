@@ -6,6 +6,7 @@ on:
       - "*.json"
       - "*.yaml"
       - "packages/**"
+      - ".github/workflows/code.yml"
 
 env:
   NODE_VERSION: {{ cookiecutter.__gha_version_node }}
@@ -23,13 +24,8 @@ jobs:
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
 
-      - uses: pnpm/action-setup@{{ cookiecutter.__gha_version_pnpm_action_setup }}
-        name: Install pnpm
-        with:
-          version: {{ cookiecutter.__version_pnpm_major }}
-          # We don't want to install until later,
-          # when the cache is in place
-          run_install: false
+      - name: Enable corepack
+        run: corepack enable
 
       - name: Get pnpm store directory
         shell: bash

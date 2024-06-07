@@ -1,9 +1,9 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <!-- List all packages you depend here -->
-  {%- if cookiecutter.feature_headless == '1' %}
-  <include package="plone.volto" />
+  {%- if cookiecutter.__feature_headless == '1' %}
   <include package="plone.restapi" />
+  <include package="plone.volto" />
   {%- endif %}
 
 </configure>
