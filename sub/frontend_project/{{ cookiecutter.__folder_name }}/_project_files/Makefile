@@ -34,6 +34,7 @@ help: ## Show this help
 install: ## Installs the add-on in a development environment
 	pnpm dlx mrs-developer missdev --no-config --fetch-https
 	pnpm i
+	pnpm build:deps
 
 .PHONY: start
 start: ## Starts Volto, allowing reloading of the add-on during development
@@ -53,7 +54,7 @@ format: ## Format codebase
 lint: ## Lint, or catch and remove problems, in code base
 	pnpm lint
 	pnpm prettier
-	pnpm stylelint
+	pnpm stylelint --allow-empty-input
 
 .PHONY: release
 release: ## Release the add-on on npmjs.org
