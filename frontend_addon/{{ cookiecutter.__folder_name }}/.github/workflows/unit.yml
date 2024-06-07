@@ -5,8 +5,8 @@ on:
       - "*.js"
       - "*.json"
       - "*.yaml"
-      - "*.yml"
       - "packages/**"
+      - ".github/workflows/unit.yml"
 
 env:
   NODE_VERSION: {{ cookiecutter.__gha_version_node }}
