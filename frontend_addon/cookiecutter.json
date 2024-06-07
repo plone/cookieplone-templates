@@ -16,6 +16,7 @@
   "__version_mrs_developer": "^2.2.0",
   "__version_pnpm": "9.1.1",
   "__version_release_it": "^17.1.1",
+  "__version_pre_commit": "3.7.1",
   "__gha_version_node": "20.x",
   "__gha_version_checkout": "v4",
   "__gha_version_setup_node": "v4",
