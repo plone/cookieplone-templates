@@ -69,8 +69,8 @@ ci-i18n: ## Check if i18n is not synced
 
 .PHONY: format
 format: ## Format codebase
-	pnpm lint:fix
 	pnpm prettier:fix
+	pnpm lint:fix
 	pnpm stylelint:fix
 
 .PHONY: lint

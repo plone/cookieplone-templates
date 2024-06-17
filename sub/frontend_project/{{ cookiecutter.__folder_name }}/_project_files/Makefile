@@ -55,8 +55,8 @@ build-deps: core/packages/registry/dist core/packages/components/dist ## Build d
 
 .PHONY: format
 format: ## Format codebase
-	pnpm lint:fix
 	pnpm prettier:fix
+	pnpm lint:fix
 	pnpm stylelint:fix
 
 .PHONY: lint
