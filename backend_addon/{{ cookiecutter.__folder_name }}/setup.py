@@ -14,7 +14,7 @@ long_description = f"""
 setup(
     name="{{ cookiecutter.python_package_name }}",
     version="{{ cookiecutter.__version_package }}",
-    description="{{ cookiecutter.description }}.",
+    description="{{ cookiecutter.description }}",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
@@ -31,6 +31,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Operating System :: OS Independent",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     ],
@@ -39,7 +40,7 @@ setup(
     author_email="{{ cookiecutter.email }}",
     url="https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}",
     project_urls={
-        "PyPI": "https://pypi.python.org/pypi/{{ cookiecutter.python_package_name }}",
+        "PyPI": "https://pypi.org/project/{{ cookiecutter.python_package_name }}",
         "Source": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}",
         "Tracker": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues",
     },
