@@ -29,8 +29,7 @@
   "dependencies": {},
   "peerDependencies": {
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-intl": "3.8.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@plone/scripts": "{{ cookiecutter.__version_plone_scripts }}",
