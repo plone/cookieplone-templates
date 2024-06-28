@@ -209,5 +209,5 @@ acceptance-containers-stop: ## Stop Acceptance containers
 ci-acceptance-test: ## Run Acceptance tests in ci mode
 	$(MAKE) acceptance-containers-start
 	pnpm dlx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
-	$(MAKE) -C "./frontend/" test-acceptance-headless
+	$(MAKE) -C "./frontend/" ci-acceptance-test
 	$(MAKE) acceptance-containers-stop
