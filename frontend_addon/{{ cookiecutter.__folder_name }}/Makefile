@@ -40,7 +40,7 @@ install: ## Installs the add-on in a development environment
 	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	pnpm dlx mrs-developer missdev --no-config --fetch-https
 	pnpm i
-	pnpm build:deps
+	make build-deps
 
 .PHONY: start
 start: ## Starts Volto, allowing reloading of the add-on during development
