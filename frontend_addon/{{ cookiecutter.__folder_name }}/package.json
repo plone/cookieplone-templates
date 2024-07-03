@@ -30,7 +30,7 @@
     "release-major-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-major-alpha",
     "release-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-alpha",
     "storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
-    "build-storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
+    "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
   },
   "dependencies": {
     "@plone/volto": "workspace:*",
