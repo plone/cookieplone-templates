@@ -28,10 +28,7 @@ module.exports = {
       alias: {
         map: [
           ['@plone/volto', `${coreLocation}/packages/volto/src`],
-          [
-            '@plone/volto-slate',
-            `${coreLocation}/core/packages/volto-slate/src`,
-          ],
+          ['@plone/volto-slate', `${coreLocation}/packages/volto-slate/src`],
           ['@plone/registry', `${coreLocation}/packages/registry/src`],
           [
             '{{ cookiecutter.__npm_package_name }}',
