@@ -112,6 +112,11 @@ jobs:
         run: |
           make check
 
+      - name: Check generated package
+        working-directory: project/project-title/backend
+        run: |
+          echo "from collective.volto.formsupport.interfaces import ICollectiveVoltoFormsupportLayer" > src/project/title/interfaces2.py && git add src/project/title/interfaces2.py
+
       - name: Check generated package from inside the backend folder
         working-directory: project/project-title/backend
         run: |
