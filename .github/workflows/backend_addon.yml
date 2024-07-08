@@ -64,3 +64,13 @@ jobs:
         working-directory: backend_addon
         run: |
           make generate
+
+      - name: Install generated package
+        working-directory: backend_addon/collective.addon
+        run: |
+          make install
+
+      - name: Check generated package
+        working-directory: backend_addon/collective.addon
+        run: |
+          make check
