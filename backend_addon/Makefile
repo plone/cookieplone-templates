@@ -14,7 +14,7 @@ all: build
 
 TEMPLATE = $(shell basename $(CURRENT_DIR))
 ADDON_FOLDER_NAME = collective.addon
-BASE_FOLDER = ..
+BASE_FOLDER = ../
 BIN_FOLDER = ${BASE_FOLDER}/bin
 
 

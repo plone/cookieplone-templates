@@ -6,6 +6,10 @@ on:
       - ".github/workflows/project.yml"
   workflow_dispatch:
 
+env:
+  NODE_VERSION: 20.x
+  PYTHON_VERSION: "3.12"
+
 jobs:
 
   generation:
@@ -42,3 +46,40 @@ jobs:
         run: |
           cd project
           python -m pytest tests
+
+  functional:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ env.PYTHON_VERSION }}'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Generate
+        working-directory: project
+        run: |
+          make generate
+
+      - name: Install generated package
+        working-directory: project/project-title
+        run: |
+          make install
+
+      - name: Add to version control all generated files from install
+        working-directory: project/project-title
+        run: |
+          git add .
+
+      - name: Check generated package
+        working-directory: project/project-title
+        run: |
+          make check

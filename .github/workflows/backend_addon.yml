@@ -6,6 +6,9 @@ on:
       - ".github/workflows/backend_addon.yml"
   workflow_dispatch:
 
+env:
+  PYTHON_VERSION: "3.12"
+
 jobs:
 
   generation:
