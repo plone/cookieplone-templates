@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - "project/**"
+      - "sub/project_settings/**"
+      - "backend_addon/**"
+      - "frontend_addon/**"
       - ".github/workflows/project.yml"
   workflow_dispatch:
 
