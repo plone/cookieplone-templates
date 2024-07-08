@@ -42,3 +42,25 @@ jobs:
         run: |
           cd backend_addon
           python -m pytest tests
+
+  functional:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ env.PYTHON_VERSION }}'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Generate
+        working-directory: backend_addon
+        run: |
+          make generate
