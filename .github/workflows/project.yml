@@ -111,3 +111,8 @@ jobs:
         working-directory: project/project-title
         run: |
           make check
+
+      - name: Check generated package from inside the backend folder
+        working-directory: project/project-title/backend
+        run: |
+          make check
