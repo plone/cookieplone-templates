@@ -87,10 +87,15 @@ console: instance/etc/zope.ini ## Start a console into a Plone instance
 create-site: instance/etc/zope.ini ## Create a new site from scratch
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
-.PHONY: check
-check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
-	@echo "$(GREEN)==> Format codebase$(RESET)"
+.PHONY: lint
+lint: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
+	@echo "$(GREEN)==> Check codebase$(RESET)"
 	$(BIN_FOLDER)/tox -e lint
+
+.PHONY: format
+format: $(BIN_FOLDER)/tox ## Format the codebase according to our standards
+	@echo "$(GREEN)==> Format codebase$(RESET)"
+	$(BIN_FOLDER)/tox -e format
 
 # i18n
 $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
