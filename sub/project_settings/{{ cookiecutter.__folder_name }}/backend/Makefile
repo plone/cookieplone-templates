@@ -100,10 +100,15 @@ update-example-content: $(BIN_FOLDER)/tox ## Export example content inside packa
 	if [ -d $(EXAMPLE_CONTENT_FOLDER)/content ]; then rm -r $(EXAMPLE_CONTENT_FOLDER)/* ;fi
 	$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
 
-.PHONY: check
-check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
-	@echo "$(GREEN)==> Format codebase$(RESET)"
+.PHONY: lint
+lint: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
+	@echo "$(GREEN)==> Check codebase$(RESET)"
 	$(BIN_FOLDER)/tox -e lint
+
+.PHONY: format
+format: $(BIN_FOLDER)/tox ## Format the codebase according to our standards
+	@echo "$(GREEN)==> Format codebase$(RESET)"
+	$(BIN_FOLDER)/tox -e format
 
 # i18n
 $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
