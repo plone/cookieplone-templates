@@ -100,7 +100,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest --disable-warnings src/{{ cookiecutter.python_package_name }}/tests
+          pytest --disable-warnings tests
 
   release:
     runs-on: ubuntu-latest
