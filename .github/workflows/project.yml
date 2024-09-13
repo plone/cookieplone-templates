@@ -3,8 +3,15 @@ on:
   push:
     paths:
       - "project/**"
+      - "sub/project_settings/**"
+      - "backend_addon/**"
+      - "frontend_addon/**"
       - ".github/workflows/project.yml"
   workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+  PYTHON_VERSION: "3.12"
 
 jobs:
 
@@ -42,3 +49,78 @@ jobs:
         run: |
           cd project
           python -m pytest tests
+
+  functional:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ env.PYTHON_VERSION }}'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cache Cypress Binary
+        id: cache-cypress-binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: binary-${{ env.NODE_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Generate
+        working-directory: project
+        run: |
+          make generate
+
+      - name: Install generated package
+        working-directory: project/project-title
+        run: |
+          make install
+
+      - name: Add to version control all generated files from install
+        working-directory: project/project-title
+        run: |
+          git add .
+
+      - name: Check generated package
+        working-directory: project/project-title
+        run: |
+          make check
+
+      - name: Check generated package
+        working-directory: project/project-title/backend
+        run: |
+          echo "from collective.volto.formsupport.interfaces import ICollectiveVoltoFormsupportLayer" > src/project/title/interfaces2.py && git add src/project/title/interfaces2.py
+
+      - name: Check generated package from inside the backend folder
+        working-directory: project/project-title/backend
+        run: |
+          make check
