@@ -2,3 +2,4 @@
 node_modules
 /core
 /public
+*.mo
