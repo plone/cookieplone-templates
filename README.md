@@ -15,7 +15,7 @@
 
 ## About
 
-Powered by [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone"), this project is a collection of templates intended to be used by Plone integrators.
+This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
 ## Prerequisites
 
