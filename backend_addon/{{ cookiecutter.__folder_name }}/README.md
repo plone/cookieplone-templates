@@ -32,6 +32,22 @@ plonecli add -b .mrbob.ini content_type
 The command passes the `.mrbob.ini` configuration file to `plonecli` to set some configuration variables which are needed to properly run the subtemplates.
 
 
+For instance, you could add a behavior to your package running this command:
+
+```shell
+plonecli add -b .mrbob.ini behavior
+```
+
+Or a controlpanel running this other command:
+
+```shell
+plonecli add -b .mrbob.ini controlpanel
+```
+
+You can check the list of available subtemplates in the [bobtemplates.plone README file](https://github.com/plone/bobtemplates.plone/?tab=readme-ov-file#provided-subtemplates)
+
+
+
 ## Contribute
 
 - [Issue Tracker](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues)
