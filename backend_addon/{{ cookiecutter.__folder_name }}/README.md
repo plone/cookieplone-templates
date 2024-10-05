@@ -30,7 +30,7 @@ To use them, you need to use bobtemplates.plone version > X.X.X and run your com
 plonecli add -b .mrbob.ini content_type
 ```
 
-This way we are passing the `.mrbob.ini` configuration file to plonecli to set some configuration variables needed to properly run the subtemplates.
+The command passes the `.mrbob.ini` configuration file to `plonecli` to set some configuration variables which are needed to properly run the subtemplates.
 
 
 ## Contribute
