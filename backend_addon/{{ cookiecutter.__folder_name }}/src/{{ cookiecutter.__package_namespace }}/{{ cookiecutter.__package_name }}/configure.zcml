@@ -21,4 +21,6 @@
   {%- endif %}
   <include package=".vocabularies" />
 
+  <!-- -*- extra stuff goes here -*- -->
+
 </configure>
