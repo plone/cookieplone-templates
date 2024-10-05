@@ -17,7 +17,21 @@ And to create the Plone site:
 
 ```shell
 make create_site
+
 ```
+
+## Add features using plonecli/bobtemplates.plone
+
+This package provides plonecli/bobtemplates.plone compatible entrypoints to add all kind of subtemplates provided by them.
+
+To use them, you need to use bobtemplates.plone version > X.X.X and run your command as follows:
+
+```shell
+plonecli add -b .mrbob.ini content_type
+```
+
+This way we are passing the `.mrbob.ini` configuration file to plonecli to set some configuration variables needed to properly run the subtemplates.
+
 
 ## Contribute
 
