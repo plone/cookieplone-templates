@@ -24,7 +24,7 @@ make create_site
 
 This package provides plonecli/bobtemplates.plone compatible entrypoints to add all kind of subtemplates provided by them.
 
-To use them, you need to use bobtemplates.plone version > X.X.X and run your command as follows:
+To use them, you need to use `bobtemplates.plone` version X.X.X or later, and run the following command.
 
 ```shell
 plonecli add -b .mrbob.ini content_type
