@@ -20,7 +20,7 @@ make create_site
 
 ```
 
-## Add features using plonecli/bobtemplates.plone
+## Add features using `plonecli` or `bobtemplates.plone`
 
 This package provides plonecli/bobtemplates.plone compatible entrypoints to add all kind of subtemplates provided by them.
 
