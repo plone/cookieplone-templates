@@ -17,7 +17,6 @@ And to create the Plone site:
 
 ```shell
 make create_site
-
 ```
 
 ## Add features using `plonecli` or `bobtemplates.plone`
