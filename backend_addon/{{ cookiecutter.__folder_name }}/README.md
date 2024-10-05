@@ -21,7 +21,8 @@ make create_site
 
 ## Add features using `plonecli` or `bobtemplates.plone`
 
-This package provides plonecli/bobtemplates.plone compatible entrypoints to add all kind of subtemplates provided by them.
+This package provides markers as strings (`<!-- extra stuff goes here -->`) that are compatible with [`plonecli`](https://github.com/plone/plonecli) and [`bobtemplates.plone`](https://github.com/plone/bobtemplates.plone).
+These markers act as hooks to add all kinds of subtemplates, including behaviors, control panels, upgrade steps, or other subtemplates from `plonecli`.
 
 To use them, you need to use `bobtemplates.plone` version X.X.X or later, and run the following command.
 
