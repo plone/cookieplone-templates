@@ -116,7 +116,10 @@
     "devops/etc",
     "devops/playbooks",
     "devops/requirements",
-    "devops/tasks"
+    "devops/tasks",
+    "devops/inventory/group_vars/all/users.yml",
+    "devops/inventory/group_vars/all/projects.yml"
+
   ],
   "_extensions": [
     "cookieplone.filters.use_prerelease_versions",

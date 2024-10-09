@@ -246,7 +246,7 @@ volumes:
   vol-site-data:
     driver_opts:
       type: none
-      device: /srv/{{ cookiecutter.project_slug }}/data
+      device: "${DEPLOY_FOLDER:/srv/{{ cookiecutter.project_slug }}/data}"
       o: bind
 
 networks:
