@@ -119,7 +119,7 @@
     "devops/tasks",
     "devops/inventory/group_vars/all/users.yml",
     "devops/inventory/group_vars/all/projects.yml",
-    "devops/stacks/{{cookiecutter.hostname}}.yml"
+    "devops/stacks/{{ cookiecutter.hostname }}.yml"
 
   ],
   "_extensions": [
