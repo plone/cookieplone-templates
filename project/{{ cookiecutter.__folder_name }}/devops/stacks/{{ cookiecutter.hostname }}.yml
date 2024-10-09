@@ -246,7 +246,7 @@ volumes:
   vol-site-data:
     driver_opts:
       type: none
-      device: "{{ lookup('ansible.builtin.env', 'DEPLOY_PATH', default='/srv/{{ cookiecutter.project_slug }}/data') }}"
+      device: "{{ lookup('ansible.builtin.env', 'DEPLOY_FOLDER', default='/srv/{{ cookiecutter.project_slug }}/data') }}"
       o: bind
 
 networks:
