@@ -54,7 +54,7 @@ Note: The `.env` file is included in `.gitignore`, ensuring environment-specific
 
 ### Server installation
 
-You need to Ubuntu or Debian in {{ cookiecutter.hostname }}, enable SSH and install python3 there.
+You need to Ubuntu or Debian in {{ cookiecutter.hostname }}, enable SSH, and install a supported version of Python 3 there.
 
 
 ### Ansible Installation
