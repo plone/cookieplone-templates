@@ -98,7 +98,11 @@ services:
         order: start-first
 
   varnish:
+  {%- if cookiecutter.devops_gitlab_deploy %}
+    image: {{ cookiecutter.__container_image_prefix }}/varnish:${STACK_PARAM:-latest}
+  {% else %}
     image: {{ cookiecutter.__container_image_prefix }}-varnish:${STACK_PARAM:-latest}
+  {% endif %}
     command:
       - '-p'
       - 'nuke_limit=2000'
@@ -134,7 +138,11 @@ services:
 {%- endif %}
 
   frontend:
+  {%- if cookiecutter.devops_gitlab_deploy %}
+    image: {{ cookiecutter.__container_image_prefix }}/frontend:${STACK_PARAM:-latest}
+  {% else %}
     image: {{ cookiecutter.__container_image_prefix }}-frontend:${STACK_PARAM:-latest}
+  {% endif %}
     environment:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
       RAZZLE_API_PATH: https://{{ cookiecutter.hostname }}
@@ -170,7 +178,11 @@ services:
 {%- endif %}
 
   backend:
+  {%- if cookiecutter.devops_gitlab_deploy %}
+    image: {{ cookiecutter.__container_image_prefix }}/backend:${STACK_PARAM:-latest}
+  {% else %}
     image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
+  {% endif %}
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
