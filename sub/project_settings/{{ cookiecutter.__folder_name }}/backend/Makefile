@@ -142,3 +142,8 @@ acceptance-backend-start: ## Start backend acceptance server
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+
+.PHONY: add
+add: ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
+	$(BIN_FOLDER)/uv run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+
