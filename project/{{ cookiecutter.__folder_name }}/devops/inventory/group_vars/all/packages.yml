@@ -4,6 +4,7 @@ base_packages:
   - ca-certificates
   - acl
   - aptitude
+  - sudo
   - curl
   - python3-apt
   - python3-minimal

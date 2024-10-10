@@ -51,6 +51,12 @@ STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
 Note: The `.env` file is included in `.gitignore`, ensuring environment-specific configurations aren't pushed to the repository.
 
+
+### Server installation
+
+You need either a Ubuntu or Debian based system for {{ cookiecutter.hostname }}, enable SSH, and install a supported version of Python 3 on that system.
+
+
 ### Ansible Installation
 
 Execute the following to create a Python 3 virtual environment and install Ansible along with its dependencies:
