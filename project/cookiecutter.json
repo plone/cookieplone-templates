@@ -29,6 +29,10 @@
     "1",
     "0"
   ],
+  "devops_gitlab_deploy": [
+    "1",
+    "0"
+  ],
   "__feature_headless": "1",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
@@ -108,6 +112,11 @@
     },
     "devops_gha_deploy": {
       "__prompt__": "Add GitHub Action to Deploy this project?",
+      "1": "Yes",
+      "0": "No"
+    },
+    "devops_gitlab_deploy": {
+      "__prompt__": "Add GitLab Action to Deploy this project?",
       "1": "Yes",
       "0": "No"
     }
