@@ -29,12 +29,13 @@ check-backend:
     - make check
 
 check-frontend:
-  image: 22-alpine
+  image: node:22-alpine
   stage: test
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
   script:
     - cd frontend
+    - make install
     - make lint
     - make ci-i18n
 
@@ -50,7 +51,7 @@ test-backend:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 test-frontend:
-  image: 22-alpine
+  image: node:22-alpine
   stage: test
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
