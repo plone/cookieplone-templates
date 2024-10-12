@@ -60,7 +60,7 @@ test-frontend:
   script:
     - cd frontend
     - make install
-    - make test
+    - make ci-test
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
