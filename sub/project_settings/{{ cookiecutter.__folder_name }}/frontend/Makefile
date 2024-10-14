@@ -24,7 +24,11 @@ DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
 ADDON_NAME='{{ cookiecutter.__npm_package_name }}'
+{%- if cookiecutter.devops_gitlab_deploy %}
+IMAGE_NAME={{cookiecutter.__container_image_prefix}}/frontend
+{%- else %}
 IMAGE_NAME={{cookiecutter.__container_image_prefix}}-frontend
+{%- endif %}
 IMAGE_TAG=latest
 VOLTO_VERSION = $(shell cat ./mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 
