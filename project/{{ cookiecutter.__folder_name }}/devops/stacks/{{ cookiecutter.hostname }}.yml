@@ -101,9 +101,9 @@ services:
   varnish:
   {%- if cookiecutter.devops_gitlab_deploy %}
     image: {{ cookiecutter.__container_image_prefix }}/varnish:${STACK_PARAM:-latest}
-  {% else %}
+  {%- else %}
     image: {{ cookiecutter.__container_image_prefix }}-varnish:${STACK_PARAM:-latest}
-  {% endif %}
+  {%- endif %}
     command:
       - '-p'
       - 'nuke_limit=2000'
@@ -141,9 +141,9 @@ services:
   frontend:
   {%- if cookiecutter.devops_gitlab_deploy %}
     image: {{ cookiecutter.__container_image_prefix }}/frontend:${STACK_PARAM:-latest}
-  {% else %}
+  {%- else %}
     image: {{ cookiecutter.__container_image_prefix }}-frontend:${STACK_PARAM:-latest}
-  {% endif %}
+  {%- endif %}
     environment:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
       RAZZLE_API_PATH: https://{{ cookiecutter.hostname }}

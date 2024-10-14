@@ -132,8 +132,11 @@ test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
 # Build Docker images
 .PHONY: build-image
 build-image:  ## Build Docker Images
+	{%- if cookiecutter.devops_gitlab_deploy %}
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)/backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	{%- else %}
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
-
+	{%- endif %}
 # Acceptance tests
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
@@ -141,4 +144,8 @@ acceptance-backend-start: ## Start backend acceptance server
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
+	{%- if cookiecutter.devops_gitlab_deploy %}
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)/backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	{%- else %}
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	{%- endif %}
