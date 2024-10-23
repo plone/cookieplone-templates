@@ -135,7 +135,7 @@ stack-create-site:  ## Local Stack: Create a new site
 	@echo "Create a new site in the local Docker stack"
 	@docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
 
-.PHONY: start-ps
+.PHONY: stack-status
 stack-status:  ## Local Stack: Check Status
 	@echo "Check the status of the local Docker stack"
 	@docker compose -f docker-compose.yml ps

@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG PLONE_VERSION={{ cookiecutter.plone_version }}
-FROM plone/server-builder:${PLONE_VERSION} as builder
+FROM plone/server-builder:${PLONE_VERSION} AS builder
 
 WORKDIR /app
 

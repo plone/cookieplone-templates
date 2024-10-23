@@ -79,6 +79,7 @@ services:
 
     networks:
       - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
 
 {%- if cookiecutter.devops_cache == '1' %}
 
@@ -89,7 +90,7 @@ services:
       PURGER_SERVICE_PORT: 80
       PURGER_PUBLIC_SITES: "['{{ cookiecutter.hostname }}']"
     networks:
-      - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
       replicas: 2
       update_config:
@@ -111,7 +112,7 @@ services:
       - frontend
       - backend
     networks:
-      - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
       replicas: 1
       update_config:
@@ -142,6 +143,7 @@ services:
       - backend
     networks:
       - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
       replicas: 2
       update_config:
@@ -177,6 +179,7 @@ services:
       - db
     networks:
       - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
       replicas: 2
       update_config:
@@ -239,17 +242,19 @@ services:
     volumes:
       - vol-site-data:/var/lib/postgresql/data
     networks:
-      - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
 
 volumes:
   vol-traefik-certs: {}
   vol-site-data:
     driver_opts:
       type: none
-      device: "${DEPLOY_FOLDER:/srv/{{ cookiecutter.project_slug }}/data}"
+      device: ${DEPLOY_FOLDER:-/srv/{{ cookiecutter.project_slug }}/data}
       o: bind
 
 networks:
   {{ cookiecutter.__devops_swarm_public_network }}:
+    external: true
+  {{ cookiecutter.__devops_swarm_stack_network }}:
     internal: true
     driver: overlay
