@@ -41,10 +41,12 @@ cp .env_dist .env
 Edit the `.env` file to suit your environment. For example:
 
 ```
+ANSIBLE_REMOTE_PORT=22
 DEPLOY_ENV=prod
 DEPLOY_HOST={{ cookiecutter.hostname }}
 DEPLOY_PORT=22
 DEPLOY_USER=plone
+DEPLOY_FOLDER=/srv/{{ cookiecutter.project_slug }}/data
 DOCKER_CONFIG=.docker
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 ```
