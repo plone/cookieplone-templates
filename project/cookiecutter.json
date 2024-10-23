@@ -35,6 +35,7 @@
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
+  "__version_pnpm": "9.1.1",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
   "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
   "__profile_version": "{% now 'utc', '%Y%m%d001' %}",
