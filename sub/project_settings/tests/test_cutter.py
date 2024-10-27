@@ -30,7 +30,6 @@ GENERATED_FILES = [
     "backend/Dockerfile.acceptance",
     "backend/Dockerfile",
     "backend/Makefile",
-    "backend/requirements-docker.txt",
     "backend/scripts/create_site.py",
     "backend/setup.py",
     "backend/src/project/title/locales/__init__.py",

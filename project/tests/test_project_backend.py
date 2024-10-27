@@ -13,7 +13,6 @@ BACKEND_FILES = [
     "Makefile",
     "mx.ini",
     "pyproject.toml",
-    "requirements-docker.txt",
     "requirements.txt",
     "version.txt",
 ]
