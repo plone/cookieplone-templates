@@ -4,6 +4,6 @@ isort
 pytest
 pytest-cookies
 pytest-jsonschema >= 1.0.0a2
-cookieplone>=0.7.0
+cookieplone @ git+https://github.com/plone/cookieplone@variable-namespace-length
 GitPython
 wheel
