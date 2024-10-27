@@ -113,7 +113,8 @@ $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
 .PHONY: i18n
 i18n: $(BIN_FOLDER)/i18ndude ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	$(BIN_FOLDER)/update_locale
+	cd src/{{cookiecutter.__package_namespace}}/{{cookiecutter.__package_name}}/locales
+	./update.sh
 
 # Tests
 .PHONY: test
