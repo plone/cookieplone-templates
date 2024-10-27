@@ -39,9 +39,7 @@ def set_configurations(package_root: Path, context: OrderedDict):
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    namespace = context.get("__package_namespace")
-    package_name = context.get("__package_name")
-    package_root = output_dir / "backend/src" / namespace / package_name
+    package_root = output_dir / "backend/src/packagename"
     set_configurations(package_root, context)
 
 

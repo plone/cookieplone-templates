@@ -41,8 +41,8 @@ def test_json_schema(
     "file_path",
     [
         ".github/workflows/varnish.yml",
-        "backend/src/project/title/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",  # noQA
-        "backend/src/project/title/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",  # noQA
+        "backend/src/packagename/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",  # noQA
+        "backend/src/packagename/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",  # noQA
         "devops/varnish/etc/varnish.vcl",
         "devops/varnish/Dockerfile",
     ],

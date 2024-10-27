@@ -3,7 +3,9 @@
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
+import os
 
+from cookieplone.settings import QUIET_MODE_VAR
 from cookieplone.utils import console, files, git, plone
 
 context: OrderedDict = {{cookiecutter}}
@@ -18,10 +20,16 @@ FEATURES_TO_REMOVE = {
 
 
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
-    package_namespace = context.get("__package_namespace")
-    package_name = context.get("__package_name")
-    output_dir = output_dir / "src" / package_namespace / package_name
+    output_dir = output_dir / "src" / "packagename"
     files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_headless"])
+
+
+def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
+    plone.create_namespace_packages(output_dir / "src/packagename", context["python_package_name"])
+
+
+def handle_format(context: OrderedDict, output_dir: Path):
+    plone.format_python_codebase(output_dir)
 
 
 def handle_git_initialization(context: OrderedDict, output_dir: Path):
@@ -32,9 +40,11 @@ def handle_git_initialization(context: OrderedDict, output_dir: Path):
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
+    is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
     remove_headless = not int(
         context.get("feature_headless")
     )  # {{ cookiecutter.__feature_headless }}
+    create_namespace_packages = not is_subtemplate
     initialize_git = bool(
         int(context.get("__backend_addon_git_initialize"))
     )  # {{ cookiecutter.__backend_addon_git_initialize }}
@@ -49,6 +59,16 @@ def main():
             remove_headless,
         ],
         [
+            handle_create_namespace_packages,
+            "Create namespace packages",
+            create_namespace_packages,
+        ],
+        [
+            handle_format,
+            "Format code",
+            backend_format,
+        ],
+        [
             handle_git_initialization,
             "Initialize Git repository",
             initialize_git,
@@ -61,18 +81,10 @@ def main():
         console.print(f" -> {title}")
         func(new_context, output_dir)
 
-    # Run format
-    if backend_format:
-        plone.format_python_codebase(output_dir)
-
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
 
-        Now, enter the repository run the code formatter with:
-
-        make format
-
-        start coding, and push to your organization.
+        Now, enter the repository, start coding, and push to your organization.
 
         Sorry for the convenience,
         The Plone Community.

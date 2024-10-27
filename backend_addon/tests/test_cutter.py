@@ -40,10 +40,8 @@ def test_root_files_generated(cutter_result, file_path):
 @pytest.mark.parametrize("file_path", PKG_SRC_FILES)
 def test_pkg_src_files_generated(cutter_result, file_path: str):
     """Check if distribution files were generated."""
-    package_namespace = cutter_result.context["__package_namespace"]
-    package_name = cutter_result.context["__package_name"]
-    file_path = file_path.format(package_name=package_name)
-    src_path = cutter_result.project_path / "src" / package_namespace / package_name
+    package_path = cutter_result.context["__package_path"]
+    src_path = cutter_result.project_path / "src" / package_path
     path = src_path / file_path
     assert path.exists()
     assert path.is_file()
@@ -52,9 +50,8 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
 @pytest.mark.parametrize("file_path", PKG_SRC_FEATURE_HEADLESS)
 def test_pkg_src_feature_files_generated(cutter_result, file_path: str):
     """Check if feature-specific files were generated."""
-    package_namespace = cutter_result.context["__package_namespace"]
-    package_name = cutter_result.context["__package_name"]
-    src_path = cutter_result.project_path / "src" / package_namespace / package_name
+    package_path = cutter_result.context["__package_path"]
+    src_path = cutter_result.project_path / "src" / package_path
     path = src_path / file_path
     assert path.exists()
     assert path.is_file()

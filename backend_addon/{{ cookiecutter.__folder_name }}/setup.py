@@ -46,7 +46,7 @@ setup(
     },
     license="GPL version 2",
     packages=find_packages("src", exclude=["ez_setup"]),
-    namespace_packages=["{{ cookiecutter.__package_namespace }}"],
+    namespace_packages=[{{ cookiecutter.__package_namespaces }}],
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,

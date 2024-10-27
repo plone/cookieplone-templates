@@ -12,23 +12,10 @@
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
   "github_organization": "collective",
-  "container_registry": [
-    "github",
-    "docker_hub",
-    "gitlab"
-  ],
-  "devops_cache": [
-    "1",
-    "0"
-  ],
-  "devops_ansible": [
-    "1",
-    "0"
-  ],
-  "devops_gha_deploy": [
-    "1",
-    "0"
-  ],
+  "container_registry": ["github", "docker_hub", "gitlab"],
+  "devops_cache": ["1", "0"],
+  "devops_ansible": ["1", "0"],
+  "devops_gha_deploy": ["1", "0"],
   "__feature_headless": "1",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
@@ -65,8 +52,8 @@
   "__devops_varnish_version": "7.4",
   "__devops_db_version": "14",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
-  "__backend_addon_format": "1",
   "__backend_addon_git_initialize": "0",
+  "__backend_addon_format": "1",
   "__project_git_initialize": "1",
   "__prompts__": {
     "title": "Project Title",
@@ -119,7 +106,6 @@
     "devops/tasks",
     "devops/inventory/group_vars/all/users.yml",
     "devops/inventory/group_vars/all/projects.yml"
-
   ],
   "_extensions": [
     "cookieplone.filters.use_prerelease_versions",

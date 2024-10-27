@@ -5,14 +5,11 @@
   "email": "collective@plone.org",
   "github_organization": "collective",
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
-  "feature_headless": [
-    "1",
-    "0"
-  ],
+  "feature_headless": ["1", "0"],
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
   "__feature_distribution": "0",
-  "__package_name": "{{ cookiecutter.python_package_name | package_name }}",
-  "__package_namespace": "{{ cookiecutter.python_package_name | package_namespace }}",
+  "__package_namespaces": "{{ cookiecutter.python_package_name | package_namespaces }}",
+  "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
   "__folder_name": "{{ cookiecutter.python_package_name }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
   "__profile_language": "en",
@@ -38,8 +35,8 @@
   "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.pascal_case",
-    "cookieplone.filters.package_name",
-    "cookieplone.filters.package_namespace"
+    "cookieplone.filters.package_namespaces",
+    "cookieplone.filters.package_path"
   ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": ""
