@@ -40,5 +40,11 @@
   "devDependencies": {
     "mrs-developer": "{{ cookiecutter.__version_mrs_developer }}"
   },
+  "pnpm": {
+    "overrides": {
+      "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+      "react-refresh": "^0.14.2"
+    }
+  },
   "packageManager": "pnpm@{{ cookiecutter.__version_pnpm }}"
 }
