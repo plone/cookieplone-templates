@@ -35,6 +35,7 @@
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
+  "__version_pnpm": "9.1.1",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
   "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
   "__profile_version": "{% now 'utc', '%Y%m%d001' %}",
@@ -57,12 +58,13 @@
   "__devops_host": "{{ cookiecutter.hostname | extract_host }}",
   "__devops_compose_name": "{{ cookiecutter.project_slug | replace('.','-') | replace('_','-') }}",
   "__devops_stack_name": "{{ cookiecutter.hostname | replace('.','-') | replace('_','-') }}",
-  "__devops_swarm_public_network": "nw-internal",
-  "__devops_traefik_version": "v2.10",
+  "__devops_swarm_public_network": "nw-public",
+  "__devops_swarm_stack_network": "nw-internal",
+  "__devops_traefik_version": "v2.11",
   "__devops_traefik_local_include_ui": "yes",
   "__devops_traefik_stack_include_ui": "no",
-  "__devops_traefik_docker_network": "{{ cookiecutter.__devops_stack_name }}_{{ cookiecutter.__devops_swarm_public_network }}",
-  "__devops_varnish_version": "7.4",
+  "__devops_traefik_docker_network": "{{ cookiecutter.__devops_stack_name }}_{{ cookiecutter.__devops_swarm_stack_network }}",
+  "__devops_varnish_version": "7.6",
   "__devops_db_version": "14",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
   "__backend_addon_format": "1",
@@ -117,8 +119,7 @@
     "devops/playbooks",
     "devops/requirements",
     "devops/tasks",
-    "devops/inventory/group_vars/all/users.yml",
-    "devops/inventory/group_vars/all/projects.yml"
+    "devops/inventory/group_vars/all/users.yml"
 
   ],
   "_extensions": [

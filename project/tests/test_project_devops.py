@@ -90,3 +90,10 @@ def test_project_devops_no_gha_deploy(
     folder = cutter_result_devops_no_gha_deploy.project_path
     path = folder / filepath
     assert path.exists() is False
+
+
+def test_ansible_inventory_projects_replacement(cutter_result):
+    """Test GHA deploy files are not present."""
+    folder = cutter_result.project_path
+    path = folder / "devops/inventory/group_vars/all/projects.yml"
+    assert "{{ cookiecutter.hostname }}" not in path.read_text()
