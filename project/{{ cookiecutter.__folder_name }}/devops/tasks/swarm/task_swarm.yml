@@ -11,7 +11,31 @@
         advertise_addr: "{{ swarm.advertise_addr }}"
       register: swarm_info
 
+- name: "Docker Swarm: Set public network"
+  become: true
+  become_user: "{{ users.default.name }}"
+  block:
+    - name: "Docker Swarm: Check for public network"
+      community.docker.docker_network_info:
+        name: "{{ cookiecutter.__devops_swarm_public_network }}"
+      register: docker_swarm_net_public
+
+    - name: "Docker Swarm: Create public network"
+      community.docker.docker_network:
+        name: "{{ cookiecutter.__devops_swarm_public_network }}"
+        internal: false
+        attachable: true
+        driver: overlay
+        driver_options:
+          "com.docker.network.driver.mtu": "{{ docker.network.mtu }}"
+      when: not docker_swarm_net_public.exists
+
 - name: "Docker Swarm: Purge data"
+  become: true
+  become_user: "{{ users.default.name }}"
+  tags:
+    - cron
+    - swarm
   block:
     - name: "Docker Swarm: Purge old containers"
       ansible.builtin.cron:
@@ -34,7 +58,3 @@
         hour: "*"
         minute: 15
         state: present
-  become_user: "{{ users.default.name }}"
-  tags:
-    - cron
-    - swarm

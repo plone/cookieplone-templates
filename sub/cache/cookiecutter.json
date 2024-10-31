@@ -14,7 +14,7 @@
   "__gha_version_docker_buildx": "v3",
   "__gha_version_docker_login": "v3",
   "__gha_version_docker_build_push": "v4",
-  "__devops_varnish_version": "7.4",
+  "__devops_varnish_version": "7.6",
   "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.extract_host",

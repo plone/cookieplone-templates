@@ -19,6 +19,7 @@
   "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
   "__profile_language": "{{ cookiecutter.language_code|gs_language_code }}",
   "__locales_language": "{{ cookiecutter.language_code|locales_language_code }}",
+  "__version_pnpm": "9.1.1",
   "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.use_prerelease_versions",
