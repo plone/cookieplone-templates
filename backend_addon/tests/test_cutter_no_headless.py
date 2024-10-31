@@ -58,5 +58,3 @@ def test_pkg_src_headless_files_not_generated(cutter_result, file_path: str):
     src_path = cutter_result.project_path / "src" / package_path
     path = src_path / file_path
     assert path.exists() is False
-
-# test with 0 and 2 namespaces

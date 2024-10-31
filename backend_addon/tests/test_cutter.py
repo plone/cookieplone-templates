@@ -1,5 +1,6 @@
 """Test cookiecutter generation with all features enabled."""
 
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
@@ -86,3 +87,38 @@ def test_git_initialization_not_set(cookies, context_no_git):
     cutter_result = cookies.bake(extra_context=context_no_git)
     path = cutter_result.project_path
     assert git.check_path_is_repository(path) is False
+
+
+@pytest.fixture(scope="session")
+def cutter_result_no_namespace(context, cookies_session) -> dict:
+    """Cookiecutter context without namespace package."""
+    new_context = deepcopy(context)
+    new_context["python_package_name"] = "addon"
+    return cookies_session.bake(extra_context=new_context)
+
+
+@pytest.fixture(scope="session")
+def cutter_result_two_namespaces(context, cookies_session) -> dict:
+    """Cookiecutter context with 2 namespace packages."""
+    new_context = deepcopy(context)
+    new_context["python_package_name"] = "foo.bar.baz"
+    return cookies_session.bake(extra_context=new_context)
+
+
+
+@pytest.mark.parametrize("file_path", PKG_SRC_FILES)
+def test_pkg_src_files_generated_without_namespace(cutter_result_no_namespace, file_path: str):
+    """Check package contents with no namespaces."""
+    src_path = cutter_result_no_namespace.project_path / "src/addon"
+    path = src_path / file_path
+    assert path.exists()
+    assert path.is_file()
+
+
+@pytest.mark.parametrize("file_path", PKG_SRC_FILES)
+def test_pkg_src_files_generated_with_two_namespaces(cutter_result_two_namespaces, file_path: str):
+    """Check package contents with 2 namespaces."""
+    src_path = cutter_result_two_namespaces.project_path / "src/foo/bar/baz"
+    path = src_path / file_path
+    assert path.exists()
+    assert path.is_file()
