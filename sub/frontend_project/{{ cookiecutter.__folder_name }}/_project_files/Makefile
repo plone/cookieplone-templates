@@ -77,7 +77,7 @@ release-dry-run: ## Dry-run the release of the add-on on npmjs.org
 test: ## Run unit tests
 	pnpm test
 
-.PHONY: test-ci
+.PHONY: ci-test
 ci-test: ## Run unit tests in CI
 	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests
 
