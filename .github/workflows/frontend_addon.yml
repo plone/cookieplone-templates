@@ -1,4 +1,5 @@
 name: Plone Frontend Add-on CI
+# DEBUG just triggering frontend addon test
 on:
   push:
     paths:
