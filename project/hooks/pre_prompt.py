@@ -33,7 +33,7 @@ def sanity_check() -> data.SanityCheckResults:
         ),
         data.SanityCheck("git", commands.check_command_is_available, ["git"], "error"),
         data.SanityCheck(
-            "Docker", commands.check_docker_version, ["docker"], "warning"
+            "Docker (optional)", commands.check_docker_version, ["26"], "warning"
         ),
     ]
     return sanity.run_sanity_checks(checks)
