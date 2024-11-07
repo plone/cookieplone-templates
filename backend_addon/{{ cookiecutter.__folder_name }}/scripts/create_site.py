@@ -2,6 +2,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from {{ cookiecutter.python_package_name }}.interfaces import IBrowserLayer
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.factory import addPloneSite
+from Products.GenericSetup.tool import SetupTool
 from Testing.makerequest import makerequest
 from zope.interface import directlyProvidedBy
 from zope.interface import directlyProvides
@@ -43,9 +44,12 @@ site_id = "Plone"
 payload = {
     "title": "{{ cookiecutter.title }}",
     "profile_id": _DEFAULT_PROFILE,
-    "extension_ids": [
-        "{{ cookiecutter.python_package_name }}:default",
-    ],
+{% if cookiecutter.plone_version >= "6.1" and cookiecutter.__feature_headless == "0" -%}
+    "distribution_name": "classic",
+{%- endif %}
+{% if cookiecutter.plone_version >= "6.1" and cookiecutter.__feature_headless == "1" -%}
+    "distribution_name": "default",
+{%- endif %}
     "setup_content": False,
     "default_language": "{{ cookiecutter.__profile_language }}",
     "portal_timezone": "UTC",
@@ -59,4 +63,7 @@ if site_id in app.objectIds() and DELETE_EXISTING:
 if site_id not in app.objectIds():
     site = addPloneSite(app, site_id, **payload)
     transaction.commit()
-    app._p_jar.sync()
+
+    portal_setup: SetupTool = site.portal_setup
+    portal_setup.runAllImportStepsFromProfile("profile-{{ cookiecutter.python_package_name }}:default")
+    transaction.commit()
