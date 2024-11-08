@@ -4,6 +4,50 @@ Welcome to the DevOps pipelines guide for deploying your project using GitLab pi
 This README provides step-by-step instructions to set up your GitLab repository and initiate manual deployment pipelines.
 Follow each step carefully to correctly configure your environment and secrets.
 
+## Runner setup 🛠️
+
+If you use your own runners, you will need to configure your runners to do "Docker-in-Docker". You can read about it in the [GitLab Documentation](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html).
+
+A GitLab runner configuration like this works out of the box. Perhaps this is not the most secure setup, but it works.
+
+[Register a runner](https://docs.gitlab.com/runner/register/) in one of your servers, and then modify its configuration (check `/etc/gitlab-runner/config.toml`):
+
+```toml
+concurrent = 1
+check_interval = 0
+connection_max_age = "15m0s"
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "runner1"
+  url = "https://gitlab.com"
+  id = <REDACTED>
+  token = "<REDACTED>"
+  token_obtained_at = 2024-09-17T08:51:36Z
+  token_expires_at = 0001-01-01T00:00:00Z
+  executor = "docker"
+  [runners.custom_build_dir]
+  [runners.cache]
+    MaxUploadedArchiveSize = 0
+    [runners.cache.s3]
+    [runners.cache.gcs]
+    [runners.cache.azure]
+  [runners.docker]
+    tls_verify = false
+    image = "docker:24.0.5"
+    privileged = true
+    disable_entrypoint_overwrite = false
+    oom_kill_disable = false
+    disable_cache = false
+    volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/certs/client", "/cache"]
+    shm_size = 0
+    network_mtu = 0
+
+```
+
 ## Repository setup 🛠️
 
 See [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/).
