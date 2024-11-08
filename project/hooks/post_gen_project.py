@@ -95,10 +95,6 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     # Use the same base folder
     folder_name = output_dir.name
     output_dir = output_dir.parent
-    import pdb
-
-    pdb.set_trace()
-    a = 1
 
     generator.generate_subtemplate(
         "sub/project_settings", output_dir, folder_name, context
