@@ -9,7 +9,12 @@
   "language_code": "en",
   "plone_version": "{{ 'No' | latest_plone }}",
   "github_organization": "collective",
-  "container_registry": ["github", "docker_hub", "gitlab"],
+  "container_registry": [
+    "github",
+    "docker_hub",
+    "gitlab"
+  ],
+  "devops_gitlab_deploy": "0",
   "__version_package": "1.0.0a0",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",

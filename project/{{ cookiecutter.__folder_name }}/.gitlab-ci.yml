@@ -20,10 +20,10 @@ variables:
   CONTAINER_FRONTEND_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/frontend
   {%- if cookiecutter.devops_cache == '1' %}
   CONTAINER_VARNISH_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/varnish
-  {%- endif}
+  {%- endif %}
 
 check-backend:
-  stage: test
+  stage: check
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
   script:
@@ -35,7 +35,7 @@ check-backend:
 
 check-frontend:
   image: node:20-alpine
-  stage: test
+  stage: check
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
     - corepack enable
