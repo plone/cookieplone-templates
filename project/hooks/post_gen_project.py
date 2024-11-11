@@ -127,7 +127,7 @@ def main():
         ],
         [
             handle_remove_devops_gitlab,
-            "Remove GHA deployment files",
+            "Remove GitLab CI/CD deployment files",
             not int(
                 context.get("devops_gitlab_deploy")
             ),  # {{ cookiecutter.devops_gha_deploy }}
