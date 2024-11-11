@@ -62,7 +62,8 @@ See [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/).
 4.  Expand the `Variables`.
 5.  Add all variables and their corresponding values, copying them from the `.env` file.
     This file is not commited into the repository, and that's why we need to add them here.
-    **Note**: do not mark any of the variables as *protected*.
+    > [!NOTE]
+    > Do not mark any of the variables as *protected*.
 
 ### Step 2: Add deployment's host SSH key as a known host
 
