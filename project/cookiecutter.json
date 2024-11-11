@@ -102,7 +102,7 @@
       "0": "No"
     },
     "devops_gitlab_deploy": {
-      "__prompt__": "Add GitLab Action to Deploy this project?",
+      "__prompt__": "Add GitLab CI/CD to deploy this project?",
       "1": "Yes",
       "0": "No"
     }
