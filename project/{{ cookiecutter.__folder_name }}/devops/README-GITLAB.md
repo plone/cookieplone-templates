@@ -10,7 +10,8 @@ If you use your own runners, you will need to configure your runners to do "Dock
 
 A GitLab runner configuration like this works out of the box. Perhaps this is not the most secure setup, but it works.
 
-[Register a runner](https://docs.gitlab.com/runner/register/) in one of your servers, and then modify its configuration (check `/etc/gitlab-runner/config.toml`):
+[Register a runner](https://docs.gitlab.com/runner/register/) in one of your servers.
+Then modify its configuration file `/etc/gitlab-runner/config.toml` as needed.
 
 ```toml
 concurrent = 1
