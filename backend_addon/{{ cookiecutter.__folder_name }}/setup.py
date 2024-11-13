@@ -1,4 +1,5 @@
 """Installer for the {{ cookiecutter.python_package_name }} package."""
+
 from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
@@ -55,7 +56,7 @@ setup(
         "setuptools",
         "Products.CMFPlone",
         "plone.api",
-        {%- if cookiecutter.__feature_headless == '1' %}
+        {% if cookiecutter.__feature_headless == '1' -%}
         "plone.restapi",
         "plone.volto",
         {%- endif %}
@@ -65,6 +66,9 @@ setup(
             "zest.releaser[recommended]",
             "zestreleaser.towncrier",
             "plone.app.testing",
+            {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
+            "plone.classicui",
+            {%- endif -%}
             "plone.restapi[test]",
             "pytest",
             "pytest-cov",

@@ -20,7 +20,7 @@ SUPPORTED_PYTHON_VERSIONS = [
 ]
 
 
-def sanity_check() -> bool:
+def sanity_check() -> data.SanityCheckResults:
     """Run sanity checks on the system."""
     checks = [
         data.SanityCheck(
@@ -31,8 +31,7 @@ def sanity_check() -> bool:
         ),
         data.SanityCheck("git", commands.check_command_is_available, ["git"], "error"),
     ]
-    result = sanity.run_sanity_checks(checks)
-    return result.status
+    return sanity.run_sanity_checks(checks)
 
 
 def main():
@@ -41,8 +40,17 @@ def main():
         print("This template should be run with cookieplone")
         sys.exit(1)
 
-    console.panel(title="Plone Addon", msg="Creating a new Plone Addon")
-    if not sanity_check():
+    msg = """
+Creating a new Plone Addon
+
+Sanity check results:
+"""
+    check_results = sanity_check()
+    for check in check_results.checks:
+        label = "green" if check.status else "red"
+        msg = f"{msg}\n  - {check.name}: [{label}]{check.message}[/{label}]"
+    console.panel(title="Plone Addon", msg=f"{msg}\n")
+    if not check_results.status:
         sys.exit(1)
 
 
