@@ -3,16 +3,9 @@
   "project_slug": "{{ cookiecutter.title | slugify }}",
   "author": "Plone Foundation",
   "email": "collective@plone.org",
-  "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "github_organization": "collective",
-  "container_registry": [
-    "github",
-    "docker_hub",
-    "gitlab"
-  ],
+  "container_registry": ["github", "docker_hub", "gitlab"],
   "__folder_name": "{{ cookiecutter.project_slug }}",
-  "__package_name": "{{ cookiecutter.python_package_name | package_name }}",
-  "__package_namespace": "{{ cookiecutter.python_package_name | package_namespace }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
   "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
   "__gha_version_checkout": "v4",
@@ -22,13 +15,10 @@
   "__gha_version_docker_login": "v3",
   "__gha_version_docker_build_push": "v4",
   "__devops_varnish_version": "7.6",
-  "_copy_without_render": [
-  ],
+  "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.extract_host",
-    "cookieplone.filters.image_prefix",
-    "cookieplone.filters.package_name",
-    "cookieplone.filters.package_namespace"
+    "cookieplone.filters.image_prefix"
   ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": ""

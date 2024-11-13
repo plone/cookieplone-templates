@@ -1,4 +1,4 @@
-graft src/{{ cookiecutter.__package_namespace }}
+graft src/{{ cookiecutter.__package_path }}
 graft docs
 graft news
 graft tests

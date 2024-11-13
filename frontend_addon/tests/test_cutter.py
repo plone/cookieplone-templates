@@ -91,7 +91,6 @@ def test_root_files_generated(cutter_result, file_path):
 def test_pkg_src_files_generated(cutter_result, file_path: str):
     """Check if package files were generated."""
     package_name = cutter_result.context["frontend_addon_name"]
-    file_path = file_path.format(package_name=package_name)
     src_path = cutter_result.project_path / "packages" / package_name
     path = src_path / file_path
     assert path.exists()
