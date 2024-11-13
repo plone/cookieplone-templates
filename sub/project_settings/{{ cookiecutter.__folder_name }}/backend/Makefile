@@ -145,5 +145,5 @@ acceptance-image-build:  ## Build Docker Images
 
 .PHONY: add
 add: ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
-	$(BIN_FOLDER)/uv run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+	$(BIN_FOLDER)/pipx run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
 
