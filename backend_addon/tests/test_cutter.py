@@ -105,9 +105,10 @@ def cutter_result_two_namespaces(context, cookies_session) -> dict:
     return cookies_session.bake(extra_context=new_context)
 
 
-
 @pytest.mark.parametrize("file_path", PKG_SRC_FILES)
-def test_pkg_src_files_generated_without_namespace(cutter_result_no_namespace, file_path: str):
+def test_pkg_src_files_generated_without_namespace(
+    cutter_result_no_namespace, file_path: str
+):
     """Check package contents with no namespaces."""
     src_path = cutter_result_no_namespace.project_path / "src/addon"
     path = src_path / file_path
@@ -116,7 +117,9 @@ def test_pkg_src_files_generated_without_namespace(cutter_result_no_namespace, f
 
 
 @pytest.mark.parametrize("file_path", PKG_SRC_FILES)
-def test_pkg_src_files_generated_with_two_namespaces(cutter_result_two_namespaces, file_path: str):
+def test_pkg_src_files_generated_with_two_namespaces(
+    cutter_result_two_namespaces, file_path: str
+):
     """Check package contents with 2 namespaces."""
     src_path = cutter_result_two_namespaces.project_path / "src/foo/bar/baz"
     path = src_path / file_path

@@ -2,10 +2,14 @@
 
 import sys
 
-from cookieplone import data
-from cookieplone.utils import commands, console, sanity
-
-HAS_COOKIEPLONE = True
+try:
+    from cookieplone import __version__ as cookieplone_version
+    from cookieplone import data
+    from cookieplone.utils import commands, console, sanity
+except ModuleNotFoundError:
+    print("This template should be run with cookieplone")
+    sys.exit(1)
+from packaging.version import Version
 
 SUPPORTED_PYTHON_VERSIONS = [
     "3.8",
@@ -19,6 +23,16 @@ SUPPORTED_PYTHON_VERSIONS = [
 def sanity_check() -> data.SanityCheckResults:
     """Run sanity checks on the system."""
     checks = [
+        data.SanityCheck(
+            "Cookieplone",
+            lambda: (
+                ""
+                if Version(cookieplone_version) > Version("0.8.0.dev0")
+                else "This template requires Cookieplone 0.8 or higher."
+            ),
+            [],
+            "error",
+        ),
         data.SanityCheck(
             "Python",
             commands.check_python_version,
@@ -41,9 +55,6 @@ def sanity_check() -> data.SanityCheckResults:
 
 def main():
     """Validate context."""
-    if not HAS_COOKIEPLONE:
-        print("This template should be run with cookieplone")
-        sys.exit(1)
 
     msg = """
 Creating a new Plone Project

@@ -1,9 +1,9 @@
 """Post generation hook."""
 
+import os
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
-import os
 
 from cookieplone.settings import QUIET_MODE_VAR
 from cookieplone.utils import console, files, git, plone
@@ -25,7 +25,9 @@ def handle_feature_headless(context: OrderedDict, output_dir: Path):
 
 
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
-    plone.create_namespace_packages(output_dir / "src/packagename", context["python_package_name"])
+    plone.create_namespace_packages(
+        output_dir / "src/packagename", context["python_package_name"]
+    )
 
 
 def handle_format(context: OrderedDict, output_dir: Path):

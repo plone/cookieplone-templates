@@ -146,7 +146,9 @@ def main():
         func(new_context, output_dir)
 
     # Create namespace packages
-    plone.create_namespace_packages(output_dir / "backend/src/packagename", context["python_package_name"])
+    plone.create_namespace_packages(
+        output_dir / "backend/src/packagename", context["python_package_name"]
+    )
 
     # Run format
     if backend_format:
