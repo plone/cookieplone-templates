@@ -79,7 +79,12 @@ build: build-dev ## Install Plone
 .PHONY: clean
 clean: ## Clean environment
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
-	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .tox .venv .pytest_cache
+	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance/etc .tox .venv .pytest_cache
+
+.PHONY: remove-data
+remove-data: ## Remove all content
+	@echo "$(RED)==> Removing all content$(RESET)"
+	rm -rf $(VENV_FOLDER) instance/var
 
 .PHONY: start
 start: ## Start a Plone instance on localhost:8080
