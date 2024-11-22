@@ -6,6 +6,7 @@ COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{
 COPY --chown=node volto.config.js /app/
 COPY --chown=node package.json /app/package.json.temp
 COPY --chown=node mrs.developer.json /app/
+COPY --chown=node pnpm-workspace.yaml /app/
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     set -e
