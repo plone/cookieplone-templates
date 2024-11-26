@@ -4,7 +4,6 @@
 
 - name: "Docker Swarm: Initial Setup"
   block:
-
     - name: "Docker Swarm: Init Swarm"
       community.docker.docker_swarm:
         state: present
@@ -17,12 +16,12 @@
   block:
     - name: "Docker Swarm: Check for public network"
       community.docker.docker_network_info:
-        name: "{{ cookiecutter.__devops_swarm_public_network }}"
+        name: "{{ swarm.public_network }}"
       register: docker_swarm_net_public
 
     - name: "Docker Swarm: Create public network"
       community.docker.docker_network:
-        name: "{{ cookiecutter.__devops_swarm_public_network }}"
+        name: "{{ swarm.public_network }}"
         internal: false
         attachable: true
         driver: overlay
