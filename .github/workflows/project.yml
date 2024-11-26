@@ -6,10 +6,11 @@ on:
       - ".github/workflows/project.yml"
   workflow_dispatch:
 
+env:
+  NODE_VERSION: 22.x
+
 jobs:
-
   generation:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,12 +31,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
       # python install
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
+      # Node setup
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       # Test
       - name: Run tests
