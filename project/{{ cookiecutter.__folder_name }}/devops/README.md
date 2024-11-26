@@ -46,7 +46,6 @@ DEPLOY_ENV=prod
 DEPLOY_HOST={{ cookiecutter.hostname }}
 DEPLOY_PORT=22
 DEPLOY_USER=plone
-DEPLOY_FOLDER=/srv/{{ cookiecutter.project_slug }}/data
 DOCKER_CONFIG=.docker
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 ```
