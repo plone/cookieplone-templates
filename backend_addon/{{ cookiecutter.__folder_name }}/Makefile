@@ -62,7 +62,7 @@ config: instance/etc/zope.ini
 build-dev: config ## Install Plone packages
 	@echo "$(GREEN)==> Setup Build$(RESET)"
 	$(BIN_FOLDER)/pipx run mxdev -c mx.ini
-	$(BIN_FOLDER)/uv pip install -r requirements-mxdev.txt
+	VIRTUAL_ENV=.venv $(BIN_FOLDER)/uv pip install -r requirements-mxdev.txt
 
 .PHONY: install
 install: build-dev ## Install Plone
@@ -100,7 +100,7 @@ check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
 # i18n
 $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
 	@echo "$(GREEN)==> Install translation tools$(RESET)"
-	$(BIN_FOLDER)/uv pip install i18ndude
+	VIRTUAL_ENV=.venv $(BIN_FOLDER)/uv pip install i18ndude
 
 .PHONY: i18n
 i18n: $(BIN_FOLDER)/i18ndude ## Update locales
