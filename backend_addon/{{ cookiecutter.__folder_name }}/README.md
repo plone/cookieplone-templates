@@ -13,6 +13,7 @@ Install {{ cookiecutter.python_package_name }} with `pip`:
 ```shell
 pip install {{ cookiecutter.python_package_name }}
 ```
+
 And to create the Plone site:
 
 ```shell
@@ -24,31 +25,28 @@ make create_site
 This package provides markers as strings (`<!-- extra stuff goes here -->`) that are compatible with [`plonecli`](https://github.com/plone/plonecli) and [`bobtemplates.plone`](https://github.com/plone/bobtemplates.plone).
 These markers act as hooks to add all kinds of subtemplates, including behaviors, control panels, upgrade steps, or other subtemplates from `plonecli`.
 
-To use them, you need to use `bobtemplates.plone` version 6.3.4 or later, and run the following command.
+To run `plonecli` with configuration to target this package, run the following command.
 
 ```shell
-plonecli add -b .mrbob.ini content_type
+make add <template_name>
 ```
 
-The command passes the `.mrbob.ini` configuration file to `plonecli` to set some configuration variables which are needed to properly run the subtemplates.
-
-For example, you can add a behavior to your package with the following command.
+For example, you can add a content type to your package with the following command.
 
 ```shell
-plonecli add -b .mrbob.ini behavior
+make add content_type
 ```
 
-You can add a control panel with the following command.
+You can add a behavior with the following command.
 
 ```shell
-plonecli add -b .mrbob.ini controlpanel
+make add behavior
 ```
 
 ```{seealso}
 You can check the list of available subtemplates in the [`bobtemplates.plone` `README.md` file](https://github.com/plone/bobtemplates.plone/?tab=readme-ov-file#provided-subtemplates).
 See also the documentation of [Mockup and Patternslib](https://6.docs.plone.org/classic-ui/mockup.html) for how to build the UI toolkit for Classic UI.
 ```
-
 
 ## Contribute
 
