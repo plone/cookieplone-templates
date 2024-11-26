@@ -1,6 +1,6 @@
 {
   "title": "Volto Add-on",
-  "frontend_addon_name": "volto-addon",
+  "frontend_addon_name": "{{ cookiecutter.title | slugify }}",
   "description": "A new add-on for Volto",
   "author": "Plone Community",
   "email": "collective@plone.org",
