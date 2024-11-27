@@ -16,4 +16,6 @@
   </genericsetup:upgradeSteps>
   -->
 
+  <!-- -*- extra stuff goes here -*- -->
+
 </configure>

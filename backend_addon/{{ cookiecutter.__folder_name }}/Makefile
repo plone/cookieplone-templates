@@ -115,3 +115,7 @@ test: $(BIN_FOLDER)/tox ## run tests
 .PHONY: test-coverage
 test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
 	$(BIN_FOLDER)/tox -e coverage
+
+## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
+add: $(BIN_FOLDER)/pipx
+	$(BIN_FOLDER)/pipx run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
