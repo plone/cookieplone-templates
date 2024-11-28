@@ -149,3 +149,8 @@ acceptance-image-build:  ## Build Docker Images
 	{%- else %}
 	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 	{%- endif %}
+
+## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
+add: $(BIN_FOLDER)/pipx
+	$(BIN_FOLDER)/pipx run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+
