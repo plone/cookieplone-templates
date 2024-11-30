@@ -24,7 +24,10 @@
     "dry-release": "release-it --dry-run",
     "release": "release-it",
     "release-major-alpha": "release-it major --preRelease=alpha",
-    "release-alpha": "release-it --preRelease=alpha"
+    "release-alpha": "release-it --preRelease=alpha",
+    "test": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "storybook-build": "storybook build"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -33,6 +36,25 @@
   },
   "devDependencies": {
     "@plone/scripts": "{{ cookiecutter.__version_plone_scripts }}",
-    "release-it": "{{ cookiecutter.__version_release_it }}"
+    "@vitejs/plugin-react": "^4.3.1",
+    "release-it": "{{ cookiecutter.__version_release_it }}",
+    "vite": "^5.3.1",
+    "vite-plugin-markdown": "^2.2.0",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@storybook/react": "^8.1.10",
+    "@storybook/react-vite": "^8.1.10",
+    "@storybook/addon-a11y": "^8.1.10",
+    "@storybook/addon-actions": "^8.1.10",
+    "@storybook/addon-controls": "^8.1.10",
+    "@storybook/addon-docs": "^8.1.10",
+    "@storybook/addon-essentials": "^8.1.10",
+    "@storybook/addon-interactions": "^8.1.10",
+    "@storybook/addon-links": "^8.1.10",
+    "@storybook/addon-onboarding": "^8.1.10",
+    "@storybook/blocks": "^8.1.10",
+    "storybook-react-intl": "^3.0.1"
   }
 }
