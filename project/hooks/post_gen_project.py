@@ -36,6 +36,10 @@ DEVOPS_TO_REMOVE = {
         "devops/.env_gha",
         "devops/README-GHA.md",
     ],
+    "gitlab": [
+        ".gitlab-ci.yml",
+        "devops/README-GITLAB.md",
+    ],
 }
 
 
@@ -45,8 +49,13 @@ def handle_devops_ansible(context: OrderedDict, output_dir: Path):
 
 
 def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
-    """Clean up ansible."""
+    """Clean up GitHub Actions deploy files but not docker image generation files."""
     files.remove_files(output_dir, DEVOPS_TO_REMOVE["gha"])
+
+
+def handle_remove_devops_gitlab(context: OrderedDict, output_dir: Path):
+    """clean up GitLab deployment files"""
+    files.remove_files(output_dir, DEVOPS_TO_REMOVE["gitlab"])
 
 
 def handle_git_initialization(context: OrderedDict, output_dir: Path):
@@ -86,6 +95,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     # Use the same base folder
     folder_name = output_dir.name
     output_dir = output_dir.parent
+
     generator.generate_subtemplate(
         "sub/project_settings", output_dir, folder_name, context
     )
@@ -113,6 +123,13 @@ def main():
             "Remove GHA deployment files",
             not int(
                 context.get("devops_gha_deploy")
+            ),  # {{ cookiecutter.devops_gha_deploy }}
+        ],
+        [
+            handle_remove_devops_gitlab,
+            "Remove GitLab CI/CD deployment files",
+            not int(
+                context.get("devops_gitlab_deploy")
             ),  # {{ cookiecutter.devops_gha_deploy }}
         ],
         [
