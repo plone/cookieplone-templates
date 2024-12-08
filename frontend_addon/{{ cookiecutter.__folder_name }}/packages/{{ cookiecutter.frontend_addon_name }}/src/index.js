@@ -1,5 +1,4 @@
 const applyConfig = (config) => {
-  };
   return config;
 };
 
