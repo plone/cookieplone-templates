@@ -24,4 +24,5 @@ repos:
         entry: make ci-i18n
         language: system
         files: '^packages/.*/src/.*/?.*.(js|jsx|ts|tsx)$'
+        exclude: '^packages/.*/src/index.js'
         types: [file]
