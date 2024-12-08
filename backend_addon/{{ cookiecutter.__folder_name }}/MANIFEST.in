@@ -10,6 +10,8 @@ include .editorconfig
 include *.txt
 include *.yml
 include *.md
+include bobtemplate.cfg
+include .mrbob.ini
 exclude *-mxdev.txt
 exclude Dockerfile
 exclude mx.ini
