@@ -48,7 +48,7 @@ payload = {
     "distribution_name": "classic",
 {%- endif %}
 {% if cookiecutter.plone_version >= "6.1" and cookiecutter.__feature_headless == "1" -%}
-    "distribution_name": "default",
+    "distribution_name": "volto",
 {%- endif %}
     "setup_content": False,
     "default_language": "{{ cookiecutter.__profile_language }}",
