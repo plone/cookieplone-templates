@@ -45,7 +45,7 @@ def main():
     check_results = sanity_check()
     msg = dedent(
         """
-        Creating a new Volto Addon
+        Creating a new Seven Addon
 
         Sanity check results:
 

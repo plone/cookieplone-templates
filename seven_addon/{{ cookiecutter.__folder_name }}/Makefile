@@ -48,26 +48,26 @@ start: ## Starts Volto, allowing reloading of the add-on during development
 build: ## Build a production bundle for distribution of the project with the add-on
 	pnpm build
 
-../registry/dist: $(shell find ../registry/src -type f)
-	(cd ../../ && pnpm build:registry)
+core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
+	pnpm build:registry
 
-../components/dist: $(shell find ../components/src -type f)
-	(cd ../../ && pnpm build:components)
+core/packages/components/dist: $(shell find core/packages/components/src -type f)
+	pnpm build:components
 
-../client/dist: $(shell find ../client/src -type f)
-	(cd ../../ && pnpm build:client)
+core/packages/client/dist: $(shell find core/packages/client/src -type f)
+	pnpm build:client
 
-../providers/dist: $(shell find ../providers/src -type f)
-	(cd ../../ && pnpm build:providers)
+core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
+	pnpm build:providers
 
-../helpers/dist: $(shell find ../helpers/src -type f)
-	(cd ../../ && pnpm build:helpers)
+core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
+	pnpm build:helpers
 
-../react-router/dist: $(shell find ../react-router/src -type f)
-	(cd ../../ && pnpm build:react-router)
+core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
+	pnpm build:react-router
 
 .PHONY: build-deps
-build-deps: ../registry/dist ../components/dist ../client/dist ../providers/dist ../react-router/dist ../helpers/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/providers/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n
