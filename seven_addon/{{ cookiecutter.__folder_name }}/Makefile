@@ -49,22 +49,22 @@ build: ## Build a production bundle for distribution of the project with the add
 	pnpm build
 
 core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
-	pnpm build:registry
+	pnpm --filter @plone/registry build
 
 core/packages/components/dist: $(shell find core/packages/components/src -type f)
-	pnpm build:components
+	pnpm --filter @plone/components build
 
 core/packages/client/dist: $(shell find core/packages/client/src -type f)
-	pnpm build:client
+	pnpm --filter @plone/client build
 
 core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
-	pnpm build:providers
+	pnpm --filter @plone/providers build
 
 core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
-	pnpm build:helpers
+	pnpm --filter @plone/helpers build
 
 core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
-	pnpm build:react-router
+	pnpm --filter @plone/react-router build
 
 .PHONY: build-deps
 build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/providers/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
