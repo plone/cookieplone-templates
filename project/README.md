@@ -10,7 +10,7 @@ Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [P
 ## Features ✨
 
 - Tailored for Plone 6
-- Compatible with Python 3.8, 3.9, 3.10, 3.11, 3.12
+- Compatible with Python 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
 
 ## Getting Started 🏁
 
