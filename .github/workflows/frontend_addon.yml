@@ -97,39 +97,39 @@ jobs:
           key: binary-${{ env.NODE_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install generated package
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make install
 
       - name: Run unit tests
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make ci-test
 
       - name: Run i18n tests
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make i18n
 
       - name: Run linting
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make lint
 
       - name: Run formatting
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make format
 
       - name: Run Storybook
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make storybook-build
 
       - name: Start Servers
         uses: JarvusInnovations/background-action@v1
         with:
-          working-directory: frontend_addon/volto-addon
+          working-directory: frontend_addon/volto-add-on
           run: |
             make ci-acceptance-backend-start &
             make acceptance-frontend-prod-start &
@@ -157,6 +157,6 @@ jobs:
           log-output-if: failure
 
       - name: Run acceptance tests
-        working-directory: frontend_addon/volto-addon
+        working-directory: frontend_addon/volto-add-on
         run: |
           make ci-acceptance-test
