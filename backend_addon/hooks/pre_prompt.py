@@ -13,8 +13,6 @@ from packaging.version import Version
 
 
 SUPPORTED_PYTHON_VERSIONS = [
-    "3.8",
-    "3.9",
     "3.10",
     "3.11",
     "3.12",
