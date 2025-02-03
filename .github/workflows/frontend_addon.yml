@@ -74,11 +74,11 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Enable corepack
-        working-directory: frontend_addon/volto-add-on
-        run: corepack enable
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
 
       - name: Get pnpm store directory
-        working-directory: frontend_addon/volto-add-on
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
