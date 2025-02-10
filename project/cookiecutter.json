@@ -78,7 +78,7 @@
       "nl": "Nederlands",
       "fi": "Suomi"
     },
-    "github_organization": "GitHub-, GitLab-User (or -Organization) Username from url",
+    "github_organization": "GitHub or GitLab username or organization slug from URL",
     "container_registry": {
       "__prompt__": "Container Registry",
       "github": "GitHub Container Registry",
