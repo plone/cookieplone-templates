@@ -45,9 +45,12 @@ site_id = "Plone"
 payload = {
     "title": "{{ cookiecutter.title }}",
     "profile_id": _DEFAULT_PROFILE,
-{% if cookiecutter.plone_version >= "6.1" %}
+{% if cookiecutter.plone_version >= "6.1" and cookiecutter.__feature_headless == "0" -%}
+    "distribution_name": "classic",
+{%- endif %}
+{% if cookiecutter.plone_version >= "6.1" and cookiecutter.__feature_headless == "1" -%}
     "distribution_name": "volto",
-{% endif %}
+{%- endif %}
     "setup_content": False,
     "default_language": "{{ cookiecutter.__profile_language }}",
     "portal_timezone": "UTC",

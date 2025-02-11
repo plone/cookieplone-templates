@@ -10,6 +10,8 @@
   "plone_version": "{{ 'No' | latest_plone }}",
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
+  "feature_headless": ["1", "0"],
+  "__feature_headless": "{{ cookiecutter.feature_headless }}",
   "__version_package": "1.0.0a0",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
