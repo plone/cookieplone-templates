@@ -200,4 +200,4 @@ The project is licensed under the MIT license.
 
 ## Credits and Acknowledgements 🙏
 
-Crafted with care by **{{ cookiecutter.__generator_signature }}**. A special thanks to all contributors and supporters!
+{{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!
