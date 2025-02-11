@@ -1,6 +1,4 @@
 ---
-name: {{ cookiecutter.__devops_compose_name }}
-
 services:
   traefik:
     image: traefik:{{ cookiecutter.__devops_traefik_version }}

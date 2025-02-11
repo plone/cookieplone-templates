@@ -13,6 +13,7 @@ GIT_FOLDER=$(CURRENT_DIR)/.git
 
 PROJECT_NAME={{ cookiecutter.project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
+COMPOSE_PROJECT_NAME={{ cookiecutter.__devops_compose_name }}
 
 VOLTO_VERSION=$(shell cat frontend/mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 PLONE_VERSION=$(shell cat backend/version.txt)
