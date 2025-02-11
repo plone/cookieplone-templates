@@ -14,8 +14,6 @@
 Ensure you have the following installed:
 
 - Python 3.11 🐍
-- Node {{ cookiecutter.__node_version }} 🟩
-- pnpm 🧶
 - Docker 🐳
 
 ### Installation 🔧

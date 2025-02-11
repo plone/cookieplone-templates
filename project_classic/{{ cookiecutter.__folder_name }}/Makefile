@@ -14,7 +14,6 @@ GIT_FOLDER=$(CURRENT_DIR)/.git
 PROJECT_NAME={{ cookiecutter.project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
-VOLTO_VERSION=$(shell cat frontend/mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 PLONE_VERSION=$(shell cat backend/version.txt)
 
 PRE_COMMIT=pipx run --spec 'pre-commit=={{ cookiecutter.__pre_commit_version }}' pre-commit
@@ -34,26 +33,6 @@ all: install
 .PHONY: help
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-###########################################
-# Frontend
-###########################################
-.PHONY: frontend-install
-frontend-install:  ## Install React Frontend
-	$(MAKE) -C "./frontend/" install
-
-.PHONY: frontend-build
-frontend-build:  ## Build React Frontend
-	$(MAKE) -C "./frontend/" build
-
-.PHONY: frontend-start
-frontend-start:  ## Start React Frontend
-	$(MAKE) -C "./frontend/" start
-
-.PHONY: frontend-test
-frontend-test:  ## Test frontend codebase
-	@echo "Test frontend"
-	$(MAKE) -C "./frontend/" test
 
 ###########################################
 # Backend
@@ -86,22 +65,19 @@ backend-test:  ## Test backend codebase
 
 .PHONY: install
 install:  ## Install
-	@echo "Install Backend & Frontend"
+	@echo "Install Backend"
 	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	$(MAKE) backend-install
-	$(MAKE) frontend-install
 
 .PHONY: start
 start:  ## Start
 	@echo "Starting application"
 	$(MAKE) backend-start
-	$(MAKE) frontend-start
 
 .PHONY: clean
 clean:  ## Clean installation
 	@echo "Clean installation"
 	$(MAKE) -C "./backend/" clean
-	$(MAKE) -C "./frontend/" clean
 
 .PHONY: check
 check:  ## Lint and Format codebase
@@ -112,16 +88,14 @@ check:  ## Lint and Format codebase
 i18n:  ## Update locales
 	@echo "Update locales"
 	$(MAKE) -C "./backend/" i18n
-	$(MAKE) -C "./frontend/" i18n
 
 .PHONY: test
-test:  backend-test frontend-test ## Test codebase
+test:  backend-test ## Test codebase
 
 .PHONY: build-images
 build-images:  ## Build docker images
 	@echo "Build"
 	$(MAKE) -C "./backend/" build-image
-	$(MAKE) -C "./frontend/" build-image
 
 ## Docker stack
 .PHONY: stack-start
@@ -158,36 +132,15 @@ acceptance-backend-dev-start:
 	@echo "Start acceptance backend"
 	$(MAKE) -C "./backend/" acceptance-backend-start
 
-.PHONY: acceptance-frontend-dev-start
-acceptance-frontend-dev-start:
-	@echo "Start acceptance frontend"
-	$(MAKE) -C "./frontend/" acceptance-frontend-dev-start
-
-.PHONY: acceptance-test
-acceptance-test:
-	@echo "Start acceptance tests in interactive mode"
-	$(MAKE) -C "./frontend/" acceptance-test
-
 # Build Docker images
-.PHONY: acceptance-frontend-image-build
-acceptance-frontend-image-build:
-	@echo "Build acceptance frontend image"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
-
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:
 	@echo "Build acceptance backend image"
 	@docker build backend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 .PHONY: acceptance-images-build
-acceptance-images-build: ## Build Acceptance frontend/backend images
+acceptance-images-build: ## Build Acceptance backend image
 	$(MAKE) acceptance-backend-image-build
-	$(MAKE) acceptance-frontend-image-build
-
-.PHONY: acceptance-frontend-container-start
-acceptance-frontend-container-start:
-	@echo "Start acceptance frontend"
-	@docker run --rm -p 3000:3000 --name {{ cookiecutter.project_slug }}-frontend-acceptance --link {{ cookiecutter.project_slug }}-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d {{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}-frontend:acceptance
 
 .PHONY: acceptance-backend-container-start
 acceptance-backend-container-start:
@@ -197,18 +150,8 @@ acceptance-backend-container-start:
 .PHONY: acceptance-containers-start
 acceptance-containers-start: ## Start Acceptance containers
 	$(MAKE) acceptance-backend-container-start
-	$(MAKE) acceptance-frontend-container-start
 
 .PHONY: acceptance-containers-stop
 acceptance-containers-stop: ## Stop Acceptance containers
 	@echo "Stop acceptance containers"
-	@docker stop {{ cookiecutter.project_slug }}-frontend-acceptance
 	@docker stop {{ cookiecutter.project_slug }}-backend-acceptance
-
-.PHONY: ci-acceptance-test
-ci-acceptance-test:
-	@echo "Run acceptance tests in CI mode"
-	$(MAKE) acceptance-containers-start
-	pnpm dlx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
-	$(MAKE) -C "./frontend/" ci-acceptance-test
-	$(MAKE) acceptance-containers-stop

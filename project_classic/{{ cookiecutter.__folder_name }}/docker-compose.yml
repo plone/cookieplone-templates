@@ -56,39 +56,6 @@ services:
       - backend
 
 {%- endif %}
-  frontend:
-    build:
-      context: ./frontend
-      args:
-        - VOLTO_VERSION=${VOLTO_VERSION}
-    environment:
-      RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
-    depends_on:
-      - backend
-    labels:
-      - traefik.enable=true
-      - traefik.constraint-label=public
-      # Service
-      - traefik.http.services.svc-frontend.loadbalancer.server.port=3000
-      # Routers
-      ## /
-      {%- if cookiecutter.devops_cache == '0' %}
-      - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.project_slug }}.localhost`)
-      - traefik.http.routers.rt-frontend.entrypoints=http
-      - traefik.http.routers.rt-frontend.service=svc-frontend
-      - traefik.http.routers.rt-frontend.middlewares=gzip
-      {%- endif %}
-      {%- if cookiecutter.devops_cache == '1' %}
-      ### Router: Varnish Public
-      - traefik.http.routers.rt-frontend-public.rule=Host(`{{ cookiecutter.project_slug }}.localhost`)
-      - traefik.http.routers.rt-frontend-public.entrypoints=http
-      - traefik.http.routers.rt-frontend-public.service=svc-varnish
-      - traefik.http.routers.rt-frontend-public.middlewares=gzip
-      ### Router: Internal
-      - traefik.http.routers.rt-frontend-internal.rule=Host(`{{ cookiecutter.project_slug }}.localhost`) && Headers(`X-Varnish-Routed`, `1`)
-      - traefik.http.routers.rt-frontend-internal.entrypoints=http
-      - traefik.http.routers.rt-frontend-internal.service=svc-frontend
-      {%- endif %}
 
   backend:
     build:

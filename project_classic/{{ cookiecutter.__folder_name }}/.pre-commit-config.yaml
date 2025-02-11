@@ -8,9 +8,3 @@ repos:
         args: ["-p", "backend/"]
         files: "^backend/.*"
         stages: ["commit"]
-      - id: sub-pre-commit
-        alias: frontend
-        name: "pre-commit for frontend"
-        args: ["-p", "frontend"]
-        files: "^frontend/.*"
-        stages: ["commit"]

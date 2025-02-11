@@ -16,8 +16,6 @@ BACKEND_ADDON_REMOVE = [
     ".meta.toml",
 ]
 
-FRONTEND_ADDON_REMOVE = [".github"]
-
 DEVOPS_TO_REMOVE = {
     "ansible": [
         "devops/.env_dist",
@@ -58,7 +56,7 @@ def generate_backend_addon(context, output_dir):
     """Run Plone Addon generator."""
     output_dir = output_dir
     folder_name = "backend"
-    # Headless
+    # Not Headless
     context["feature_headless"] = "0"
     generator.generate_subtemplate(
         "backend_addon", output_dir, folder_name, context, BACKEND_ADDON_REMOVE
@@ -79,6 +77,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     # Use the same base folder
     folder_name = output_dir.name
     output_dir = output_dir.parent
+    # Not Headless
     context["feature_headless"] = "0"
     generator.generate_subtemplate(
         "sub/project_settings", output_dir, folder_name, context
