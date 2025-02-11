@@ -40,6 +40,14 @@ def context(cookieplone_root) -> dict:
 
 
 @pytest.fixture(scope="session")
+def context_devops_traefik(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["devops_traefik"] = "1"
+    return new_context
+
+
+@pytest.fixture(scope="session")
 def context_devops_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
@@ -52,6 +60,14 @@ def context_no_git(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
     new_context["__project_git_initialize"] = "0"
+    return new_context
+
+
+@pytest.fixture(scope="session")
+def context_devops_no_traefik(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["devops_traefik"] = "0"
     return new_context
 
 
@@ -115,6 +131,12 @@ def cutter_result_devops_no_ansible(cookies_session, context_devops_no_ansible):
 def cutter_result_devops_no_gha_deploy(cookies_session, context_devops_no_gha_deploy):
     """Cookiecutter result."""
     return cookies_session.bake(extra_context=context_devops_no_gha_deploy)
+
+
+@pytest.fixture(scope="session")
+def cutter_devops_result_traefik(cookies_session, context_devops_traefik):
+    """Cookiecutter result."""
+    return cookies_session.bake(extra_context=context_devops_traefik)
 
 
 @pytest.fixture(scope="session")

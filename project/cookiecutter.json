@@ -13,6 +13,7 @@
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
+  "devops_traefik": ["1", "0"],
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
@@ -84,6 +85,11 @@
       "github": "GitHub Container Registry",
       "docker_hub": "Docker Hub",
       "gitlab": "GitLab"
+    },
+    "devops_traefik": {
+      "__prompt__": "Should we use a traefik server?",
+      "1": "Yes",
+      "0": "No"
     },
     "devops_cache": {
       "__prompt__": "Should we setup a caching server?",

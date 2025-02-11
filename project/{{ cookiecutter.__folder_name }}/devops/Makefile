@@ -103,11 +103,13 @@ stack-status: ## Check status of stack
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Status in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} stack ps -f "desired-state=running" $(STACK_NAME)
 
+{%- if cookiecutter.devops_traefik == '1' %}
 .PHONY: stack-logs-webserver
 stack-logs-webserver: ## Display webserver logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for webserver in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_traefik
 
+{%- endif %}
 .PHONY: stack-logs-frontend
 stack-logs-frontend: ## Display frontend logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for frontend in context $(DEPLOY_ENV) $(RESET)"

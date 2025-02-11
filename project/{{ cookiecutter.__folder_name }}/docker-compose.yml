@@ -2,6 +2,7 @@
 name: {{ cookiecutter.__devops_compose_name }}
 
 services:
+{%- if cookiecutter.devops_traefik == '1' %}
   traefik:
     image: traefik:{{ cookiecutter.__devops_traefik_version }}
 
@@ -34,6 +35,7 @@ services:
       - --log
       - --api
 
+{%- endif %}
 {%- if cookiecutter.devops_cache == '1' %}
   purger:
     image: ghcr.io/kitconcept/cluster-purger:latest
@@ -65,6 +67,7 @@ services:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
     depends_on:
       - backend
+{%- if cookiecutter.devops_traefik == '1' %}
     labels:
       - traefik.enable=true
       - traefik.constraint-label=public
@@ -89,6 +92,10 @@ services:
       - traefik.http.routers.rt-frontend-internal.entrypoints=http
       - traefik.http.routers.rt-frontend-internal.service=svc-frontend
       {%- endif %}
+{%- else %}
+    ports:
+      - 80:3000
+{%- endif %}
 
   backend:
     build:
@@ -99,6 +106,7 @@ services:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_NAME:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
       - db
+{%- if cookiecutter.devops_traefik == '1' %}
     labels:
       - traefik.enable=true
       - traefik.constraint-label=public
@@ -147,6 +155,10 @@ services:
       - traefik.http.routers.rt-backend-classic.entrypoints=http
       - traefik.http.routers.rt-backend-classic.service=svc-backend
       - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
+{%- else %}
+    ports:
+      - 8080:8080
+{%- endif %}
 
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}

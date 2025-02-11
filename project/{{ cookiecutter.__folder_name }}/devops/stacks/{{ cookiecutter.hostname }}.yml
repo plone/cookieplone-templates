@@ -2,6 +2,7 @@
 version: '3.8'
 
 services:
+{%- if cookiecutter.devops_traefik == '1' %}
   traefik:
     image: traefik:{{ cookiecutter.__devops_traefik_version }}
 
@@ -81,6 +82,7 @@ services:
       - {{ cookiecutter.__devops_swarm_public_network }}
       - {{ cookiecutter.__devops_swarm_stack_network }}
 
+{%- endif %}
 {%- if cookiecutter.devops_cache == '1' %}
 
   purger:
@@ -150,6 +152,7 @@ services:
         parallelism: 1
         delay: 5s
         order: start-first
+{%- if cookiecutter.devops_traefik == '1' %}
       labels:
         - traefik.enable=true
         - traefik.constraint-label=public
@@ -170,6 +173,10 @@ services:
         - traefik.http.routers.rt-frontend.entrypoints=http
         - traefik.http.routers.rt-frontend.service=svc-frontend
 {%- endif %}
+{%- else %}
+      ports:
+        - 80:3000
+{%- endif %}
 
   backend:
     image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
@@ -186,6 +193,7 @@ services:
         parallelism: 1
         delay: 5s
         order: start-first
+{%- if cookiecutter.devops_traefik == '1' %}
       labels:
         - traefik.enable=true
         - traefik.constraint-label=public
@@ -227,6 +235,10 @@ services:
         - traefik.http.routers.rt-backend-classic.tls=true
         - traefik.http.routers.rt-backend-classic.service=svc-backend
         - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
+{%- else %}
+      ports:
+        - 8080:8080
+{%- endif %}
 
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}
@@ -246,7 +258,9 @@ services:
       - {{ cookiecutter.__devops_swarm_stack_network }}
 
 volumes:
+{%- if cookiecutter.devops_traefik == '1' %}
   vol-traefik-certs: {}
+{%- endif %}
   vol-site-data:
     driver_opts:
       type: none
