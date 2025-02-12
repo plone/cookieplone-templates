@@ -13,6 +13,7 @@
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
+  "storage": ["relstorage", "filestorage"],
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
@@ -84,6 +85,11 @@
       "github": "GitHub Container Registry",
       "docker_hub": "Docker Hub",
       "gitlab": "GitLab"
+    },
+    "storage": {
+      "__prompt__": "Storage backend",
+      "relstorage": "RelStorage with PostgreSQL",
+      "filestorage": "Local FileStorage, implies a single backend"
     },
     "devops_cache": {
       "__prompt__": "Should we setup a caching server?",

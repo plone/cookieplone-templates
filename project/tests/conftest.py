@@ -35,6 +35,7 @@ def context(cookieplone_root) -> dict:
         "github_organization": "plonegovbr",
         "__project_git_initialize": "1",
         "container_registry": "github",
+        "storage": "relstorage",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
@@ -96,6 +97,7 @@ def bad_context() -> dict:
         "language_code": "en-",  # error
         "github_organization": "plonegovbr",
         "container_registry": " ",  # error
+        "storage": " ",  # error
     }
 
 

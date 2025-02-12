@@ -102,6 +102,7 @@ Every project is unique, and we provide a variety of options to ensure that your
 | `language_code`       | Language to be used on the site.                                                                                                                     | **pt-br**                     |
 | `github_organization` | Used for GitHub, GitLab, and Docker repositories.  GitHub or GitLab username or organization slug from URL.                                           | **collective**                |
 | `container_registry`  | Container registry to be used.                                                                                                                       | **github**                    |
+| `storage`             | Storage backend to be used.                                                                                                                          | **github**                    |
 | `devops_ansible`      | Should we create an Ansible playbook to bootstrap and deploy this project?                                                                           | **Yes**                       |
 | `devops_gha_deploy`   | Should we create a GitHub action to deploy this project?                                                                                             | **Yes**                       |
 

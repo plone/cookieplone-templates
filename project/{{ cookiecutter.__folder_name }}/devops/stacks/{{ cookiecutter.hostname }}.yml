@@ -173,15 +173,24 @@ services:
 
   backend:
     image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
+{%- if cookiecutter.storage == 'relstorage' %}
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
       - db
+{%- else %}
+    volumes:
+      - vol-site-data:/data
+{%- endif %}
     networks:
       - {{ cookiecutter.__devops_swarm_public_network }}
       - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
+{%- if cookiecutter.storage == 'relstorage' %}
       replicas: 2
+{%- else %}
+      replicas: 1
+{%- endif %}
       update_config:
         parallelism: 1
         delay: 5s
@@ -228,6 +237,7 @@ services:
         - traefik.http.routers.rt-backend-classic.service=svc-backend
         - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
+{%- if cookiecutter.storage == 'relstorage' %}
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}
     environment:
@@ -245,6 +255,7 @@ services:
     networks:
       - {{ cookiecutter.__devops_swarm_stack_network }}
 
+{%- endif %}
 volumes:
   vol-traefik-certs: {}
   vol-site-data:
