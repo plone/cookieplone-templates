@@ -51,8 +51,13 @@ setup(
         "setuptools",
         "Plone",
         "plone.api",
+        {% if cookiecutter.__feature_headless == '1' -%}
         "plone.restapi",
         "plone.volto",
+        {%- endif %}
+        {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
+        "plone.classicui",
+        {%- endif %}
         "plone.exportimport",
     ],
     extras_require={
