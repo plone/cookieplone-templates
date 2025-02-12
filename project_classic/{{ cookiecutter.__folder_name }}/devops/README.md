@@ -14,9 +14,7 @@ We deploy a robust website running [Plone](https://plone.org/) using a Docker st
 
 - **Traefik:** Serves as the router and SSL termination, integrated with [Let's Encrypt](https://letsencrypt.org/) for free SSL certificates, ensuring that our website is secure and trusted. 🔒🌐
 
-- **Plone Frontend using Volto:** A modern, fast, React-based frontend that delivers an exceptional user experience. It's like having a sleek, high-performance car to navigate the web! 🏎️💨
-
-- **Plone Backend:** Responsible for the API, it's the engine under the hood, ensuring that data is processed, stored, and retrieved efficiently. 🏭🚀
+- **Plone with Classic UI:** The engine under the hood and the frontend using server-side rendered templates. 🏭🚀
 
 - **Postgres 14 Database:** A reliable, robust database to store the site data, ensuring that our content is safe, secure, and quickly accessible. 🗃️⚡
 
@@ -135,5 +133,4 @@ make stack-create-site
 Monitor logs for each service using the commands below:
 
 - Traefik: ```make stack-logs-webserver```
-- Frontend: ```make stack-logs-frontend```
 - Backend: ```make stack-logs-backend```

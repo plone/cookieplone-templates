@@ -109,7 +109,6 @@ services:
       - 'workspace_backend=192k'
     depends_on:
       - traefik
-      - frontend
       - backend
     networks:
       - {{ cookiecutter.__devops_swarm_stack_network }}
@@ -134,43 +133,6 @@ services:
         - traefik.http.routers.rt-varnish-public.middlewares=gzip
 {%- endif %}
 
-  frontend:
-    image: {{ cookiecutter.__container_image_prefix }}-frontend:${STACK_PARAM:-latest}
-    environment:
-      RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
-      RAZZLE_API_PATH: https://{{ cookiecutter.hostname }}
-    depends_on:
-      - backend
-    networks:
-      - {{ cookiecutter.__devops_swarm_public_network }}
-      - {{ cookiecutter.__devops_swarm_stack_network }}
-    deploy:
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 5s
-        order: start-first
-      labels:
-        - traefik.enable=true
-        - traefik.constraint-label=public
-        # Service
-        - traefik.http.services.svc-frontend.loadbalancer.server.port=3000
-        # Routers
-{%- if cookiecutter.devops_cache == '0' %}
-        ## /
-        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`)
-        - traefik.http.routers.rt-frontend.entrypoints=https
-        - traefik.http.routers.rt-frontend.tls=true
-        - traefik.http.routers.rt-frontend.tls.certresolver=le
-        - traefik.http.routers.rt-frontend.service=svc-frontend
-        - traefik.http.routers.rt-frontend.middlewares=gzip
-{%- else %}
-        ## / (Internal)
-        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`) && Headers(`X-Varnish-Routed`, `1`)
-        - traefik.http.routers.rt-frontend.entrypoints=http
-        - traefik.http.routers.rt-frontend.service=svc-frontend
-{%- endif %}
-
   backend:
     image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
     environment:
@@ -191,41 +153,31 @@ services:
         - traefik.constraint-label=public
         # Services
         - traefik.http.services.svc-backend.loadbalancer.server.port=8080
-        # Middlewares
-        ## VHM rewrite /++api++/
-        - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.regex=^/\\+\\+api\\+\\+($$|/.*)"
-        - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.replacement=/VirtualHostBase/https/{{ cookiecutter.hostname }}/Plone/++api++/VirtualHostRoot$$1"
-        ## VHM rewrite /ClassicUI/
-        - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.regex=^/ClassicUI($$|/.*)"
-        - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.replacement=/VirtualHostBase/https/{{ cookiecutter.hostname }}/Plone/VirtualHostRoot/_vh_ClassicUI$$1"
-        ## Basic Authentication
-        ### Note: all dollar signs in the hash need to be doubled for escaping.
-        ### To create user:password pair, it's possible to use this command:
-        ### echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
-        ### Defaults to admin:admin
-        - traefik.http.middlewares.mw-backend-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
+        # Middleware
+        ## VHM points to /Plone
+        - "traefik.http.middlewares.mw-backend-vhm-classic.addprefix.prefix=/VirtualHostBase/http/{{ cookiecutter.project_slug }}.localhost/Plone/VirtualHostRoot/"
 
         # Routes
 {%- if cookiecutter.devops_cache == '0' %}
-        ## /++api++
-        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`)
-        - traefik.http.routers.rt-backend-api.entrypoints=https
-        - traefik.http.routers.rt-backend-api.tls=true
-        - traefik.http.routers.rt-backend-api.service=svc-backend
-        - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-api
-{%- else %}
-        ## /++api++ (Internal)
-        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`) && Headers(`X-Varnish-Routed`, `1`)
+        ## From incoming directly to backend
+        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.project_slug }}.localhost`)
         - traefik.http.routers.rt-backend-api.entrypoints=http
         - traefik.http.routers.rt-backend-api.service=svc-backend
-        - traefik.http.routers.rt-backend-api.middlewares=mw-backend-vhm-api
+        - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-classic
 {%- endif %}
-        ## /ClassicUI
-        - traefik.http.routers.rt-backend-classic.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/ClassicUI`)
-        - traefik.http.routers.rt-backend-classic.entrypoints=https
-        - traefik.http.routers.rt-backend-classic.tls=true
-        - traefik.http.routers.rt-backend-classic.service=svc-backend
-        - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
+{%- if cookiecutter.devops_cache == '1' %}
+        ## Router: From incoming to Varnish (public)
+        - traefik.http.routers.rt-backend-public.rule=Host(`{{ cookiecutter.project_slug }}.localhost`)
+        - traefik.http.routers.rt-backend-public.entrypoints=http
+        - traefik.http.routers.rt-backend-public.service=svc-varnish
+        - traefik.http.routers.rt-backend-public.middlewares=gzip
+
+        ## Router: from Varnish to backend (internal)
+        - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.project_slug }}.localhost`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-backend-internal.entrypoints=http
+        - traefik.http.routers.rt-backend-internal.service=svc-backend
+        - traefik.http.routers.rt-backend-internal.middlewares=mw-backend-vhm-classic
+{%- endif %}
 
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}
