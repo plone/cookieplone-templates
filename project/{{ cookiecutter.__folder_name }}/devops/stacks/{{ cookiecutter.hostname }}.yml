@@ -178,6 +178,11 @@ services:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
       - db
+{%- elif cookiecutter.storage == 'zeo' %}
+    environment:
+      ZEO_ADDRESS: "zeo:8100"
+    depends_on:
+      - zeo
 {%- else %}
     volumes:
       - vol-site-data:/data
@@ -186,7 +191,7 @@ services:
       - {{ cookiecutter.__devops_swarm_public_network }}
       - {{ cookiecutter.__devops_swarm_stack_network }}
     deploy:
-{%- if cookiecutter.storage == 'relstorage' %}
+{%- if cookiecutter.storage in ('relstorage', 'zeo') %}
       replicas: 2
 {%- else %}
       replicas: 1
@@ -252,6 +257,20 @@ services:
         order: stop-first
     volumes:
       - vol-site-data:/var/lib/postgresql/data
+    networks:
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+
+{%- elif cookiecutter.storage == 'zeo' %}
+  zeo:
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1s
+        order: stop-first
+    volumes:
+      - vol-site-data:/data
     networks:
       - {{ cookiecutter.__devops_swarm_stack_network }}
 

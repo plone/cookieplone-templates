@@ -100,6 +100,11 @@ services:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_NAME:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
       - db
+{%- elif cookiecutter.storage == 'zeo' %}
+    environment:
+      ZEO_ADDRESS: "zeo:8100"
+    depends_on:
+      - zeo
 {%- else %}
     volumes:
       - vol-site-data:/data
@@ -162,6 +167,12 @@ services:
       POSTGRES_DB: plone
     volumes:
       - vol-site-data:/var/lib/postgresql/data
+
+{%- elif cookiecutter.storage == 'zeo' %}
+  zeo:
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    volumes:
+      - vol-site-data:/data
 
 {%- endif %}
 volumes:
