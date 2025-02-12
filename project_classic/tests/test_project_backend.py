@@ -66,18 +66,14 @@ def test_backend_package_files_removed(cutter_result, filename: str):
     assert path.parent.exists()
 
 
-BACKEND_HEADLESS_FILE_CHECKS = [
-    ["setup.py", "plone.volto"],
-    ["setup.py", "plone.restapi"],
-    ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.volto"],
-    ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.restapi"],
-    ["src/plonegov/ploneorgbr/profiles/default/metadata.xml", "plone.volto:default"],
+BACKEND_CLASSIC_FILE_CHECKS = [
+    ["setup.py", "plone.classicui"],
 ]
 
 
-@pytest.mark.parametrize("filename,content", BACKEND_HEADLESS_FILE_CHECKS)
-def test_backend_headless_support(cutter_result, filename: str, content: str):
-    """Test backend files contain headless support."""
+@pytest.mark.parametrize("filename,content", BACKEND_CLASSIC_FILE_CHECKS)
+def test_backend_classic_support(cutter_result, filename: str, content: str):
+    """Test backend files contain classic support."""
     backend_folder = cutter_result.project_path / "backend"
     path = backend_folder / filename
     assert path.is_file()

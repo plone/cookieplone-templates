@@ -36,7 +36,6 @@ ANSIBLE_FILES = [
 
 GHA_ACTIONS_CI = [
     ".github/workflows/backend.yml",
-    ".github/workflows/frontend.yml",
 ]
 
 GHA_ACTIONS_DEPLOY = [

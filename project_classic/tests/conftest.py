@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-PLONE_VERSION = "6.0.10"
-VOLTO_VERSION = "18.0.0-alpha.31"
+PLONE_VERSION = "6.1.0"
+VOLTO_VERSION = "18.8.1"
 
 
 @pytest.fixture(scope="session")
@@ -28,9 +28,7 @@ def context(cookieplone_root) -> dict:
         "email": "gov@plone.org.br",
         "use_prerelease_versions": "Yes",
         "plone_version": PLONE_VERSION,
-        "volto_version": VOLTO_VERSION,
         "python_package_name": "plonegov.ploneorgbr",
-        "frontend_addon_name": "volto-ploneorgbr",
         "language_code": "en",
         "github_organization": "plonegovbr",
         "__project_git_initialize": "1",
@@ -90,9 +88,7 @@ def bad_context() -> dict:
         "author": "PloneGov-BR",
         "email": "gov@plone.org.br",
         "python_package_name": "plone-org-br",  # error
-        "frontend_addon_name": "volto-ploneorgbr",
         "plone_version": "5.2.8",  # error
-        "volto_version": "16.0.0-alpha.4",
         "language_code": "en-",  # error
         "github_organization": "plonegovbr",
         "container_registry": " ",  # error

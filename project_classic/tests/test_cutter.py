@@ -35,7 +35,6 @@ FOLDERS = [
     ".vscode",
     "backend",
     "devops",
-    "frontend",
 ]
 
 

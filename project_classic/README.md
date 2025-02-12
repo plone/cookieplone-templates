@@ -17,7 +17,6 @@ Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [P
 ### Prerequisites
 
 - **pipx**: A handy tool for installing and running Python applications.
-- **NodeJS & pnpm**: Essential for managing and running JavaScript packages.
 
 
 ### Installation Guide 🛠️
@@ -28,15 +27,11 @@ Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [P
 pip install pipx
 ```
 
-2. **NodeJS & pnpm**
 
-Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
-
-
-### Generate Your Plone 6 Project 🎉
+### Generate Your Plone 6 Classic UI Project 🎉
 
 ```shell
-pipx run cookieplone project
+pipx run cookieplone project_classic
 ```
 
 ### Use options to avoid prompts
@@ -62,24 +57,16 @@ make install
 
 ### Start Servers
 
-Backend:
-
 ```shell
 make backend-start
 ```
 
-Frontend:
-
-```shell
-make frontend-start
-```
 
 ### Rebuild After Changes
 
 ```shell
 make install
 make backend-start
-make frontend-start
 ```
 
 ## Project Generation Options 🛠️
@@ -96,9 +83,7 @@ Every project is unique, and we provide a variety of options to ensure that your
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `use_prerelease_versions`  | Use non-stable versions of Plone and Volto, (The default value could also be set via `USE_PRERELEASE` environment variable.                                   | **Yes**                       |
 | `plone_version`       | Plone version to be used. This queries for the latest available Plone 6 version and presents it to you as the default value.                         | **6.0.0**                     |
-| `volto_version`       | Volto (Plone Frontend) version to be used. This queries for the latest available Volto version and presents it to you as the default value.          | **16.4.1**    |
 | `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces or special characters are allowed. | **plone_site**                |
-| `frontend_addon_name`    | Name of the Volto addon package used to configure your frontend project. No spaces or special characters are allowed.                                | **volto-plone-site**          |
 | `language_code`       | Language to be used on the site.                                                                                                                     | **pt-br**                     |
 | `github_organization` | Used for GitHub, GitLab, and Docker repositories.                                                                                                             | **collective**                |
 | `container_registry`  | Container registry to be used.                                                                                                                       | **github**                    |
@@ -108,7 +93,7 @@ Every project is unique, and we provide a variety of options to ensure that your
 
 ## Dive into Your Project's Structure 🏗️
 
-Your generated project will have a well-organized structure, ensuring that both development and maintenance are a breeze. It includes separate sections for backend, frontend, and devops, each tailored for its specific role.
+Your generated project will have a well-organized structure, ensuring that both development and maintenance are a breeze. It includes separate sections for backend and devops, each tailored for its specific role.
 
 (Include the Structure and Reasoning section from the previous README.md here, as it provides a good overview of the project structure)
 

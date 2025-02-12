@@ -1,5 +1,5 @@
-ALLOWED_MISSING = ["feature_headless", "npm_package_name"]
-ALLOWED_NOT_USED = []
+ALLOWED_MISSING = ["feature_headless", "frontend_addon_name"]
+ALLOWED_NOT_USED = ["__gha_version_cache", "__gha_version_setup_node"]
 
 
 def test_no_missing_variables(variables_missing):

@@ -26,35 +26,14 @@ def test_project_files(cutter_result, filepath: str):
 
 
 @pytest.mark.parametrize(
-    "filepath",
-    [
-        "frontend/mrs.developer.json",
-        "frontend/package.json",
-    ],
-)
-def test_valid_json_files(cutter_result, filepath: str):
-    """Test generated json files are valid."""
-    folder = cutter_result.project_path
-    path = folder / filepath
-    with open(path, "r") as fh:
-        content = json.load(fh)
-    assert content
-
-
-@pytest.mark.parametrize(
     "file_path,schema_name",
     [
         [".github/workflows/backend.yml", "github-workflow"],
-        [".github/workflows/frontend.yml", "github-workflow"],
         [".github/workflows/manual_deploy.yml", "github-workflow"],
         [".github/workflows/varnish.yml", "github-workflow"],
         [".pre-commit-config.yaml", "pre-commit-config"],
         ["backend/.pre-commit-config.yaml", "pre-commit-config"],
-        ["frontend/.pre-commit-config.yaml", "pre-commit-config"],
         ["docker-compose.yml", "docker-compose"],
-        ["frontend/package.json", "package"],
-        ["frontend/packages/volto-ploneorgbr/package.json", "package"],
-        ["frontend/packages/volto-ploneorgbr/tsconfig.json", "tsconfig"],
     ],
 )
 def test_json_schema(
