@@ -74,13 +74,12 @@ And... you're all set! Your Plone site is up and running locally! 🚀
 
 This monorepo consists of three distinct sections: `backend`, `frontend`, and `devops`.
 
-- **backend**: Houses the API and Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
-- **frontend**: Contains the React (Volto) package.
+- **backend**: Houses Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
 - **devops**: Encompasses Docker Stack, Ansible playbooks, and Cache settings.
 
 ### Why This Structure? 🤔
 
-- All necessary codebases to run the site are contained within the repo (excluding existing addons for Plone and React).
+- All necessary codebases to run the site are contained within the repo (excluding existing addons for Plone).
 - Specific GitHub Workflows are triggered based on changes in each codebase (refer to .github/workflows).
 - Simplifies the creation of Docker images for each codebase.
 - Demonstrates Plone installation/setup without buildout.
@@ -97,7 +96,7 @@ Linters can be run individually within the `backend` or `frontend` folders.
 
 ## Internationalization 🌐
 
-Generate translation files for Plone and Volto with ease:
+Generate translation files for Plone with ease:
 
 ```shell
 make i18n

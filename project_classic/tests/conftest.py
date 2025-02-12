@@ -6,7 +6,6 @@ from pathlib import Path
 import pytest
 
 PLONE_VERSION = "6.1.0"
-VOLTO_VERSION = "18.8.1"
 
 
 @pytest.fixture(scope="session")
