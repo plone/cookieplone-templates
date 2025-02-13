@@ -3,9 +3,9 @@
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Plone Project 🌟
+# Cookieplone Plone Classic UI project 🌟
 
-Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
+Welcome to **Cookieplone Plone Classic UI Project**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
 
 ## Features ✨
 

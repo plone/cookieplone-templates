@@ -48,7 +48,7 @@ pipx run cookieplone
 | Template | Description |  |
 | --------- | --------- | --------- |
 | `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read More](./project/README.md) |
-| `A Plone Project with Classic UI`  | Create a new Plone project with backend. | [Read More](./project_classic/README.md) |
+| `A Plone Classic UI project`  | Create a new Plone project that uses Classic UI (Python only project). | [Read More](./project_classic/README.md) |
 | `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read More](./backend_addon/README.md) |
 | `Frontend Add-on for Plone`  | Create a new Node package to be used with Volto. | [Read More](./frontend_addon/README.md) |
 

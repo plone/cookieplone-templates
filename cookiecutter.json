@@ -7,8 +7,8 @@
     },
     "project_classic": {
         "path": "./project_classic",
-        "title": "A Plone Project with Classic UI",
-        "description": "Create a new Plone project with backend"
+        "title": "A Plone Classic UI project",
+        "description": "Create a new Plone project that uses Classic UI (Python only project)"
       },
     "backend_addon": {
       "path": "./backend_addon",
