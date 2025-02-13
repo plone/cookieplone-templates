@@ -119,12 +119,13 @@ stack-logs-backend: ## Display backend logs
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_backend
 
 {%- if cookiecutter.storage == 'relstorage' %}
+
 .PHONY: stack-logs-db
 stack-logs-db: ## Display db logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for db in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_db
-
 {%- endif %}
+
 .PHONY: stack-scale-services
 stack-scale-services: ## Scale services
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Scaling Frontend and Backend to $(DEPLOY_SCALES) in context $(DEPLOY_ENV) $(RESET)"

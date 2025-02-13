@@ -159,6 +159,7 @@ services:
       - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
 {%- if cookiecutter.storage == 'relstorage' %}
+
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}
     environment:
@@ -167,13 +168,13 @@ services:
       POSTGRES_DB: plone
     volumes:
       - vol-site-data:/var/lib/postgresql/data
-
 {%- elif cookiecutter.storage == 'zeo' %}
+
   zeo:
     image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
     volumes:
       - vol-site-data:/data
-
 {%- endif %}
+
 volumes:
   vol-site-data: {}
