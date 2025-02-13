@@ -65,7 +65,9 @@ setup(
             "zest.releaser[recommended]",
             "zestreleaser.towncrier",
             "plone.app.testing",
+            {% if cookiecutter.__feature_headless == '1' -%}
             "plone.restapi[test]",
+            {%- endif %}
             "pytest",
             "pytest-cov",
             "pytest-plone>=0.5.0",

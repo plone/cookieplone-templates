@@ -32,7 +32,7 @@ LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
 {% if cookiecutter.__feature_headless == "1" -%}
 ENV CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,{{ cookiecutter.python_package_name }}"
 {%- else %}
-ENV CONFIGURE_PACKAGES="plone.restapi,{{ cookiecutter.python_package_name }}"
+ENV CONFIGURE_PACKAGES="{{ cookiecutter.python_package_name }}"
 {%- endif %}
 ENV APPLY_PROFILES="{{ cookiecutter.python_package_name }}:default"
 
