@@ -15,13 +15,21 @@ context: OrderedDict = {{cookiecutter}}
 FEATURES_TO_REMOVE = {
     "feature_headless": [
         "serializers",
-    ]
+    ],
+    "feature_distribution": [
+        "distributions",
+    ],
 }
 
 
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
     output_dir = output_dir / "src" / "packagename"
     files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_headless"])
+
+
+def handle_feature_distribution(context: OrderedDict, output_dir: Path):
+    output_dir = output_dir / "src" / "packagename"
+    files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_distribution"])
 
 
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
@@ -46,6 +54,9 @@ def main():
     remove_headless = not int(
         context.get("feature_headless")
     )  # {{ cookiecutter.__feature_headless }}
+    remove_distribution = not int(
+        context.get("feature_distribution")
+    )  # {{ cookiecutter.__feature_distribution }}
     create_namespace_packages = not is_subtemplate
     initialize_git = bool(
         int(context.get("__backend_addon_git_initialize"))
@@ -59,6 +70,11 @@ def main():
             handle_feature_headless,
             "Remove files used in headless setup",
             remove_headless,
+        ],
+        [
+            handle_feature_distribution,
+            "Remove files used in distribution setup",
+            remove_distribution,
         ],
         [
             handle_create_namespace_packages,

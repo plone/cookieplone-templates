@@ -1,5 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+{% if cookiecutter.__feature_distribution == '1' %}
+    xmlns:plone="http://namespaces.plone.org/plone"
+{% endif %}
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="{{ cookiecutter.python_package_name }}"
     >
@@ -11,7 +14,19 @@
       file="permissions.zcml"
       />
 
-
+  {% if cookiecutter.__feature_distribution == '1' %}
+  <include package="plone.distribution" />
+  <plone:distribution
+      name="{{ cookiecutter.__distribution_name }}"
+      title="{{ cookiecutter.title }}"
+      description=""
+  {%- if cookiecutter.__feature_headless == '0' %}
+      headless="false"
+  {%- endif %}
+      directory="distributions/{{ cookiecutter.__distribution_name }}"
+      post_handler=".setuphandlers.post_handler"
+      />
+  {% endif %}
   <include file="dependencies.zcml" />
   <include file="profiles.zcml" />
   <include file="permissions.zcml"/>
