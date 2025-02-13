@@ -108,11 +108,6 @@ stack-logs-webserver: ## Display webserver logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for webserver in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_traefik
 
-.PHONY: stack-logs-frontend
-stack-logs-frontend: ## Display frontend logs
-	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for frontend in context $(DEPLOY_ENV) $(RESET)"
-	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_frontend
-
 .PHONY: stack-logs-backend
 stack-logs-backend: ## Display backend logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for backend in context $(DEPLOY_ENV) $(RESET)"
@@ -125,8 +120,8 @@ stack-logs-db: ## Display db logs
 
 .PHONY: stack-scale-services
 stack-scale-services: ## Scale services
-	@echo "$(GREEN)==> Stack $(STACK_NAME): Scaling Frontend and Backend to $(DEPLOY_SCALES) in context $(DEPLOY_ENV) $(RESET)"
-	${DOCKER_CMD_CONTEXT} service scale $(STACK_NAME)_frontend=$(DEPLOY_SCALES) $(STACK_NAME)_backend=$(DEPLOY_SCALES)
+	@echo "$(GREEN)==> Stack $(STACK_NAME): Scaling Backend to $(DEPLOY_SCALES) in context $(DEPLOY_ENV) $(RESET)"
+	${DOCKER_CMD_CONTEXT} service scale $(STACK_NAME)_backend=$(DEPLOY_SCALES)
 
 .PHONY: all
 all: ## Create new box, run ansible, deploy stack

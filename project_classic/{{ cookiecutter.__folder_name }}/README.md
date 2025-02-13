@@ -3,7 +3,6 @@
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookieplone-0083be.svg?logo=cookiecutter)](https://github.com/plone/cookiecutter-plone/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Backend Tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/backend.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/backend.yml)
-[![Frontend Tests](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/frontend.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/actions/workflows/frontend.yml)
 
 {{ cookiecutter.description }}
 
@@ -25,7 +24,7 @@ git clone git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.
 cd {{ cookiecutter.project_slug }}
 ```
 
-2. Install both Backend and Frontend:
+2. Install Backend:
 
 ```shell
 make install
@@ -45,19 +44,13 @@ make backend-create-site
 make backend-start
 ```
 
-3. In a new terminal, start the Frontend at [http://localhost:3000/](http://localhost:3000/):
-
-```shell
-make frontend-start
-```
-
 Voila! Your Plone site should be live and kicking! 🎉
 
 ### Local Stack Deployment 📦
 
 Deploy a local `Docker Compose` environment that includes:
 
-- Docker images for Backend and Frontend 🖼️
+- Docker image for Backend 🖼️
 - A stack with a Traefik router and a Postgres database 🗃️
 - Accessible at [http://{{ cookiecutter.project_slug }}.localhost](http://{{ cookiecutter.project_slug }}.localhost) 🌐
 
@@ -72,7 +65,7 @@ And... you're all set! Your Plone site is up and running locally! 🚀
 
 ## Project Structure 🏗️
 
-This monorepo consists of three distinct sections: `backend`, `frontend`, and `devops`.
+This monorepo consists of two distinct sections: `backend` and `devops`.
 
 - **backend**: Houses Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
 - **devops**: Encompasses Docker Stack, Ansible playbooks, and Cache settings.
@@ -92,7 +85,7 @@ To automatically format your code and ensure it adheres to quality standards, ex
 make check
 ```
 
-Linters can be run individually within the `backend` or `frontend` folders.
+Linters can be run within the `backend` folder.
 
 ## Internationalization 🌐
 

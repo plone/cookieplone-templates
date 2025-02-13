@@ -122,7 +122,7 @@ make stack-status
 
 ### Plone Site Creation
 
-If deploying for the first time, the frontend containers might not be `healthy` due to the absence of a configured Plone site on the backend. Create a new site with:
+Create a new site with:
 
 ```shell
 make stack-create-site
