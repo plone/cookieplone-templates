@@ -88,7 +88,7 @@
       "gitlab": "GitLab"
     },
     "storage": {
-      "__prompt__": "Storage backend",
+      "__prompt__": "What storage backend should we use in the stack?",
       "relstorage": "RelStorage with PostgreSQL",
       "zeo": "ZEO with FileStorage",
       "filestorage": "Local FileStorage, implies a single backend"
