@@ -27,7 +27,7 @@ def asbool(s):
 
 
 DELETE_EXISTING = asbool(os.getenv("DELETE_EXISTING"))
-{% if cookiecutter.__feature_headless == "1" -%}
+{%- if cookiecutter.__feature_headless == "1" %}
 EXAMPLE_CONTENT = asbool(os.getenv("EXAMPLE_CONTENT", "1"))  # Create example content by default
 {%- endif %}
 
