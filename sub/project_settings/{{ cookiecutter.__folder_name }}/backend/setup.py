@@ -68,6 +68,9 @@ setup(
             {% if cookiecutter.__feature_headless == '1' -%}
             "plone.restapi[test]",
             {%- endif %}
+            {% if cookiecutter.__feature_headless == '0' -%}
+            "plone.app.robotframework",
+            {%- endif %}
             "pytest",
             "pytest-cov",
             "pytest-plone>=0.5.0",
