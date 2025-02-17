@@ -81,6 +81,7 @@ build-backend:
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common
   script:
+    - set -e # Stop if the execution of any command fails
     - cd backend
     - make build-image
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
@@ -94,6 +95,7 @@ build-frontend:
     - apk add --no-cache make bash python3 ncurses openssh-client-common
 
   script:
+    - set -e # Stop if the execution of any command fails
     - cd frontend
     - make build-image
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
