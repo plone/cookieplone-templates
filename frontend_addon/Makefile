@@ -21,7 +21,7 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf volto-addon
+	rm -rf volto-add-on
 
 ../bin/cookieplone:  ## cookieplone installation
 	$(MAKE) -C ".." bin/cookieplone
@@ -35,7 +35,7 @@ format: ../bin/cookieplone ## Format code
 .PHONY: generate
 generate:  ../bin/cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf volto-addon
+	rm -rf volto-add-on
 	../bin/cookiecutter . --no-input
 
 .PHONY: test
