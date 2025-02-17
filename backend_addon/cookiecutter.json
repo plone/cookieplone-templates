@@ -8,8 +8,10 @@
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "feature_headless": ["1", "0"],
+  "feature_distribution": ["1", "0"],
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
-  "__feature_distribution": "0",
+  "__feature_distribution": "{{ cookiecutter.feature_distribution }}",
+  "__distribution_name": "{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "__package_namespaces": "{{ cookiecutter.python_package_name | package_namespaces }}",
   "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
   "__folder_name": "{{ cookiecutter.python_package_name }}",
@@ -34,7 +36,12 @@
       "__prompt__": "Support headless Plone?",
       "1": "Yes",
       "0": "No"
-    }
+    },
+    "feature_distribution": {
+        "__prompt__": "Add a distribution?",
+        "1": "Yes",
+        "0": "No"
+      }
   },
   "_copy_without_render": [],
   "_extensions": [
