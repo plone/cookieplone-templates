@@ -1,6 +1,12 @@
 name: Plone Project CI
 on:
+  pull_request:
+    paths:
+      - "project/**"
+      - ".github/workflows/project.yml"
   push:
+    branches:
+      - main
     paths:
       - "project/**"
       - ".github/workflows/project.yml"
