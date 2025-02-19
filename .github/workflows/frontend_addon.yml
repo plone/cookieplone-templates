@@ -1,6 +1,12 @@
 name: Plone Frontend Add-on CI
 on:
+  pull_request:
+    paths:
+      - "frontend_addon/**"
+      - ".github/workflows/frontend_addon.yml"
   push:
+    branches:
+      - main
     paths:
       - "frontend_addon/**"
       - ".github/workflows/frontend_addon.yml"

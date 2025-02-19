@@ -1,6 +1,12 @@
 name: Plone Frontend Project CI
 on:
+  pull_request:
+    paths:
+      - "sub/frontend_project/**"
+      - ".github/workflows/sub_frontend_project.yml"
   push:
+    branches:
+      - main
     paths:
       - "sub/frontend_project/**"
       - ".github/workflows/sub_frontend_project.yml"
@@ -11,9 +17,7 @@ env:
   PYTHON_VERSION: "3.10"
 
 jobs:
-
   generation:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -35,7 +39,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
       # python install
       - name: Install dependencies
