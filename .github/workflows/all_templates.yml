@@ -1,12 +1,13 @@
 name: cookieplone-templates CI
 on:
+  pull_request:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-
   generation:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,7 +29,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
       # python install
       - name: Install dependencies
