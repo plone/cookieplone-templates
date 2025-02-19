@@ -7,6 +7,7 @@
   "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
+  "__year": "{% now 'local', '%Y' %}",
   "feature_headless": ["1", "0"],
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
   "__feature_distribution": "0",
