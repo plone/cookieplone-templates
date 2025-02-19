@@ -16,7 +16,9 @@ exclude *-mxdev.txt
 exclude Dockerfile
 exclude mx.ini
 exclude Makefile
+{%- if cookiecutter.__feature_headless == "1" %}
 recursive-exclude frontend *
+{%- endif %}
 exclude instance.yaml
 global-exclude *.pyc
 global-exclude .DS_Store

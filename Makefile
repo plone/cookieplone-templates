@@ -9,7 +9,7 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TOP_LEVEL_TEMPLATES = backend_addon frontend_addon project
+TOP_LEVEL_TEMPLATES = backend_addon frontend_addon project project_classic
 SUB_TEMPLATES = cache frontend_project project_settings
 
 .PHONY: all

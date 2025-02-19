@@ -41,7 +41,7 @@ format: $(BIN_FOLDER)/cookieplone ## Format code
 generate:  $(BIN_FOLDER)/cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	rm -rf $(ADDON_FOLDER_NAME)
-	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) $(BIN_FOLDER)/cookieplone $(TEMPLATE) --no_input
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) $(BIN_FOLDER)/cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
 test: $(BIN_FOLDER)/cookieplone ## Create a sample package and tests it
