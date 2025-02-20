@@ -13,7 +13,7 @@
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_plone_scripts": "^3.6.1",
   "__version_mrs_developer": "^2.2.0",
-  "__version_pnpm": "9.1.1",
+  "__version_pnpm": "10.4.1",
   "__version_release_it": "^17.1.1",
   "__version_pre_commit": "3.7.1",
   "__gha_version_node": "22.x",
