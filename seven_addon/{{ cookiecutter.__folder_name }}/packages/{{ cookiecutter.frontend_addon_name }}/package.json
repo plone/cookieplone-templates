@@ -2,7 +2,7 @@
   "name": "{{ cookiecutter.__npm_package_name }}",
   "version": "{{ cookiecutter.__version_package }}",
   "description": "{{ cookiecutter.description }}",
-  "main": "src/index.js",
+  "main": "index.ts",
   "license": "MIT",
   "keywords": [
     "volto-addon",
@@ -28,11 +28,13 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@plone/scripts": "{{ cookiecutter.__version_plone_scripts }}",
+    "@plone/registry": "workspace:*",
+    "@plone/scripts": "workspace:*",
+    "@plone/types": "workspace:*",
     "release-it": "{{ cookiecutter.__version_release_it }}"
   }
 }
