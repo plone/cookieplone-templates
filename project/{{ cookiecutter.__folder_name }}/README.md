@@ -95,6 +95,18 @@ To automatically format your code and ensure it adheres to quality standards, ex
 make check
 ```
 
+It is possible to only run `format`:
+
+```shell
+make format
+```
+
+ or `lint`:
+
+ ```shell
+make lint
+```
+
 Linters can be run individually within the `backend` or `frontend` folders.
 
 ## Internationalization 🌐

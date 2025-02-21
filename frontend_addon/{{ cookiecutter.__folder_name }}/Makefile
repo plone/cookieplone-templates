@@ -20,7 +20,6 @@ RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
 GIT_FOLDER=$(CURRENT_DIR)/.git
-PRE_COMMIT=pipx run --spec 'pre-commit=={{cookiecutter.__version_pre_commit}}' pre-commit
 
 PLONE_VERSION=6
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
@@ -42,7 +41,6 @@ clean: ## Clean environment
 .PHONY: install
 install: ## Installs the add-on in a development environment
 	@echo "$(GREEN)Install$(RESET)"
-	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	pnpm dlx mrs-developer missdev --no-config --fetch-https
 	pnpm i
 	make build-deps
@@ -71,6 +69,10 @@ i18n: ## Sync i18n
 .PHONY: ci-i18n
 ci-i18n: ## Check if i18n is not synced
 	pnpm --filter $(ADDON_NAME) i18n && git diff -G'^[^\"POT]' --exit-code
+
+.PHONY: clean
+clean: ## Format codebase
+	rm -Rf core node_modules
 
 .PHONY: format
 format: ## Format codebase

@@ -45,15 +45,14 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-$(BIN_FOLDER)/pip $(BIN_FOLDER)/tox $(BIN_FOLDER)/pipx $(BIN_FOLDER)/uv $(BIN_FOLDER)/mxdev:
+$(BIN_FOLDER)/pip $(BIN_FOLDER)/uv:
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
 	$(PYTHON) -m venv $(VENV_FOLDER)
-	$(BIN_FOLDER)/pip install -U "pip" "uv" "wheel" "pipx" "tox" "pre-commit"
-	if [ -d $(GIT_FOLDER) ]; then $(BIN_FOLDER)/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
+	$(BIN_FOLDER)/pip install -U "pip" "uv"
 
 instance/etc/zope.ini: $(BIN_FOLDER)/pip  ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
-	$(BIN_FOLDER)/pipx run cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+	$(BIN_FOLDER)/uvx cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 
 .PHONY: config
 config: instance/etc/zope.ini
@@ -61,7 +60,7 @@ config: instance/etc/zope.ini
 .PHONY: build-dev
 build-dev: config ## Install Plone packages
 	@echo "$(GREEN)==> Setup Build$(RESET)"
-	$(BIN_FOLDER)/pipx run mxdev -c mx.ini
+	$(BIN_FOLDER)/uvx mxdev -c mx.ini
 	VIRTUAL_ENV=.venv $(BIN_FOLDER)/uv pip install -r requirements-mxdev.txt
 
 .PHONY: install
@@ -73,7 +72,7 @@ build: build-dev ## Install Plone
 .PHONY: clean
 clean: ## Clean environment
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
-	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance/etc .tox .venv .pytest_cache
+	rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance/etc .tox .venv .pytest_cache .ruff_cache
 
 .PHONY: remove-data
 remove-data: ## Remove all content
@@ -92,10 +91,34 @@ console: instance/etc/zope.ini ## Start a console into a Plone instance
 create-site: instance/etc/zope.ini ## Create a new site from scratch
 	PYTHONWARNINGS=ignore $(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
-.PHONY: check
-check: $(BIN_FOLDER)/tox ## Check and fix code base according to Plone standards
+# QA
+.PHONY: lint-zpretty
+lint-zpretty: ## Check and fix zcml and xml files
+	@find src -name '*.xml'|xargs uvx zpretty@latest -x --check
+	@find src -name '*.zcml'|xargs uvx zpretty@latest -z --check
+
+.PHONY: lint
+lint: $(BIN_FOLDER)/uv ## Check and fix code base according to Plone standards
+	@echo "$(GREEN)==> Lint codebase$(RESET)"
+	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx pyroma@latest -d .
+	@uvx check-python-versions@latest .
+	@make lint-zpretty
+
+.PHONY: format-zpretty
+format-zpretty: ## Check and fix zcml and xml files
+	@find src -name '*.xml'|xargs uvx zpretty@latest -x -i
+	@find src -name '*.zcml'|xargs uvx zpretty@latest -z -i
+
+.PHONY: format
+format: $(BIN_FOLDER)/uv ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
-	$(BIN_FOLDER)/tox -e lint
+	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
+	@make format-zpretty
+
+.PHONY: check
+check: format lint ## Check and fix code base according to Plone standards
 
 # i18n
 $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
@@ -105,17 +128,17 @@ $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
 .PHONY: i18n
 i18n: $(BIN_FOLDER)/i18ndude ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	$(BIN_FOLDER)/update_locale
+	$(BIN_FOLDER)/python src/{{ cookiecutter.__package_path }}/locales
 
 # Tests
 .PHONY: test
-test: $(BIN_FOLDER)/tox ## run tests
-	$(BIN_FOLDER)/tox -e test
+test: $(BIN_FOLDER)/uv ## run tests
+	@uv run pytest
 
 .PHONY: test-coverage
-test-coverage: $(BIN_FOLDER)/tox ## run tests with coverage
-	$(BIN_FOLDER)/tox -e coverage
+test-coverage: $(BIN_FOLDER)/uv ## run tests with coverage
+	@uv run pytest --cov={{cookiecutter.python_package_name}} --cov-report term-missing
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
-add: $(BIN_FOLDER)/pipx
-	$(BIN_FOLDER)/pipx run plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+add: $(BIN_FOLDER)/uvx
+	$(BIN_FOLDER)/uvx plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))

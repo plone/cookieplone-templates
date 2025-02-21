@@ -17,8 +17,6 @@ STACK_NAME={{ cookiecutter.__devops_stack_name }}
 VOLTO_VERSION=$(shell cat frontend/mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 PLONE_VERSION=$(shell cat backend/version.txt)
 
-PRE_COMMIT=pipx run --spec 'pre-commit=={{ cookiecutter.__pre_commit_version }}' pre-commit
-
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
 RED=`tput setaf 1`
@@ -87,7 +85,6 @@ backend-test:  ## Test backend codebase
 .PHONY: install
 install:  ## Install
 	@echo "Install Backend & Frontend"
-	if [ -d $(GIT_FOLDER) ]; then $(PRE_COMMIT) install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
 	$(MAKE) backend-install
 	$(MAKE) frontend-install
 
@@ -103,10 +100,20 @@ clean:  ## Clean installation
 	$(MAKE) -C "./backend/" clean
 	$(MAKE) -C "./frontend/" clean
 
+.PHONY: format
+format:  ## Format codebase
+	@echo "Format the codebase"
+	$(MAKE) -C "./backend/" format
+	$(MAKE) -C "./frontend/" format
+
+.PHONY: lint
+lint:  ## Format codebase
+	@echo "Lint the codebasecodebase"
+	$(MAKE) -C "./backend/" lint
+	$(MAKE) -C "./frontend/" lint
+
 .PHONY: check
-check:  ## Lint and Format codebase
-	@echo "Lint and Format codebase"
-	$(PRE_COMMIT) run -a
+check:  format lint ## Lint and Format codebase
 
 .PHONY: i18n
 i18n:  ## Update locales

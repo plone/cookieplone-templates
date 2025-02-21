@@ -8,10 +8,8 @@ import pytest
 
 ROOT_FILES = [
     ".editorconfig",
-    ".github/workflows/meta.yml",
+    ".github/workflows/ci.yml",
     ".gitignore",
-    ".meta.toml",
-    ".pre-commit-config.yaml",
     "CHANGES.md",
     "constraints.txt",
     "CONTRIBUTORS.md",
@@ -25,8 +23,6 @@ ROOT_FILES = [
     "README.md",
     "requirements.txt",
     "scripts/create_site.py",
-    "setup.py",
-    "tox.ini",
 ]
 
 
@@ -39,6 +35,8 @@ PKG_SRC_FILES = [
     "dependencies.zcml",
     "indexers/__init__.py",
     "indexers/configure.zcml",
+    "locales/__init__.py",
+    "locales/__main__.py",
     "profiles/default/browserlayer.xml",
     "profiles/default/catalog.xml",
     "profiles/default/controlpanel.xml",

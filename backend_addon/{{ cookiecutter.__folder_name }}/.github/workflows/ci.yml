@@ -1,27 +1,11 @@
-name: Backend CI
+name: {{ cookiecutter.python_package_name }} CI
 
 on:
-  workflow_call:
-    inputs:
-      base-tag:
-        required: true
-        type: string
-      image-name-prefix:
-        required: true
-        type: string
-      image-name-suffix:
-        required: true
-        type: string
-      python-version:
-        required: true
-        type: string
-      plone-version:
-        required: true
-        type: string
+  push:
 
-defaults:
-  run:
-    working-directory: backend
+env:
+  PYTHON_VERSION: "{{ cookiecutter.__gha_python_version }}"
+  PLONE_VERSION: "{{ cookiecutter.__gha_plone_version }}"
 
 jobs:
 
@@ -35,7 +19,7 @@ jobs:
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
           with:
-            python-version: {{ "${{ inputs.python-version }}" }}
+            python-version: {{ "${{ env.PYTHON_VERSION }}" }}
 
         - name: Check formatting
           if: {{ "${{ success() || failure() }}" }}
@@ -82,9 +66,13 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: {{ cookiecutter.__gha_python_versions }}
+        plone-version: {{ cookiecutter.__gha_plone_versions }}
     env:
-      PYTHON_VERSION: {{ "${{ inputs.python-version }}" }}
-      PLONE_VERSION: {{ "${{ inputs.plone-version }}" }}
+      PYTHON_VERSION: {{ "${{ env.PYTHON_VERSION }}" }}
+      PLONE_VERSION: {{ "${{ env.PLONE_VERSION }}" }}
     steps:
 
         - name: Checkout
@@ -93,17 +81,17 @@ jobs:
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
           with:
-            python-version: {{ "${{ inputs.python-version }}" }}
+            python-version: {{ "${{ env.PYTHON_VERSION }}" }}
             enable-cache: false
 
         - name: Restore uv cache
           uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
           with:
             path: {{ "${{ env.UV_CACHE_DIR }}" }}
-            key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}-${{ hashFiles('pyproject.toml') }}" }}
+            key: uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}-${{ hashFiles('pyproject.toml') }}" }}
             restore-keys: |
-              uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}-${{ hashFiles('pyproject.toml') }}" }}
-              uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}" }}
+              uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}-${{ hashFiles('pyproject.toml') }}" }}
+              uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}" }}
 
         - name: Install Plone and package
           run: make install
@@ -122,17 +110,17 @@ jobs:
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
           with:
-            python-version: {{ "${{ inputs.python-version }}" }}
+            python-version: {{ "${{ env.PYTHON_VERSION }}" }}
             enable-cache: false
 
         - name: Restore uv cache
           uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
           with:
             path: /tmp/.uv-cache
-            key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}-${{ hashFiles('pyproject.toml') }}" }}
+            key: uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}-${{ hashFiles('pyproject.toml') }}" }}
             restore-keys: |
-              uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}-${{ hashFiles('pyproject.toml') }}" }}
-              uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.plone-version }}" }}
+              uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}-${{ hashFiles('pyproject.toml') }}" }}
+              uv-{{ "${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.PLONE_VERSION }}" }}
 
         - name: Install Plone and package
           run: make install
@@ -144,63 +132,3 @@ jobs:
           run: |
             echo "# Coverage Report" >> $GITHUB_STEP_SUMMARY
             echo "$(uv run coverage report --format markdown)" >> $GITHUB_STEP_SUMMARY
-
-  release:
-    runs-on: ubuntu-latest
-    needs:
-      - lint
-      - coverage
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@{{ cookiecutter.__gha_version_docker_metadata }}
-        with:
-          images: |
-            {{ "${{ inputs.image-name-prefix }}-${{ inputs.image-name-suffix }}" }}
-          labels: |
-            org.label-schema.docker.cmd=docker run -d -p 8080:8080 {{ "${{ inputs.image-name-prefix }}-${{ inputs.image-name-suffix }}:${{ inputs.base-tag }}" }}
-          flavor:
-            latest=false
-          tags: |
-            type=ref,event=branch
-            type=sha
-            type=raw,value=latest,enable={{ "{{is_default_branch}}" }}
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@{{ cookiecutter.__gha_version_docker_qemu }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@{{ cookiecutter.__gha_version_docker_buildx }}
-
-      - name: Login to Container Registry
-        uses: docker/login-action@{{ cookiecutter.__gha_version_docker_login }}
-        with:
-          {%- if cookiecutter.container_registry == 'docker_hub' %}
-          username: {{ "${{ secrets.DOCKERHUB_USERNAME }}" }}
-          password: {{ "${{ secrets.DOCKERHUB_TOKEN }}" }}
-          {%- endif %}
-          {%- if cookiecutter.container_registry == 'github' %}
-          registry: ghcr.io
-          username: {{ "${{ github.actor }}" }}
-          password: {{ "${{ secrets.GITHUB_TOKEN }}" }}
-          {%- endif %}
-
-      - name: Build and push
-        uses: docker/build-push-action@{{ cookiecutter.__gha_version_docker_build_push }}
-        with:
-          platforms: linux/amd64
-          context: backend/
-          file: backend/Dockerfile
-          push: {{ "${{ github.event_name != 'pull_request' }}" }}
-          tags: {{ "${{ steps.meta.outputs.tags }}" }}
-          labels: {{ "${{ steps.meta.outputs.labels }}" }}
-          build-args: |
-            PLONE_VERSION={{ "${{ inputs.plone-version }}" }}
