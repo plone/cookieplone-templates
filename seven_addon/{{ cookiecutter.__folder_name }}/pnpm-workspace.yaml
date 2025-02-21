@@ -4,7 +4,6 @@ packages:
   - 'packages/*'
   - '!core/packages/volto*'
   - '!core/packages/coresandbox'
-  - '!core/packages/generator-volto'
 
 # We need a way to sync the versions of the catalog packages with the one in core
 # Probably a script in @plone/scripts
