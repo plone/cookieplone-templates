@@ -47,15 +47,10 @@ jobs:
           id: ruff-lint
           run: uvx ruff@latest check --diff
 
-        - name: Check XML
+        - name: Check XML / ZCML
           if: {{ "${{ success() || failure() }}" }}
-          id: zpretty-xml
-          run: find src -name '*.xml'|xargs uvx zpretty@latest -x --check
-
-        - name: Check ZCML
-          if: {{ "${{ success() || failure() }}" }}
-          id: zpretty-zcml
-          run: find src -name '*.zcml'|xargs uvx zpretty@latest -z --check
+          id: zpretty
+          run: uvx zpretty@latest --check src
 
         - name: Check Package Metadata
           if: {{ "${{ success() || failure() }}" }}
@@ -75,8 +70,7 @@ jobs:
             echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
             echo '| Format | {{ "${{ steps.ruff-format.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
             echo '| Lint | {{ "${{ steps.ruff-lint.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
-            echo '| ZCML | {{ "${{ steps.zpretty-xml.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
-            echo '| XML | {{ "${{ steps.zpretty-zcml.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
+            echo '| XML / ZCML | {{ "${{ steps.zpretty.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
             echo '| Package Metadata | {{ "${{ steps.pyroma.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
             echo '| Python Versions | {{ "${{ steps.py-versions.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
 

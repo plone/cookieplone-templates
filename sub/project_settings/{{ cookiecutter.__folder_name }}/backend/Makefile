@@ -105,29 +105,20 @@ update-example-content: $(BIN_FOLDER)/tox ## Export example content inside packa
 	$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
 
 # QA
-.PHONY: lint-zpretty
-lint-zpretty: ## Check and fix zcml and xml files
-	@find src -name '*.xml'|xargs uvx zpretty@latest -x --check
-	@find src -name '*.zcml'|xargs uvx zpretty@latest -z --check
-
 .PHONY: lint
 lint: $(BIN_FOLDER)/uv ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Lint codebase$(RESET)"
 	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx pyroma@latest -d .
 	@uvx check-python-versions@latest .
-	@make lint-zpretty
-
-.PHONY: format-zpretty
-format-zpretty: ## Check and fix zcml and xml files
-	@find src -name '*.xml'|xargs uvx zpretty@latest -x -i
-	@find src -name '*.zcml'|xargs uvx zpretty@latest -z -i
+	@uvx zpretty@latest --check src
 
 .PHONY: format
 format: $(BIN_FOLDER)/uv ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx zpretty@latest -i src
 
 .PHONY: check
 check: format lint ## Check and fix code base according to Plone standards
