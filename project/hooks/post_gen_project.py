@@ -13,7 +13,6 @@ context: OrderedDict = {{cookiecutter}}
 BACKEND_ADDON_REMOVE = [
     ".github",
     ".git",
-    ".meta.toml",
 ]
 
 FRONTEND_ADDON_REMOVE = [".github"]

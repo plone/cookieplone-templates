@@ -23,7 +23,7 @@ pip install pipx
 ### Generate Your Frontend project 🎉
 
 ```shell
-pipx run cookieplone sub/frontend_project --no_input __version_plone_volto=18.0.0-alpha.31
+pipx run cookieplone sub/frontend_project --no-input __version_plone_volto=18.0.0-alpha.31
 ```
 
 ## Project Generation Options
