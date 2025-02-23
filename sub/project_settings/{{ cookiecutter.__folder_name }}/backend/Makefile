@@ -99,7 +99,7 @@ create-site: instance/etc/zope.ini ## Create a new site from scratch
 
 # Example Content
 .PHONY: update-example-content
-update-example-content: $(BIN_FOLDER)/tox ## Export example content inside package
+update-example-content: $(BIN_FOLDER)/uv ## Export example content inside package
 	@echo "$(GREEN)==> Export example content into $(EXAMPLE_CONTENT_FOLDER) $(RESET)"
 	if [ -d $(EXAMPLE_CONTENT_FOLDER)/content ]; then rm -r $(EXAMPLE_CONTENT_FOLDER)/* ;fi
 	$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
