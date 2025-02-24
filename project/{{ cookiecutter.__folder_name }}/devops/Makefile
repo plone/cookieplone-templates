@@ -118,7 +118,7 @@ stack-logs-backend: ## Display backend logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for backend in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_backend
 
-{%- if cookiecutter.storage == 'relstorage' %}
+{%- if cookiecutter.devops_storage == 'relstorage' %}
 
 .PHONY: stack-logs-db
 stack-logs-db: ## Display db logs
