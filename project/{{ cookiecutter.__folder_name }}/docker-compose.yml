@@ -95,10 +95,20 @@ services:
       context: ./backend
       args:
         - PLONE_VERSION=${PLONE_VERSION}
+{%- if cookiecutter.devops_storage == 'relstorage' %}
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_NAME:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
     depends_on:
       - db
+{%- elif cookiecutter.devops_storage == 'zeo' %}
+    environment:
+      ZEO_ADDRESS: "zeo:8100"
+    depends_on:
+      - zeo
+{%- else %}
+    volumes:
+      - vol-site-data:/data
+{%- endif %}
     labels:
       - traefik.enable=true
       - traefik.constraint-label=public
@@ -148,6 +158,8 @@ services:
       - traefik.http.routers.rt-backend-classic.service=svc-backend
       - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
+{%- if cookiecutter.devops_storage == 'relstorage' %}
+
   db:
     image: postgres:{{ cookiecutter.__devops_db_version }}
     environment:
@@ -156,6 +168,13 @@ services:
       POSTGRES_DB: plone
     volumes:
       - vol-site-data:/var/lib/postgresql/data
+{%- elif cookiecutter.devops_storage == 'zeo' %}
+
+  zeo:
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    volumes:
+      - vol-site-data:/data
+{%- endif %}
 
 volumes:
   vol-site-data: {}

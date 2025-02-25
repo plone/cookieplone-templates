@@ -13,6 +13,7 @@
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
+  "devops_storage": ["relstorage", "zeo", "filestorage"],
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
@@ -54,6 +55,7 @@
   "__devops_varnish_version": "7.6",
   "__devops_db_version": "14.15",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
+  "__devops_zeo_version": "6.0.0",
   "__backend_addon_git_initialize": "0",
   "__backend_addon_format": "1",
   "__project_git_initialize": "1",
@@ -84,6 +86,12 @@
       "github": "GitHub Container Registry",
       "docker_hub": "Docker Hub",
       "gitlab": "GitLab"
+    },
+    "devops_storage": {
+      "__prompt__": "Which persistent storage to use in the deployment stack?",
+      "relstorage": "RelStorage with PostgreSQL (recommended)",
+      "zeo": "ZEO with FileStorage",
+      "filestorage": "Local FileStorage, implies a single backend"
     },
     "devops_cache": {
       "__prompt__": "Should we setup a caching server?",
