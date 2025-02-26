@@ -101,7 +101,7 @@ It is possible to only run `format`:
 make format
 ```
 
- or `lint`:
+or `lint`:
 
  ```shell
 make lint
