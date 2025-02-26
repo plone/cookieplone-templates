@@ -21,7 +21,7 @@
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
-  "__python_version": "3.11",
+  "__python_version": "3.12",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_pnpm": "9.1.1",
