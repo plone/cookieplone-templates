@@ -118,7 +118,7 @@ $(BIN_FOLDER)/i18ndude: $(BIN_FOLDER)/pip
 .PHONY: i18n
 i18n: $(BIN_FOLDER)/i18ndude ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	$(BIN_FOLDER)/python src/{{ cookiecutter.__package_path }}/locales
+	$(BIN_FOLDER)/python -m {{ cookiecutter.python_package_name }}.locales
 
 # Tests
 .PHONY: test
