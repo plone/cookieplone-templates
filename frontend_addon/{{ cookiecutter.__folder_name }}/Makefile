@@ -70,10 +70,6 @@ i18n: ## Sync i18n
 ci-i18n: ## Check if i18n is not synced
 	pnpm --filter $(ADDON_NAME) i18n && git diff -G'^[^\"POT]' --exit-code
 
-.PHONY: clean
-clean: ## Format codebase
-	rm -Rf core node_modules
-
 .PHONY: format
 format: ## Format codebase
 	pnpm prettier:fix
