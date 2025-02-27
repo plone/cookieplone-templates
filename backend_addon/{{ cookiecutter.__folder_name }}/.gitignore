@@ -13,7 +13,7 @@ __pycache__/
 .mypy_cache
 .pytest_cache
 .ruff_cache
-build/
+/build/
 coverage.xml
 dist/
 docs/_build
