@@ -20,6 +20,7 @@ jobs:
           uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
           with:
             python-version: {{ "${{ env.PYTHON_VERSION }}" }}
+            enable-cache: true
 
         - name: Check formatting
           if: {{ "${{ success() || failure() }}" }}

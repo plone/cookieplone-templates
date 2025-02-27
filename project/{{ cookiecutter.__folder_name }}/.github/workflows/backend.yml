@@ -36,6 +36,7 @@ jobs:
           uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
           with:
             python-version: {{ "${{ inputs.python-version }}" }}
+            enable-cache: true
 
         - name: Check formatting
           if: {{ "${{ success() || failure() }}" }}
