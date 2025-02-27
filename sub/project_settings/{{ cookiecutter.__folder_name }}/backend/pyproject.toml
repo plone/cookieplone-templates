@@ -121,7 +121,7 @@ name = "Tests"
 showcontent = true
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py{{ cookiecutter.__python_version_identifier }}"
 line-length = 88
 fix = true
 lint.select = [
