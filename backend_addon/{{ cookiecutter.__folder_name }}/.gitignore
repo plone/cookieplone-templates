@@ -40,3 +40,5 @@ var/
 /reports/
 /sources/
 /venv/
+constraints*.txt
+requirements*.txt

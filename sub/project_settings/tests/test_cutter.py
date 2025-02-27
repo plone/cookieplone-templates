@@ -26,7 +26,6 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 
 GENERATED_FILES = [
     "backend/.dockerignore",
-    "backend/constraints.txt",
     "backend/Dockerfile.acceptance",
     "backend/Dockerfile",
     "backend/Makefile",
