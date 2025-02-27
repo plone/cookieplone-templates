@@ -1,6 +1,3 @@
-# Generated from:
-# https://github.com/plone/meta/tree/master/config/default
-# See the inline comments on how to expand/tweak this configuration file
 # python related
 *.egg-info
 *.pyc
@@ -8,7 +5,6 @@
 
 # tools related
 __pycache__/
-.coverage
 .coverage
 .mypy_cache
 .pytest_cache
@@ -20,26 +16,27 @@ docs/_build
 node_modules/
 
 # venv / buildout related
+.eggs/
+.installed.cfg
+.mr.developer.cfg
+.venv/
 bin/
 develop-eggs/
 eggs/
-.eggs/
 etc/
-.installed.cfg
 include/
 lib/
 lib64
-.mr.developer.cfg
 parts/
 pyvenv.cfg
 var/
 
 # mxdev
-/instance/
+.installed.txt
+.lock
 /.make-sentinels/
 /*-mxdev.txt
+/instance/
 /reports/
 /sources/
 /venv/
-.installed.txt
-.lock

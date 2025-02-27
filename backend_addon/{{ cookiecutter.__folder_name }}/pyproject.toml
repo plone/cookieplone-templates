@@ -46,8 +46,6 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "zest.releaser[recommended]",
-    "zestreleaser.towncrier",
     "plone.app.testing",
     {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
     "plone.classicui",
@@ -66,6 +64,9 @@ Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecu
 
 [project.entry-points."z3c.autoinclude.plugin"]
 target = "plone"
+
+[tool.uv]
+managed = false
 
 [tool.hatch.build]
 strict-naming = false
@@ -88,7 +89,7 @@ only-include = ["src/{{ cookiecutter.__package_path }}"]
 
 [tool.towncrier]
 directory = "news/"
-filename = "CHANGES.md"
+filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
@@ -176,14 +177,6 @@ preview = true
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E501", "RUF001", "S101"]
 
-[tool.check-manifest]
-ignore = [
-    ".editorconfig",
-    ".flake8",
-    "dependabot.yml",
-    "mx.ini",
-]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
@@ -191,3 +184,7 @@ testpaths = ["tests"]
 source_pkgs = ["{{ cookiecutter.python_package_name }}", "tests"]
 branch = true
 parallel = true
+omit = [
+  "src/{{ cookiecutter.__package_path }}/locales/__init__.py",
+  "src/{{ cookiecutter.__package_path }}/locales/__main__.py",
+]
