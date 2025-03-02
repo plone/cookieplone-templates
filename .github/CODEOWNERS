@@ -1,6 +1,7 @@
 /backend_addon/ @ericof
 /frontend_addon/ @sneridagh
 /project/ @ericof
+/project_classic/ @pbauer
 /sub/cache/ @ericof
 /sub/frontend_project/ @sneridagh
 /sub/project_settings/ @sneridagh

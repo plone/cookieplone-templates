@@ -71,7 +71,11 @@
     },
     "d9707a27-2565-4d7d-9daa-6c61d60ce8fd": {
       "@type": "slate",
+{%- if cookiecutter.__feature_headless == "1" %}
       "plaintext": " The features of Plone   Plone Documentation   Plone Training   Plone Community Forum   Add-ons for Plone (backend)   Add-ons for Volto (frontend) ",
+{%- else %}
+      "plaintext": " The features of Plone   Plone Documentation   Plone Training   Plone Community Forum   Add-ons for Plone ",
+{%- endif %}
       "value": [
         {
           "children": [
@@ -184,6 +188,7 @@
                 }
               ],
               "type": "li"
+{%- if cookiecutter.__feature_headless == "1" %}
             },
             {
               "children": [
@@ -206,6 +211,7 @@
                 }
               ],
               "type": "li"
+{%- endif %}
             }
           ],
           "type": "ul"

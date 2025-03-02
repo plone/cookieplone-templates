@@ -51,8 +51,13 @@ setup(
         "setuptools",
         "Plone",
         "plone.api",
+        {% if cookiecutter.__feature_headless == '1' -%}
         "plone.restapi",
         "plone.volto",
+        {%- endif %}
+        {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
+        "plone.classicui",
+        {%- endif %}
         "plone.exportimport",
     ],
     extras_require={
@@ -60,7 +65,12 @@ setup(
             "zest.releaser[recommended]",
             "zestreleaser.towncrier",
             "plone.app.testing",
+            {% if cookiecutter.__feature_headless == '1' -%}
             "plone.restapi[test]",
+            {%- endif %}
+            {% if cookiecutter.__feature_headless == '0' -%}
+            "plone.app.robotframework",
+            {%- endif %}
             "pytest",
             "pytest-cov",
             "pytest-plone>=0.5.0",

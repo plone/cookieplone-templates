@@ -59,15 +59,15 @@ setup(
         "plone.restapi",
         "plone.volto",
         {%- endif %}
+        {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
+        "plone.classicui",
+        {%- endif -%}
     ],
     extras_require={
         "test": [
             "zest.releaser[recommended]",
             "zestreleaser.towncrier",
             "plone.app.testing",
-            {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
-            "plone.classicui",
-            {%- endif -%}
             "plone.restapi[test]",
             "pytest",
             "pytest-cov",
