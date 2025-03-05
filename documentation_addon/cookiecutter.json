@@ -20,7 +20,7 @@
     "github_organization": "GitHub Username or Organization",
     "author": "Author",
     "email": "Author E-mail",
-    "__documentation_addon_git_initialize": "Initialize a git repository?"
+    "__documentation_addon_git_initialize": "Initialize a git repository? (1=>Yes, 0=>No)"
   },
   "_copy_without_render": [
   ],

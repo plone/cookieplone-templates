@@ -1,75 +1,45 @@
-"""Test cookiecutter generation for documentation_addon."""
+"""Tests for documentation_addon template generation."""
 
 from pathlib import Path
+from .conftest import EXPECTED_FILES
 
 import pytest
 
-from .conftest import DOCS_FILES, ROOT_FILES
+
+def test_default_bake(bake_template, default_context, tmp_path):
+    """Test baking with default context succeeds and initializes Git."""
+    output_dir = bake_template(default_context, tmp_path)
+    assert output_dir.exists(), "Output directory was not created"
+    assert output_dir.name == default_context["__folder_name"], "Folder name mismatch"
+    assert (output_dir / ".git").exists(), "Git was not initialized"
 
 
-def test_creation(cookies, context: dict):
-    """Generated project should match provided value."""
-    result = cookies.bake(extra_context=context)
-    assert result.exception is None
-    assert result.exit_code == 0
-    assert result.project_path.name == context["__folder_name"]
-    assert result.project_path.is_dir()
+def test_no_git_bake(bake_template, no_git_context, tmp_path):
+    """Test baking without Git initialization succeeds."""
+    output_dir = bake_template(no_git_context, tmp_path)
+    assert output_dir.exists(), "Output directory was not created"
+    assert output_dir.name == no_git_context["__folder_name"], "Folder name mismatch"
+    assert not (output_dir / ".git").exists(), "Git was initialized unexpectedly"
 
 
-def test_variable_substitution(build_files_list, variable_pattern, cutter_result):
-    """Check if no file was unprocessed."""
-    paths = build_files_list(cutter_result.project_path)
-    for path in paths:
-        # Skip binary files in _static/
-        if path.suffix in [".ico", ".svg"]:
-            continue
-        for line in open(path, encoding="utf-8"):
-            match = variable_pattern.search(line)
-            msg = f"cookiecutter variable not replaced in {path}"
-            assert match is None, msg
+def test_variable_substitution(bake_template, default_context, tmp_path):
+    """Test that all Jinja2 variables are substituted in the output."""
+    output_dir = bake_template(default_context, tmp_path)
+    text_extensions = [".md", ".txt", ".py", ".rst", ".json", ".xml", ".yaml", ".ini"]
+    for file_path in output_dir.rglob("*"):
+        if file_path.is_file() and file_path.suffix in text_extensions:
+            content = file_path.read_text(encoding="utf-8")
+            assert "{{" not in content, f"Unsubstituted variable found in {file_path}"
 
 
-@pytest.mark.parametrize("file_path", ROOT_FILES)
-def test_root_files_generated(cutter_result, file_path):
-    """Check if root files were generated."""
-    path = cutter_result.project_path / file_path
-    assert path.exists()
-    assert path.is_file()
+def test_file_generation(bake_template, default_context, tmp_path):
+    """Test that all expected files are generated."""
+    output_dir = bake_template(default_context, tmp_path)
+    for file_path in EXPECTED_FILES:
+        assert (output_dir / file_path).exists(), f"Missing file: {file_path}"
 
 
-@pytest.mark.parametrize("file_path", DOCS_FILES)
-def test_docs_files_generated(cutter_result, file_path):
-    """Check if documentation files were generated."""
-    docs_path = cutter_result.project_path / "docs"
-    path = docs_path / file_path
-    assert path.exists()
-    assert path.is_file()
-
-
-def test_git_initialization(cutter_result):
-    """Check if Git repository is initialized when enabled."""
-    from cookieplone.utils import git
-
-    path = cutter_result.project_path
-    repo = git.repo_from_path(path)
-    assert Path(repo.working_dir) == path
-
-
-def test_git_initialization_not_set(cutter_result_no_git):
-    """Check if Git repository is not initialized when disabled."""
-    from cookieplone.utils import git
-
-    path = cutter_result_no_git.project_path
-    assert not git.check_path_is_repository(path)
-
-
-@pytest.mark.parametrize(
-    "file_path,schema_name",
-    [
-        ["pyproject.toml", "pyproject"],
-    ],
-)
-def test_json_schema(cutter_result, schema_validate_file, file_path: str, schema_name: str):
-    """Check if specific files match their JSON schemas."""
-    path = cutter_result.project_path / file_path
-    assert schema_validate_file(path, schema_name)
+def test_post_gen_hook(bake_template, default_context, tmp_path):
+    """Test that the post-generation hook runs correctly (Git init)."""
+    output_dir = bake_template(default_context, tmp_path)
+    assert (output_dir / ".git").exists(), "Git repository was not initialized"

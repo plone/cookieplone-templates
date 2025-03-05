@@ -8,6 +8,7 @@ from cookieplone.utils import console, files, git, plone
 
 context: OrderedDict = {{cookiecutter}}
 
+
 def handle_format(context: OrderedDict, output_dir: Path):
     plone.format_python_codebase(output_dir)
 
@@ -55,7 +56,10 @@ def main():
         The Plone Community.
     """
     console.panel(
-        title="New documentation addon was generated", subtitle="", msg=msg, url="https://plone.org/"
+        title="New documentation addon was generated",
+        subtitle="",
+        msg=msg,
+        url="https://plone.org/",
     )
 
 

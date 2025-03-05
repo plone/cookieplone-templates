@@ -166,7 +166,7 @@ suppress_warnings = [
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "plone_sphinx_theme" # This can be configured
+html_theme = "plone_sphinx_theme"  # This can be configured
 html_logo = "_static/logo.svg"
 html_favicon = "_static/favicon.ico"
 # The default value includes icon-links, so override it with that one omitted, and add it to html_theme_options[footer_content_items].
@@ -193,47 +193,47 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/plone/documentation", # Add Template for Github link
+            "url": "https://github.com/plone/documentation",  # Add Template for Github link
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
             "attributes": {
                 "target": "_blank",
                 "rel": "noopener me",
-                "class": "nav-link custom-fancy-css"
-            }
+                "class": "nav-link custom-fancy-css",
+            },
         },
         {
             "name": "Mastodon",
-            "url": "https://plone.social/@plone", # Add Template for Mastodon link
+            "url": "https://plone.social/@plone",  # Add Template for Mastodon link
             "icon": "fa-brands fa-mastodon",
             "type": "fontawesome",
             "attributes": {
                 "target": "_blank",
                 "rel": "noopener me",
-                "class": "nav-link custom-fancy-css"
-            }
+                "class": "nav-link custom-fancy-css",
+            },
         },
         {
             "name": "YouTube",
-            "url": "https://www.youtube.com/@PloneCMS", # Add Template for Youtube link
+            "url": "https://www.youtube.com/@PloneCMS",  # Add Template for Youtube link
             "icon": "fa-brands fa-youtube",
             "type": "fontawesome",
             "attributes": {
                 "target": "_blank",
                 "rel": "noopener me",
-                "class": "nav-link custom-fancy-css"
-            }
+                "class": "nav-link custom-fancy-css",
+            },
         },
         {
             "name": "X (formerly Twitter)",
-            "url": "https://x.com/plone", # Add Template for X link
+            "url": "https://x.com/plone",  # Add Template for X link
             "icon": "fa-brands fa-square-x-twitter",
             "type": "fontawesome",
             "attributes": {
                 "target": "_blank",
                 "rel": "noopener me",
-                "class": "nav-link custom-fancy-css"
-            }
+                "class": "nav-link custom-fancy-css",
+            },
         },
     ],
     "logo": {
@@ -418,6 +418,7 @@ latex_documents = [
 # the title page.
 latex_logo = "_static/logo_2x.png"
 
+
 # --  Configuration for source_replacements extension -----------------------
 # An extension that allows replacements for code blocks that
 # are not supported in `rst_epilog` or other substitutions.
@@ -427,6 +428,7 @@ def source_replace(app, docname, source):
     for key in app.config.source_replacements:
         result = result.replace(key, app.config.source_replacements[key])
     source[0] = result
+
 
 # Dict of replacements.
 source_replacements = {

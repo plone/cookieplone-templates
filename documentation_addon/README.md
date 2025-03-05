@@ -61,3 +61,7 @@ make html
 ```
 
 Your documentation will be built in the `_build` directory.
+
+## License 📜
+
+This project is licensed under the [MIT License](/LICENSE).

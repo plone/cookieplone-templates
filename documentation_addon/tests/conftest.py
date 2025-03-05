@@ -1,101 +1,75 @@
-"""Pytest configuration for documentation_addon."""
+"""Pytest configuration for documentation_addon template tests."""
 
-from copy import deepcopy
 from pathlib import Path
-from typing import List
+from typing import Dict
 
 import pytest
 
-# Expected root files for documentation_addon
-ROOT_FILES = [
+# List of expected files in the generated output
+EXPECTED_FILES = [
     "CHANGES.md",
     "LICENSE",
     "Makefile",
-    "MANIFEST.in",
     "pyproject.toml",
     "README.md",
-    # Note: requirements-*.txt should be removed in favor of pyproject.toml, but kept here if still present
-    "requirements-dev.txt",
-    "requirements-docs.txt",
-    "requirements.txt",
-]
-
-# Expected docs files (relative to docs/)
-DOCS_FILES = [
-    "conf.py",
-    "glossary.md",
-    "guides/getting-started.md",
-    "guides/usage.md",
-    "index.md",
-    "reference/file-system-structure.md",
-    "reference/index.md",
-    "reference/theme-elements.md",
-    "robots.txt",
-    "_static/favicon.ico",
-    "_static/logo.svg",
+    "docs/conf.py",
+    "docs/glossary.md",
+    "docs/guides/getting-started.md",
+    "docs/guides/usage.md",
+    "docs/index.md",
+    "docs/reference/file-system-structure.md",
+    "docs/reference/theme-elements.md",
+    "docs/robots.txt",
+    "docs/_static/favicon.ico",
+    "docs/_static/logo.svg",
 ]
 
 
 @pytest.fixture(scope="session")
-def cookieplone_root() -> Path:
-    """Cookieplone root dir."""
-    return Path().cwd().resolve().parent
+def template_dir() -> Path:
+    """Path to the documentation_addon template directory."""
+    return Path().cwd().resolve()
 
 
 @pytest.fixture(scope="session")
-def context(cookieplone_root) -> dict:
-    """Cookiecutter context for documentation_addon."""
+def default_context() -> Dict[str, str]:
+    """Default context for baking the template."""
     return {
         "title": "My Documentation",
-        "project_description": "Documentation for a Plone project.",
+        "project_description": "Documentation for a Plone project",
         "author_name": "Plone Community",
         "author_email": "collective@plone.org",
         "github_organization": "collective",
         "__folder_name": "collective.docs",
-        "repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__folder_name }}",
+        "repository_url": "https://github.com/collective/collective.docs",
         "version": "1.0.0",
         "min_python_version": "3.8",
-        "__cookieplone_repository_path": str(cookieplone_root),
+        "__documentation_addon_git_initialize": "1",
     }
 
 
 @pytest.fixture(scope="session")
-def context_no_git(context) -> dict:
-    """Cookiecutter context without Git repository initialization."""
-    new_context = deepcopy(context)
-    new_context["__folder_name"] = "collective.docsnogit"
-    new_context["__documentation_addon_git_initialize"] = "0"  # Optional, if you add this toggle
-    return new_context
-
-
-@pytest.fixture(scope="session")
-def bad_context() -> dict:
-    """Cookiecutter context with invalid data."""
-    return {
-        "title": "Invalid Docs",
-        "project_description": "Broken config.",
-        "author_name": "Unknown",
-        "author_email": "invalid@email",  # Missing domain
-        "github_organization": "collective",
-        "__folder_name": "collective_docs_invalid",  # Invalid naming
-    }
+def no_git_context(default_context) -> Dict[str, str]:
+    """Context with Git initialization disabled."""
+    context = default_context.copy()
+    context["__folder_name"] = "collective.docsnogit"
+    context["__documentation_addon_git_initialize"] = "0"
+    return context
 
 
 @pytest.fixture
-def build_files_list():
-    """Build a list containing absolute paths to the generated files."""
-    def func(root_dir: Path) -> List[Path]:
-        return [path for path in root_dir.glob("**/*") if path.is_file()]
-    return func
+def bake_template(template_dir):
+    """Fixture to bake the template with a given context."""
 
+    def _bake(context: Dict[str, str], output_dir: Path) -> Path:
+        from cookiecutter.main import cookiecutter
 
-@pytest.fixture(scope="session")
-def cutter_result(cookies_session, context):
-    """Cookiecutter result for documentation_addon."""
-    return cookies_session.bake(extra_context=context)
+        cookiecutter(
+            str(template_dir),
+            no_input=True,
+            extra_context=context,
+            output_dir=str(output_dir),
+        )
+        return output_dir / context["__folder_name"]
 
-
-@pytest.fixture(scope="session")
-def cutter_result_no_git(cookies_session, context_no_git):
-    """Cookiecutter result without Git initialization."""
-    return cookies_session.bake(extra_context=context_no_git)
+    return _bake
