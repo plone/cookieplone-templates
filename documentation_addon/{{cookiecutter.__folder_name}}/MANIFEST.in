@@ -1,0 +1,19 @@
+# Include core documentation files and directories
+graft docs
+graft scripts
+graft news
+graft src
+
+# Include individual root files
+include CHANGES.md
+include LICENSE
+include Makefile
+include pyproject.toml
+include README.md
+
+# Include optional configuration files (if present)
+include .readthedocs.yaml
+
+# Exclude unnecessary or runtime files
+global-exclude *.pyc
+global-exclude __pycache__/*
