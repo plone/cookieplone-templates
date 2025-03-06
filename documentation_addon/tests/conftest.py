@@ -7,8 +7,8 @@ import pytest
 
 # List of expected files in the generated output
 EXPECTED_FILES = [
-    "CHANGES.md",
-    "LICENSE",
+    "LICENSE.GPL",
+    "LICENSE.md",
     "Makefile",
     "pyproject.toml",
     "README.md",
