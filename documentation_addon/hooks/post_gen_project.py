@@ -22,11 +22,11 @@ def main():
     """Final fixes."""
     output_dir = Path().cwd()
     initialize_git = bool(
-        int(context.get("__documentation_addon_git_initialize"))
-    )  # {{ cookiecutter.__documentation_addon_git_initialize}}
+        int(context.get("initialize_git"))
+    )
     backend_format = bool(
         int(context.get("__documentation_addon_format"))
-    )  # {{ cookiecutter.__documentation_addon_git_initialize}}
+    )
     # Cleanup / Git
     actions = [
         [

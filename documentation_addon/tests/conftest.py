@@ -44,7 +44,7 @@ def default_context() -> Dict[str, str]:
         "repository_url": "https://github.com/collective/collective.docs",
         "version": "1.0.0",
         "min_python_version": "3.8",
-        "__documentation_addon_git_initialize": "1",
+        "initialize_git": "1",
     }
 
 
@@ -53,7 +53,7 @@ def no_git_context(default_context) -> Dict[str, str]:
     """Context with Git initialization disabled."""
     context = default_context.copy()
     context["__folder_name"] = "collective.docsnogit"
-    context["__documentation_addon_git_initialize"] = "0"
+    context["initialize_git"] = "0"
     return context
 
 
