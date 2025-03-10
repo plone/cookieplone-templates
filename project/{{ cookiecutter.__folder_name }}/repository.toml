@@ -1,0 +1,24 @@
+[repository]
+name = "{{ cookiecutter.project_slug }}"
+is_distribution = false
+changelog = "CHANGELOG.md"
+version = "version.txt"
+compose = "docker-compose.yml"
+
+[backend]
+path = "backend"
+
+[backend.package]
+name = "{{ cookiecutter.python_package_name }}"
+path = "backend"
+changelog = "backend/CHANGELOG.md"
+towncrier_settings = "backend/pyproject.toml"
+
+[frontend]
+path = "frontend"
+
+[frontend.package]
+name = "{{ cookiecutter.frontend_addon_name }}"
+path = "frontend/packages/{{ cookiecutter.frontend_addon_name }}"
+changelog = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/CHANGELOG.md"
+towncrier_settings = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/towncrier.toml"

@@ -16,6 +16,7 @@ import pytest
         "CHANGELOG.md",
         "Makefile",
         "README.md",
+        "repository.toml",
         "version.txt",
     ],
 )
