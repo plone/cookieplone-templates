@@ -3,8 +3,9 @@ from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
 
-from cookieplone.settings import QUIET_MODE_VAR
-from cookieplone.utils import console, files, git, plone
+from cookieplone.utils import console
+from cookieplone.utils import git
+from cookieplone.utils import plone
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -14,25 +15,21 @@ def handle_format(context: OrderedDict, output_dir: Path):
 
 
 def handle_git_initialization(context: OrderedDict, output_dir: Path):
-    """Initialize a GIT repository for the project codebase."""
+    """Initialize a GIT repository for the documentation codebase."""
     git.initialize_repository(output_dir)
 
 
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    initialize_git = bool(
-        int(context.get("initialize_git"))
-    )
-    backend_format = bool(
-        int(context.get("__documentation_addon_format"))
-    )
+    initialize_git = bool(int(context.get("initialize_git")))
+    documentation_format = bool(int(context.get("__documentation_starter_format")))
     # Cleanup / Git
     actions = [
         [
             handle_format,
             "Format code",
-            backend_format,
+            documentation_format,
         ],
         [
             handle_git_initialization,
@@ -50,13 +47,13 @@ def main():
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
 
-        Now, enter the docs repository, start documenting the code, and push to your organization.
+        Now, enter the docs folder, start documenting the code, and push to your organization.
 
         Sorry for the convenience,
         The Plone Community.
     """
     console.panel(
-        title="New documentation addon was generated",
+        title="New documentation scaffolding was generated",
         subtitle="",
         msg=msg,
         url="https://plone.org/",

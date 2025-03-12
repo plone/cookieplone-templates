@@ -1,11 +1,11 @@
-<!-- [![Cookieplone Documentation Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/documentation_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/documentation_addon.yml)  -->
+<!-- [![Cookieplone Documentation Starter CI](https://github.com/plone/cookieplone-templates/actions/workflows/documentation_starter.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/documentation_starter.yml)  -->
 [![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Documentation Add-on
+# Cookieplone Documentation Starter
 
-Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Documentation Add-on](https://github.com/plone/cookieplone-templates/documentation_addon) is intended to be used by Plone developers to create comprehensive documentation packages for Plone add-ons using Sphinx.
+Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Documentation Starter](https://github.com/plone/cookieplone-templates/documentation_starter) is intended to be used by Plone developers to create comprehensive documentation packages for Plone add-ons using Sphinx.
 
 ## Getting Started 🏁
 
@@ -21,7 +21,7 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 pip install pipx
 ```
 
-2. **Generate Your Documentation using Add-on🎉**
+2. **Generate Your Documentation Scaffolding🎉**
 
 ```shell
 pipx run cookie
@@ -35,7 +35,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `title`               | Your documentation's human-readable name, capitals and spaces allowed.
-| `description`         | Describes your documentation add-on and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
+| `description`         | Describes your documentation and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
 | `github_organization` | Used for GitHub and Docker repositories.                                                                                                             | **collective**                |
 | `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | **Our Company**               |
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |

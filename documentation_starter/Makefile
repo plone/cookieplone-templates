@@ -1,4 +1,4 @@
-# Makefile for testing documentation_addon template
+# Makefile for testing documentation_starter template
 .DEFAULT_GOAL   = help
 SHELL           = bash
 
@@ -31,12 +31,12 @@ $(VENV_DIR)/bin/uv:  ## Create virtual environment and install dependencies
 	$(UV) pip install pytest cookiecutter pytest-cookies
 
 # Test target: Run pytest
-test: venv  ## Run pytest tests for documentation_addon
+test: venv  ## Run pytest tests for documentation_starter
 	$(UV) pip install cookieplone
 	$(PYTEST) tests/
 
 # Bake target: Generate the template
-bake: venv  ## Bake the documentation_addon template into output_test/
+bake: venv  ## Bake the documentation_starter template into output_test/
 	rm -rf $(OUTPUT_DIR)
 	$(COOKIECUTTER) . --no-input --output-dir $(OUTPUT_DIR)
 

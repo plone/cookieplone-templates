@@ -1,4 +1,4 @@
-"""Pytest configuration for documentation_addon template tests."""
+"""Pytest configuration for documentation_starter template tests."""
 
 from pathlib import Path
 from typing import Dict
@@ -27,7 +27,7 @@ EXPECTED_FILES = [
 
 @pytest.fixture(scope="session")
 def template_dir() -> Path:
-    """Path to the documentation_addon template directory."""
+    """Path to the documentation_starter template directory."""
     return Path().cwd().resolve()
 
 

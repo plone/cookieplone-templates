@@ -10,11 +10,6 @@
       "title": "Backend Add-on for Plone",
       "description": "Create a new Python package to be used with Plone"
     },
-    "documentation_addon": {
-      "path": "./documentation_addon",
-      "title": "Documentation Add-on for Plone",
-      "description": "Create a new template documentation to be used with Plone projects"
-    },
     "frontend_addon": {
       "path": "./frontend_addon",
       "title": "Frontend Add-on for Plone",
