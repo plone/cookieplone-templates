@@ -13,6 +13,7 @@ name = "{{ cookiecutter.python_package_name }}"
 path = "backend"
 changelog = "backend/CHANGELOG.md"
 towncrier_settings = "backend/pyproject.toml"
+publish = false
 
 [frontend]
 path = "frontend"
@@ -22,3 +23,4 @@ name = "{{ cookiecutter.frontend_addon_name }}"
 path = "frontend/packages/{{ cookiecutter.frontend_addon_name }}"
 changelog = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/CHANGELOG.md"
 towncrier_settings = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/towncrier.toml"
+publish = false
