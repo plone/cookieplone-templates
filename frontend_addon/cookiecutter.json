@@ -38,5 +38,8 @@
   "_copy_without_render": [],
   "_extensions": ["cookieplone.filters.latest_volto"],
   "__cookieplone_repository_path": "",
-  "__cookieplone_template": ""
+  "__cookieplone_template": "",
+  "__cookieplone_subtemplates": [
+    ["documentation_starter", "Setup Documentation Scaffolding", "1"]
+  ]
 }

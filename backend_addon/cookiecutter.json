@@ -46,5 +46,8 @@
     "cookieplone.filters.package_path"
   ],
   "__cookieplone_repository_path": "",
-  "__cookieplone_template": ""
+  "__cookieplone_template": "",
+  "__cookieplone_subtemplates": [
+    ["documentation_starter", "Setup Documentation Scaffolding", "1"]
+  ]
 }

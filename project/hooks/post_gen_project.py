@@ -16,6 +16,11 @@ BACKEND_ADDON_REMOVE = [
     ".meta.toml",
 ]
 
+DOCUMENTATION_STARTER_REMOVE = [
+    ".github",
+    ".git",
+]
+
 FRONTEND_ADDON_REMOVE = [".github"]
 
 DEVOPS_TO_REMOVE = {
@@ -70,6 +75,13 @@ def generate_frontend_addon(context, output_dir):
     """Run volto generator."""
     generator.generate_subtemplate(
         "frontend_addon", output_dir, "frontend", context, FRONTEND_ADDON_REMOVE
+    )
+
+
+def generate_documentation_starter(context, output_dir):
+    """Generate documentation scaffolding"""
+    generator.generate_subtemplate(
+        "documentation_starter", output_dir, "docs", context, DOCUMENTATION_STARTER_REMOVE
     )
 
 
