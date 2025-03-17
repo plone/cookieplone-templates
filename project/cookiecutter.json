@@ -17,6 +17,7 @@
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
+  "initialize_documentation": ["1", "0"],
   "__feature_headless": "1",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
@@ -105,6 +106,11 @@
     },
     "devops_gha_deploy": {
       "__prompt__": "Add GitHub Action to Deploy this project?",
+      "1": "Yes",
+      "0": "No"
+    },
+    "initialize_documentation": {
+      "__prompt__": "Do you require Documentation Scaffolding?",
       "1": "Yes",
       "0": "No"
     }

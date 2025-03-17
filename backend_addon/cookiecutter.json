@@ -9,6 +9,7 @@
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "__year": "{% now 'local', '%Y' %}",
   "feature_headless": ["1", "0"],
+  "initialize_documentation": ["1", "0"],
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
   "__feature_distribution": "0",
   "__package_namespaces": "{{ cookiecutter.python_package_name | package_namespaces }}",
@@ -33,6 +34,11 @@
     "email": "Author E-mail",
     "feature_headless": {
       "__prompt__": "Support headless Plone?",
+      "1": "Yes",
+      "0": "No"
+    },
+    "initialize_documentation": {
+      "__prompt__": "Do you require Documentation Scaffolding?",
       "1": "Yes",
       "0": "No"
     }

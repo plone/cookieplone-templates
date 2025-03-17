@@ -7,6 +7,7 @@
   "github_organization": "collective",
   "npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "volto_version": "{{ 'Yes' | latest_volto }}",
+  "initialize_documentation": ["1", "0"],
   "__folder_name": "{{ cookiecutter.frontend_addon_name }}",
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__version_package": "1.0.0-alpha.0",
@@ -33,7 +34,12 @@
     "npm_package_name": "Package name on NPM",
     "volto_version": "Volto version",
     "author": "Author",
-    "email": "Author E-mail"
+    "email": "Author E-mail",
+    "initialize_documentation": {
+      "__prompt__": "Do you require Documentation Scaffolding?",
+      "1": "Yes",
+      "0": "No"
+    }
   },
   "_copy_without_render": [],
   "_extensions": ["cookieplone.filters.latest_volto"],

@@ -11,13 +11,7 @@ except ModuleNotFoundError:
     sys.exit(1)
 from packaging.version import Version
 
-
-SUPPORTED_PYTHON_VERSIONS = [
-    "3.10",
-    "3.11",
-    "3.12",
-    "3.13"
-]
+SUPPORTED_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13"]
 
 
 def sanity_check() -> data.SanityCheckResults:
