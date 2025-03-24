@@ -12,7 +12,7 @@ except ModuleNotFoundError:
 from packaging.version import Version
 
 SUPPORTED_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13"]
-MIN_COOKIEPLONE = "0.8.0.dev0"
+MIN_COOKIEPLONE = "0.9.1.dev0"
 
 
 def sanity_check() -> data.SanityCheckResults:

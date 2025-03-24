@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     __version__ = ""
 
 
-MIN_COOKIEPLONE = "0.8.0.dev0"
+MIN_COOKIEPLONE = "0.9.1.dev0"
 
 
 def _check_version(version: str) -> str:

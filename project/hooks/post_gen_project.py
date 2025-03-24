@@ -6,7 +6,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files, git, plone
+from cookieplone.utils import console, files, git, npm, plone
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -72,7 +72,7 @@ def generate_frontend_addon(context, output_dir):
     frontend_addon_name = context["frontend_addon_name"]
     if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
         npm_package_name = frontend_addon_name
-        frontend_addon_name = frontend_addon_name.split("/")[-1]
+        frontend_addon_name = npm.unscoped_package_name(npm_package_name)
         context["npm_package_name"] = npm_package_name
         context["frontend_addon_name"] = frontend_addon_name
     generator.generate_subtemplate(
