@@ -95,17 +95,40 @@ To automatically format your code and ensure it adheres to quality standards, ex
 make check
 ```
 
-It is possible to only run `format`:
+### Formatting the codebase
+
+To format the codebase, it is possible to run `format`:
 
 ```shell
 make format
 ```
 
+| Section | Tool | Description | Configuration |
+| --- | --- | --- | --- |
+| backend | Ruff | Python code formatting, imports sorting  | [`backend/pyproject.toml`](./backend/pyproject.toml) |
+| backend | Zpretty | XML and ZCML formatting  | -- |
+| frontend | eslint | Fixes most common frontend issues | [`frontend/.eslintrc.js`](.frontend/.eslintrc.js) |
+| frontend | prettier | Format JS and Typescript code  | [`frontend/.prettierrc`](.frontend/.prettierrc) |
+| frontend | stylelint | Format Styles (css, less, sass)  | [`frontend/.stylelintrc`](.frontend/.stylelintrc) |
+
+Formatters can also be run within the `backend` or `frontend` folders.
+
+### Linting the codebase
 or `lint`:
 
  ```shell
 make lint
 ```
+
+| Section | Tool | Description | Configuration |
+| --- | --- | --- | --- |
+| backend | Ruff | Checks code formatting, imports sorting  | [`backend/pyproject.toml`](./backend/pyproject.toml) |
+| backend | pyroma | Checks Python package metadata  | -- |
+| backend | check-python-versions | Checks Python version information  | -- |
+| backend | Zpretty | Checks XML and ZCML formatting  | -- |
+| frontend | eslint | Checks JS / Typescript lint | [`frontend/.eslintrc.js`](.frontend/.eslintrc.js) |
+| frontend | prettier | Check JS / Typescript formatting  | [`frontend/.prettierrc`](.frontend/.prettierrc) |
+| frontend | stylelint | Check Styles (css, less, sass) formatting  | [`frontend/.stylelintrc`](.frontend/.stylelintrc) |
 
 Linters can be run individually within the `backend` or `frontend` folders.
 
