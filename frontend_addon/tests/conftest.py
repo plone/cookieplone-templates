@@ -25,7 +25,7 @@ def context(cookieplone_root) -> dict:
         "email": "collective@plone.org",
         "github_organization": "collective",
         "npm_package_name": "@plone-collective/volto-addon",
-        "volto_version": "18.0.0-alpha.31",
+        "volto_version": "18.10.0",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 

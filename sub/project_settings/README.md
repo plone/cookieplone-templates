@@ -35,7 +35,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | **Project Settings**                |
 | `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | **Our Company**               |
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
-| `volto_version` | Volto version to be used. | **18.0.0-alpha.31**    |
+| `volto_version` | Volto version to be used. | **18.10.0**    |
 
 
 ## Code Quality Assurance 🧐

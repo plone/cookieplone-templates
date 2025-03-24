@@ -20,7 +20,7 @@ def context(cookieplone_root) -> dict:
         "title": "Frontend project",
         "author": "Plone Collective",
         "email": "collective@plone.org",
-        "volto_version": "18.0.0-alpha.31",
+        "volto_version": "18.10.0",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
