@@ -67,6 +67,13 @@ def generate_backend_addon(context, output_dir):
 
 def generate_frontend_addon(context, output_dir):
     """Run volto generator."""
+    # Handle packages inside an organization
+    frontend_addon_name = context["frontend_addon_name"]
+    if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
+        npm_package_name = frontend_addon_name
+        frontend_addon_name = frontend_addon_name.split("/")[-1]
+        context["npm_package_name"] = npm_package_name
+        context["frontend_addon_name"] = frontend_addon_name
     generator.generate_subtemplate(
         "frontend_addon", output_dir, "frontend", context, FRONTEND_ADDON_REMOVE
     )

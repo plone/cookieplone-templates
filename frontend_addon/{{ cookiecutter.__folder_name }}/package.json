@@ -1,9 +1,9 @@
 {
   "name": "{{ cookiecutter.__npm_package_name }}-dev",
-  "version": "{{ cookiecutter.__version_package }}",
+  "version": "{{ cookiecutter.__version_frontend_package }}",
   "description": "{{ cookiecutter.description }}",
   "author": "{{ cookiecutter.author }}",
-  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}",
+  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "license": "MIT",
   "keywords": [
     "volto-addon",

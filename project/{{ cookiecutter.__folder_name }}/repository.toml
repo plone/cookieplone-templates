@@ -1,9 +1,13 @@
 [repository]
-name = "{{ cookiecutter.project_slug }}"
-managed_by_uv = false
+name = "{{ cookiecutter.__project_slug }}"
+managed_by_uv = {{ cookiecutter.__backend_managed_by_uv }}
 changelog = "CHANGELOG.md"
 version = "version.txt"
 compose = "docker-compose.yml"
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
 
 [backend]
 path = "backend"
@@ -24,3 +28,7 @@ path = "frontend/packages/{{ cookiecutter.frontend_addon_name }}"
 changelog = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/CHANGELOG.md"
 towncrier_settings = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/towncrier.toml"
 publish = false
+
+[cookieplone]
+template = "{{ cookiecutter.__generator_template }}"
+generated_date = "{{ cookiecutter.__generator_date_long }}"

@@ -1,6 +1,6 @@
 {
   "name": "{{ cookiecutter.__npm_package_name }}",
-  "version": "{{ cookiecutter.__version_package }}",
+  "version": "{{ cookiecutter.__version_frontend_package }}",
   "description": "{{ cookiecutter.description }}",
   "main": "src/index.js",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "react"
   ],
   "author": "{{ cookiecutter.author }}",
-  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}#readme",
+  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}.git"
+    "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}.git"
   },
   "publishConfig": {
     "access": "public"

@@ -57,16 +57,16 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}"
+Homepage = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}"
 PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
-Source = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}"
-Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues"
+Source = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}"
+Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}/issues"
 
 [project.entry-points."z3c.autoinclude.plugin"]
 target = "plone"
 
 [tool.uv]
-managed = false
+managed = {{ cookiecutter.__backend_managed_by_uv }}
 
 [tool.hatch.build]
 strict-naming = false
@@ -93,7 +93,7 @@ filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
-issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}/issues/{issue})"
 underlines = ["", "", ""]
 
 [[tool.towncrier.type]]

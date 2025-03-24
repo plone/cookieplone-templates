@@ -3,9 +3,9 @@ filename = "CHANGELOG.md"
 directory = "news/"
 title_format = "## {version} ({project_date})"
 underlines = ["", "", ""]
-template = "./node_modules/@plone/scripts/templates/towncrier_template.jinja"
+template = "./news/.changelog_template.jinja"
 start_string = "<!-- towncrier release notes start -->\n"
-issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}/issue/{issue})"
+issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}"/{{ cookiecutter.__project_slug }}"/pull/{issue})"
 
 [[tool.towncrier.type]]
 directory = "breaking"
