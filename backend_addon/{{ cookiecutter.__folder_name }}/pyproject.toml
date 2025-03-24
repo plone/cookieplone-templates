@@ -68,28 +68,23 @@ target = "plone"
 [tool.uv]
 managed = {{ cookiecutter.__backend_managed_by_uv }}
 
+[tool.hatch.version]
+path = "src/{{ cookiecutter.__package_path }}/__init__.py"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-strict-naming = false
-packages = [{% set namespace = '' %}
-    {%- for part in cookiecutter.python_package_name.split(".")[:-1] -%}
-    "src/{{ namespace }}{{part}}",
-    {%- set namespace = '{{namespace}}.{{part}}' -%}{%- endfor -%}]
-
-[tool.hatch.version]
-path = "src/{{ cookiecutter.__package_path }}/__init__.py"
+strict-naming = true
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/src",
+exclude = [
+  "/.github",
 ]
 
 [tool.hatch.build.targets.wheel]
-sources = ["src"]
-only-include = ["src/{{ cookiecutter.__package_path }}"]
+packages = ["src/{{ cookiecutter.__package_path }}"]
 
 [tool.towncrier]
 directory = "news/"
