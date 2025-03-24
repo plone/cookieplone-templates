@@ -4,7 +4,9 @@ import os
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
+from re import template
 
+from cookieplone import generator
 from cookieplone.settings import QUIET_MODE_VAR
 from cookieplone.utils import console, files, git, plone
 
@@ -18,6 +20,11 @@ FEATURES_TO_REMOVE = {
     ]
 }
 
+DOCUMENTATION_STARTER_REMOVE = [
+    ".github",
+    ".git",
+]
+
 
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
     output_dir = output_dir / "src" / "packagename"
@@ -27,6 +34,17 @@ def handle_feature_headless(context: OrderedDict, output_dir: Path):
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
     plone.create_namespace_packages(
         output_dir / "src/packagename", context["python_package_name"]
+    )
+
+
+def generate_documentation_starter(context, output_dir):
+    """Generate documentation scaffolding"""
+    generator.generate_subtemplate(
+        "documentation_starter",
+        output_dir,
+        "docs",
+        context,
+        DOCUMENTATION_STARTER_REMOVE,
     )
 
 
@@ -82,6 +100,29 @@ def main():
         new_context = deepcopy(context)
         console.print(f" -> {title}")
         func(new_context, output_dir)
+
+    subtemplates = context.get(
+        "__cookieplone_subtemplates", []
+    )  # {{ cookiecutter.__cookieplone_subtemplates }}
+    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
+    for template_id, title, enabled in subtemplates:
+        # Convert sub/cache -> prepare_sub_cache
+        if (
+            not bool(int(context.get("initialize_documentation")))
+            and template_id == "documentation_starter"
+        ):
+            pass
+        else:
+            func_name = f"generate_{template_id.replace('/', '_')}"
+            func = funcs.get(func_name)
+            if not func:
+                raise ValueError(f"No handler available for sub_template {template_id}")
+            elif not int(enabled):
+                console.print(f" -> Ignoring ({title})")
+                continue
+            new_context = deepcopy(context)
+            console.print(f" -> {title}")
+            func(new_context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
