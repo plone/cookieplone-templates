@@ -22,7 +22,7 @@ def _check_version(version: str) -> str:
         min_v = versions.Version(MIN_COOKIEPLONE)
         is_valid = versions.is_valid_version(v, min_v, allow_prerelease=True)
         if not is_valid:
-            msg = f"Please upgrader Cookieplone to {MIN_COOKIEPLONE} or higher."
+            msg = f"Please upgrade Cookieplone to {MIN_COOKIEPLONE} or higher."
     return msg
 
 
