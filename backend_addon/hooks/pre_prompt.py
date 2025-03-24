@@ -11,13 +11,8 @@ except ModuleNotFoundError:
     sys.exit(1)
 from packaging.version import Version
 
-
-SUPPORTED_PYTHON_VERSIONS = [
-    "3.10",
-    "3.11",
-    "3.12",
-    "3.13"
-]
+SUPPORTED_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13"]
+MIN_COOKIEPLONE = "0.8.0.dev0"
 
 
 def sanity_check() -> data.SanityCheckResults:
@@ -27,8 +22,8 @@ def sanity_check() -> data.SanityCheckResults:
             "Cookieplone",
             lambda: (
                 ""
-                if Version(cookieplone_version) > Version("0.8.0.dev0")
-                else "This template requires Cookieplone 0.8 or higher."
+                if Version(cookieplone_version) > Version(MIN_COOKIEPLONE)
+                else f"This template requires Cookieplone {MIN_COOKIEPLONE} or higher."
             ),
             [],
             "error",
