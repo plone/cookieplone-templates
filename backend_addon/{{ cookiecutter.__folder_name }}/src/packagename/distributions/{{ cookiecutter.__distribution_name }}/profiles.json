@@ -1,0 +1,11 @@
+{
+  "base": [
+    "plone.app.contenttypes:default",
+    "plone.app.caching:default",
+    {%- if cookiecutter.__feature_headless == '1' -%}
+    "plone.volto:default",
+    {%- endif %}
+    "plonetheme.barceloneta:default"
+  ],
+  "content": []
+}
