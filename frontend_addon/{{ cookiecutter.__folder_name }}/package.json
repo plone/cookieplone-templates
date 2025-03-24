@@ -3,7 +3,7 @@
   "version": "{{ cookiecutter.__version_frontend_package }}",
   "description": "{{ cookiecutter.description }}",
   "author": "{{ cookiecutter.author }}",
-  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "homepage": "{{ cookiecutter.__repository_url }}",
   "license": "MIT",
   "keywords": [
     "volto-addon",

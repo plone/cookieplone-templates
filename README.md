@@ -8,7 +8,7 @@
 
 <div align="center">
 
-![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
+![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 </div>

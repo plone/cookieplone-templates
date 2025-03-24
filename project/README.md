@@ -1,5 +1,5 @@
 [![Cookieplone Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml)
-[![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
+[![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 

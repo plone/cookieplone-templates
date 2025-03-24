@@ -5,7 +5,7 @@ title_format = "## {version} ({project_date})"
 underlines = ["", "", ""]
 template = "./news/.changelog_template.jinja"
 start_string = "<!-- towncrier release notes start -->\n"
-issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}"/{{ cookiecutter.__project_slug }}"/pull/{issue})"
+issue_format = "[#{issue}]({{ cookiecutter.__repository_url }}/pull/{issue})"
 
 [[tool.towncrier.type]]
 directory = "breaking"

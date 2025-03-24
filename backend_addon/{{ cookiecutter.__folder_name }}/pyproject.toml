@@ -1,14 +1,10 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "{{ cookiecutter.python_package_name }}"
 dynamic = ["version"]
 description = "{{ cookiecutter.description }}"
 readme = "README.md"
 license = "GPL-2.0-only"
-requires-python = ">=3.10"
+requires-python = ">={{ cookiecutter.__supported_versions_python[0] }}"
 authors = [
     { name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" },
 ]
@@ -21,8 +17,9 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
     "Framework :: Plone",
-    "Framework :: Plone :: 6.0",
-    "Framework :: Plone :: 6.1",
+    {%- for version in cookiecutter.__supported_versions_plone -%}
+    "Framework :: Plone :: {{ version }}",
+    {%- endfor %}
     "Framework :: Plone :: Addon",
     {%- if cookiecutter.__feature_distribution == '1' %}
     "Framework :: Plone :: Distribution",
@@ -30,10 +27,9 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+    {%- for version in cookiecutter.__supported_versions_python -%}
+    "Programming Language :: Python :: {{ version }}",
+    {%- endfor %}
 ]
 dependencies = [
     "Products.CMFPlone",
@@ -57,16 +53,20 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}"
+Homepage = "{{ cookiecutter.__repository_url }}"
 PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
-Source = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}"
-Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}/issues"
+Source = "{{ cookiecutter.__repository_url }}"
+Tracker = "{{ cookiecutter.__repository_url }}/issues"
 
 [project.entry-points."z3c.autoinclude.plugin"]
 target = "plone"
 
 [tool.uv]
 managed = {{ cookiecutter.__backend_managed_by_uv }}
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.hatch.build]
 strict-naming = false
@@ -93,7 +93,7 @@ filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
-issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}/issues/{issue})"
+issue_format = "[#{issue}]({{ cookiecutter.__repository_url }}/issues/{issue})"
 underlines = ["", "", ""]
 
 [[tool.towncrier.type]]
@@ -127,7 +127,7 @@ name = "Tests"
 showcontent = true
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py{{ cookiecutter.__python_version_identifier }}"
 line-length = 88
 fix = true
 lint.select = [

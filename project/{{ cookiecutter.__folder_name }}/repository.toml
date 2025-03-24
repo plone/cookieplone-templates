@@ -30,5 +30,5 @@ towncrier_settings = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/t
 publish = false
 
 [cookieplone]
-template = "{{ cookiecutter.__generator_template }}"
+template = "{{ cookiecutter.__cookieplone_template }}"
 generated_date = "{{ cookiecutter.__generator_date_long }}"

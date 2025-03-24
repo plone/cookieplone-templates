@@ -11,7 +11,7 @@
     "react"
   ],
   "author": "{{ cookiecutter.author }}",
-  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}#readme",
+  "homepage": "{{ cookiecutter.__repository_url }}#readme",
   "repository": {
     "type": "git",
     "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}.git"

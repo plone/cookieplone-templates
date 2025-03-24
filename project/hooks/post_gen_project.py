@@ -1,5 +1,6 @@
 """Post generation hook."""
 
+import subprocess
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
@@ -159,7 +160,9 @@ def main():
     # Run format
     if backend_format:
         backend_folder = output_dir / "backend"
-        plone.format_python_codebase(backend_folder)
+        # Run make format in the backend folder
+        cmd = f"make -C {backend_folder} format"
+        subprocess.call(cmd, shell=True)  # noQA: S602
 
     # Do a second run add newly created files
     if initialize_git:
