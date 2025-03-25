@@ -7,3 +7,4 @@ pytest-jsonschema >= 1.0.0a2
 cookieplone >= 0.9.3
 GitPython
 wheel
+uv
