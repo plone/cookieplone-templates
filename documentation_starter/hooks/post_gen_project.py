@@ -2,11 +2,13 @@ import os
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
+from textwrap import dedent
 
 from cookieplone.utils import console
 from cookieplone.utils import git
 from cookieplone.utils import plone
 
+output_path = Path().resolve()
 context: OrderedDict = {{cookiecutter}}
 
 
@@ -44,14 +46,31 @@ def main():
         console.print(f" -> {title}")
         func(new_context, output_dir)
 
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
+    msg = dedent(
+            f"""
+            Project Title: [bold blue]{{ cookiecutter.title }}[/bold blue]
 
-        Now, enter the docs folder, start documenting the code, and push to your organization.
+            - Output folder: [bold blue]{output_path}[/bold blue]
 
-        Sorry for the convenience,
-        The Plone Community.
+            Now, enter the docs folder at [bold blue]{{ cookiecutter.project_folder }}[/bold blue], start documenting the code, and push to your organization.
+
+            1.  Build and serve the Docs:
+
+                [bold blue]cd {output_path}
+                make livehtml[/bold blue]
+
+            2.  Watch the documentation live while you edit it.
+
+                - [bold blue]Open your browser[/bold blue] at the url displayed in the console  
+                - Default local url is: [bold blue]http://127.0.0.1:8050/[/bold blue]
+                - Edit the documentation source and save.
+                - Content is rebuild and updates in the browser live.
+
+            Sorry for the convenience,
+            The Plone Community.
     """
+    )
+
     console.panel(
         title="New documentation scaffolding was generated",
         subtitle="",
