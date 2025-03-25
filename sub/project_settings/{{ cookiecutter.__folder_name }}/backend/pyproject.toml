@@ -32,20 +32,15 @@ classifiers = [
     {%- endfor %}
 ]
 dependencies = [
-    "Products.CMFPlone",
+    "Products.CMFPlone=={{ cookiecutter.plone_version }}",
     "plone.api",
-    {% if cookiecutter.__feature_headless == '1' -%}
     "plone.restapi",
     "plone.volto",
-    {%- endif %}
 ]
 
 [project.optional-dependencies]
 test = [
     "plone.app.testing",
-    {% if cookiecutter.__feature_headless == "0" and cookiecutter.plone_version >= "6.1" -%}
-    "plone.classicui",
-    {%- endif -%}
     "plone.restapi[test]",
     "pytest",
     "pytest-cov",
@@ -53,10 +48,10 @@ test = [
 ]
 
 [project.urls]
-Homepage = "{{ cookiecutter.__repository_url }}"
+Homepage = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}"
 PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
-Source = "{{ cookiecutter.__repository_url }}"
-Tracker = "{{ cookiecutter.__repository_url }}/issues"
+Source = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}"
+Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/issues"
 
 {% if cookiecutter.plone_version.startswith('6.1') is true %}
 [project.entry-points."plone.autoinclude.plugin"]
@@ -88,11 +83,11 @@ packages = ["{{ cookiecutter.python_package_name | package_namespace_path }}"]
 
 [tool.towncrier]
 directory = "news/"
-filename = "CHANGELOG.md"
+filename = "CHANGES.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
-issue_format = "[#{issue}]({{ cookiecutter.__repository_url }}/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues/{issue})"
 underlines = ["", "", ""]
 
 [[tool.towncrier.type]]
@@ -177,6 +172,14 @@ preview = true
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E501", "RUF001", "S101"]
 
+[tool.check-manifest]
+ignore = [
+    ".editorconfig",
+    ".flake8",
+    "dependabot.yml",
+    "mx.ini",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
@@ -184,7 +187,3 @@ testpaths = ["tests"]
 source_pkgs = ["{{ cookiecutter.python_package_name }}", "tests"]
 branch = true
 parallel = true
-omit = [
-  "src/{{ cookiecutter.__package_path }}/locales/__init__.py",
-  "src/{{ cookiecutter.__package_path }}/locales/__main__.py",
-]

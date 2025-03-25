@@ -50,8 +50,8 @@ See also the documentation of [Mockup and Patternslib](https://6.docs.plone.org/
 
 ## Contribute
 
-- [Issue Tracker](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/issues)
-- [Source Code](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/)
+- [Issue Tracker]({{ cookiecutter.__repository_url }}/issues)
+- [Source Code]({{ cookiecutter.__repository_url }}/)
 
 ## License
 

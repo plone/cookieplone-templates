@@ -26,7 +26,7 @@ def handle_feature_headless(context: OrderedDict, output_dir: Path):
 
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
     plone.create_namespace_packages(
-        output_dir / "src/packagename", context["python_package_name"]
+        output_dir / "src/packagename", context["python_package_name"], style="pkgutil"
     )
 
 

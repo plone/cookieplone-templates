@@ -1,5 +1,5 @@
 ALLOWED_MISSING = []
-ALLOWED_NOT_USED = []
+ALLOWED_NOT_USED = ["__generator_sha"]
 
 
 def test_no_missing_variables(variables_missing):

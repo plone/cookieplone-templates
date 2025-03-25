@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 PLONE_VERSION = "6.0.10"
-VOLTO_VERSION = "18.0.0-alpha.31"
+VOLTO_VERSION = "18.10.0"
 
 
 @pytest.fixture(scope="session")
@@ -17,27 +17,30 @@ def cookieplone_root() -> dict:
 
 
 @pytest.fixture(scope="session")
-def context(cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
-    return {
-        "title": "Plone Brasil",
-        "project_slug": "plone.org.br",
-        "description": "Brazilian community website.",
-        "hostname": "plone.org.br",
-        "author": "PloneGov-BR",
-        "email": "gov@plone.org.br",
-        "use_prerelease_versions": "Yes",
-        "plone_version": PLONE_VERSION,
-        "volto_version": VOLTO_VERSION,
-        "python_package_name": "plonegov.ploneorgbr",
-        "frontend_addon_name": "volto-ploneorgbr",
-        "language_code": "en",
-        "github_organization": "plonegovbr",
-        "__project_git_initialize": "1",
-        "container_registry": "github",
-        "devops_storage": "relstorage",
-        "__cookieplone_repository_path": f"{cookieplone_root}",
-    }
+    return annotate_context(
+        {
+            "title": "Plone Brasil",
+            "project_slug": "plone.org.br",
+            "description": "Brazilian community website.",
+            "hostname": "plone.org.br",
+            "author": "PloneGov-BR",
+            "email": "gov@plone.org.br",
+            "use_prerelease_versions": "Yes",
+            "plone_version": PLONE_VERSION,
+            "volto_version": VOLTO_VERSION,
+            "python_package_name": "plonegov.ploneorgbr",
+            "frontend_addon_name": "volto-ploneorgbr",
+            "language_code": "en",
+            "github_organization": "plonegovbr",
+            "__project_git_initialize": "1",
+            "container_registry": "github",
+            "devops_storage": "relstorage",
+        },
+        cookieplone_root,
+        "project",
+    )
 
 
 @pytest.fixture(scope="session")

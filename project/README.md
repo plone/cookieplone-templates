@@ -1,5 +1,5 @@
 [![Cookieplone Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml)
-[![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
+[![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
@@ -22,11 +22,14 @@ Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [P
 
 ### Installation Guide 🛠️
 
-1. **pipx**
+1. **uv**
+
+[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+
+To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
 
 ```shell
-pip install pipx
-```
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 2. **NodeJS & pnpm**
 
@@ -36,7 +39,7 @@ Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-p
 ### Generate Your Plone 6 Project 🎉
 
 ```shell
-pipx run cookieplone project
+uvx cookieplone project
 ```
 
 ### Use options to avoid prompts
@@ -45,9 +48,9 @@ Cookieplone will ask a lot of questions.
 You can use some of its options to avoid repeatedly entering the same values.
 
 
-#### `--no_input`
+#### `--no-input`
 
-You can use the [`--no_input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make cookieplone not prompt for parameters and only use `cookiecutter.json` file content.
+You can use the [`--no-input`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-no-input) option to make cookieplone not prompt for parameters and only use `cookiecutter.json` file content.
 
 
 #### `--replay` and `--replay-file`
