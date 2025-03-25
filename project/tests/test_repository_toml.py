@@ -4,14 +4,14 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-import tomllib
+import tomli
 
 
 @pytest.fixture
 def repository_settings(cutter_result) -> dict:
     folder = cutter_result.project_path
     path: Path = folder / "repository.toml"
-    return tomllib.loads(path.read_text())
+    return tomli.loads(path.read_text())
 
 
 @pytest.mark.parametrize(
