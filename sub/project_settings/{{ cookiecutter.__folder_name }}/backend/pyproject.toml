@@ -164,6 +164,7 @@ force-single-line = true
 from-first = true
 lines-after-imports = 2
 lines-between-types = 1
+order-by-type = false
 
 [tool.ruff.format]
 preview = true
