@@ -12,7 +12,11 @@ YELLOW=`tput setaf 3`
 .PHONY: all
 all: build
 
-BIN_FOLDER = "../../bin"
+TEMPLATE = $(shell basename $(CURRENT_DIR))
+PROJECT_FOLDER_NAME = project-title
+BASE_FOLDER = ../../
+VENV_FOLDER = ${BASE_FOLDER}/.venv
+BIN_FOLDER = ${VENV_FOLDER}/bin
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -22,24 +26,24 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf volto-addon
+	rm -rf $(PROJECT_FOLDER_NAME)
 
-$(BIN_FOLDER)/cookieplone:  ## cookieplone installation
-	$(MAKE) -C "../.." bin/cookieplone
+$(VENV_FOLDER): ## cookieplone installation
+	$(MAKE) -C $(BASE_FOLDER) sync
 
 .PHONY: format
-format: $(BIN_FOLDER)/cookieplone ## Format code
+format: $(VENV_FOLDER)## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	$(BIN_FOLDER)/black hooks tests
-	$(BIN_FOLDER)/isort hooks tests
+	@uv run ruff format --config $(BASE_FOLDER)pyproject.toml hooks tests
+	@uv run ruff check --select I --fix --config $(BASE_FOLDER)pyproject.toml hooks tests
 
 .PHONY: generate
-generate:  $(BIN_FOLDER)/cookieplone ## Create a sample package
+generate: $(VENV_FOLDER) ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf volto-addon
-	$(BIN_FOLDER)/cookiecutter . --no-input
+	rm -rf $(PROJECT_FOLDER_NAME)
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
-test: $(BIN_FOLDER)/cookieplone ## Create a sample package and tests it
+test: $(VENV_FOLDER)## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	$(BIN_FOLDER)/python -m pytest tests
+	@uv run pytest tests
