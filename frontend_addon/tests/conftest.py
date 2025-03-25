@@ -15,19 +15,22 @@ def cookieplone_root() -> dict:
 
 
 @pytest.fixture(scope="session")
-def context(cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
-    return {
-        "frontend_addon_name": "volto-addon",
-        "title": "Volto Add-on",
-        "description": "Add new features to your Volto Project.",
-        "author": "Plone Collective",
-        "email": "collective@plone.org",
-        "github_organization": "collective",
-        "npm_package_name": "@plone-collective/volto-addon",
-        "volto_version": "18.10.0",
-        "__cookieplone_repository_path": f"{cookieplone_root}",
-    }
+    return annotate_context(
+        {
+            "frontend_addon_name": "volto-addon",
+            "title": "Volto Add-on",
+            "description": "Add new features to your Volto Project.",
+            "author": "Plone Collective",
+            "email": "collective@plone.org",
+            "github_organization": "collective",
+            "npm_package_name": "@plone-collective/volto-addon",
+            "volto_version": "18.10.0",
+        },
+        cookieplone_root,
+        "frontend_addon",
+    )
 
 
 @pytest.fixture(scope="session")

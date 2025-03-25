@@ -22,11 +22,14 @@ Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [P
 
 ### Installation Guide 🛠️
 
-1. **pipx**
+1. **uv**
+
+[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+
+To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
 
 ```shell
-pip install pipx
-```
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 2. **NodeJS & pnpm**
 
@@ -36,7 +39,7 @@ Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-p
 ### Generate Your Plone 6 Project 🎉
 
 ```shell
-pipx run cookieplone project
+uvx cookieplone project
 ```
 
 ### Use options to avoid prompts

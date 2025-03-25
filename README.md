@@ -34,7 +34,7 @@ pip install pipx
 Select a template with the following command:
 
 ```shell
-pipx run cookieplone
+uvx cookieplone
 ```
 
 ```text

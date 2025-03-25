@@ -58,7 +58,7 @@ PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
 Source = "{{ cookiecutter.__repository_url }}"
 Tracker = "{{ cookiecutter.__repository_url }}/issues"
 
-{%- if cookiecutter.plone_version.startswith('6.1') is true %}
+{% if cookiecutter.plone_version.startswith('6.1') is true %}
 [project.entry-points."plone.autoinclude.plugin"]
 {%- else %}
 [project.entry-points."z3c.autoinclude.plugin"]
@@ -84,7 +84,7 @@ exclude = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/{{ cookiecutter.__package_path }}"]
+packages = ["{{ cookiecutter.python_package_name | package_namespace_path }}"]
 
 [tool.towncrier]
 directory = "news/"

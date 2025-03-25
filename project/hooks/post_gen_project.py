@@ -154,7 +154,9 @@ def main():
 
     # Create namespace packages
     plone.create_namespace_packages(
-        output_dir / "backend/src/packagename", context["python_package_name"]
+        output_dir / "backend/src/packagename",
+        context["python_package_name"],
+        style="pkgutil",
     )
 
     # Run format

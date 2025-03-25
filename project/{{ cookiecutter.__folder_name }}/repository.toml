@@ -31,4 +31,5 @@ publish = false
 
 [cookieplone]
 template = "{{ cookiecutter.__cookieplone_template }}"
+template_version = "{{ cookiecutter.__generator_sha }}"
 generated_date = "{{ cookiecutter.__generator_date_long }}"

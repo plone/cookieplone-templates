@@ -15,15 +15,18 @@ This is a sub-template -- used by other templates, in automated tests, and for O
 
 ### Installation Guide 🛠️
 
-1. **pipx**
+1. **uv**
+
+[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+
+To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
 
 ```shell
-pip install pipx
-```
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ### Generate Your Project Settings 🎉
 
 ```shell
-pipx run cookieplone sub/project_settings
+uvx cookieplone sub/project_settings
 ```
 
 ## Project Generation Options
