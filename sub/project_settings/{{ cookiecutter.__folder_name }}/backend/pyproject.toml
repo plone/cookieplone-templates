@@ -73,9 +73,6 @@ build-backend = "hatchling.build"
 [tool.hatch.build]
 strict-naming = true
 
-[tool.hatch.build]
-strict-naming = true
-
 [tool.hatch.build.targets.sdist]
 exclude = [
   "/.github",
