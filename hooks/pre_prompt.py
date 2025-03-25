@@ -10,7 +10,10 @@ except ModuleNotFoundError:
     __version__ = ""
 
 
-MIN_COOKIEPLONE = "0.9.2"
+MIN_COOKIEPLONE = "0.9.3"
+COOKIEPLONE_INSTALLATION = (
+    "https://github.com/plone/cookieplone/blob/main/README.md#installation-"
+)
 
 
 def _check_version(version: str) -> str:
@@ -22,7 +25,11 @@ def _check_version(version: str) -> str:
         min_v = versions.Version(MIN_COOKIEPLONE)
         is_valid = versions.is_valid_version(v, min_v, allow_prerelease=True)
         if not is_valid:
-            msg = f"Please upgrade Cookieplone to {MIN_COOKIEPLONE} or higher."
+            msg = (
+                f"This template requires Cookieplone {MIN_COOKIEPLONE} "
+                "or higher. Upgrade information available "
+                f"at {COOKIEPLONE_INSTALLATION}."
+            )
     return msg
 
 
