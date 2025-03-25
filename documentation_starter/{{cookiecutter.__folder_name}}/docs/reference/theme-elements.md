@@ -9,7 +9,7 @@ myst:
 
 # Theme-specific elements
 
-This page contains a number of reference elements to see how they look in Plone Sphinx Theme.
+This page contains a number of reference elements to see how they look in Plone Sphinx Theme, the default theme used in **{{ cookiecutter.title }}**.
 Each element is followed by the MyST code used to generate the element.
 
 ````{seealso}

@@ -237,7 +237,7 @@ html_theme_options = {
         },
     ],
     "logo": {
-        "text": "Plone Sphinx Theme",
+        "text": "{{ cookiecutter.title }} Documentation",
     },
     "navigation_with_keys": True,
     "path_to_docs": "docs",
@@ -432,10 +432,12 @@ def source_replace(app, docname, source):
 
 # Dict of replacements.
 source_replacements = {
-    "{PLONE_BACKEND_MINOR_VERSION}": "6.0",
-    "{PLONE_BACKEND_PATCH_VERSION}": "6.0.13",
-    "{NVM_VERSION}": "0.39.5",
-    "{SUPPORTED_PYTHON_VERSIONS}": "3.9, 3.10, 3.11, or 3.12",
+    "{PROJECT_TITLE}": "{{ cookiecutter.title }}",
+    "{PACKAGE_NAME}": "{{ cookiecutter.project_package }}",
+    "{PLONE_BACKEND_MINOR_VERSION}": "{{ cookiecutter.plone_version }}",
+    "{PLONE_BACKEND_PATCH_VERSION}": "{{ cookiecutter.plone_version }}.x (adjust me)",
+    "{NVM_VERSION}": "0.39.5 (adjust me)",
+    "{SUPPORTED_PYTHON_VERSIONS}": "3.9, 3.10, 3.11, 3.12 or 3.13 (adjust me)",
 }
 
 

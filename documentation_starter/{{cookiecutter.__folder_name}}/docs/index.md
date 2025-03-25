@@ -9,10 +9,14 @@ myst:
 
 # {{ cookiecutter.title }}
 
-Welcome to the documentation for **{{ cookiecutter.__folder_name }}**!
-{{ cookiecutter.description }}
+Welcome to the documentation for **{{ cookiecutter.title }}** !
+
+{{ cookiecutter.description }}.
+
 This template provides a ready-to-use environment for creating comprehensive documentation for Plone projects, powered by the [Plone Sphinx Theme](https://github.com/plone/plone-sphinx-theme).
 Whether you're documenting a Plone add-on, a training guide, or a custom deployment, this setup combines the simplicity of Markdown with the power of Sphinx.
+
+The documentation lives in ``{{ cookiecutter.__folder_name }}``
 
 Built with [Markedly Structured Text (MyST)](https://myst-parser.readthedocs.io/en/latest/), this environment supports rich formatting, directives, and extensions tailored for technical documentation.
 It’s designed to work seamlessly with Plone’s ecosystem, requiring Python 3.7 or higher.
@@ -22,7 +26,7 @@ As this documentation is powered by Plone Sphinx Theme, documentation for the sa
 <!-- Need to add the updated link of documentation here -->
 
 ```{todo}
-Replace this section with you project introduction and key features.
+Replace this section with your project introduction and key features.
 ```
 
 ```{toctree}

@@ -1,22 +1,22 @@
 ---
 myst:
   html_meta:
-    "description": "File system structure of Plone Sphinx Theme"
-    "property=og:description": "File system structure of Plone Sphinx Theme"
-    "property=og:title": "File system structure of Plone Sphinx Theme"
-    "keywords": "Plone, Sphinx, Theme, plone-sphinx-theme, file, system, structure"
+    "description": "File system structure of {{ cookiecutter.__folder_name }}"
+    "property=og:description": "File system structure of {{ cookiecutter.__folder_name }}"
+    "property=og:title": "File system structure of {{ cookiecutter.__folder_name }}"
+    "keywords": "{{ cookiecutter.title }}, Plone, {{ cookiecutter.__folder_name }}, Sphinx, Theme, plone-sphinx-theme, file, system, structure"
 ---
 
 # File system structure
 
-This reference document describes the file system structure of Plone Sphinx Theme, and the purpose of its files and directories.
+This reference document describes the file system structure of {{ cookiecutter.__folder_name }}, and the purpose of its files and directories.
 
-Plone Sphinx Theme uses [Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) for compiling static assets and previewing design changes.
-Plone Sphinx Theme's file structure follows [that of Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/filesystem-layout/), with some slight variations.
+**{{ cookiecutter.title }}** uses [Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/) for compiling static assets and previewing design changes.
+**{{ cookiecutter.title }}'s** file structure follows [that of Sphinx Theme Builder](https://sphinx-theme-builder.readthedocs.io/en/latest/filesystem-layout/), with some slight variations.
 
 ```text
 .
-├── docs  # Documentation of Plone Sphinx Theme
+├── docs  # Documentation of {{ cookiecutter.title }}
 │   ├── [Documentation content and files]
 │   └── conf.py  # Sphinx configuration for building documentation
 ├── .gitignore

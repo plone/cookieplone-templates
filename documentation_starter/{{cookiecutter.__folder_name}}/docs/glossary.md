@@ -7,7 +7,7 @@ myst:
     "keywords": "Plone, documentation, glossary, term, definition"
 ---
 
-This glossary provides example terms and definitions relevant to **{{ cookiecutter.__folder_name }}**. {{ cookiecutter.description }}
+This glossary provides example terms and definitions relevant to **{{ cookiecutter.title }}**. {{ cookiecutter.description }}
 
 ```{note}
 This is an example glossary demonstrating MyST Markdown’s `{glossary}` directive. You can adapt it for your project’s appendix by editing or replacing these entries with your own terms and definitions.
@@ -19,6 +19,12 @@ This is an example glossary demonstrating MyST Markdown’s `{glossary}` directi
 
 ```{glossary}
 :sorted: true
+
+{{ cookiecutter.title }}
+    The title of this documentation living in the folder ``{{ cookiecutter.__folder_name }}``
+
+{{ cookiecutter.__folder_name }}
+    The package/folder name the ``{{ cookiecutter.__folder_name }}`` documentation  is living in 
 
 Sphinx
     [Sphinx](https://www.sphinx-doc.org/en/master/) is a tool that makes it easy to create intelligent and beautiful documentation.
