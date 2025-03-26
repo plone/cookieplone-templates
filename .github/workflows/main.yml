@@ -28,6 +28,9 @@ jobs:
 
   test-template:
     name: "${{ matrix.template }}: ${{ matrix.python-version }}"
+    if: "${{ always() }}"
+    needs:
+      - test-variables
     uses: ./.github/workflows/test-template.yml
     strategy:
       fail-fast: false
@@ -50,6 +53,9 @@ jobs:
 
   backend-functional:
     runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-variables
     env:
       template: "backend_addon"
       name: "collective.addon"
@@ -85,6 +91,9 @@ jobs:
 
   frontend-functional:
     runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-variables
     env:
       template: "frontend_addon"
       name: "volto-add-on"
