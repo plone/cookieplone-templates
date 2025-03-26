@@ -12,7 +12,7 @@ env:
 jobs:
 
   test-variables:
-    name: "{{ matrix.template }}: {{ matrix.python-version }}"
+    name: "Test variables: ${{ matrix.python-version }}"
     uses: ./.github/workflows/test-variables.yml
     strategy:
       fail-fast: false
@@ -27,7 +27,7 @@ jobs:
 
 
   test-template:
-    name: "{{ matrix.template }}: {{ matrix.python-version }}"
+    name: "${{ matrix.template }}: ${{ matrix.python-version }}"
     uses: ./.github/workflows/test-template.yml
     strategy:
       fail-fast: false
@@ -36,9 +36,9 @@ jobs:
           - "project"
           - "backend_addon"
           - "frontend_addon"
-          - "sub_cache"
-          - "sub_frontend_project"
-          - "sub_project_settings"
+          - "sub/sub_cache"
+          - "sub/sub_frontend_project"
+          - "sub/sub_project_settings"
         python-version:
           - "3.10"
           - "3.11"
