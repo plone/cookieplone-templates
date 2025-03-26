@@ -35,6 +35,8 @@
     "@plone/registry": "workspace:*",
     "@plone/scripts": "workspace:*",
     "@plone/types": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "release-it": "{{ cookiecutter.__version_release_it }}"
   }
 }
