@@ -42,13 +42,7 @@ jobs:
           - "sub/cache"
           - "sub/frontend_project"
           - "sub/project_settings"
-        python-version:
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
     with:
-        python-version: ${{ matrix.python-version }}
         working-directory: ${{ matrix.template }}
 
   backend-functional:
