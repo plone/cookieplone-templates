@@ -1,6 +1,12 @@
 name: Plone Cache Settings CI
 on:
+  pull_request:
+    paths:
+      - "sub/cache_settings/**"
+      - ".github/workflows/sub_cache_settings.yml"
   push:
+    branches:
+      - main
     paths:
       - "sub/cache_settings/**"
       - ".github/workflows/sub_cache_settings.yml"
@@ -10,9 +16,7 @@ env:
   PYTHON_VERSION: "3.10"
 
 jobs:
-
   generation:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,6 +26,7 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
+          - "3.13"
 
     steps:
       # git checkout
@@ -33,7 +38,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
+          cache: "pip"
 
       # python install
       - name: Install dependencies

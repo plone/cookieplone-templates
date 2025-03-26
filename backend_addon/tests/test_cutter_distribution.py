@@ -31,5 +31,5 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 def test_trove_classifier_set(cutter_result):
     """Check feature-specific files were not generated."""
     trove_classifier = "Framework :: Plone :: Distribution"
-    setup_py = cutter_result.project_path / "setup.py"
-    assert trove_classifier in setup_py.read_text()
+    pyproject = cutter_result.project_path / "pyproject.toml"
+    assert trove_classifier in pyproject.read_text()

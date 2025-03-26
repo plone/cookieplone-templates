@@ -10,11 +10,13 @@ import pytest
     [
         ".editorconfig",
         ".gitignore",
+        ".vscode/extensions.json",
         ".vscode/settings.json",
         "dependabot.yml",
         "CHANGELOG.md",
         "Makefile",
         "README.md",
+        "repository.toml",
         "version.txt",
     ],
 )
@@ -46,11 +48,9 @@ def test_valid_json_files(cutter_result, filepath: str):
     [
         [".github/workflows/backend.yml", "github-workflow"],
         [".github/workflows/frontend.yml", "github-workflow"],
+        [".github/workflows/main.yml", "github-workflow"],
         [".github/workflows/manual_deploy.yml", "github-workflow"],
         [".github/workflows/varnish.yml", "github-workflow"],
-        [".pre-commit-config.yaml", "pre-commit-config"],
-        ["backend/.pre-commit-config.yaml", "pre-commit-config"],
-        ["frontend/.pre-commit-config.yaml", "pre-commit-config"],
         ["docker-compose.yml", "docker-compose"],
         ["frontend/package.json", "package"],
         ["frontend/packages/volto-ploneorgbr/package.json", "package"],

@@ -26,16 +26,14 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 
 GENERATED_FILES = [
     "backend/.dockerignore",
-    "backend/constraints.txt",
     "backend/Dockerfile.acceptance",
     "backend/Dockerfile",
     "backend/Makefile",
     "backend/scripts/create_site.py",
-    "backend/setup.py",
     "backend/src/packagename/locales/__init__.py",
     "backend/src/packagename/locales/en/LC_MESSAGES/project.title.po",
     "backend/src/packagename/locales/project.title.pot",
-    "backend/src/packagename/locales/update.py",
+    "backend/src/packagename/locales/__main__.py",
     "backend/src/packagename/profiles/default/registry/plone.base.interfaces.controlpanel.IMailSchema.xml",  # noQA
     "backend/src/packagename/profiles/default/registry/plone.base.interfaces.controlpanel.ISiteSchema.xml",  # noQA
     "backend/src/packagename/profiles/default/registry/plone.i18n.interfaces.ILanguageSchema.xml",

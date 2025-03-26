@@ -1,66 +1,57 @@
 name: Frontend CI
 
 on:
-  push:
-    paths:
-      - "frontend/**"
-      - ".github/workflows/frontend.yml"
-  workflow_dispatch:
-
-env:
-  IMAGE_NAME_PREFIX: {{ cookiecutter.__container_image_prefix }}
-  IMAGE_NAME_SUFFIX: frontend
-  NODE_VERSION: {{ cookiecutter.__node_version }}.x
+  workflow_call:
+    inputs:
+      base-tag:
+        required: true
+        type: string
+      image-name-prefix:
+        required: true
+        type: string
+      image-name-suffix:
+        required: true
+        type: string
+      node-version:
+        required: true
+        type: string
+      volto-version:
+        required: true
+        type: string
 
 defaults:
   run:
     working-directory: ./frontend
 
 jobs:
-  meta:
-    runs-on: ubuntu-latest
-    outputs:
-      BASE_TAG: {{"${{ steps.vars.outputs.BASE_TAG }}"}}
-      VOLTO_VERSION: {{"${{ steps.vars.outputs.VOLTO_VERSION }}"}}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Compute several vars needed for the build
-        id: vars
-        run: |
-          echo 'BASE_TAG=sha-$(git rev-parse --short HEAD)' >> $GITHUB_OUTPUT
-          python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
-      - name: Test vars
-        run: |
-          echo 'BASE_TAG={{"${{ steps.vars.outputs.BASE_TAG }}"}}'
-          echo 'VOLTO_VERSION={{"${{ steps.vars.outputs.VOLTO_VERSION }}"}}'
-
   code-analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@v4
 
-      - name: Use Node.js {{ "${{ env.node-version }}" }}
-        uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
+      - name: Use Node.js {{ "${{ inputs.node-version }}" }}
+        uses: actions/setup-node@v4
         with:
-          node-version: {{ "${{ env.NODE_VERSION }}" }}
+          node-version: {{ "${{ inputs.node-version }}" }}
 
       - name: Enable corepack
-        run: corepack enable
+        run: |
+          npm i -g corepack@latest
+          corepack enable
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
-          path: {{"${{ env.STORE_PATH }}"}}
-          key: {{"${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}"}}
+          path: {{ "${{ env.STORE_PATH }}" }}
+          key: {{ "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}" }}
           restore-keys: |
-            {{"${{ runner.os }}"}}-pnpm-store-
+            {{ "${{ runner.os }}" }}-pnpm-store-
 
       - name: Install dependencies
         run: make install
@@ -86,14 +77,13 @@ jobs:
           echo '# Code Analysis' >> $GITHUB_STEP_SUMMARY
           echo '| Test | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
-          {{ "echo '| Lint | ${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY" }}
-          {{ "echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY" }}
-          {{ "echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY " }}
+          echo '| Lint | {{ "${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
+          echo '| i18n | {{ "${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
+          echo '| Unit Tests | {{ "${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
 
   release:
     runs-on: ubuntu-latest
     needs:
-      - meta
       - code-analysis
     permissions:
       contents: read
@@ -109,9 +99,9 @@ jobs:
         uses: docker/metadata-action@{{ cookiecutter.__gha_version_docker_metadata }}
         with:
           images: |
-            {{ "${{ env.IMAGE_NAME_PREFIX }}-${{ env.IMAGE_NAME_SUFFIX }}" }}
+            {{ "${{ inputs.image-name-prefix }}-${{ inputs.image-name-suffix }}" }}
           labels: |
-            org.label-schema.docker.cmd=docker run -d -p 3000:3000 {{ "${{ env.IMAGE_NAME_PREFIX }}-${{ env.IMAGE_NAME_SUFFIX }}" }}:latest
+            org.label-schema.docker.cmd=docker run -d -p 8080:8080 {{ "${{ inputs.image-name-prefix }}-${{ inputs.image-name-suffix }}:${{ inputs.base-tag }}" }}
           flavor:
             latest=false
           tags: |
@@ -129,13 +119,13 @@ jobs:
         uses: docker/login-action@{{ cookiecutter.__gha_version_docker_login }}
         with:
           {%- if cookiecutter.container_registry == 'docker_hub' %}
-          username: {{"${{ secrets.DOCKERHUB_USERNAME }}"}}
-          password: {{"${{ secrets.DOCKERHUB_TOKEN }}"}}
+          username: {{ "${{ secrets.DOCKERHUB_USERNAME }}" }}
+          password: {{ "${{ secrets.DOCKERHUB_TOKEN }}" }}
           {%- endif %}
           {%- if cookiecutter.container_registry == 'github' %}
           registry: ghcr.io
-          username: {{"${{ github.actor }}"}}
-          password: {{"${{ secrets.GITHUB_TOKEN }}"}}
+          username: {{ "${{ github.actor }}" }}
+          password: {{ "${{ secrets.GITHUB_TOKEN }}" }}
           {%- endif %}
 
       - name: Build and push
@@ -144,8 +134,8 @@ jobs:
           platforms: linux/amd64
           context: frontend/
           file: frontend/Dockerfile
-          push: {{"${{ github.event_name != 'pull_request' }}"}}
-          tags: {{"${{ steps.meta.outputs.tags }}"}}
-          labels: {{"${{ steps.meta.outputs.labels }}"}}
+          push: {{ "${{ github.event_name != 'pull_request' }}" }}
+          tags: {{ "${{ steps.meta.outputs.tags }}" }}
+          labels: {{ "${{ steps.meta.outputs.labels }}" }}
           build-args: |
-            VOLTO_VERSION={{"${{ needs.meta.outputs.VOLTO_VERSION }}"}}
+            VOLTO_VERSION={{ "${{ inputs.volto-version }}" }}

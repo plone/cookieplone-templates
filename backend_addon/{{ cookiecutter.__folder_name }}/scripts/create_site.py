@@ -32,7 +32,9 @@ app = makerequest(globals()["app"])
 
 request = app.REQUEST
 
-ifaces = [IBrowserLayer] + list(directlyProvidedBy(request))
+ifaces = [IBrowserLayer]
+for iface in directlyProvidedBy(request):
+    ifaces.append(iface)
 
 directlyProvides(request, *ifaces)
 

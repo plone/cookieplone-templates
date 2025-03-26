@@ -61,8 +61,6 @@ def test_pkg_src_feature_files_generated(cutter_result, file_path: str):
 @pytest.mark.parametrize(
     "file_path,schema_name",
     [
-        [".github/workflows/meta.yml", "github-workflow"],
-        [".pre-commit-config.yaml", "pre-commit-config"],
         ["pyproject.toml", "pyproject"],
     ],
 )

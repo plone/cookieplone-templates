@@ -8,25 +8,18 @@ import pytest
 
 ROOT_FILES = [
     ".editorconfig",
-    ".github/workflows/meta.yml",
+    ".github/workflows/ci.yml",
     ".gitignore",
-    ".meta.toml",
-    ".pre-commit-config.yaml",
-    "CHANGES.md",
-    "constraints.txt",
+    "CHANGELOG.md",
     "CONTRIBUTORS.md",
     "instance.yaml",
     "LICENSE.GPL",
     "LICENSE.md",
     "Makefile",
-    "MANIFEST.in",
     "mx.ini",
     "pyproject.toml",
     "README.md",
-    "requirements.txt",
     "scripts/create_site.py",
-    "setup.py",
-    "tox.ini",
 ]
 
 
@@ -39,6 +32,8 @@ PKG_SRC_FILES = [
     "dependencies.zcml",
     "indexers/__init__.py",
     "indexers/configure.zcml",
+    "locales/__init__.py",
+    "locales/__main__.py",
     "profiles/default/browserlayer.xml",
     "profiles/default/catalog.xml",
     "profiles/default/controlpanel.xml",
@@ -73,19 +68,22 @@ def cookieplone_root() -> dict:
 
 
 @pytest.fixture(scope="session")
-def context(cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
-    return {
-        "title": "Addon",
-        "description": "A Tech blog.",
-        "github_organization": "collective",
-        "python_package_name": "collective.addon",
-        "author": "Plone Collective",
-        "email": "collective@plone.org",
-        "feature_headless": "1",
-        "__backend_addon_git_initialize": "1",
-        "__cookieplone_repository_path": f"{cookieplone_root}",
-    }
+    return annotate_context(
+        {
+            "title": "Addon",
+            "description": "A Tech blog.",
+            "github_organization": "collective",
+            "python_package_name": "collective.addon",
+            "author": "Plone Collective",
+            "email": "collective@plone.org",
+            "feature_headless": "1",
+            "__backend_addon_git_initialize": "1",
+        },
+        cookieplone_root,
+        "backend_addon",
+    )
 
 
 @pytest.fixture(scope="session")

@@ -14,21 +14,24 @@ def cookieplone_root() -> dict:
 
 
 @pytest.fixture(scope="session")
-def context(cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
-    return {
-        "title": "Project Title",
-        "description": "A new project using Plone 6.",
-        "project_slug": "project-title",
-        "author": "Plone Foundation",
-        "email": "collective@plone.org",
-        "python_package_name": "project.title",
-        "frontend_addon_name": "volto-project-title",
-        "language_code": "en",
-        "github_organization": "collective",
-        "__node_version": "20",
-        "__cookieplone_repository_path": f"{cookieplone_root}",
-    }
+    return annotate_context(
+        {
+            "title": "Project Title",
+            "description": "A new project using Plone 6.",
+            "project_slug": "project-title",
+            "author": "Plone Foundation",
+            "email": "collective@plone.org",
+            "python_package_name": "project.title",
+            "frontend_addon_name": "volto-project-title",
+            "language_code": "en",
+            "github_organization": "collective",
+            "__node_version": "20",
+        },
+        cookieplone_root,
+        "project_settings",
+    )
 
 
 @pytest.fixture(scope="session")

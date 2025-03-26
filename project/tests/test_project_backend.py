@@ -13,7 +13,6 @@ BACKEND_FILES = [
     "Makefile",
     "mx.ini",
     "pyproject.toml",
-    "requirements.txt",
     "version.txt",
 ]
 
@@ -27,7 +26,6 @@ def test_backend_top_level_files(cutter_result, filename: str):
 
 
 BACKEND_PACKAGE_FILES_PYTEST = [
-    "setup.py",
     "src/plonegov/ploneorgbr/configure.zcml",
     "src/plonegov/ploneorgbr/dependencies.zcml",
     "src/plonegov/ploneorgbr/permissions.zcml",
@@ -67,8 +65,8 @@ def test_backend_package_files_removed(cutter_result, filename: str):
 
 
 BACKEND_HEADLESS_FILE_CHECKS = [
-    ["setup.py", "plone.volto"],
-    ["setup.py", "plone.restapi"],
+    ["pyproject.toml", "plone.volto"],
+    ["pyproject.toml", "plone.restapi"],
     ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.volto"],
     ["src/plonegov/ploneorgbr/dependencies.zcml", "plone.restapi"],
     ["src/plonegov/ploneorgbr/profiles/default/metadata.xml", "plone.volto:default"],

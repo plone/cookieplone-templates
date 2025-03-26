@@ -1,11 +1,12 @@
 """Post generation hook."""
 
+import subprocess
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files, git, plone
+from cookieplone.utils import console, files, git, npm, plone
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -13,7 +14,6 @@ context: OrderedDict = {{cookiecutter}}
 BACKEND_ADDON_REMOVE = [
     ".github",
     ".git",
-    ".meta.toml",
 ]
 
 FRONTEND_ADDON_REMOVE = [".github"]
@@ -68,6 +68,13 @@ def generate_backend_addon(context, output_dir):
 
 def generate_frontend_addon(context, output_dir):
     """Run volto generator."""
+    # Handle packages inside an organization
+    frontend_addon_name = context["frontend_addon_name"]
+    if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
+        npm_package_name = frontend_addon_name
+        frontend_addon_name = npm.unscoped_package_name(npm_package_name)
+        context["npm_package_name"] = npm_package_name
+        context["frontend_addon_name"] = frontend_addon_name
     generator.generate_subtemplate(
         "frontend_addon", output_dir, "frontend", context, FRONTEND_ADDON_REMOVE
     )
@@ -147,13 +154,17 @@ def main():
 
     # Create namespace packages
     plone.create_namespace_packages(
-        output_dir / "backend/src/packagename", context["python_package_name"]
+        output_dir / "backend/src/packagename",
+        context["python_package_name"],
+        style="pkgutil",
     )
 
     # Run format
     if backend_format:
         backend_folder = output_dir / "backend"
-        plone.format_python_codebase(backend_folder)
+        # Run make format in the backend folder
+        cmd = f"make -C {backend_folder} format"
+        subprocess.call(cmd, shell=True)  # noQA: S602
 
     # Do a second run add newly created files
     if initialize_git:

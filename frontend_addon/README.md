@@ -1,6 +1,6 @@
 [![Cookieplone Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml)
-[![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
-![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
+[![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
+![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 # Cookieplone Frontend Add-on
@@ -15,16 +15,19 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 
 ### Installation Guide 🛠️
 
-1. **pipx**
+1. **uv**
+
+[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+
+To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
 
 ```shell
-pip install pipx
-```
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ### Generate Your Plone Add-on 🎉
 
 ```shell
-pipx run cookieplone frontend_addon
+uvx cookieplone frontend_addon
 ```
 
 ## Project Generation Options
@@ -40,7 +43,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `github_organization` | Used for GitHub repositories.                                                                                                             | **collective**                |
 | `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
-| `volto_version` | Volto version to be used. | **18.0.0-alpha.31**    |
+| `volto_version` | Volto version to be used. | **18.10.0**    |
 
 ## Code Quality Assurance 🧐
 
