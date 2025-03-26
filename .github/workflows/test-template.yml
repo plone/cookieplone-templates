@@ -1,0 +1,29 @@
+name: Template generation
+on:
+    workflow_call:
+      inputs:
+        python-version:
+          required: true
+          type: string
+        working-directory:
+          required: false
+          type: string
+
+jobs:
+  generation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup_python
+        with:
+          python-version: ${{ inputs.python-version }}
+
+      # Test
+      - name: Run tests
+        working-directory: ${{ inputs.working-directory }}
+        run: |
+          uv run pytest tests

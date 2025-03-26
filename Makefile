@@ -40,6 +40,9 @@ $(VENV_FOLDER): ## Create virtualenv and install dependencies
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
 	@uv sync
 
+.PHONY: install
+install: $(VENV_FOLDER)
+
 .PHONY: sync
 sync: ## Sync dependencies
 	@echo "$(GREEN)==> Sync dependencies$(RESET)"
