@@ -10,7 +10,7 @@
   "volto_version": "{{ 'Yes' | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
-  "language_code": ["en", "de", "es", "pt-br", "nl", "fi"],
+  "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
   "devops_storage": ["relstorage", "zeo", "filestorage"],
