@@ -1,0 +1,123 @@
+name: 'Cookieplone Templates: Frontend functional tests'
+description: 'Generate the codebase and run functional tests'
+inputs:
+  python-version:
+    description: 'Python Version'
+    required: true
+  node-version:
+    description: 'Node Version'
+    required: true
+  template:
+    description: 'Template'
+    required: false
+    default: "frontend_addon"
+  name:
+    description: 'Name'
+    required: false
+    default: "volto-add-on"
+runs:
+  using: "composite"
+  steps:
+    - name: Generate
+      uses: ./.github/actions/generate
+      with:
+        template: ${{ inputs.template }}
+        python-version: ${{ inputs.python-version }}
+
+    - name: Enable corepack
+      shell: bash
+      run: |
+        npm install -g --force corepack@latest
+        corepack enable
+
+    - name: Get pnpm store directory
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+    - uses: actions/cache@v4
+      name: Setup pnpm cache
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Cache Cypress Binary
+      id: cache-cypress-binary
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/Cypress
+        key: binary-${{ env.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+    - name: Install generated package
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make install
+
+    - name: Run unit tests
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make ci-test
+
+    - name: Run i18n tests
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make i18n
+
+    - name: Run linting
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make lint
+
+    - name: Run formatting
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make format
+
+    - name: Run Storybook
+      shell: bash
+      working-directory: ${{ inputs.name }}
+      run: |
+        make storybook-build
+
+    - name: Start Servers
+      uses: JarvusInnovations/background-action@v1
+      with:
+        working-directory: ${{ inputs.name }}
+        run: |
+          make ci-acceptance-backend-start &
+          make acceptance-frontend-prod-start &
+        # your step-level and job-level environment variables are available to your commands as-is
+        # npm install will count towards the wait-for timeout
+        # whenever possible, move unrelated scripts to a different step
+        # to background multiple processes: add & to the end of the command
+
+        wait-on: |
+          http-get://localhost:55001/plone
+          http://localhost:3000
+        # IMPORTANT: to use environment variables in wait-on, you must use this form: ${{ env.VAR }}
+        # See wait-on section below for all resource types and prefixes
+
+        tail: true # true = stderr,stdout
+        # This will allow you to monitor the progress live
+
+        log-output-resume: stderr
+        # Eliminates previosuly output stderr log entries from post-run output
+
+        wait-for: 10m
+
+        log-output: stderr,stdout # same as true
+
+        log-output-if: failure
+
+    - name: Run acceptance tests
+      working-directory: ${{ inputs.name }}
+      shell: bash
+      run: |
+        make ci-acceptance-test

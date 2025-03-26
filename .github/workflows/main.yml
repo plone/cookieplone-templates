@@ -11,9 +11,32 @@ env:
 
 jobs:
 
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      node-version: ${{ steps.vars.outputs.NODE_VERSION }}
+      python-version: ${{ steps.vars.outputs.PYTHON_VERSION }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        run: |
+          echo "NODE_VERSION=${{ env.node-version }}" >> $GITHUB_OUTPUT
+          echo "PYTHON_VERSION=${{ env.python-version }}" >> $GITHUB_OUTPUT
+
+      - name: Test vars
+        run: |
+          echo 'node-version: ${{ steps.vars.outputs.NODE_VERSION }}'
+          echo 'python-version: ${{ steps.vars.outputs.PYTHON_VERSION }}'
+
   test-variables:
     name: "Test variables: ${{ matrix.python-version }}"
     uses: ./.github/workflows/test-variables.yml
+    needs:
+      - config
     strategy:
       fail-fast: false
       matrix:
@@ -25,12 +48,11 @@ jobs:
     with:
         python-version: ${{ matrix.python-version }}
 
-
   test-template:
     name: "${{ matrix.template }}: ${{ matrix.python-version }}"
     if: "${{ always() }}"
     needs:
-      - test-variables
+      - config
     uses: ./.github/workflows/test-template.yml
     strategy:
       fail-fast: false
@@ -48,152 +70,6 @@ jobs:
           - "3.12"
           - "3.13"
     with:
+        node-version: ${{ needs.config.outputs.node-version }}
         python-version: ${{ matrix.python-version }}
         working-directory: ${{ matrix.template }}
-
-  backend-functional:
-    runs-on: ubuntu-latest
-    if: "${{ always() }}"
-    needs:
-      - test-variables
-    env:
-      template: "backend_addon"
-      name: "collective.addon"
-    steps:
-
-      - name: Checkout codebase
-        uses: actions/checkout@v4
-
-      - name: Generate
-        uses: ./.github/actions/generate
-        with:
-          template: ${{ env.template }}
-          python-version: ${{ env.python-version }}
-
-      - name: Restore uv cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.UV_CACHE_DIR }}
-          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'backend_addon/collective.addon/pyproject.toml') }}
-          restore-keys: |
-            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('backend_addon/collective.addon/pyproject.toml') }}
-            uv-${{ runner.os }}-${{ env.python-version }}
-
-      - name: Install generated package
-        working-directory: ${{ env.name }}
-        run: |
-          make install
-
-      - name: Run unit tests
-        working-directory: ${{ env.name }}
-        run: |
-          make test
-
-  frontend-functional:
-    runs-on: ubuntu-latest
-    if: "${{ always() }}"
-    needs:
-      - test-variables
-    env:
-      template: "frontend_addon"
-      name: "volto-add-on"
-    steps:
-
-      - name: Checkout codebase
-        uses: actions/checkout@v4
-
-      - name: Generate
-        uses: ./.github/actions/generate
-        with:
-          template: ${{ env.template }}
-          python-version: ${{ env.python-version }}
-
-      - name: Enable corepack
-        run: |
-          npm install -g --force corepack@latest
-          corepack enable
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Cache Cypress Binary
-        id: cache-cypress-binary
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/Cypress
-          key: binary-${{ env.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Install generated package
-        working-directory: ${{ env.name }}
-        run: |
-          make install
-
-      - name: Run unit tests
-        working-directory: ${{ env.name }}
-        run: |
-          make ci-test
-
-      - name: Run i18n tests
-        working-directory: ${{ env.name }}
-        run: |
-          make i18n
-
-      - name: Run linting
-        working-directory: ${{ env.name }}
-        run: |
-          make lint
-
-      - name: Run formatting
-        working-directory: ${{ env.name }}
-        run: |
-          make format
-
-      - name: Run Storybook
-        working-directory: ${{ env.name }}
-        run: |
-          make storybook-build
-
-      - name: Start Servers
-        uses: JarvusInnovations/background-action@v1
-        with:
-          working-directory: ${{ env.name }}
-          run: |
-            make ci-acceptance-backend-start &
-            make acceptance-frontend-prod-start &
-          # your step-level and job-level environment variables are available to your commands as-is
-          # npm install will count towards the wait-for timeout
-          # whenever possible, move unrelated scripts to a different step
-          # to background multiple processes: add & to the end of the command
-
-          wait-on: |
-            http-get://localhost:55001/plone
-            http://localhost:3000
-          # IMPORTANT: to use environment variables in wait-on, you must use this form: ${{ env.VAR }}
-          # See wait-on section below for all resource types and prefixes
-
-          tail: true # true = stderr,stdout
-          # This will allow you to monitor the progress live
-
-          log-output-resume: stderr
-          # Eliminates previosuly output stderr log entries from post-run output
-
-          wait-for: 10m
-
-          log-output: stderr,stdout # same as true
-
-          log-output-if: failure
-
-      - name: Run acceptance tests
-        working-directory: ${{ env.name }}
-        run: |
-          make ci-acceptance-test
