@@ -80,9 +80,11 @@
       "en": "English",
       "de": "Deutsch",
       "es": "Español",
+      "fi": "Suomi",
+      "it": "Italiano",
       "pt-br": "Português (Brasil)",
       "nl": "Nederlands",
-      "fi": "Suomi"
+      "se": "Svenska"
     },
     "github_organization": "GitHub or GitLab username or organization slug from URL",
     "container_registry": {
