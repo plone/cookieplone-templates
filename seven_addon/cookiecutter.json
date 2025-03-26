@@ -1,6 +1,7 @@
 {
   "title": "Seven Add-on",
   "frontend_addon_name": "{{ cookiecutter.title | slugify }}",
+  "project_slug": "{{ cookiecutter.title | slugify }}",
   "description": "A new add-on for Seven",
   "author": "Plone Community",
   "email": "collective@plone.org",
