@@ -1,25 +1,19 @@
-name: Plone Frontend Add-on CI
+name: "Cookieplone Templates: CI"
+description: "Main workflow for cookieplone-templates"
+
 on:
-  pull_request:
-    paths:
-      - "frontend_addon/**"
-      - ".github/workflows/frontend_addon.yml"
   push:
-    branches:
-      - main
-    paths:
-      - "frontend_addon/**"
-      - ".github/workflows/frontend_addon.yml"
   workflow_dispatch:
 
 env:
-  NODE_VERSION: 22.x
-  PYTHON_VERSION: "3.10"
+  node-version: 22.x
+  python-version: "3.10"
 
 jobs:
-  generation:
-    runs-on: ubuntu-latest
 
+  test-variables:
+    name: "Test variables: ${{ matrix.python-version }}"
+    uses: ./.github/workflows/test-variables.yml
     strategy:
       fail-fast: false
       matrix:
@@ -28,56 +22,85 @@ jobs:
           - "3.11"
           - "3.12"
           - "3.13"
+    with:
+        python-version: ${{ matrix.python-version }}
 
-    steps:
-      # git checkout
-      - name: Checkout codebase
-        uses: actions/checkout@v4
 
-      # python setup
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
+  test-template:
+    name: "Template ${{ matrix.template }}"
+    if: "${{ always() }}"
+    needs:
+      - test-variables
+    uses: ./.github/workflows/test-template.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        template:
+          - "project"
+          - "backend_addon"
+          - "frontend_addon"
+          - "sub/cache"
+          - "sub/frontend_project"
+          - "sub/project_settings"
+    with:
+        working-directory: ${{ matrix.template }}
 
-      # python install
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      # Test
-      - name: Run tests
-        run: |
-          cd frontend_addon
-          python -m pytest tests
-
-  functional:
+  backend-functional:
     runs-on: ubuntu-latest
-
+    if: "${{ always() }}"
+    needs:
+      - test-variables
+    env:
+      template: "backend_addon"
+      name: "collective.addon"
     steps:
+
       - name: Checkout codebase
         uses: actions/checkout@v4
-
-      - name: Set up Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: "${{ env.PYTHON_VERSION }}"
-          cache: "pip"
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
 
       - name: Generate
-        working-directory: frontend_addon
-        run: |
-          make generate
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
+        uses: ./.github/actions/generate
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Restore uv cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.UV_CACHE_DIR }}
+          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'backend_addon/collective.addon/pyproject.toml') }}
+          restore-keys: |
+            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('backend_addon/collective.addon/pyproject.toml') }}
+            uv-${{ runner.os }}-${{ env.python-version }}
+
+      - name: Install generated package
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Run unit tests
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
+  frontend-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-variables
+    env:
+      template: "frontend_addon"
+      name: "volto-add-on"
+    steps:
+
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
 
       - name: Enable corepack
         run: |
@@ -102,42 +125,42 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: binary-${{ env.NODE_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: binary-${{ env.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Install generated package
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make install
 
       - name: Run unit tests
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make ci-test
 
       - name: Run i18n tests
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make i18n
 
       - name: Run linting
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make lint
 
       - name: Run formatting
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make format
 
       - name: Run Storybook
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make storybook-build
 
       - name: Start Servers
         uses: JarvusInnovations/background-action@v1
         with:
-          working-directory: frontend_addon/volto-add-on
+          working-directory: ${{ env.name }}
           run: |
             make ci-acceptance-backend-start &
             make acceptance-frontend-prod-start &
@@ -165,6 +188,6 @@ jobs:
           log-output-if: failure
 
       - name: Run acceptance tests
-        working-directory: frontend_addon/volto-add-on
+        working-directory: ${{ env.name }}
         run: |
           make ci-acceptance-test

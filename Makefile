@@ -12,8 +12,19 @@ YELLOW=`tput setaf 3`
 TOP_LEVEL_TEMPLATES = backend_addon frontend_addon project
 SUB_TEMPLATES = cache frontend_project project_settings
 
+# Python checks
+UV?=uv
+
+# installed?
+ifeq (, $(shell which $(UV) ))
+  $(error "UV=$(UV) not found in $(PATH)")
+endif
+
+VENV_FOLDER=$(CURRENT_DIR)/.venv
+BIN_FOLDER=$(VENV_FOLDER)/bin
+
 .PHONY: all
-all: bin/cookieplone
+all: $(VENV_FOLDER)
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -23,43 +34,49 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf bin include lib lib64 pyvenv.cfg .Python
+	rm -rf bin include lib lib64 pyvenv.cfg .Python .venv
 
-bin/cookieplone: ## Create virtualenv and install dependencies
+$(VENV_FOLDER): ## Create virtualenv and install dependencies
 	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
-	python3 -m venv .
-	bin/pip install pip --upgrade
-	bin/pip install -r requirements.txt --upgrade
+	@uv sync
+
+.PHONY: install
+install: $(VENV_FOLDER)
+
+.PHONY: sync
+sync: ## Sync dependencies
+	@echo "$(GREEN)==> Sync dependencies$(RESET)"
+	@uv sync
 
 .PHONY: format
-format: bin/cookieplone ## Format code
+format: $(VENV_FOLDER) ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	bin/black hooks .scripts tests
-	bin/isort hooks .scripts tests
+	@uv run ruff format hooks .scripts tests
+	@uv run ruff check --select I --fix hooks .scripts tests
 	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" format ;)
 	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" format ;)
 
 .PHONY: test
-test: bin/cookieplone ## Test all cookiecutters
+test: $(VENV_FOLDER) ## Test all cookiecutters
 	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
-	bin/python3 -m pytest tests
+	@uv run pytest tests
 	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test ;)
 	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test ;)
 
 .PHONY: test-pdb
-test-pdb: bin/cookieplone ## Test all cookiecutters (and stop on error)
+test-pdb: $(VENV_FOLDER) ## Test all cookiecutters (and stop on error)
 	@echo "$(GREEN)==> Test all cookiecutters (and stop on error)$(RESET)"
-	bin/python3 -m pytest tests -x --pdb
+	@uv run pytest tests -x --pdb
 	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test-pdb ;)
 	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test-pdb ;)
 
 
 .PHONY: report-context
-report-context: bin/cookieplone ## Generate a report of all context options
+report-context: $(VENV_FOLDER) ## Generate a report of all context options
 	@echo "$(GREEN)==> Generate a report of all context options$(RESET)"
-	bin/python .scripts/report_context.py
+	@uv run .scripts/report_context.py
 
 .PHONY: report-keys-usage
-report-keys-usage: bin/cookieplone ## Generate a report of usage of context keys
+report-keys-usage: $(VENV_FOLDER) ## Generate a report of usage of context keys
 	@echo "$(GREEN)==> Generate a report of usage of context keys$(RESET)"
-	bin/python .scripts/report_keys_usage.py
+	@uv run .scripts/report_keys_usage.py

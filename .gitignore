@@ -9,3 +9,4 @@ collective.plonedistribution
 .reports/*.csv
 .reports/*.json
 */__pycache__/
+.venv
