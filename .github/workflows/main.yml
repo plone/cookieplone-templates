@@ -36,9 +36,9 @@ jobs:
           - "project"
           - "backend_addon"
           - "frontend_addon"
-          - "sub/sub_cache"
-          - "sub/sub_frontend_project"
-          - "sub/sub_project_settings"
+          - "sub/cache"
+          - "sub/frontend_project"
+          - "sub/project_settings"
         python-version:
           - "3.10"
           - "3.11"
