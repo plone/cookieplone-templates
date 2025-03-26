@@ -27,7 +27,7 @@ jobs:
 
 
   test-template:
-    name: "${{ matrix.template }}: ${{ matrix.python-version }}"
+    name: "Template ${{ matrix.template }}"
     if: "${{ always() }}"
     needs:
       - test-variables

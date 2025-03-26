@@ -8,7 +8,7 @@ on:
 
 jobs:
   generation:
-    name: "Use ${{ inputs.working-directory }} with ${{ matrix.python-version }}"
+    name: "With Python ${{ matrix.python-version }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
