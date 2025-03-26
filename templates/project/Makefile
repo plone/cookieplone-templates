@@ -14,7 +14,7 @@ all: build
 
 TEMPLATE = $(shell basename $(CURRENT_DIR))
 PROJECT_FOLDER_NAME = project-title
-BASE_FOLDER = ../../
+BASE_FOLDER = $(CURRENT_DIR)/../../
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
 
@@ -42,7 +42,7 @@ format: $(VENV_FOLDER)## Format code
 generate: $(VENV_FOLDER) ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	rm -rf $(PROJECT_FOLDER_NAME)
-	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv cookieplone $(TEMPLATE) --no-input
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it

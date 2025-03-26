@@ -28,7 +28,7 @@ def generate_addon(context, output_dir):
 def cleanup(context, output_dir):
     """Remove references to volto-addon."""
     project_files_folder = output_dir / LOCAL_FILES_FOLDER_NAME
-    project_files: list[Path] = [path for path in project_files_folder.glob("*")]
+    project_files: list[Path] = list(project_files_folder.glob("*"))
     filenames = [path.name for path in project_files]
     # Remove old files
     files.remove_files(output_dir, filenames)

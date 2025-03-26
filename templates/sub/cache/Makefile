@@ -13,8 +13,8 @@ YELLOW=`tput setaf 3`
 all: build
 
 TEMPLATE = $(shell basename $(CURRENT_DIR))
-ADDON_FOLDER_NAME = collective.addon
-BASE_FOLDER = ../
+PROJECT_FOLDER_NAME = project-title
+BASE_FOLDER = ../../../
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
 
@@ -27,7 +27,7 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf $(ADDON_NAME)
+	rm -rf volto-addon
 
 $(VENV_FOLDER): ## cookieplone installation
 	$(MAKE) -C $(BASE_FOLDER) sync
@@ -39,10 +39,10 @@ format: $(VENV_FOLDER)## Format code
 	@uv run ruff check --select I --fix --config $(BASE_FOLDER)pyproject.toml hooks tests
 
 .PHONY: generate
-generate:  uv cookieplone ## Create a sample package
+generate:  uv run cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf $(ADDON_FOLDER_NAME)
-	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv cookieplone $(TEMPLATE) --no-input
+	rm -rf $(PROJECT_FOLDER_NAME)
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it

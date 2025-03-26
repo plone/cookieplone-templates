@@ -61,7 +61,11 @@ def generate_backend_addon(context, output_dir):
     # Headless
     context["feature_headless"] = "1"
     generator.generate_subtemplate(
-        "backend_addon", output_dir, folder_name, context, BACKEND_ADDON_REMOVE
+        "templates/backend_addon",
+        output_dir,
+        folder_name,
+        context,
+        BACKEND_ADDON_REMOVE,
     )
     files.remove_files(output_dir / folder_name, BACKEND_ADDON_REMOVE)
 
@@ -76,7 +80,11 @@ def generate_frontend_addon(context, output_dir):
         context["npm_package_name"] = npm_package_name
         context["frontend_addon_name"] = frontend_addon_name
     generator.generate_subtemplate(
-        "frontend_addon", output_dir, "frontend", context, FRONTEND_ADDON_REMOVE
+        "templates/frontend_addon",
+        output_dir,
+        "frontend",
+        context,
+        FRONTEND_ADDON_REMOVE,
     )
 
 
@@ -85,7 +93,9 @@ def generate_sub_cache(context: OrderedDict, output_dir: Path):
     # Use the same base folder
     folder_name = output_dir.name
     output_dir = output_dir.parent
-    generator.generate_subtemplate("sub/cache", output_dir, folder_name, context)
+    generator.generate_subtemplate(
+        "templates/sub/cache", output_dir, folder_name, context
+    )
 
 
 def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
@@ -94,7 +104,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     folder_name = output_dir.name
     output_dir = output_dir.parent
     generator.generate_subtemplate(
-        "sub/project_settings", output_dir, folder_name, context
+        "templates/sub/project_settings", output_dir, folder_name, context
     )
 
 

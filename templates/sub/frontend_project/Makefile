@@ -9,15 +9,14 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TEMPLATE = $(shell basename $(CURRENT_DIR))
-ADDON_FOLDER_NAME = collective.addon
-ADDON_FOLDER_NAME = volto-add-on
-BASE_FOLDER = ../
-VENV_FOLDER = ${BASE_FOLDER}/.venv
-BIN_FOLDER = ${VENV_FOLDER}/bin
-
 .PHONY: all
 all: build
+
+TEMPLATE = $(shell basename $(CURRENT_DIR))
+PROJECT_FOLDER_NAME = project-title
+BASE_FOLDER = ../../../
+VENV_FOLDER = ${BASE_FOLDER}/.venv
+BIN_FOLDER = ${VENV_FOLDER}/bin
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -27,29 +26,24 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf $(ADDON_NAME)
+	rm -rf $(PROJECT_FOLDER_NAME)
 
-$(VENV_FOLDER):  ## cookieplone installation
+$(VENV_FOLDER): ## cookieplone installation
 	$(MAKE) -C $(BASE_FOLDER) sync
 
 .PHONY: format
-format: $(VENV_FOLDER) ## Format code
+format: $(VENV_FOLDER)## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
 	@uv run ruff format --config $(BASE_FOLDER)pyproject.toml hooks tests
 	@uv run ruff check --select I --fix --config $(BASE_FOLDER)pyproject.toml hooks tests
 
 .PHONY: generate
-generate:  uv cookieplone ## Create a sample package
+generate: $(VENV_FOLDER) ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf $(ADDON_FOLDER_NAME)
-	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv cookieplone $(TEMPLATE) --no-input
+	rm -rf $(PROJECT_FOLDER_NAME)
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it
-	@echo "$(GREEN)==> Test template$(RESET)"
+	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	@uv run pytest tests
-
-.PHONY: test-pdb
-test-pdb: $(VENV_FOLDER)## Stop on the first failed test
-	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
-	@uv run pytest tests -x --pdb

@@ -29,6 +29,6 @@ jobs:
 
       # Test
       - name: Run tests
-        working-directory: ${{ inputs.working-directory }}
+        working-directory: templates/${{ inputs.working-directory }}
         run: |
           uv run pytest tests

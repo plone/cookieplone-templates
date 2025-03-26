@@ -22,6 +22,7 @@ endif
 
 VENV_FOLDER=$(CURRENT_DIR)/.venv
 BIN_FOLDER=$(VENV_FOLDER)/bin
+TEMPLATES_FOLDER=$(CURRENT_DIR)/templates
 
 .PHONY: all
 all: $(VENV_FOLDER)
@@ -53,22 +54,22 @@ format: $(VENV_FOLDER) ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
 	@uv run ruff format hooks .scripts tests
 	@uv run ruff check --select I --fix hooks .scripts tests
-	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" format ;)
-	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" format ;)
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/$(project)/" format ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/sub/$(project)/" format ;)
 
 .PHONY: test
 test: $(VENV_FOLDER) ## Test all cookiecutters
 	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
 	@uv run pytest tests
-	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test ;)
-	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test ;)
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/$(project)/" test ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/sub/$(project)/" test ;)
 
 .PHONY: test-pdb
 test-pdb: $(VENV_FOLDER) ## Test all cookiecutters (and stop on error)
 	@echo "$(GREEN)==> Test all cookiecutters (and stop on error)$(RESET)"
 	@uv run pytest tests -x --pdb
-	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "./$(project)/" test-pdb ;)
-	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "./sub/$(project)/" test-pdb ;)
+	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/$(project)/" test-pdb ;)
+	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/sub/$(project)/" test-pdb ;)
 
 
 .PHONY: report-context

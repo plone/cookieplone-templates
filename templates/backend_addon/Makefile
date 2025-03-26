@@ -13,10 +13,11 @@ YELLOW=`tput setaf 3`
 all: build
 
 TEMPLATE = $(shell basename $(CURRENT_DIR))
-PROJECT_FOLDER_NAME = project-title
+ADDON_FOLDER_NAME = collective.addon
 BASE_FOLDER = ../../
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
+
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -26,7 +27,7 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf $(PROJECT_FOLDER_NAME)
+	rm -rf $(ADDON_NAME)
 
 $(VENV_FOLDER): ## cookieplone installation
 	$(MAKE) -C $(BASE_FOLDER) sync
@@ -38,12 +39,17 @@ format: $(VENV_FOLDER)## Format code
 	@uv run ruff check --select I --fix --config $(BASE_FOLDER)pyproject.toml hooks tests
 
 .PHONY: generate
-generate: $(VENV_FOLDER) ## Create a sample package
+generate:  uv run cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf $(PROJECT_FOLDER_NAME)
-	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv cookieplone $(TEMPLATE) --no-input
+	rm -rf $(ADDON_FOLDER_NAME)
+	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it
-	@echo "$(GREEN)==> Creating new test package$(RESET)"
+	@echo "$(GREEN)==> Test template$(RESET)"
 	@uv run pytest tests
+
+.PHONY: test-pdb
+test-pdb: $(VENV_FOLDER)## Stop on the first failed test
+	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
+	@uv run pytest tests -x --pdb
