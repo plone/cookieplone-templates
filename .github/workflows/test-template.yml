@@ -11,6 +11,7 @@ on:
 
 jobs:
   generation:
+    name: "Use ${{ inputs.working-directory }} with ${{ inputs.python-version }}"
     runs-on: ubuntu-latest
 
     steps:
