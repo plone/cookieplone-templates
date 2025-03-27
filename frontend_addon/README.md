@@ -3,17 +3,17 @@
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Frontend Add-on
+# Cookieplone frontend add-on
 
 Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Frontend Add-on](https://github.com/plone/cookieplone-templates/frontend_addon) is intended to be used by Plone developers to create new add-on packages for Volto.
 
-## Getting Started 🏁
+## Getting started 🏁
 
 ### Prerequisites
 
 - **pipx**: A handy tool for installing and running Python applications.
 
-### Installation Guide 🛠️
+### Installation guide 🛠️
 
 1. **uv**
 
@@ -30,7 +30,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uvx cookieplone frontend_addon
 ```
 
-## Project Generation Options
+## Project generation options
 
 These are all the template options that will be prompted by the [Cookiecutter CLI](https://github.com/cookiecutter/cookiecutter) before generating your project.
 
@@ -45,7 +45,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
 | `volto_version` | Volto version to be used. | **18.10.0**    |
 
-## Code Quality Assurance 🧐
+## Code quality assurance 🧐
 
 Your package comes equipped with linters to ensure code quality. Run the following to automatically format your code:
 
@@ -65,6 +65,6 @@ make i18n
 
 This project is licensed under the [MIT License](/LICENSE).
 
-## Let's Get Building! 🚀
+## Let's get building! 🚀
 
 Happy coding!

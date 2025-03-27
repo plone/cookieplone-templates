@@ -7,7 +7,7 @@
 
 Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Backend Add-on](https://github.com/plone/cookieplone-templates/backend_addon) is intended to be used by Plone developers to create new add-on packages.
 
-## Getting Started 🏁
+## Getting started 🏁
 
 Install prerequisites.
 
@@ -59,6 +59,6 @@ make i18n
 
 This project is licensed under the [MIT License](/LICENSE).
 
-## Let's Get Building! 🚀
+## Let's get building! 🚀
 
 Happy coding!
