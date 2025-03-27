@@ -200,8 +200,8 @@ wheels = [
 
 [[package]]
 name = "cookieplone"
-version = "0.9.4.dev0"
-source = { git = "https://github.com/plone/cookieplone?branch=support-template-paths#e4bfb5240545ad5449ac07a9ea5286c323ba9d3c" }
+version = "0.9.4"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "black" },
     { name = "cookiecutter" },
@@ -213,6 +213,10 @@ dependencies = [
     { name = "typer" },
     { name = "xmltodict" },
     { name = "zpretty" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/76/8555d98370f4cbe302e43006744243dd2090556400759132aa5d75265222/cookieplone-0.9.4.tar.gz", hash = "sha256:7e295dc13aa2de507109b50a0e466c5f8b1aaec193c2321fc158635393830580", size = 33556 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/89/fd/0f8c5305c8b9c88e8a4d87130769486fb45e814d60f8478bc30931182294/cookieplone-0.9.4-py3-none-any.whl", hash = "sha256:72314ee0ccc295bf6bf66510dd961271eb50d30527b334684cca1d47e7031702", size = 29115 },
 ]
 
 [[package]]
@@ -231,7 +235,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cookieplone", git = "https://github.com/plone/cookieplone?branch=support-template-paths" },
+    { name = "cookieplone", specifier = ">=0.9.4" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cookies", specifier = ">=0.7.0" },
