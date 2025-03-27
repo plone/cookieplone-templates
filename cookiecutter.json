@@ -14,6 +14,11 @@
       "path": "./frontend_addon",
       "title": "Frontend Add-on for Plone",
       "description": "Create a new Node package to be used with Volto"
+    },
+    "seven_addon": {
+      "path": "./seven_addon",
+      "title": "Seven Add-on for Plone",
+      "description": "Create a new Node package to be used with Seven"
     }
   }
 }
