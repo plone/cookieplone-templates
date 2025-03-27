@@ -75,9 +75,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.UV_CACHE_DIR }}
-          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'backend_addon/collective.addon/pyproject.toml') }}
+          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'templates/add-ons/backend/collective.addon/pyproject.toml') }}
           restore-keys: |
-            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('backend_addon/collective.addon/pyproject.toml') }}
+            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('templates/add-ons/backend/collective.addon/pyproject.toml') }}
             uv-${{ runner.os }}-${{ env.python-version }}
 
       - name: Install generated package
