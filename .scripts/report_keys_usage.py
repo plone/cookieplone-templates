@@ -11,6 +11,7 @@ PATTERN = "{{ ?(cookiecutter)[.]([a-zA-Z0-9-_]*)"
 RE_OBJ = re.compile(PATTERN)
 
 cwd = Path().cwd()
+templates = cwd / "templates"
 reports = cwd / ".reports"
 
 repo = Repo(cwd)
@@ -56,7 +57,7 @@ def valid_key(key: str) -> bool:
 
 keys = defaultdict(dict)
 for folder in folders:
-    base_path = cwd / folder
+    base_path = templates / folder
     file_ = base_path / "cookiecutter.json"
     template_folder = base_path / "{{ cookiecutter.__folder_name }}"
     raw_context = file_.read_text()

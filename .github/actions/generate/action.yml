@@ -19,4 +19,4 @@ runs:
     - name: Generate codebase
       shell: bash
       run: |
-        COOKIEPLONE_REPOSITORY=$(pwd) uvx cookieplone ${{ inputs.template }} --no-input
+        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} --no-input
