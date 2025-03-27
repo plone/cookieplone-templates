@@ -29,14 +29,14 @@ uvx cookieplone backend_addon
 
 These are all the template options that will be prompted by the [Cookiecutter CLI](https://github.com/cookiecutter/cookiecutter) before generating your project.
 
-| Option                | Description                                                                                                                                          | Example                       |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `title`  | Your add-on's human-readable name, capitals and spaces allowed.                                                                                     | **Plone Blog**                |
-| `description`         | Describes your add-on and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
-| `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | **Our Company**               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
-| `github_organization` | Used for GitHub and Docker repositories.                                                                                                             | **collective**                |
-| `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces, or special characters are allowed. | **collective.blog**    |
+| Option                | Description                                                                                                                                           | Example                            |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
+| `title`               | Your add-on's human-readable name, capitals and spaces allowed.                                                                                       | `Plone Blog`                       |
+| `description`         | Describes your add-on and gets used in places like `README.md` and such.                                                                              | `Create awesome blogs with Plone.` |
+| `author`              | This is you! The value goes into places like `LICENSE`, `setup.py` and such.                                                                          | `Our Company`                      |
+| `email`               | The email address you want to identify yourself in the project.                                                                                       | `email@example.com`                |
+| `github_organization` | Used for GitHub and Docker repositories.                                                                                                              | `collective`                       |
+| `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces, or special characters are allowed. | `collective.blog`                  |
 
 ## Code quality assurance 🧐
 
