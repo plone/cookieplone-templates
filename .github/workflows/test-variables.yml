@@ -22,5 +22,21 @@ jobs:
 
       # Test
       - name: Run tests
+        env:
+          REPORT_OUTPUT: md_report.md
+        shell: bash
         run: |
-          uv run pytest tests
+          echo "REPORT_FILE=${REPORT_OUTPUT}" >> "$GITHUB_ENV"
+          uv run pytest --md-report-exclude-outcomes passed skipped xpassed --md-report-output "$REPORT_OUTPUT" tests/variables
+
+      - name: Output reports to the job summary when tests fail
+        if: ${{ failure() }}
+        shell: bash
+        run: |
+          if [ -f "$REPORT_FILE" ]; then
+            echo "<details><summary>Failed Test Report</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            cat "$REPORT_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          fi

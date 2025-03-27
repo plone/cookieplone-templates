@@ -27,7 +27,7 @@ jobs:
 
 
   test-template:
-    name: "Template ${{ matrix.template }}"
+    name: "Test template"
     if: "${{ always() }}"
     needs:
       - test-variables
@@ -35,15 +35,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        template:
-          - "project"
-          - "backend_addon"
-          - "frontend_addon"
-          - "sub/cache"
-          - "sub/frontend_project"
-          - "sub/project_settings"
+        include:
+          - name: "project"
+            path: "templates/projects/monorepo"
+          - name: "backend_addon"
+            path: "templates/add-ons/backend"
+          - name: "frontend_addon"
+            path: "templates/add-ons/frontend"
+          - name: "sub/cache"
+            path: "templates/sub/cache"
+          - name: "sub/frontend_project"
+            path: "templates/sub/frontend_project"
+          - name: "sub/project_settings"
+            path: "templates/sub/project_settings"
     with:
-        working-directory: ${{ matrix.template }}
+        name: ${{ matrix.name }}
+        tests-path: ${{ matrix.path }}
 
   backend-functional:
     runs-on: ubuntu-latest

@@ -16,9 +16,8 @@ BASE_FOLDER = $(shell git rev-parse --show-toplevel)
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
 
-TEMPLATE = $(shell basename $(CURRENT_DIR))
+TEMPLATE = project
 PROJECT_FOLDER_NAME = project-title
-
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -28,7 +27,7 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf volto-addon
+	rm -rf $(PROJECT_FOLDER_NAME)
 
 $(VENV_FOLDER): ## cookieplone installation
 	$(MAKE) -C $(BASE_FOLDER) sync
@@ -40,7 +39,7 @@ format: $(VENV_FOLDER)## Format code
 	@uv run ruff check --select I --fix --config $(BASE_FOLDER)/pyproject.toml hooks
 
 .PHONY: generate
-generate:  $(VENV_FOLDER) ## Create a sample package
+generate: $(VENV_FOLDER) ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	rm -rf $(PROJECT_FOLDER_NAME)
 	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
@@ -49,9 +48,9 @@ generate:  $(VENV_FOLDER) ## Create a sample package
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE)
+	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/monorepo
 
 .PHONY: test-pdb
 test-pdb: $(VENV_FOLDER)## Stop on the first failed test
 	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
-	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE) -x --pdb
+	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/monorepo -x --pdb

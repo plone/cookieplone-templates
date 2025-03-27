@@ -21,7 +21,7 @@ def generate_addon(context, output_dir):
     output_dir = output_dir.parent
     context["frontend_addon_name"] = "volto-addon"
     generator.generate_subtemplate(
-        "../../frontend_addon", output_dir, folder_name, context, TO_REMOVE
+        "../../add-ons/frontend", output_dir, folder_name, context, TO_REMOVE
     )
 
 

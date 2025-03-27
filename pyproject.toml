@@ -5,16 +5,20 @@ description = "Collection of templates for Plone integrators to use through Cook
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "cookieplone>=0.9.3",
+    "cookieplone",
     "gitpython>=3.1.43",
     "pytest>=8.3.5",
     "pytest-cookies>=0.7.0",
     "pytest-jsonschema>=1.0.0a2",
+    "pytest-md-report>=0.6.3",
     "tomli>=2.0.1",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+md_report = true
+md_report_verbose = 0
+md_report_color = "auto"
 
 [tool.ruff]
 include = ["hooks/*.py", "tests/**.py"]
@@ -101,3 +105,6 @@ showcontent = true
 directory = "tests"
 name = "Tests"
 showcontent = true
+
+[tool.uv.sources]
+cookieplone = { git = "https://github.com/plone/cookieplone", branch = "support-template-paths" }

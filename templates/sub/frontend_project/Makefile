@@ -12,11 +12,12 @@ YELLOW=`tput setaf 3`
 .PHONY: all
 all: build
 
-TEMPLATE = $(shell basename $(CURRENT_DIR))
-PROJECT_FOLDER_NAME = project-title
-BASE_FOLDER = ../../../
+BASE_FOLDER = $(shell git rev-parse --show-toplevel)
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
+
+TEMPLATE = $(shell basename $(CURRENT_DIR))
+PROJECT_FOLDER_NAME = project-title
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -33,9 +34,9 @@ $(VENV_FOLDER): ## cookieplone installation
 
 .PHONY: format
 format: $(VENV_FOLDER)## Format code
-	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	@uv run ruff format --config $(BASE_FOLDER)pyproject.toml hooks tests
-	@uv run ruff check --select I --fix --config $(BASE_FOLDER)pyproject.toml hooks tests
+	@echo "$(GREEN)==> Formatting $(TEMPLATE) codebase $(RESET)"
+	@uv run ruff format --config $(BASE_FOLDER)/pyproject.toml hooks
+	@uv run ruff check --select I --fix --config $(BASE_FOLDER)/pyproject.toml hooks
 
 .PHONY: generate
 generate: $(VENV_FOLDER) ## Create a sample package
@@ -46,4 +47,9 @@ generate: $(VENV_FOLDER) ## Create a sample package
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	@uv run pytest tests
+	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE)
+
+.PHONY: test-pdb
+test-pdb: $(VENV_FOLDER)## Stop on the first failed test
+	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
+	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE) -x --pdb
