@@ -1,50 +1,48 @@
+# Cookieplone Plone Project 🌟
+
 [![Cookieplone Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml)
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Plone Project 🌟
-
 Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
 
 ## Features ✨
 
-- Tailored for Plone 6
-- Compatible with Python 3.10, 3.11, 3.12, 3.13
-
-## Getting Started 🏁
-
-### Prerequisites
-
-- **pipx**: A handy tool for installing and running Python applications.
-- **NodeJS & pnpm**: Essential for managing and running JavaScript packages.
+-   Tailored for Plone 6
+-   Compatible with Python 3.10, 3.11, 3.12, 3.13
 
 
-### Installation Guide 🛠️
+## Prerequisites
 
-1. **uv**
+-   [uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+-   Node.js and pnpm: essential for managing and running JavaScript packages.
 
-[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
 
-To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
+### uv
+
+To install uv, use the following command, or visit the [uv installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods.
 
 ```shell
 curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-2. **NodeJS & pnpm**
+
+### Node.js
 
 Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
 
 
-### Generate Your Plone 6 Project 🎉
+## Generate your Plone 6 project 🎉
 
 ```shell
 uvx cookieplone project
 ```
 
+
 ### Use options to avoid prompts
 
-Cookieplone will ask a lot of questions.
+Cookieplone will ask a lot of questions, as described under [Project generation options](#project-generation-options).
 You can use some of its options to avoid repeatedly entering the same values.
 
 
@@ -54,30 +52,41 @@ You can use the [`--no-input`](https://cookiecutter.readthedocs.io/en/latest/cli
 
 
 #### `--replay` and `--replay-file`
+
 You can use the option [`--replay-file`](https://cookiecutter.readthedocs.io/en/latest/cli_options.html#cmdoption-cookiecutter-replay-file) to not prompt for parameters and only use information entered previously or from a specified file.
 See [Replay Project Generation](https://cookiecutter.readthedocs.io/en/latest/advanced/replay.html) in the cookiecutter documentation for more information.
 
-### Initial Build
+
+## Develop your project
+
+This section provides commands that you will frequently use during development.
+
+
+### Initial build
 
 ```shell
 make install
 ```
 
-### Start Servers
 
-Backend:
+### Start servers
+
+Start the backend server with the following command.
 
 ```shell
 make backend-start
 ```
 
-Frontend:
+Start the frontend server with the following command.
 
 ```shell
 make frontend-start
 ```
 
-### Rebuild After Changes
+
+### Rebuild after changes
+
+After you make changes to your code, you will need to install the changes and restart the servers.
 
 ```shell
 make install
@@ -85,9 +94,10 @@ make backend-start
 make frontend-start
 ```
 
-## Project Generation Options 🛠️
 
-Every project is unique, and we provide a variety of options to ensure that your Plone 6 project aligns with your specific needs. Here are the options you can customize during the generation process:
+## Project generation options 🛠️
+
+The table below describes the options you can customize using the [Cookiecutter CLI](https://github.com/cookiecutter/cookiecutter) during the generation process.
 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
@@ -110,32 +120,38 @@ Every project is unique, and we provide a variety of options to ensure that your
 | `devops_gha_deploy`   | Should we create a GitHub action to deploy this project?                                                                                             | **Yes**                       |
 
 
-## Dive into Your Project's Structure 🏗️
+## Dive into your project's structure 🏗️
 
-Your generated project will have a well-organized structure, ensuring that both development and maintenance are a breeze. It includes separate sections for backend, frontend, and devops, each tailored for its specific role.
+Your generated project will have a well-organized structure, ensuring that both development and maintenance are a breeze.
+It includes separate sections for backend, frontend, and devops, each tailored for its specific role.
 
 (Include the Structure and Reasoning section from the previous README.md here, as it provides a good overview of the project structure)
 
-## Code Quality Assurance 🧐
 
-Your project comes equipped with linters to ensure code quality. Run the following to automatically format your code:
+## Code quality assurance 🧐
+
+Your project comes equipped with linters to ensure code quality.
+Run the following command to automatically format your code.
 
 ```shell
 make format
 ```
 
+
 ## Internationalization 🌐
 
-Generate translation files with ease:
+Generate translation files with the following command.
 
 ```shell
 make i18n
 ```
 
+
 ## License 📜
 
 This project is licensed under the [MIT License](/LICENSE).
 
-## Let's Get Building! 🚀
+
+## Let's get building! 🚀
 
 Happy coding!

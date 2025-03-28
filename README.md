@@ -17,17 +17,26 @@
 
 This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
+
 ## Prerequisites
 
-- **[pipx](https://pipx.pypa.io/stable/ "Link to the website of pipx")**: A tool for installing and running Python applications.
+-   [uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
+-   Node.js and pnpm: essential for managing and running JavaScript packages.
 
-## Installation 💾
 
-Install `pipx` with the following command:
+### uv
+
+To install uv, use the following command, or visit the [uv installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods.
 
 ```shell
-pip install pipx
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+
+### Node.js
+
+Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
+
 
 ## Choose a template 🛠️
 
