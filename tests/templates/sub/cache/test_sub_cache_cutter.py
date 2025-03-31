@@ -1,6 +1,5 @@
 """Test cookiecutter generation with all features enabled."""
 
-
 import pytest
 
 

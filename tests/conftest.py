@@ -13,6 +13,13 @@ VALID_HOOK_NAMES = [
 
 
 @pytest.fixture(scope="session")
+def templates_folder() -> Path:
+    tests_folder = Path(__file__).parent
+    repo_folder = tests_folder.parent
+    return repo_folder / "templates"
+
+
+@pytest.fixture(scope="session")
 def read_config():
     def func(path: Path) -> dict:
         config = {}

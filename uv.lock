@@ -200,7 +200,7 @@ wheels = [
 
 [[package]]
 name = "cookieplone"
-version = "0.9.4"
+version = "0.9.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "black" },
@@ -214,9 +214,9 @@ dependencies = [
     { name = "xmltodict" },
     { name = "zpretty" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/76/8555d98370f4cbe302e43006744243dd2090556400759132aa5d75265222/cookieplone-0.9.4.tar.gz", hash = "sha256:7e295dc13aa2de507109b50a0e466c5f8b1aaec193c2321fc158635393830580", size = 33556 }
+sdist = { url = "https://files.pythonhosted.org/packages/68/7b/3052c94b5724a24509cbcfd2b68ecff98164390798931fb9efebc9e61a40/cookieplone-0.9.6.tar.gz", hash = "sha256:926148228d1827c3502015d0429379f711d95a63022f9aa563d0c9785bc8beda", size = 34276 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/fd/0f8c5305c8b9c88e8a4d87130769486fb45e814d60f8478bc30931182294/cookieplone-0.9.4-py3-none-any.whl", hash = "sha256:72314ee0ccc295bf6bf66510dd961271eb50d30527b334684cca1d47e7031702", size = 29115 },
+    { url = "https://files.pythonhosted.org/packages/71/22/f3605c331fbb2f34b2d3e17e60caeb34b626b7605baa218d94f941610648/cookieplone-0.9.6-py3-none-any.whl", hash = "sha256:b22dd1a0daef9153cf30ca032d3adc14f7058bf688ad131ed85a707877319351", size = 29541 },
 ]
 
 [[package]]
@@ -235,7 +235,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cookieplone", specifier = ">=0.9.4" },
+    { name = "cookieplone", specifier = ">=0.9.6" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cookies", specifier = ">=0.7.0" },
