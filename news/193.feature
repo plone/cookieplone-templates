@@ -1,0 +1,1 @@
+Support having 'hidden' templates in `cookiecutter.json` @ericof

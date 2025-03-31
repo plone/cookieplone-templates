@@ -1,4 +1,4 @@
-name: Variables testing
+name: 'Repository settings'
 on:
     workflow_call:
       inputs:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: "Test variable usage"
+    name: "Test repository-wide configurations"
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           echo "REPORT_FILE=${REPORT_OUTPUT}" >> "$GITHUB_ENV"
-          uv run pytest --md-report-exclude-outcomes passed skipped xpassed --md-report-output "$REPORT_OUTPUT" tests/variables
+          uv run pytest --md-report-exclude-outcomes passed skipped xpassed --md-report-output "$REPORT_OUTPUT" tests/cookieplone-templates
 
       - name: Output reports to the job summary when tests fail
         if: ${{ failure() }}
