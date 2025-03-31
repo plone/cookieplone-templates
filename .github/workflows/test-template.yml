@@ -2,13 +2,16 @@ name: Template generation
 on:
     workflow_call:
       inputs:
-        working-directory:
+        name:
+          required: true
+          type: string
+        tests-path:
           required: false
           type: string
 
 jobs:
   generation:
-    name: "With Python ${{ matrix.python-version }}"
+    name: "${{ inputs.name }} with Python ${{ matrix.python-version }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -25,10 +28,25 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup_python
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: ${{ matrix.python-version }}
 
       # Test
       - name: Run tests
-        working-directory: ${{ inputs.working-directory }}
+        env:
+          REPORT_OUTPUT: md_report.md
+        shell: bash
         run: |
-          uv run pytest tests
+          echo "REPORT_FILE=${REPORT_OUTPUT}" >> "$GITHUB_ENV"
+          uv run pytest --md-report-exclude-outcomes passed skipped xpassed --md-report-output "$REPORT_OUTPUT" tests/${{ inputs.tests-path }}
+
+      - name: Output reports to the job summary when tests fail
+        if: ${{ failure() }}
+        shell: bash
+        run: |
+          if [ -f "$REPORT_FILE" ]; then
+            echo "<details><summary>Failed Test Report</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            cat "$REPORT_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+          fi

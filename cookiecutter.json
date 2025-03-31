@@ -1,17 +1,17 @@
 {
   "templates": {
     "project": {
-      "path": "./project",
+      "path": "./templates/projects/monorepo",
       "title": "A Plone Project",
       "description": "Create a new Plone project with backend and frontend components"
     },
     "backend_addon": {
-      "path": "./backend_addon",
+      "path": "./templates/add-ons/backend",
       "title": "Backend Add-on for Plone",
       "description": "Create a new Python package to be used with Plone"
     },
     "frontend_addon": {
-      "path": "./frontend_addon",
+      "path": "./templates/add-ons/frontend",
       "title": "Frontend Add-on for Plone",
       "description": "Create a new Node package to be used with Volto"
     }

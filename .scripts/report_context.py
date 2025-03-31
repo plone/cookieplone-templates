@@ -5,6 +5,7 @@ from pathlib import Path
 from git import Repo
 
 cwd = Path().cwd()
+templates = cwd / "templates"
 reports = cwd / ".reports"
 
 repo = Repo(cwd)
@@ -17,7 +18,7 @@ ignore = ["__prompts__", "_copy_without_render", "_extensions"]
 data = []
 
 for folder in folders:
-    file_ = cwd / folder / "cookiecutter.json"
+    file_ = templates / folder / "cookiecutter.json"
     questions = json.loads(file_.read_text())
     items = [
         (folder, key, value) for key, value in questions.items() if key not in ignore
