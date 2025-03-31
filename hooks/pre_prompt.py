@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     __version__ = ""
 
 
-MIN_COOKIEPLONE = "0.9.5"
+MIN_COOKIEPLONE = "0.9.6"
 COOKIEPLONE_INSTALLATION = (
     "https://github.com/plone/cookieplone/blob/main/README.md#installation-"
 )
