@@ -21,7 +21,6 @@ This project is a collection of templates for Plone integrators to use through [
 ## Prerequisites
 
 -   [uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
--   Node.js and pnpm: essential for managing and running JavaScript packages.
 
 
 ### uv
@@ -31,11 +30,6 @@ To install uv, use the following command, or visit the [uv installation page](ht
 ```shell
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-
-
-### Node.js
-
-Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
 
 
 ## Choose a template 🛠️
