@@ -36,7 +36,7 @@ def sanity_check() -> data.SanityCheckResults:
             "error",
         ),
         data.SanityCheck(
-            "UV",
+            "uv",
             commands.check_command_is_available,
             ["uv"],
             "error",

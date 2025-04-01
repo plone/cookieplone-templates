@@ -17,17 +17,20 @@
 
 This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
+
 ## Prerequisites
 
-- **[pipx](https://pipx.pypa.io/stable/ "Link to the website of pipx")**: A tool for installing and running Python applications.
+-   [uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
 
-## Installation 💾
 
-Install `pipx` with the following command:
+### uv
+
+To install uv, use the following command, or visit the [uv installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods.
 
 ```shell
-pip install pipx
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
 
 ## Choose a template 🛠️
 
@@ -48,7 +51,7 @@ uvx cookieplone
 | --------- | --------- | --------- |
 | `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read More](./project/README.md) |
 | `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read More](./backend_addon/README.md) |
-| `Frontend Add-on for Plone`  | Create a new Node package to be used with Volto. | [Read More](./frontend_addon/README.md) |
+| `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read More](./frontend_addon/README.md) |
 
 ## License 📜
 
