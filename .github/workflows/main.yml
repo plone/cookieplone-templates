@@ -11,9 +11,9 @@ env:
 
 jobs:
 
-  test-variables:
-    name: "Test variables: ${{ matrix.python-version }}"
-    uses: ./.github/workflows/test-variables.yml
+  test-repository:
+    name: "Test repository settings: ${{ matrix.python-version }}"
+    uses: ./.github/workflows/test-repository.yml
     strategy:
       fail-fast: false
       matrix:
@@ -25,31 +25,37 @@ jobs:
     with:
         python-version: ${{ matrix.python-version }}
 
-
   test-template:
-    name: "Template ${{ matrix.template }}"
+    name: "Test template"
     if: "${{ always() }}"
     needs:
-      - test-variables
+      - test-repository
     uses: ./.github/workflows/test-template.yml
     strategy:
       fail-fast: false
       matrix:
-        template:
-          - "project"
-          - "backend_addon"
-          - "frontend_addon"
-          - "sub/cache"
-          - "sub/frontend_project"
-          - "sub/project_settings"
+        include:
+          - name: "project"
+            path: "templates/projects/monorepo"
+          - name: "backend_addon"
+            path: "templates/add-ons/backend"
+          - name: "frontend_addon"
+            path: "templates/add-ons/frontend"
+          - name: "sub/cache"
+            path: "templates/sub/cache"
+          - name: "sub/frontend_project"
+            path: "templates/sub/frontend_project"
+          - name: "sub/project_settings"
+            path: "templates/sub/project_settings"
     with:
-        working-directory: ${{ matrix.template }}
+        name: ${{ matrix.name }}
+        tests-path: ${{ matrix.path }}
 
   backend-functional:
     runs-on: ubuntu-latest
     if: "${{ always() }}"
     needs:
-      - test-variables
+      - test-repository
     env:
       template: "backend_addon"
       name: "collective.addon"
@@ -68,9 +74,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.UV_CACHE_DIR }}
-          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'backend_addon/collective.addon/pyproject.toml') }}
+          key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'templates/add-ons/backend/collective.addon/pyproject.toml') }}
           restore-keys: |
-            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('backend_addon/collective.addon/pyproject.toml') }}
+            uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('templates/add-ons/backend/collective.addon/pyproject.toml') }}
             uv-${{ runner.os }}-${{ env.python-version }}
 
       - name: Install generated package
@@ -87,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "${{ always() }}"
     needs:
-      - test-variables
+      - test-repository
     env:
       template: "frontend_addon"
       name: "volto-add-on"
@@ -191,3 +197,23 @@ jobs:
         working-directory: ${{ env.name }}
         run: |
           make ci-acceptance-test
+
+  report:
+    runs-on: ubuntu-latest
+    needs:
+      - test-repository
+      - test-template
+      - backend-functional
+      - frontend-functional
+    steps:
+
+      - name: Report
+        shell: bash
+        run: |
+          echo '# Report' >> $GITHUB_STEP_SUMMARY
+          echo '| Job | Status |' >> $GITHUB_STEP_SUMMARY
+          echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
+          echo '| Repository Tests | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Template Generation | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Backend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Frontend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
