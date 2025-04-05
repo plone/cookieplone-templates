@@ -95,15 +95,18 @@ def generate_addons_frontend(context, output_dir):
     )
 
 
-def generate_documentation_starter(context, output_dir):
+def generate_addons_documentation_starter(context, output_dir):
     """Generate documentation scaffolding"""
+    output_dir = output_dir
+    folder_name = "docs"
     generator.generate_subtemplate(
-        "documentation_starter",
+        f"{TEMPLATES_FOLDER}/add-ons/documentation_starter",
         output_dir,
-        "docs",
+        folder_name,
         context,
         DOCUMENTATION_STARTER_REMOVE,
     )
+    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def generate_sub_cache(context: OrderedDict, output_dir: Path):

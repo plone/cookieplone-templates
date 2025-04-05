@@ -143,9 +143,9 @@
   "__cookieplone_subtemplates": [
     ["add-ons/backend", "Setup Backend", "1"],
     ["add-ons/frontend", "Setup Frontend", "1"],
+    ["add-ons/documentation_starter", "Setup Documentation Scaffolding", "1"],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
-    ["sub/project_settings", "Setup Project Settings", "1"],
-    ["documentation_starter", "Setup Documentation Scaffolding", "1"]
+    ["sub/project_settings", "Setup Project Settings", "1"]
   ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": "project",
