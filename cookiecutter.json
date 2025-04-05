@@ -35,6 +35,12 @@
       "title": "Project settings to be applied on top of a mono repo project",
       "description": "Sub template with configuration/settings for a mono repo project.",
       "hidden": true
+    },
+    "documentation_starter": {
+      "path": "./documentation_starter",
+      "title": "Documentation Scaffolding for Plone projects",
+      "description": "Create a new template documentation to be used with Plone projects",
+      "hidden": false
     }
   }
 }
