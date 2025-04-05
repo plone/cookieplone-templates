@@ -7,7 +7,7 @@ from typing import OrderedDict
 
 from cookieplone import generator
 from cookieplone.settings import QUIET_MODE_VAR
-from cookieplone.utils import console
+from cookieplone.utils import console, files
 
 context: OrderedDict = {{cookiecutter}}
 
@@ -16,16 +16,21 @@ DOCUMENTATION_STARTER_REMOVE = [
     ".git",
 ]
 
+TEMPLATES_FOLDER = "templates"
+
 
 def generate_documentation_starter(context, output_dir):
     """Generate documentation scaffolding"""
+    output_dir = output_dir
+    folder_name = "docs"
     generator.generate_subtemplate(
-        "documentation_starter",
+        f"{TEMPLATES_FOLDER}/add-ons/documentation_starter",
         output_dir,
         "docs",
         context,
         DOCUMENTATION_STARTER_REMOVE,
     )
+    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def main():
