@@ -25,6 +25,8 @@ DOCUMENTATION_STARTER_REMOVE = [
     ".git",
 ]
 
+TEMPLATES_FOLDER = "templates"
+
 
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
     output_dir = output_dir / "src" / "packagename"
@@ -39,13 +41,16 @@ def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
 
 def generate_documentation_starter(context, output_dir):
     """Generate documentation scaffolding"""
+    output_dir = output_dir
+    folder_name = "docs"
     generator.generate_subtemplate(
-        "documentation_starter",
+        f"{TEMPLATES_FOLDER}/add-ons/documentation_starter",
         output_dir,
         "docs",
         context,
         DOCUMENTATION_STARTER_REMOVE,
     )
+    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def handle_format(context: OrderedDict, output_dir: Path):
