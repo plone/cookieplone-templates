@@ -17,7 +17,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("frontend_addon", "Frontend Add-on for Plone", False),
         (
             "documentation_starter",
-            "Documentation Scaffolding for Plone projects",
+            "Documentation scaffold for Plone projects",
             False
         ),
         ("sub/cache", "Cache settings for a monorepo Plone project", True),
