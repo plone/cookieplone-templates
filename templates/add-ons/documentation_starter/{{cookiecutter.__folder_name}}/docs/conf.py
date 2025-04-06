@@ -285,7 +285,7 @@ mermaid_version = "11.2.0"
 # -- OpenGraph configuration ----------------------------------
 ogp_site_url = "https://MY_READTHEDOCS_PROJECT_SLUG.readthedocs.io/"
 ogp_description_length = 200
-ogp_image = "https://MY_READTHEDOCS_PROJECT_SLUG/_static/MY_LOGO.png"
+ogp_image = "https://MY_READTHEDOCS_PROJECT_SLUG/_static/MY_LOGO.svg"
 ogp_site_name = "{{cookiecutter.title}} Documentation"
 ogp_type = "website"
 ogp_custom_meta_tags = [
@@ -331,7 +331,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-latex_logo = "_static/logo_2x.png"
+latex_logo = "_static/logo.svg"
 
 
 # --  Configuration for source_replacements extension -----------------------
