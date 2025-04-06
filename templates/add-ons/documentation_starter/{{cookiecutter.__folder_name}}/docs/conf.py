@@ -108,8 +108,7 @@ linkcheck_retries = 1
 # The suffix of source filenames.
 source_suffix = {
     ".md": "markdown",
-    # Uncomment to write documentation in reStructuredText
-    # ".rst": "restructuredtext",
+    ".rst": "restructuredtext",
 }
 
 # The master toctree document.
