@@ -87,7 +87,13 @@ changes: .venv/bin/python
 	cd $(DOCS_DIR) && $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
 	@echo
 	@echo "The overview file is in $(BUILDDIR)/changes."
+
+.PHONY: rtd-pr-preview
+rtd-pr-preview:  ## Build pull request preview on Read the Docs
+	pip install -r requirements.txt
+	cd $(DOCS_DIR) && sphinx-build -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
 # /documentation builders
+
 
 # test
 .PHONY: linkcheck
