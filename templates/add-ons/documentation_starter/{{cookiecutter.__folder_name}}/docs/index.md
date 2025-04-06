@@ -16,7 +16,7 @@ This scaffold provides a ready-to-use environment for creating comprehensive doc
 
 Built with [Markedly Structured Text (MyST)](https://myst-parser.readthedocs.io/en/latest/), this environment supports rich formatting, directives, and extensions tailored for technical documentation.
 
-It is structured following the [Diátaxis](https://diataxis.fr/) documentation framework.
+It's structured following the [Diátaxis](https://diataxis.fr/) documentation framework.
 
 ```{toctree}
 :caption: How to guides
