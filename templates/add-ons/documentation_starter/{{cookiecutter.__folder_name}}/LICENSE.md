@@ -1,15 +1,3 @@
 {{ cookiecutter.title }} Copyright {{ cookiecutter.__year }}, {{ cookiecutter.author }}
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License version 2
-as published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-MA 02111-1307 USA.
+The text and illustrations in this website are licensed by the Plone Foundation under a [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) license. Plone and the Plone® logo are registered trademarks of the Plone Foundation, registered in the United States and other countries. For guidelines on the permitted uses of the Plone trademarks, see [https://plone.org/foundation/logo](https://plone.org/foundation/logo). All other trademarks are owned by their respective owners.

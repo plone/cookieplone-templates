@@ -15,7 +15,7 @@ def handle_format(context: OrderedDict, output_dir: Path):
 
 
 def handle_git_initialization(context: OrderedDict, output_dir: Path):
-    """Initialize a GIT repository for the documentation codebase."""
+    """Initialize a Git repository for the documentation codebase."""
     git.initialize_repository(output_dir)
 
 
@@ -53,7 +53,7 @@ def main():
         The Plone Community.
     """
     console.panel(
-        title="New documentation scaffolding was generated",
+        title="New documentation scaffold was generated",
         subtitle="",
         msg=msg,
         url="https://plone.org/",

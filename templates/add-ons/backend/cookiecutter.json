@@ -48,7 +48,7 @@
       "0": "No"
     },
     "initialize_documentation": {
-      "__prompt__": "Do you require Documentation Scaffolding?",
+      "__prompt__": "Would you like to add a documentation scaffold to your project?",
       "1": "Yes",
       "0": "No"
     }

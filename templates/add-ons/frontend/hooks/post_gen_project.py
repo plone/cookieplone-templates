@@ -20,7 +20,7 @@ TEMPLATES_FOLDER = "templates"
 
 
 def generate_documentation_starter(context, output_dir):
-    """Generate documentation scaffolding"""
+    """Generate documentation scaffold"""
     output_dir = output_dir
     folder_name = "docs"
     generator.generate_subtemplate(
