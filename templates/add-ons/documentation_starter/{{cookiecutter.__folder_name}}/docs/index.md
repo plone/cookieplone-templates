@@ -1,52 +1,60 @@
 ---
 myst:
   html_meta:
-    "description": "This is where description of your Documentation environment will be placed."
-    "property=og:description": "Open graph description to your hosted documentation."
-    "property=og:title": "{{cookiecutter.title}}"
-    "keywords": "documentation, Documentation, docs"  # Space to add your own personal keywords!
+    "description": "{{ cookiecutter.description }}"
+    "property=og:description": "{{ cookiecutter.description }}"
+    "property=og:title": "{{ cookiecutter.title }}"
+    "keywords": "{{ cookiecutter.title }}, documentation, {{ cookiecutter.description }}"
 ---
 
 # {{ cookiecutter.title }}
 
-Welcome to the documentation for **{{ cookiecutter.__folder_name }}**!
+Welcome to the documentation for {{ cookiecutter.__folder_name }}!
 {{ cookiecutter.description }}
-This template provides a ready-to-use environment for creating comprehensive documentation for Plone projects, powered by the [Plone Sphinx Theme](https://github.com/plone/plone-sphinx-theme).
-Whether you're documenting a Plone add-on, a training guide, or a custom deployment, this setup combines the simplicity of Markdown with the power of Sphinx.
+
+This scaffold provides a ready-to-use environment for creating comprehensive documentation for Plone projects, based on [Plone Sphinx Theme](https://github.com/plone/plone-sphinx-theme).
 
 Built with [Markedly Structured Text (MyST)](https://myst-parser.readthedocs.io/en/latest/), this environment supports rich formatting, directives, and extensions tailored for technical documentation.
-It’s designed to work seamlessly with Plone’s ecosystem, requiring Python 3.7 or higher.
 
-To get started, explore the sections below or customize this introduction to reflect your project’s unique goals and features through it's documentation.
-As this documentation is powered by Plone Sphinx Theme, documentation for the same can be referenced and found [here](https://plone-sphinx-theme.readthedocs.io/).
-<!-- Need to add the updated link of documentation here -->
-
-```{todo}
-Replace this section with you project introduction and key features.
-```
+It is structured following the [Diátaxis](https://diataxis.fr/) documentation framework.
 
 ```{toctree}
 :caption: How to guides
-:hidden: true
 :maxdepth: 2
+:hidden: true
 
-guides/getting-started
-guides/usage
+how-to-guides/index
 ```
 
 ```{toctree}
 :caption: Reference
-:hidden: true
 :maxdepth: 2
+:hidden: true
 
-reference/file-system-structure
-reference/theme-elements
+reference/index
 ```
 
 ```{toctree}
+:caption: Tutorials
 :maxdepth: 2
 :hidden: true
+
+tutorials/index
+```
+
+```{toctree}
+:caption: Concepts
+:maxdepth: 2
+:hidden: true
+
+concepts/index
+```
+
+```{toctree}
 :caption: Appendices
+:maxdepth: 2
+:hidden: true
 
 glossary
+genindex
 ```
