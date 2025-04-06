@@ -8,9 +8,7 @@ Powered by [Cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 
 ## Prerequisites
 
--   [uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
-
-### uv
+[uv](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
 
 To install uv, use the following command, or visit the [uv installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods.
 
@@ -67,11 +65,25 @@ make html
 
 Your documentation will be built in the `_build` directory.
 
-For additional make commands, run the following command.
+For additional make commands, run the following command in `<project_title>/docs`.
 
 ```shell
 make help
 ```
+
+
+## Create documentation for an existing project
+
+If you have an existing project created by Cookieplone, you can create documentation for it.
+
+Run Cookieplone with the following command, making the same choices as your existing project.
+
+```shell
+uvx cookieplone project
+```
+
+Then copy your project files into the new Cookieplone file structure.
+See also the first note in the [Upgrade Guide](https://6.docs.plone.org/volto/upgrade-guide/index.html).
 
 
 ## License 📜
