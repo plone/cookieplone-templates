@@ -18,6 +18,7 @@ PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 VALEFILES       := $(shell find $(DOCS_DIR) -type f -name "*.md" -print)
 VALEOPTS        ?=
+PYTHONVERSION   = >=3.11,<3.14
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -25,11 +26,19 @@ VALEOPTS        ?=
 help:  # This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+
 # environment management
 .venv/bin/python:  ## Create Python virtual environment and install package requirements
-	python3 -m venv .venv
-	.venv/bin/pip install --upgrade pip setuptools uv wheel
-	.venv/bin/uv pip install -r requirements.txt
+	@uv python install "$(PYTHONVERSION)"
+	@uv venv --python "$(PYTHONVERSION)"
+	@uv sync
+
+.PHONY: sync
+sync:  ## Sync package requirements
+	@uv sync
+
+.PHONY: init
+init: clean clean-python .venv/bin/python  ## Clean docs build directory and Python, and initialize Python virtual environment
 
 .PHONY: clean
 clean:  ## Clean docs build directory
@@ -39,6 +48,7 @@ clean:  ## Clean docs build directory
 clean-python: clean
 	rm -rf .venv/
 # /environment management
+
 
 # documentation builders
 .PHONY: html
