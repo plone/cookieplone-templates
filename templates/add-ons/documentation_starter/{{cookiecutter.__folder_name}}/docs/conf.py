@@ -142,8 +142,8 @@ html_sidebars = {
 }
 html_theme_options = {
     "article_header_start": ["toggle-primary-sidebar"],
-    # "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
-    <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
+#   "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
+#   <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
     "footer_content_items": [
         "author",
         "copyright",
@@ -326,7 +326,7 @@ latex_documents = [
         "index",
         "{{cookiecutter.title}}Documentation.tex",
         "{{cookiecutter.title}} Documentation",
-        "{{cookiecutter.whatever_git_organization}} community",
+        "{{cookiecutter.github_organization}} community",
         "manual",
     ),
 ]
