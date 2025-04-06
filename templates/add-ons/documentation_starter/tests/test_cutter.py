@@ -1,4 +1,4 @@
-"""Tests for documentation_starter template generation."""
+"""Tests for documentation_starter scaffold generation."""
 
 from pathlib import Path
 from .conftest import EXPECTED_FILES

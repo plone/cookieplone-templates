@@ -5,4 +5,4 @@ Disallow: /.doctrees/
 Disallow: /*.txt$
 Disallow: /.buildinfo$
 Disallow: /objects.inv$
-Sitemap: https://plone-sphinx-theme.readthedocs.io/sitemap-custom.xml
+Sitemap: https://MY_READTHEDOCS_PROJECT_SLUG.readthedocs.io/sitemap-custom.xml
