@@ -110,9 +110,16 @@ doctest: .venv/bin/python  ## Test snippets in the documentation
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
+.PHONY: vale
+vale: .venv/bin/python  ## Run Vale style, grammar, and spell checks
+	.venv/bin/vale sync
+	.venv/bin/vale --no-wrap $(VALEOPTS) $(VALEFILES)
+	@echo "Vale is finished; look for any errors in the above output."
+	@echo
+
 .PHONY: test
-test: clean linkcheckbroken doctest  ## Clean docs build, then run linkcheckbroken
-# development
+test: clean vale linkcheckbroken doctest  ## Clean docs build, then run vale, linkcheckbroken, and doctest
 
 .PHONY: all
-all: clean linkcheck html  ## Clean docs build, then run linkcheck, and build html
+all: clean vale linkcheckbroken html  ## Clean docs build, then run linkcheckbroken, and build html
+# /test
