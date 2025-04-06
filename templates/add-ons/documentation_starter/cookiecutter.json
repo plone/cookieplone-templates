@@ -26,6 +26,7 @@
     }
   },
   "_copy_without_render": [
+    "docs/_templates/404.html"
   ],
   "_extensions": [
     "cookieplone.filters.latest_plone",
