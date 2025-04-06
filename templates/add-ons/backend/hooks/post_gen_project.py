@@ -4,7 +4,6 @@ import os
 from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
-from re import template
 
 from cookieplone import generator
 from cookieplone.settings import QUIET_MODE_VAR

@@ -37,7 +37,7 @@
       "hidden": true
     },
     "documentation_starter": {
-      "path": "./documentation_starter",
+      "path": "./templates/add-ons/documentation_starter",
       "title": "Documentation Scaffolding for Plone projects",
       "description": "Create a new template documentation to be used with Plone projects",
       "hidden": false
