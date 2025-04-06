@@ -5,28 +5,27 @@
 
 # Cookieplone Documentation Starter
 
-Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Documentation Starter](https://github.com/plone/cookieplone-templates/documentation_starter) is intended to be used by Plone developers to create comprehensive documentation packages for Plone add-ons using Sphinx.
+Powered by [Cookieplone](https://github.com/plone/cookieplone) and [cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Documentation Starter](https://github.com/plone/cookieplone-templates/documentation_starter) is intended to be used by Plone developers to create comprehensive documentation for Plone add-ons using [Sphinx](https://www.sphinx-doc.org/en/master/index.html) and [MyST](https://myst-parser.readthedocs.io/en/latest/) or [reStructuredText](https://www.docutils.org/rst.html).
 
 ## Getting Started 🏁
 
 ### Prerequisites
 
-- **pipx**: A tool for installing and running Python applications.
+[`uv`](https://docs.astral.sh/uv/) is the recommended tool for managing Python versions and project dependencies.
 
-### Installation Guide 🛠️
-
-1. **Install pipx** (if not already installed):
+To install `uv`, use the following command, or visit the [`uv` installation page](https://docs.astral.sh/uv/getting-started/installation/) for alternative methods:
 
 ```shell
-pip install pipx
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-2. **Generate Your Documentation Scaffolding🎉**
+### Generate your documentation scaffold 🎉
 
 ```shell
-pipx run cookie
+uvx cookieplone project
 ```
-Follow the prompts to customize your documentation project.
+
+Follow the prompts to create and customize your documentation scaffold.
 
 ## Project Generation Options
 
@@ -35,32 +34,33 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `title`               | Your documentation's human-readable name, capitals and spaces allowed.
-| `description`         | Describes your documentation and gets used in places like ``README.md`` and such.                                                                          | **Create awesome blogs with Plone.** |
-| `github_organization` | Used for GitHub and Docker repositories.                                                                                                             | **collective**                |
-| `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | **Our Company**               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
+| `description`         | Describes your documentation and gets used in places such as `README.md`.                                                                          | `Create awesome blogs with Plone.` |
+| `github_organization` | Used for GitHub and Docker repositories.                                                                                                             | `collective`                |
+| `author`              | This is you! The value goes into `LICENSE`, `setup.py`, and other files.                                                                     | `Our Company`               |
+| `email`               | The email address you want to identify yourself in the project.                                                                                      | `email@example.com`         |
 
-## Building and Viewing Documentation📖
+## Build and view documentation 📖
 
 1. Navigate to the project.
 
 ```shell
-cd <documentation_title>
+cd <project_title>/docs
 ```
 
-2. Run the following command to take look at available make modes.
-
-```shell
-make -l
-```
-
-3. Use the following command to build the documentation.
+2. Use the following command to build the documentation.
 
 ```shell
 make html
 ```
 
 Your documentation will be built in the `_build` directory.
+
+For additional make commands, run the following command.
+
+```shell
+make -l
+```
+
 
 ## License 📜
 
