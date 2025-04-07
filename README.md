@@ -17,17 +17,11 @@
 
 This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
-## Prerequisites
-
-- **[pipx](https://pipx.pypa.io/stable/ "Link to the website of pipx")**: A tool for installing and running Python applications.
 
 ## Installation 💾
 
-Install `pipx` with the following command:
+Set up your system with Plone's [Prerequisites for installation](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation).
 
-```shell
-pip install pipx
-```
 
 ## Choose a template 🛠️
 
@@ -48,7 +42,81 @@ uvx cookieplone
 | --------- | --------- | --------- |
 | `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read More](./project/README.md) |
 | `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read More](./backend_addon/README.md) |
-| `Frontend Add-on for Plone`  | Create a new Node package to be used with Volto. | [Read More](./frontend_addon/README.md) |
+| `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read More](./frontend_addon/README.md) |
+
+
+## Contribute 🤝
+
+We welcome contributions to `cookieplone-templates`.
+
+You can create an issue in the issue tracker, or contact a maintainer.
+
+- [Issue Tracker](https://github.com/plone/cookieplone-templates/issues)
+- [Source Code](https://github.com/plone/cookieplone-templates/)
+
+
+### Development requirements
+
+See [Installation](#installation-).
+
+
+### Setup
+
+Create a local Python virtual environment with the following command.
+
+```shell
+make install
+```
+
+### Run the checked out branch of `cookieplone-templates`.
+
+```shell
+COOKIEPLONE_REPOSITORY=~/YOUR_PATH_TO/cookieplone-templates uvx cookieplone project --no-input
+```
+
+
+### Format the codebase
+
+```shell
+make format
+```
+
+
+### Format the templates
+
+```shell
+make format_templates
+```
+
+
+### Run tests
+
+[`pytest`](https://docs.pytest.org/) is this package's test runner.
+
+Run all tests with the following command.
+
+```shell
+make test
+```
+
+Run all tests, but stop on the first error and open a `pdb` session with the following command.
+
+```shell
+uv run pytest -x --pdb
+```
+
+Run only tests that match `test_template_has_required_keys` with the following command.
+
+```shell
+uv run pytest -k test_template_has_required_keys
+```
+
+Run only tests that match `test_template_has_required_keys`, but stop on the first error and open a `pdb` session with the following command.
+
+```shell
+uv run pytest -k test_template_has_required_keys -x --pdb
+```
+
 
 ## License 📜
 
