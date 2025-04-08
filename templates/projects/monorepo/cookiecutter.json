@@ -17,6 +17,7 @@
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
+  "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "__version_package": "1.0.0a0",
@@ -113,6 +114,11 @@
       "__prompt__": "Add GitHub Action to Deploy this project?",
       "1": "Yes",
       "0": "No"
+    },
+    "initialize_documentation": {
+      "__prompt__": "Would you like to add a documentation scaffold to your project?",
+      "1": "Yes",
+      "0": "No"
     }
   },
   "_copy_without_render": [
@@ -137,6 +143,7 @@
   "__cookieplone_subtemplates": [
     ["add-ons/backend", "Setup Backend", "1"],
     ["add-ons/frontend", "Setup Frontend", "1"],
+    ["add-ons/documentation_starter", "Setup Documentation Scaffold", "1"],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
     ["sub/project_settings", "Setup Project Settings", "1"]
   ],

@@ -1,6 +1,12 @@
 ALLOWED_MISSING = []
-ALLOWED_NOT_USED = ["__generator_sha"]
-
+ALLOWED_NOT_USED = [
+        "__documentation_starter_format",
+        "__generator_sha",
+        "__profile_language",
+        "__version_package",
+        "__year",
+        "initialize_documentation"
+        ]
 
 def test_no_missing_variables(variables_missing):
     """Test no variable is missing from cookiecutter.json"""

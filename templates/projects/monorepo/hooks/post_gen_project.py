@@ -16,6 +16,11 @@ BACKEND_ADDON_REMOVE = [
     ".git",
 ]
 
+DOCUMENTATION_STARTER_REMOVE = [
+    ".github",
+    ".git",
+]
+
 FRONTEND_ADDON_REMOVE = [".github"]
 
 DEVOPS_TO_REMOVE = {
@@ -90,6 +95,20 @@ def generate_addons_frontend(context, output_dir):
     )
 
 
+def generate_addons_documentation_starter(context, output_dir):
+    """Generate documentation scaffold"""
+    output_dir = output_dir
+    folder_name = "docs"
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/add-ons/documentation_starter",
+        output_dir,
+        folder_name,
+        context,
+        DOCUMENTATION_STARTER_REMOVE,
+    )
+    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
+
+
 def generate_sub_cache(context: OrderedDict, output_dir: Path):
     """Add cache structure."""
     # Use the same base folder
@@ -152,18 +171,24 @@ def main():
     )  # {{ cookiecutter.__cookieplone_subtemplates }}
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
-        # Convert sub/cache -> generate_sub_cache
-        template_slug = template_id.replace("/", "_").replace("-", "")
-        func_name = f"generate_{template_slug}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+        if (
+            not bool(int(context.get("initialize_documentation")))
+            and template_id == "documentation_starter"
+        ):
+            pass
+        else:
+            # Convert sub/cache -> generate_sub_cache
+            template_slug = template_id.replace("/", "_").replace("-", "")
+            func_name = f"generate_{template_slug}"
+            func = funcs.get(func_name)
+            if not func:
+                raise ValueError(f"No handler available for sub_template {template_id}")
+            elif not int(enabled):
+                console.print(f" -> Ignoring ({title})")
+                continue
+            new_context = deepcopy(context)
+            console.print(f" -> {title}")
+            func(new_context, output_dir)
 
     # Create namespace packages
     plone.create_namespace_packages(

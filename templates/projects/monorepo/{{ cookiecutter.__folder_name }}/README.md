@@ -74,11 +74,12 @@ And... you're all set! Your Plone site is up and running locally! 🚀
 
 ## Project Structure 🏗️
 
-This monorepo consists of three distinct sections: `backend`, `frontend`, and `devops`.
+This monorepo consists of the following distinct sections:
 
 - **backend**: Houses the API and Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
 - **frontend**: Contains the React (Volto) package.
 - **devops**: Encompasses Docker Stack, Ansible playbooks, and Cache settings.
+- **docs**: Scaffold for writing documentation for your project.
 
 ### Why This Structure? 🤔
 
