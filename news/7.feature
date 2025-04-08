@@ -1,1 +1,1 @@
-Add Cookieplone template `documentation_starter` scaffold. @ujsquared
+Add Cookieplone template `documentation_starter` scaffold. @ujsquared, @stevepiercy
