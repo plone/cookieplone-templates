@@ -17,7 +17,7 @@ pip install {{ cookiecutter.python_package_name }}
 And to create the Plone site:
 
 ```shell
-make create_site
+make create-site
 ```
 
 ## Add features using `plonecli` or `bobtemplates.plone`
