@@ -88,10 +88,15 @@ changes: .venv/bin/python
 	@echo
 	@echo "The overview file is in $(BUILDDIR)/changes."
 
-.PHONY: rtd-pr-preview
-rtd-pr-preview:  ## Build pull request preview on Read the Docs
-	pip install -r requirements.txt
-	cd $(DOCS_DIR) && sphinx-build -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
+.PHONY: rtd-prepare
+rtd-prepare:  ## Prepare environment on Read the Docs
+	asdf plugin add uv
+	asdf install uv latest
+	asdf global uv latest
+
+.PHONY: rtd-pr-preview  ## Build pull request previews on Read the Docs
+rtd-pr-preview: rtd-prepare .venv/bin/python ## Build pull request preview on Read the Docs
+	cd $(DOCS_DIR) && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
 # /documentation builders
 
 
