@@ -9,7 +9,7 @@ myst:
 
 # {{ cookiecutter.title }}
 
-Welcome to the documentation for {{ cookiecutter.__folder_name }}!
+Welcome to the documentation for {{ cookiecutter.title }}!
 {{ cookiecutter.description }}
 
 This scaffold provides a ready-to-use environment for creating comprehensive documentation for Plone projects, based on [Plone Sphinx Theme](https://github.com/plone/plone-sphinx-theme).

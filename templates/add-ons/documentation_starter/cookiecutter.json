@@ -7,6 +7,7 @@
   "initialize_git": ["1", "0"],
   "plone_version": "6.0",
   "__folder_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
+  "__normalized_package_name": "{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "__year": "{% now 'local', '%Y' %}",
   "__profile_language": "en",
   "__version_package": "1.0.0a0",
