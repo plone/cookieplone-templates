@@ -59,6 +59,10 @@ You can create an issue in the issue tracker, or contact a maintainer.
 
 See [Installation](#installation-).
 
+For source control through Git and continuous integration and delivery (CI/CD), you'll also need a Git repository either under your personal or organization's account.
+Both [GitHub](https://github.com/) and [GitLab](https://about.gitlab.com/) are currently supported Git repository and CI/CD service providers.
+However, only GitHub is currently supported for documentation hosting.
+
 
 ### Setup
 
@@ -115,6 +119,49 @@ Run only tests that match `test_template_has_required_keys`, but stop on the fir
 
 ```shell
 uv run pytest -k test_template_has_required_keys -x --pdb
+```
+
+
+### Publish to Git service provider
+
+To publish your project to your Git service provider, first create an empty remote repository with your Git service provider.
+Then navigate to the root of your generated project folder.
+Finally, issue the following commands.
+
+```{note}
+If your remote repository is private, you'll need to manage authorization when you push commits upstream.
+```
+
+```shell
+git status
+git commit -m "first commit"
+git remote add origin https://<git_service_provider>/<organization_or_username>/<project_slug>.git
+git branch -M main
+git push
+```
+
+Your remote repository should now be populated with your generated project.
+
+
+### Publish documentation to Read the Docs
+
+The Cookieplone template `documentation_starter` supports publishing documentation and pull request preview builds on Read the Docs.
+
+First, create an account on Read the Docs, then follow their documentation to add a documentation project and configure pull request previews.
+
+-   [Adding a documentation project](https://docs.readthedocs.com/platform/stable/intro/add-project.html)
+-   [How to configure pull request builds](https://docs.readthedocs.com/platform/stable/guides/pull-requests.html)
+-   [Pull request previews](https://docs.readthedocs.com/platform/stable/pull-requests.html)
+
+Next, update your documentation files.
+Search for the string `MY_READTHEDOCS_PROJECT_SLUG` throughout your project, and replace it your project's slug that Read the Docs assigned to your project.
+
+Finally, commit and push your changes to your remote repository.
+
+Read the Docs will build documentation and with the next pull request, will build a pull request preview and insert a link to the preview in your pull request.
+
+```{note}
+It's currently not supported to check for a unique slug on Read the Docs before generating your project, especially if you set up a private repository.
 ```
 
 

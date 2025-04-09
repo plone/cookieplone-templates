@@ -5,8 +5,9 @@
 # -- Path setup --------------------------------------------------------------
 
 from datetime import datetime
-from plone_sphinx_theme import __version__
+
 from packaging.version import Version
+from plone_sphinx_theme import __version__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -70,6 +71,7 @@ extensions = [
     "sphinx_examples",
     "sphinx_reredirects",
     "sphinx_sitemap",
+    "sphinx_tippy",
     "sphinxcontrib.httpdomain",  # plone.restapi
     "sphinxcontrib.httpexample",  # plone.restapi
     "sphinxcontrib.mermaid",
@@ -93,7 +95,7 @@ linkcheck_ignore = [
     # Ignore file downloads
     r"^/_static/",
     # Ignore pages that require authentication
-    r"https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__folder_name }}/issues/new",  # requires auth
+    r"https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}/issues/new",  # requires auth
     # Ignore github.com pages with anchors
     r"https://github.com/.*#.*",
     # Ignore other specific anchors
@@ -117,11 +119,9 @@ master_doc = "index"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = [
-]
+exclude_patterns = []
 
-suppress_warnings = [
-]
+suppress_warnings = []
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -141,8 +141,8 @@ html_sidebars = {
 }
 html_theme_options = {
     "article_header_start": ["toggle-primary-sidebar"],
-#   "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
-#   <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
+    # "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
+    # <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
     "footer_content_items": [
         "author",
         "copyright",
@@ -155,7 +155,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__folder_name }}",
+            "url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
             "attributes": {
@@ -164,25 +164,25 @@ html_theme_options = {
                 "class": "nav-link custom-fancy-css",
             },
         },
-#         {
-#             "name": "Mastodon",
-#             "url": "https://MY_MASTODON_SERVER/@MY_MASTODON_USER",
-#             "icon": "fa-brands fa-mastodon",
-#             "type": "fontawesome",
-#             "attributes": {
-#                 "target": "_blank",
-#                 "rel": "noopener me",
-#                 "class": "nav-link custom-fancy-css",
-#             },
-#         },
+        # {
+        #   "name": "Mastodon",
+        #   "url": "https://MY_MASTODON_SERVER/@MY_MASTODON_USER",
+        #   "icon": "fa-brands fa-mastodon",
+        #   "type": "fontawesome",
+        #   "attributes": {
+        #       "target": "_blank",
+        #       "rel": "noopener me",
+        #       "class": "nav-link custom-fancy-css",
+        #    },
+        # },
     ],
     "logo": {
         "text": "{{cookiecutter.title}}",
     },
     "navigation_with_keys": True,
-    "path_to_docs": "docs",
+    "path_to_docs": "docs/{{ cookiecutter.__folder_name }}",
     "repository_branch": "main",
-    "repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__folder_name }}",
+    "repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}",
     "search_bar_text": "Search",
     "show_toc_level": 2,
     "use_edit_page_button": True,
@@ -192,7 +192,7 @@ html_theme_options = {
 # suggest edit link
 # remark:  is mandatory in "edit_page_url_template"
 # html_context = {
-#     "edit_page_url_template": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__folder_name }}/edit/main/docs/",
+#     "edit_page_url_template": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}/edit/main/docs/",
 # }
 
 # Announce that we have an opensearch plugin
@@ -245,8 +245,8 @@ sitemap_filename = "sitemap-custom.xml"
 # For more information see:
 # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html
 myst_enable_extensions = [
-    "attrs_block", # Support parsing of block attributes.
-    "attrs_inline", # Support parsing of inline attributes.
+    "attrs_block",  # Support parsing of block attributes.
+    "attrs_inline",  # Support parsing of inline attributes.
     "colon_fence",  # You can also use ::: delimiters to denote code fences, instead of ```.
     "deflist",  # Support definition lists. https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#definition-lists
     "html_image",  # For inline images. See https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#html-images
@@ -255,8 +255,7 @@ myst_enable_extensions = [
     "substitution",  # Use Jinja2 for substitutions. https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#substitutions-with-jinja2
 ]
 
-myst_substitutions = {
-}
+myst_substitutions = {}
 
 # -- Intersphinx configuration ----------------------------------
 
@@ -271,6 +270,7 @@ myst_substitutions = {
 # https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
+    "plone": ("https://6.docs.plone.org/", None),
 }
 
 
@@ -305,7 +305,16 @@ notfound_template = "404.html"
 
 # -- sphinx-reredirects configuration ----------------------------------
 # https://documatt.com/sphinx-reredirects/usage.html
-redirects = {
+redirects = {}
+
+
+# -- sphinx-tippy configuration ----------------------------------
+tippy_anchor_parent_selector = "article.bd-article"
+tippy_enable_doitips = False
+tippy_enable_wikitips = False
+tippy_props = {
+    "interactive": True,
+    "placement": "auto-end",
 }
 
 

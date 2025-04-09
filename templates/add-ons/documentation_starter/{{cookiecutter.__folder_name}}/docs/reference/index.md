@@ -17,3 +17,7 @@ This part of the documentation contains reference material, including APIs, conf
 ```{seealso}
 https://diataxis.fr/reference/
 ```
+
+## Configuration
+
+-   {doc}`plone:contributing/documentation/themes-and-extensions`

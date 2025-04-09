@@ -7,7 +7,8 @@ myst:
     "keywords": "Plone, documentation, glossary, term, definition"
 ---
 
-This glossary provides example terms and definitions relevant to **{{ cookiecutter.__folder_name }}**. {{ cookiecutter.description }}
+This glossary provides example terms and definitions relevant to **{{ cookiecutter.title }}**.
+{{ cookiecutter.description }}
 
 ```{note}
 This is an example glossary demonstrating MyST Markdown’s `{glossary}` directive. You can adapt it for your project’s appendix by editing or replacing these entries with your own terms and definitions.
@@ -42,6 +43,7 @@ plone-sphinx-theme
     [Plone Sphinx Theme](https://plone-sphinx-theme.readthedocs.io/) is a Sphinx theme for [Plone 6 Documentation](https://6.docs.plone.org/), [Plone Conference Training](https://training.plone.org/), and documentation of various Plone packages.
     This scaffold uses Plone Sphinx Theme.
 
+Markedly Structured Text
 MyST
     [Markedly Structured Text (MyST)](https://myst-parser.readthedocs.io/en/latest/) is a rich and extensible flavor of Markdown, for authoring Plone Documentation.
     The sample documentation in this scaffold is written in MyST.

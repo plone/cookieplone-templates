@@ -17,3 +17,14 @@ This part of the documentation contains how-to guides, including installation an
 ```{seealso}
 https://diataxis.fr/how-to-guides/
 ```
+
+
+## Authors
+
+-   {doc}`plone:contributing/documentation/myst-reference`
+-   {doc}`plone:contributing/documentation/authors`
+
+
+## Designers
+
+-   [Contribute to Plone Sphinx Theme](https://plone-sphinx-theme.readthedocs.io/guides/contribute.html)
