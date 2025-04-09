@@ -47,6 +47,7 @@ clean:  ## Clean docs build directory
 .PHONY: clean-python
 clean-python: clean
 	rm -rf .venv/
+	rm -rf *.egg-info
 # /environment management
 
 
