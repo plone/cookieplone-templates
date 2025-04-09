@@ -2,6 +2,7 @@ ALLOWED_MISSING = []
 ALLOWED_NOT_USED = [
         "__documentation_starter_format",
         "__generator_sha",
+        "__normalized_package_name",
         "__profile_language",
         "__version_package",
         "__year",
