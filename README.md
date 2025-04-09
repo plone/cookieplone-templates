@@ -59,6 +59,10 @@ You can create an issue in the issue tracker, or contact a maintainer.
 
 See [Installation](#installation-).
 
+For source control through Git and continuous integration and delivery (CI/CD), you'll also need a Git repository either under your personal or organization's account.
+Both [GitHub](https://github.com/) and [GitLab](https://about.gitlab.com/) are currently supported Git repository and CI/CD service providers.
+However, only GitHub is currently supported for documentation hosting.
+
 
 ### Setup
 
