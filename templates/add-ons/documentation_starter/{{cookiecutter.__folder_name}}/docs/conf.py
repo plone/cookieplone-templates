@@ -179,7 +179,7 @@ html_theme_options = {
         "text": "{{cookiecutter.title}}",
     },
     "navigation_with_keys": True,
-    "path_to_docs": "docs",
+    "path_to_docs": "docs/{{ cookiecutter.__folder_name }}",
     "repository_branch": "main",
     "repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}",
     "search_bar_text": "Search",
