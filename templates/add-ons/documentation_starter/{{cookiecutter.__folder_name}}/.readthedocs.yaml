@@ -22,4 +22,4 @@ build:
       then
         exit 183;
       fi
-    - make rtd-pr-preview
+    - cd docs && make rtd-pr-preview
