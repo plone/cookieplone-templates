@@ -5,8 +5,9 @@
 # -- Path setup --------------------------------------------------------------
 
 from datetime import datetime
-from plone_sphinx_theme import __version__
+
 from packaging.version import Version
+from plone_sphinx_theme import __version__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -117,11 +118,9 @@ master_doc = "index"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = [
-]
+exclude_patterns = []
 
-suppress_warnings = [
-]
+suppress_warnings = []
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -141,8 +140,8 @@ html_sidebars = {
 }
 html_theme_options = {
     "article_header_start": ["toggle-primary-sidebar"],
-#   "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
-#   <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
+    # "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
+    # <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
     "footer_content_items": [
         "author",
         "copyright",
@@ -164,17 +163,17 @@ html_theme_options = {
                 "class": "nav-link custom-fancy-css",
             },
         },
-#         {
-#             "name": "Mastodon",
-#             "url": "https://MY_MASTODON_SERVER/@MY_MASTODON_USER",
-#             "icon": "fa-brands fa-mastodon",
-#             "type": "fontawesome",
-#             "attributes": {
-#                 "target": "_blank",
-#                 "rel": "noopener me",
-#                 "class": "nav-link custom-fancy-css",
-#             },
-#         },
+        # {
+        #   "name": "Mastodon",
+        #   "url": "https://MY_MASTODON_SERVER/@MY_MASTODON_USER",
+        #   "icon": "fa-brands fa-mastodon",
+        #   "type": "fontawesome",
+        #   "attributes": {
+        #       "target": "_blank",
+        #       "rel": "noopener me",
+        #       "class": "nav-link custom-fancy-css",
+        #    },
+        # },
     ],
     "logo": {
         "text": "{{cookiecutter.title}}",
@@ -245,8 +244,8 @@ sitemap_filename = "sitemap-custom.xml"
 # For more information see:
 # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html
 myst_enable_extensions = [
-    "attrs_block", # Support parsing of block attributes.
-    "attrs_inline", # Support parsing of inline attributes.
+    "attrs_block",  # Support parsing of block attributes.
+    "attrs_inline",  # Support parsing of inline attributes.
     "colon_fence",  # You can also use ::: delimiters to denote code fences, instead of ```.
     "deflist",  # Support definition lists. https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#definition-lists
     "html_image",  # For inline images. See https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#html-images
@@ -255,8 +254,7 @@ myst_enable_extensions = [
     "substitution",  # Use Jinja2 for substitutions. https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#substitutions-with-jinja2
 ]
 
-myst_substitutions = {
-}
+myst_substitutions = {}
 
 # -- Intersphinx configuration ----------------------------------
 
@@ -305,8 +303,7 @@ notfound_template = "404.html"
 
 # -- sphinx-reredirects configuration ----------------------------------
 # https://documatt.com/sphinx-reredirects/usage.html
-redirects = {
-}
+redirects = {}
 
 
 # -- Options for HTML help output -------------------------------------------------
