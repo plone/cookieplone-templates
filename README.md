@@ -122,6 +122,27 @@ uv run pytest -k test_template_has_required_keys -x --pdb
 ```
 
 
+### Publish to Git service provider
+
+To publish your project to your Git service provider, first create an empty remote repository with your Git service provider.
+Then navigate to the root of your generated project folder.
+Finally, issue the following commands.
+
+```{note}
+If your remote repository is private, you'll need to manage authorization when you push commits upstream.
+```
+
+```shell
+git status
+git commit -m "first commit"
+git remote add origin https://<git_service_provider>/<organization_or_username>/<project_slug>.git
+git branch -M main
+git push
+```
+
+Your remote repository should now be populated with your generated project.
+
+
 ## License 📜
 
 This project is licensed under the [MIT License](/LICENSE).
