@@ -111,9 +111,11 @@ def main():
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
         # Convert sub/cache -> prepare_sub_cache
+        is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
         if (
             not bool(int(context.get("initialize_documentation")))
             and template_id == "documentation_starter"
+            or is_subtemplate
         ):
             pass
         else:
