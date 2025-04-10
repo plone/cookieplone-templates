@@ -23,5 +23,5 @@ jobs:
     steps:
       - uses: readthedocs/actions/preview@v1
         with:
-          project-slug: "plone-sphinx-theme"
+          project-slug: "MY_READTHEDOCS_PROJECT_SLUG"
           single-version: "true"
