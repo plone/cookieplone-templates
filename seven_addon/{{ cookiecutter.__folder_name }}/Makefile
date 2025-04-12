@@ -131,7 +131,7 @@ acceptance-frontend-dev-start: ## Start acceptance frontend in development mode
 
 .PHONY: acceptance-frontend-prod-start
 acceptance-frontend-prod-start: ## Start acceptance frontend in production mode
-	RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm build && pnpm start:prod
+	pnpm build && RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm start:prod
 
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
