@@ -7,6 +7,7 @@ context('Example Acceptance Tests', () => {
         contentType: 'Document',
         contentId: 'document',
         contentTitle: 'Test document',
+        transition: 'publish',
       });
       cy.autologin();
     });
