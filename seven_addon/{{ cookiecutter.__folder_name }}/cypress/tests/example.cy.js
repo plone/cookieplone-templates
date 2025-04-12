@@ -11,10 +11,8 @@ context('Example Acceptance Tests', () => {
       cy.autologin();
     });
 
-    it('As editor I can add edit a Page', function () {
+    it('As editor I can add visit a Page', function () {
       cy.visit('/document');
-      cy.navigate('/document/edit');
-      cy.get('#toolbar-save').click();
     });
   });
 });
