@@ -9,7 +9,7 @@
 <div align="center">
 
 ![License](https://img.shields.io/github/license/plone/cookieplone-templates)
-[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 </div>
 
