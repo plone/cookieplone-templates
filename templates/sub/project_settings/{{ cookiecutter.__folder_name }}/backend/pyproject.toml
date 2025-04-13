@@ -40,6 +40,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
+    "horse-with-no-namespace",
     "plone.app.testing",
     "plone.restapi[test]",
     "pytest",
@@ -83,7 +84,7 @@ packages = ["{{ cookiecutter.python_package_name | package_namespace_path }}"]
 
 [tool.towncrier]
 directory = "news/"
-filename = "CHANGES.md"
+filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
 title_format = "## {version} ({project_date})"
 template = "news/.changelog_template.jinja"
@@ -187,3 +188,6 @@ testpaths = ["tests"]
 source_pkgs = ["{{ cookiecutter.python_package_name }}", "tests"]
 branch = true
 parallel = true
+omit = [
+  "src/{{ cookiecutter.__package_path }}/locales/*.py",
+]
