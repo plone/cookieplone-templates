@@ -1,8 +1,8 @@
 # Cookieplone frontend project
 
-[![Cookieplone Frontend Project CI](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml)
+[![Cookieplone Templates: CI](https://github.com/plone/cookieplone-templates/actions/workflows/main.yml/badge.svg)](https://github.com/plone/cookieplone-templates/blob/main/.github/workflows/main.yml)
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
-![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
+[![License](https://img.shields.io/github/license/plone/cookieplone-templates)](../../../LICENSE)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 This is a sub-template—used by other templates, in automated tests, and for OCI image generation—accessible with **Cookieplone** at the path `sub/frontend_project`.
@@ -23,7 +23,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 
-### Node.js
+### Node.js and pnpm
 
 Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
 

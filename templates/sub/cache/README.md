@@ -1,11 +1,11 @@
 # Cookieplone cache settings
 
-[![Cookieplone Cache Settings CI](https://github.com/plone/cookieplone-templates/actions/workflows/sub_cache.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/sub_cache.yml)
+[![Cookieplone Templates: CI](https://github.com/plone/cookieplone-templates/actions/workflows/main.yml/badge.svg)](https://github.com/plone/cookieplone-templates/blob/main/.github/workflows/main.yml)
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
-![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
+[![License](https://img.shields.io/github/license/plone/cookieplone-templates)](../../../LICENSE)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-This is a sub-template -- used by other templates, in automated tests, and for OCI image generation -- accessible with **cookieplone** at the path `sub/cache`.
+This is a sub-template -- used by other templates, in automated tests, and for OCI image generation -- accessible with **Cookieplone** at the path `sub/cache`.
 
 ## Prerequisites
 
@@ -34,10 +34,10 @@ The table below describes the options you can customize using the [Cookiecutter 
 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | **Cache Settings**                |
-| `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | **Our Company**               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
-| `volto_version` | Volto version to be used. | **18.10.0**    |
+| `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | `Cache Settings`                |
+| `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | `Our Company`               |
+| `email`               | The email address you want to identify yourself in the project.                                                                                      | `email@example.com`         |
+| `volto_version` | Volto version to be used. | `18.10.0`    |
 
 
 ## Code quality assurance 🧐
