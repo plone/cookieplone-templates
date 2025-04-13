@@ -51,8 +51,8 @@ test = [
 [project.urls]
 Homepage = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}"
 PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
-Source = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}"
-Tracker = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}/issues"
+Source = "{{ cookiecutter.__repository_url }}"
+Tracker = "{{ cookiecutter.__repository_url }}/issues"
 
 {% if cookiecutter.plone_version.startswith('6.1') is true %}
 [project.entry-points."plone.autoinclude.plugin"]
