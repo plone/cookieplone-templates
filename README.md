@@ -96,7 +96,7 @@ make format_templates
 
 ### Run tests
 
-[`pytest`](https://docs.pytest.org/) is this package's test runner.
+[`pytest`](https://docs.pytest.org/en/stable/) is this package's test runner.
 
 Run all tests with the following command.
 
