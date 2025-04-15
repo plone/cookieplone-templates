@@ -7,6 +7,7 @@ import pytest
 # List of expected files in the generated output
 EXPECTED_FILES = [
     ".gitignore",
+    ".readthedocs.yaml",
     ".vale.ini",
     "LICENSE.md",
     "Makefile",
@@ -19,7 +20,6 @@ EXPECTED_FILES = [
     "docs/how-to-guides/index.md",
     "docs/reference/index.md",
     "docs/tutorials/index.md",
-    "docs/.readthedocs.yaml",
     "docs/conf.py",
     "docs/glossary.md",
     "docs/index.md",
