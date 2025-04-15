@@ -69,7 +69,7 @@ def main():
         context.update({
             "initialize_documentation": "0",
             "__cookieplone_subtemplates": [
-                ["documentation_starter", "Setup Documentation Scaffolding", "0"]
+                ["documentation_starter", "Generate documentation scaffold", "0"]
             ],
         })
     remove_headless = not int(
@@ -109,7 +109,7 @@ def main():
         ],
         [
             generate_documentation_starter,
-            "Generate Documentation Scaffold",
+            "Generate documentation scaffold",
             generate_documentation,
         ],
     ]
