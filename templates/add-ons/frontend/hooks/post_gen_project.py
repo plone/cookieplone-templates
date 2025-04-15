@@ -37,31 +37,30 @@ def main():
     """Final fixes."""
 
     output_dir = Path().cwd()
+    is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
+    if is_subtemplate:
+        context.update({
+            "initialize_documentation": "0",
+            "__cookieplone_subtemplates": [
+                ["documentation_starter", "Setup Documentation Scaffolding", "0"]
+            ],
+        })
     subtemplates = context.get(
         "__cookieplone_subtemplates", []
     )  # {{ cookiecutter.__cookieplone_subtemplates }}
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
-        # Convert sub/cache -> prepare_sub_cache
-        is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
-        if (
-            not bool(int(context.get("initialize_documentation")))
-            and template_id == "documentation_starter"
-            or is_subtemplate
-        ):
-            pass
-        else:
-            os.getenv("COOKIEPLONE_SUBTEMPLATE")
-            func_name = f"generate_{template_id.replace('/', '_')}"
-            func = funcs.get(func_name)
-            if not func:
-                raise ValueError(f"No handler available for sub_template {template_id}")
-            elif not int(enabled):
-                console.print(f" -> Ignoring ({title})")
-                continue
-            new_context = deepcopy(context)
-            console.print(f" -> {title}")
-            func(new_context, output_dir)
+        os.getenv("COOKIEPLONE_SUBTEMPLATE")
+        func_name = f"generate_{template_id.replace('/', '_')}"
+        func = funcs.get(func_name)
+        if not func:
+            raise ValueError(f"No handler available for sub_template {template_id}")
+        elif not int(enabled):
+            console.print(f" -> Ignoring ({title})")
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.frontend_addon_name }}[/bold blue]

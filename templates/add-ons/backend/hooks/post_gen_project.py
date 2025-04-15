@@ -65,6 +65,13 @@ def main():
     """Final fixes."""
     output_dir = Path().cwd()
     is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
+    if is_subtemplate:
+        context.update({
+            "initialize_documentation": "0",
+            "__cookieplone_subtemplates": [
+                ["documentation_starter", "Setup Documentation Scaffolding", "0"]
+            ],
+        })
     remove_headless = not int(
         context.get("feature_headless")
     )  # {{ cookiecutter.__feature_headless }}
@@ -75,6 +82,9 @@ def main():
     backend_format = bool(
         int(context.get("__backend_addon_format"))
     )  # {{ cookiecutter.__backend_addon_format }}
+    generate_documentation = bool(
+        int(context.get("initialize_documentation"))
+    )  # {{ cookiecutter.initialize_documentation }}
     # Cleanup / Git
     actions = [
         [
@@ -97,6 +107,11 @@ def main():
             "Initialize Git repository",
             initialize_git,
         ],
+        [
+            generate_documentation_starter,
+            "Generate Documentation Scaffold",
+            generate_documentation,
+        ],
     ]
     for func, title, enabled in actions:
         if not int(enabled):
@@ -111,24 +126,16 @@ def main():
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
         # Convert sub/cache -> prepare_sub_cache
-        is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
-        if (
-            not bool(int(context.get("initialize_documentation")))
-            and template_id == "documentation_starter"
-            or is_subtemplate
-        ):
-            pass
-        else:
-            func_name = f"generate_{template_id.replace('/', '_')}"
-            func = funcs.get(func_name)
-            if not func:
-                raise ValueError(f"No handler available for sub_template {template_id}")
-            elif not int(enabled):
-                console.print(f" -> Ignoring ({title})")
-                continue
-            new_context = deepcopy(context)
-            console.print(f" -> {title}")
-            func(new_context, output_dir)
+        func_name = f"generate_{template_id.replace('/', '_')}"
+        func = funcs.get(func_name)
+        if not func:
+            raise ValueError(f"No handler available for sub_template {template_id}")
+        elif not int(enabled):
+            console.print(f" -> Ignoring ({title})")
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]
