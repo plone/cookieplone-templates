@@ -22,7 +22,7 @@ IGNORED_KEYS = (
 )
 
 SYMBOLS = {
-    "not_found": {"title": "Not present in cookiecutter.json", "icon": "🔍"},
+    "not_found": {"title": "Not present in cookiecutter.json", "icon": "-"},
     "used": {"title": "Used by the template", "icon": "✅"},
     "not_used": {"title": "Not used in template", "icon": "❗"},
     "missing": {
@@ -143,8 +143,6 @@ def _analyze_template_folder(folder: Path, used_keys: set[str]) -> set[str]:
     all_files = folder.glob("**/*")
     for filepath in all_files:
         data = filepath.name
-        # if "backend" in str(folder) and data == "pyproject.toml":
-        #     breakpoint()
         is_file = filepath.is_file()
         if is_file and is_binary(f"{filepath}"):
             continue
