@@ -7,7 +7,7 @@
   "email": "collective@plone.org",
   "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
-  "volto_version": "{{ 'Yes' | latest_volto }}",
+  "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],
@@ -143,7 +143,11 @@
   "__cookieplone_subtemplates": [
     ["add-ons/backend", "Setup Backend", "1"],
     ["add-ons/frontend", "Setup Frontend", "1"],
-    ["add-ons/documentation_starter", "Setup Documentation Scaffold", "1"],
+    [
+      "add-ons/documentation_starter",
+      "Generate documentation scaffold",
+      "{{cookiecutter.initialize_documentation}}"
+    ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
     ["sub/project_settings", "Setup Project Settings", "1"]
   ],
