@@ -7,7 +7,7 @@
   "email": "collective@plone.org",
   "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
-  "volto_version": "{{ 'Yes' | latest_volto }}",
+  "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],

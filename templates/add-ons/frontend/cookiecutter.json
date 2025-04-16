@@ -6,7 +6,8 @@
   "email": "collective@plone.org",
   "github_organization": "collective",
   "npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
-  "volto_version": "{{ 'Yes' | latest_volto }}",
+  "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
+  "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.frontend_addon_name }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
@@ -31,6 +32,7 @@
     "description": "A short description of your addon",
     "github_organization": "GitHub Username or Organization",
     "npm_package_name": "Package name on NPM",
+    "use_prerelease_versions": "Should we use prerelease versions?",
     "volto_version": "Volto version",
     "author": "Author",
     "email": "Author E-mail",
@@ -41,7 +43,10 @@
     }
   },
   "_copy_without_render": [],
-  "_extensions": ["cookieplone.filters.latest_volto"],
+  "_extensions": [
+    "cookieplone.filters.use_prerelease_versions",
+    "cookieplone.filters.latest_volto"
+  ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": "frontend_addon",
   "__generator_sha": "",
