@@ -15,6 +15,12 @@ env:
   python-version: "3.10"
 
 jobs:
+  report:
+    name: "Report keys usage"
+    uses: ./.github/workflows/report.yml
+    with:
+      python-version: "3.13"
+
   test-repository:
     name: "Test repository settings: ${{ matrix.python-version }}"
     uses: ./.github/workflows/test-repository.yml
