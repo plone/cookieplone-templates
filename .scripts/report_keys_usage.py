@@ -11,7 +11,7 @@ from git import Repo
 
 PATTERNS = (
     re.compile(r" ?(cookiecutter)[.](?P<key>[a-zA-Z0-9-_]*) "),
-    re.compile(r"(context\.get\(\"|context\[\")(?P<key>[a-zA-Z0-9-_]*)"),
+    re.compile(r"(context\.get\(\")(?P<key>[a-zA-Z0-9-_]*)\""),
 )
 
 IGNORED_KEYS = (
