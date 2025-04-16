@@ -1,0 +1,50 @@
+name: Build documentation, check links, spelling, grammar, and style
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+  # Build pull requests
+  pull_request:
+    paths:
+      - 'docs/docs/**'
+      - 'docs/styles/**'
+      - '.github/workflows/rtd-pr-preview.yml'
+      - '.github/workflows/test.yml'
+      - 'docs/.readthedocs.yaml'
+      - 'docs/.vale.ini'
+      - 'docs/uv.lock'
+
+jobs:
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          # Install a specific version of uv.
+          version: "0.6.5"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: {{ "${{ matrix.python-version }}" }}
+
+      - name: Create Python virtual environment, install requirements
+        run: cd docs && make .venv/bin/python PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+
+      - name: Check for broken links
+        run: cd docs && make linkcheckbroken PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+
+      - name: Build HTML documentation
+        run: cd docs && make html PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+
+      - name: Run vale
+        run: cd docs && make vale VALEOPTS="--minAlertLevel='warning'" PYTHONVERSION={{ "${{ matrix.python-version }}" }}
