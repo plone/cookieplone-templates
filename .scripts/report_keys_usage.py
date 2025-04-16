@@ -10,11 +10,16 @@ from binaryornot.check import is_binary
 from git import Repo
 
 PATTERNS = (
-    re.compile(r"{{ ?(cookiecutter)[.](?P<key>[a-zA-Z0-9-_]*)"),
+    re.compile(r" ?(cookiecutter)[.](?P<key>[a-zA-Z0-9-_]*) "),
     re.compile(r"(context\.get\(\"|context\[\")(?P<key>[a-zA-Z0-9-_]*)"),
 )
 
-IGNORED_KEYS = ("__prompts__",)
+IGNORED_KEYS = (
+    "_extensions",
+    "_copy_without_render",
+    "__prompts__",
+    "__cookieplone_subtemplates",
+)
 
 SYMBOLS = {
     "not_found": {"title": "Not present in cookiecutter.json", "icon": "🔍"},
@@ -45,12 +50,13 @@ def sorted_list(value: set) -> list:
 def extract_template_keys(existing_keys: set, content: str) -> set:
     for pattern in PATTERNS:
         matches = {match.groupdict()["key"] for match in pattern.finditer(content)}
+        matches = {key for key in matches if is_valid_key(key)}
         existing_keys = existing_keys.union(matches)
     return existing_keys
 
 
 def is_valid_key(key: str) -> bool:
-    """Check if we will check for this key."""
+    """Should we check for this key."""
     return all(
         [
             key not in IGNORED_KEYS,
@@ -137,6 +143,8 @@ def _analyze_template_folder(folder: Path, used_keys: set[str]) -> set[str]:
     all_files = folder.glob("**/*")
     for filepath in all_files:
         data = filepath.name
+        # if "backend" in str(folder) and data == "pyproject.toml":
+        #     breakpoint()
         is_file = filepath.is_file()
         if is_file and is_binary(f"{filepath}"):
             continue
