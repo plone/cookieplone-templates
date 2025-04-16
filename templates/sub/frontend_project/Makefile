@@ -29,27 +29,27 @@ help: ## This help message
 clean: ## Clean
 	rm -rf $(PROJECT_FOLDER_NAME)
 
-venv: ## cookieplone installation
+$(VENV_FOLDER): ## cookieplone installation
 	$(MAKE) -C $(BASE_FOLDER) sync
 
 .PHONY: format
-format: venv## Format code
+format: $(VENV_FOLDER)## Format code
 	@echo "$(GREEN)==> Formatting $(TEMPLATE) codebase $(RESET)"
 	@uv run ruff format --config $(BASE_FOLDER)/pyproject.toml hooks
 	@uv run ruff check --select I --fix --config $(BASE_FOLDER)/pyproject.toml hooks
 
 .PHONY: generate
-generate: venv ## Create a sample package
+generate: $(VENV_FOLDER) ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	rm -rf $(PROJECT_FOLDER_NAME)
 	COOKIEPLONE_REPOSITORY=$(BASE_FOLDER) uv run cookieplone $(TEMPLATE) --no-input
 
 .PHONY: test
-test: venv## Create a sample package and tests it
+test: $(VENV_FOLDER)## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
 	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE)
 
 .PHONY: test-pdb
-test-pdb: venv## Stop on the first failed test
+test-pdb: $(VENV_FOLDER)## Stop on the first failed test
 	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
 	@uv run pytest $(BASE_FOLDER)/tests/templates/sub/$(TEMPLATE) -x --pdb

@@ -51,13 +51,13 @@ requirements-mxdev.txt: ## Generate constraints file
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
 	@uvx mxdev -c mx.ini
 
-venv: requirements-mxdev.txt ## Install dependencies
+$(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
 	@uv venv $(VENV_FOLDER)
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync
-sync: venv ## Sync project dependencies
+sync: $(VENV_FOLDER) ## Sync project dependencies
 	@echo "$(GREEN)==> Sync project dependencies$(RESET)"
 	@uv pip install -r requirements-mxdev.txt
 
@@ -69,7 +69,7 @@ instance/etc/zope.ini instance/etc/zope.conf: ## Create instance configuration
 config: instance/etc/zope.ini
 
 .PHONY: install
-install: venv config ## Install Plone and dependencies
+install: $(VENV_FOLDER) config ## Install Plone and dependencies
 
 
 .PHONY: clean
@@ -83,15 +83,15 @@ remove-data: ## Remove all content
 	rm -rf $(VENV_FOLDER) instance/var
 
 .PHONY: start
-start: venv instance/etc/zope.ini ## Start a Plone instance on localhost:8080
+start: $(VENV_FOLDER) instance/etc/zope.ini ## Start a Plone instance on localhost:8080
 	@uv run runwsgi instance/etc/zope.ini
 
 .PHONY: console
-console: venv instance/etc/zope.ini ## Start a console into a Plone instance
+console: $(VENV_FOLDER) instance/etc/zope.ini ## Start a console into a Plone instance
 	@uv run zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
-create-site: venv instance/etc/zope.ini ## Create a new site from scratch
+create-site: $(VENV_FOLDER) instance/etc/zope.ini ## Create a new site from scratch
 	@uv run zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 # QA
@@ -115,19 +115,19 @@ check: format lint ## Check and fix code base according to Plone standards
 
 # i18n
 .PHONY: i18n
-i18n: venv ## Update locales
+i18n: $(VENV_FOLDER) ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
 	@uv run python -m {{ cookiecutter.python_package_name }}.locales
 
 # Tests
 .PHONY: test
-test: venv ## run tests
+test: $(VENV_FOLDER) ## run tests
 	@uv run pytest
 
 .PHONY: test-coverage
-test-coverage: venv ## run tests with coverage
+test-coverage: $(VENV_FOLDER) ## run tests with coverage
 	@uv run pytest --cov={{cookiecutter.python_package_name}} --cov-report term-missing
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
-add: venv
+add: $(VENV_FOLDER)
 	@uvx plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
