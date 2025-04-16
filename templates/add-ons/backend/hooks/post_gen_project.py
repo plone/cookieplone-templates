@@ -110,23 +110,16 @@ def main():
     )  # {{ cookiecutter.__cookieplone_subtemplates }}
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
-        # Convert sub/cache -> prepare_sub_cache
-        if (
-            not bool(int(context.get("initialize_documentation")))
-            and template_id == "documentation_starter"
-        ):
-            pass
-        else:
-            func_name = f"generate_{template_id.replace('/', '_')}"
-            func = funcs.get(func_name)
-            if not func:
-                raise ValueError(f"No handler available for sub_template {template_id}")
-            elif not int(enabled):
-                console.print(f" -> Ignoring ({title})")
-                continue
-            new_context = deepcopy(context)
-            console.print(f" -> {title}")
-            func(new_context, output_dir)
+        func_name = f"generate_{template_id.replace('/', '_')}"
+        func = funcs.get(func_name)
+        if not func:
+            raise ValueError(f"No handler available for sub_template {template_id}")
+        elif not int(enabled):
+            console.print(f" -> Ignoring ({title})")
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

@@ -87,3 +87,4 @@ report-context: $(VENV_FOLDER) ## Generate a report of all context options
 report-keys-usage: $(VENV_FOLDER) ## Generate a report of usage of context keys
 	@echo "$(GREEN)==> Generate a report of usage of context keys$(RESET)"
 	@uv run .scripts/report_keys_usage.py
+
