@@ -1,1 +1,1 @@
-Fix duplication of docs into backend. @ujsquared, @davisagli
+Avoid duplication of the documentation scaffold into `backend/docs` directory. @ujsquared, @davisagli

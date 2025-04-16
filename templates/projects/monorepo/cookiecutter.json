@@ -145,7 +145,7 @@
     ["add-ons/frontend", "Setup Frontend", "1"],
     [
       "add-ons/documentation_starter",
-      "Setup Documentation Scaffold",
+      "Generate documentation scaffold",
       "{{cookiecutter.initialize_documentation}}"
     ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],

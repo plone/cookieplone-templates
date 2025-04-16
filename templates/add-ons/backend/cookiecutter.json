@@ -71,7 +71,7 @@
   "__cookieplone_subtemplates": [
     [
       "documentation_starter",
-      "Setup Documentation Scaffolding",
+      "Generate documentation scaffold",
       "{{cookiecutter.initialize_documentation}}"
     ]
   ]
