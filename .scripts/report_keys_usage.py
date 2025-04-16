@@ -14,6 +14,16 @@ RE_OBJ = re.compile(PATTERN)
 
 IGNORED_KEYS = ("__prompts__",)
 
+SYMBOLS = {
+    "not_found": {"title": "Not present in cookiecutter.json", "icon": "🔍"},
+    "used": {"title": "Used by the template", "icon": "✅"},
+    "not_used": {"title": "Not used in template", "icon": "❗"},
+    "missing": {
+        "title": "Used by the template, not present in cookiecutter.json",
+        "icon": "🚫",
+    },
+}
+
 
 def load_template_definitions(repo_root: Path) -> list[tuple[str, Path]]:
     templates = []
@@ -63,24 +73,52 @@ def _write_csv_report(report_data: dict, report_path: Path) -> Path:
     return report_path
 
 
-def _write_md_report(report_data: dict, report_path: Path) -> Path:
-    columns = report_data["keys"]["header"]
-    rows = report_data["keys"]["rows"]
-    with open(report_path, "w") as fout:
-        row = " | ".join(columns).strip()
-        fout.write(f"| {row} |\n")
-        divider = []
-        for idx, fieldname in enumerate(columns):
-            item = "-" * len(fieldname)
-            if idx:
-                item = f":{item[1:-1]}:"
-            divider.append(item)
-        row = " | ".join(divider).strip()
-        fout.write(f"| {row} |\n")
-        for key_report in rows:
-            row = " | ".join(list(key_report.values())).strip()
-            fout.write(f"| {row} |\n")
+def _md_table_header_rows(columns: list[str], align: str = "default") -> list[str]:
+    rows: list[str] = [" | ".join(columns).strip()]
+    # Divider
+    divider = []
+    for idx, fieldname in enumerate(columns):
+        item = "-" * len(fieldname)
+        if idx and align == "auto":
+            item = f":{item[1:-1]}:"
+        divider.append(item)
+    rows.append(" | ".join(divider).strip())
+    return [f"| {row} |\n" for row in rows]
 
+
+def _md_report_table_body(data_rows: list[dict]) -> list[str]:
+    rows: list[str] = []
+    for key_report in data_rows:
+        row = " | ".join(list(key_report.values())).strip()
+        rows.append(f"| {row} |\n")
+    return rows
+
+
+def _md_report_table(report_data: dict) -> list[str]:
+    rows: list[str] = ["# Key usage in templates\n\n"]
+    columns = report_data["keys"]["header"]
+    data_rows = report_data["keys"]["rows"]
+    rows.extend(_md_table_header_rows(columns, align="auto"))
+    rows.extend(_md_report_table_body(data_rows))
+    return rows
+
+
+def _md_legend() -> list[str]:
+    rows: list[str] = ["\n", "## Legend\n\n"]
+    columns = ["Icon", "Description"]
+    rows.extend(_md_table_header_rows(columns))
+    for item in SYMBOLS.values():
+        title, icon = item.values()
+        rows.append(f"| {icon} | {title} |\n")
+    return rows
+
+
+def _write_md_report(report_data: dict, report_path: Path) -> Path:
+    with open(report_path, "w") as fout:
+        for row in _md_report_table(report_data):
+            fout.write(row)
+        for row in _md_legend():
+            fout.write(row)
     return report_path
 
 
@@ -127,14 +165,14 @@ def generate_key_usage_matrix(
     for key in sorted(all_keys):
         key_report = {"key": key}
         for template in all_templates:
-            status = "🔍"
+            status = SYMBOLS["not_found"]["icon"]
             keys = template_keys[template]
             if key in keys["used"]:
-                status = "✅"
+                status = SYMBOLS["used"]["icon"]
             elif key in keys["not_used"]:
-                status = "❗"
+                status = SYMBOLS["not_used"]["icon"]
             elif key in keys["missing"]:
-                status = "🚫"
+                status = SYMBOLS["missing"]["icon"]
             key_report[template] = status
         keys_usage.append(key_report)
     return keys_usage
@@ -173,8 +211,8 @@ def run_report_generation(repo_root: Path, formats: tuple[str, ...]):
 if __name__ == "__main__":
     repo_root = Path().cwd()
     env_formats = os.environ.get("REPORT_FORMATS", "")
-    if env_formats:
-        formats = (fmt for fmt in env_formats.split(",") if fmt in REPORT_FORMATS)
-    else:
-        formats = tuple(REPORT_FORMATS.keys())
+    formats = tuple(REPORT_FORMATS.keys())
+    if env_formats := os.environ.get("REPORT_FORMATS", ""):
+        formats = tuple(fmt for fmt in env_formats.split(",") if fmt in REPORT_FORMATS)
+
     run_report_generation(repo_root, formats)
