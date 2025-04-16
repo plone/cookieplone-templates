@@ -9,8 +9,10 @@ from pathlib import Path
 from binaryornot.check import is_binary
 from git import Repo
 
-PATTERN = "{{ ?(cookiecutter)[.]([a-zA-Z0-9-_]*)"
-RE_OBJ = re.compile(PATTERN)
+PATTERNS = (
+    re.compile(r"{{ ?(cookiecutter)[.](?P<key>[a-zA-Z0-9-_]*)"),
+    re.compile(r"(context\.get\(\"|context\[\")(?P<key>[a-zA-Z0-9-_]*)"),
+)
 
 IGNORED_KEYS = ("__prompts__",)
 
@@ -41,8 +43,10 @@ def sorted_list(value: set) -> list:
 
 
 def extract_template_keys(existing_keys: set, content: str) -> set:
-    matches = {match[1] for match in RE_OBJ.findall(content)}
-    return existing_keys.union(matches)
+    for pattern in PATTERNS:
+        matches = {match.groupdict()["key"] for match in pattern.finditer(content)}
+        existing_keys = existing_keys.union(matches)
+    return existing_keys
 
 
 def is_valid_key(key: str) -> bool:
@@ -129,26 +133,36 @@ REPORT_FORMATS = {
 }
 
 
+def _analyze_template_folder(folder: Path, used_keys: set[str]) -> set[str]:
+    all_files = folder.glob("**/*")
+    for filepath in all_files:
+        data = filepath.name
+        is_file = filepath.is_file()
+        if is_file and is_binary(f"{filepath}"):
+            continue
+        if is_file:
+            data = f"{data} {filepath.read_text()}"
+        used_keys = extract_template_keys(used_keys, data)
+    return used_keys
+
+
 def analyze_template_usage(templates: list[tuple[str, Path]]) -> tuple[set, dict]:
     all_keys: set[str] = set()
     template_keys: dict[str, dict[str, list[str]]] = defaultdict(dict)
     for name, base_path in templates:
-        file_ = base_path / "cookiecutter.json"
-        template_folder = base_path / "{{ cookiecutter.__folder_name }}"
-        raw_context = file_.read_text()
-        used_keys = extract_template_keys({"__folder_name"}, raw_context)
+        template_config = base_path / "cookiecutter.json"
+        raw_context = template_config.read_text()
         questions = json.loads(raw_context)
+        # Already add __folder_name, used in folder name
+        used_keys = extract_template_keys({"__folder_name"}, raw_context)
         items = {key for key in questions if is_valid_key(key)}
-        all_files = template_folder.glob("**/*")
-        # Already add __folder_name
-        for filepath in all_files:
-            data = filepath.name
-            is_file = filepath.is_file()
-            if is_file and is_binary(f"{filepath}"):
-                continue
-            if is_file:
-                data = f"{data} {filepath.read_text()}"
-            used_keys = extract_template_keys(used_keys, data)
+        template_folders = (
+            base_path / "hooks",
+            base_path / "{{ cookiecutter.__folder_name }}",
+        )
+        for template_folder in template_folders:
+            used_keys = _analyze_template_folder(template_folder, used_keys)
+
         template_keys[name]["all"] = sorted_list(items)
         template_keys[name]["used"] = sorted_list(used_keys & items)
         template_keys[name]["not_used"] = sorted_list(items.difference(used_keys))
