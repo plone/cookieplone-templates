@@ -81,7 +81,7 @@ def generate_addons_backend(context, output_dir):
 def generate_addons_frontend(context, output_dir):
     """Run volto generator."""
     # Handle packages inside an organization
-    frontend_addon_name = context["frontend_addon_name"]
+    frontend_addon_name = context.get("frontend_addon_name")
     if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
         npm_package_name = frontend_addon_name
         frontend_addon_name = npm.unscoped_package_name(npm_package_name)
@@ -189,7 +189,7 @@ def main():
     # Create namespace packages
     plone.create_namespace_packages(
         output_dir / "backend/src/packagename",
-        context["python_package_name"],
+        context.get("python_package_name"),
         style="pkgutil",
     )
 

@@ -105,3 +105,6 @@ showcontent = true
 directory = "tests"
 name = "Tests"
 showcontent = true
+
+[tool.mypy]
+ignore_missing_imports = true
