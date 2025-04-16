@@ -67,6 +67,7 @@ def generate_addons_backend(context, output_dir):
     folder_name = "backend"
     # Headless
     context["feature_headless"] = "1"
+    context["initialize_documentation"] = "0"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/backend",
         output_dir,
@@ -86,6 +87,7 @@ def generate_addons_frontend(context, output_dir):
         frontend_addon_name = npm.unscoped_package_name(npm_package_name)
         context["npm_package_name"] = npm_package_name
         context["frontend_addon_name"] = frontend_addon_name
+    context["initialize_documentation"] = "0"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
@@ -171,24 +173,18 @@ def main():
     )  # {{ cookiecutter.__cookieplone_subtemplates }}
     funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
     for template_id, title, enabled in subtemplates:
-        if (
-            not bool(int(context.get("initialize_documentation")))
-            and template_id == "documentation_starter"
-        ):
-            pass
-        else:
-            # Convert sub/cache -> generate_sub_cache
-            template_slug = template_id.replace("/", "_").replace("-", "")
-            func_name = f"generate_{template_slug}"
-            func = funcs.get(func_name)
-            if not func:
-                raise ValueError(f"No handler available for sub_template {template_id}")
-            elif not int(enabled):
-                console.print(f" -> Ignoring ({title})")
-                continue
-            new_context = deepcopy(context)
-            console.print(f" -> {title}")
-            func(new_context, output_dir)
+        # Convert sub/cache -> generate_sub_cache
+        template_slug = template_id.replace("/", "_").replace("-", "")
+        func_name = f"generate_{template_slug}"
+        func = funcs.get(func_name)
+        if not func:
+            raise ValueError(f"No handler available for sub_template {template_id}")
+        elif not int(enabled):
+            console.print(f" -> Ignoring ({title})")
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
 
     # Create namespace packages
     plone.create_namespace_packages(

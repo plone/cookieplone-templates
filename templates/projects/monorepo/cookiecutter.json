@@ -143,7 +143,11 @@
   "__cookieplone_subtemplates": [
     ["add-ons/backend", "Setup Backend", "1"],
     ["add-ons/frontend", "Setup Frontend", "1"],
-    ["add-ons/documentation_starter", "Setup Documentation Scaffold", "1"],
+    [
+      "add-ons/documentation_starter",
+      "Setup Documentation Scaffold",
+      "{{cookiecutter.initialize_documentation}}"
+    ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
     ["sub/project_settings", "Setup Project Settings", "1"]
   ],

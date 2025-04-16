@@ -1,7 +1,6 @@
 """Pytest configuration for documentation_starter template tests."""
 
 from copy import deepcopy
-from typing import Dict
 
 import pytest
 
@@ -39,7 +38,7 @@ def template_folder() -> str:
 
 
 @pytest.fixture(scope="session")
-def context() -> Dict[str, str]:
+def context() -> dict[str, str]:
     """Default context for baking the template."""
     return {
         "title": "My Documentation",
@@ -57,7 +56,7 @@ def context() -> Dict[str, str]:
 
 
 @pytest.fixture(scope="session")
-def no_git_context(default_context) -> Dict[str, str]:
+def no_git_context(default_context) -> dict[str, str]:
     """Context with Git initialization disabled."""
     context = deepcopy(default_context)
     context["__folder_name"] = "collective.docsnogit"
