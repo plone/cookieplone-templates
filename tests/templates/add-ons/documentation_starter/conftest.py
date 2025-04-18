@@ -79,6 +79,5 @@ def bad_context() -> dict:
 
 
 def pytest_generate_tests(metafunc):
-    print("Here it is====================================")
     if "root_file_path" in metafunc.fixturenames:
         metafunc.parametrize("root_file_path", EXPECTED_FILES)

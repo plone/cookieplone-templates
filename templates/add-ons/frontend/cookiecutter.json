@@ -11,6 +11,7 @@
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.frontend_addon_name }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "__folder_name": "{{ cookiecutter.frontend_addon_name }}",
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__version_frontend_package": "1.0.0-alpha.0",

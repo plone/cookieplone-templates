@@ -118,3 +118,7 @@ See also Read the Docs documentation:
 
 -   [Pull request previews](https://docs.readthedocs.com/platform/stable/pull-requests.html)
 -   [Build process overview](https://docs.readthedocs.com/platform/stable/builds.html)
+
+## Credits and Acknowledgements 🙏
+
+{{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!

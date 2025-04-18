@@ -1,6 +1,7 @@
 """Pre generation hook."""
 
 import sys
+from collections import OrderedDict
 from pathlib import Path
 from textwrap import dedent
 
@@ -9,15 +10,7 @@ from cookieplone.utils import console, validators
 
 output_path = Path().resolve()
 
-context = {
-    "frontend_addon_name": "{{ cookiecutter.frontend_addon_name }}",
-    "title": "{{ cookiecutter.title }}",
-    "description": "{{ cookiecutter.description }}",
-    "author": "{{ cookiecutter.author }}",
-    "email": "{{ cookiecutter.email }}",
-    "github_organization": "{{ cookiecutter.github_organization }}",
-    "npm_package_name": "{{ cookiecutter.__npm_package_name }}",
-}
+context: OrderedDict = {{cookiecutter}}
 
 
 def check_errors(context: dict) -> data.ContextValidatorResult:

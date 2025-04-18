@@ -39,7 +39,7 @@ Ensure you have the following installed:
 
 ```shell
 git clone {{ cookiecutter.__repository_git }}.git
-cd {{ cookiecutter.__project_slug }}
+cd {{ cookiecutter.__project_slug }}/backend
 ```
 2. Install this codebase
 

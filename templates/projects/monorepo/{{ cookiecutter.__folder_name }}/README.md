@@ -13,8 +13,9 @@
 
 Ensure you have the following installed:
 
-- Python 3.11 🐍
+- UV 🐍
 - Node {{ cookiecutter.__node_version }} 🟩
+- git 🔗
 - pnpm 🧶
 - Docker 🐳
 
@@ -23,7 +24,7 @@ Ensure you have the following installed:
 1. Clone the repository:
 
 ```shell
-git clone git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}.git
+git clone {{ cookiecutter.__repository_git }}.git
 cd {{ cookiecutter.__project_slug }}
 ```
 

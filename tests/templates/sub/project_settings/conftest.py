@@ -22,6 +22,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "frontend_addon_name": "volto-project-title",
             "language_code": "en",
             "github_organization": "collective",
+            "use_prerelease_versions": "No",
             "__node_version": "20",
         },
         cookieplone_root,
