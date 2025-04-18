@@ -80,6 +80,13 @@ COOKIEPLONE_REPOSITORY=~/YOUR_PATH_TO/cookieplone-templates uvx cookieplone proj
 ```
 
 
+### Run a remote branch of `cookieplone-templates`.
+
+```shell
+COOKIEPLONE_REPOSITORY_TAG=<REMOTE_BRANCH_NAME> uvx cookieplone
+```
+
+
 ### Format the codebase
 
 ```shell
