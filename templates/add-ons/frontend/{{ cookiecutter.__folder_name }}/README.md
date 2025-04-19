@@ -16,6 +16,28 @@
 To install your project, you must choose the method appropriate to your version of Volto.
 
 
+### Volto 18 and later
+
+Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
+
+```json
+"dependencies": {
+    "{{ cookiecutter.__npm_package_name }}": "*"
+}
+```
+
+Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
+
+```javascript
+const addons = ['{{ cookiecutter.__npm_package_name }}'];
+```
+
+If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
+
+```javascript
+const theme = '{{ cookiecutter.__npm_package_name }}';
+```
+
 ### Volto 17 and earlier
 
 Create a new Volto project (you can skip this step if you already have one):
@@ -48,28 +70,6 @@ Start volto with:
 
 ```
 yarn start
-```
-
-### Volto 18 and later
-
-Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
-
-```json
-"dependencies": {
-    "{{ cookiecutter.__npm_package_name }}": "*"
-}
-```
-
-Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
-
-```javascript
-const addons = ['{{ cookiecutter.__npm_package_name }}'];
-```
-
-If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
-
-```javascript
-const theme = '{{ cookiecutter.__npm_package_name }}';
 ```
 
 ## Test installation
