@@ -34,38 +34,26 @@ Ensure you have the following installed:
     make install
     ```
 
-```
-
-```shell
-git clone {{ cookiecutter.__repository_git }}.git
-cd {{ cookiecutter.__project_slug }}
-```
-
-2. Install both Backend and Frontend:
-
-```shell
-make install
-```
 
 ### Fire Up the Servers 🔥
 
-1. Create a new Plone site on your first run:
+1.  Create a new Plone site on your first run.
 
-```shell
-make backend-create-site
-```
+    ```shell
+    make backend-create-site
+    ```
 
-2. Start the Backend at [http://localhost:8080/](http://localhost:8080/):
+2.  Start the backend at http://localhost:8080/.
 
-```shell
-make backend-start
-```
+    ```shell
+    make backend-start
+    ```
 
-3. In a new terminal, start the Frontend at [http://localhost:3000/](http://localhost:3000/):
+3.  In a new shell session, start the frontend at http://localhost:3000/.
 
-```shell
-make frontend-start
-```
+    ```shell
+    make frontend-start
+    ```
 
 Voila! Your Plone site should be live and kicking! 🎉
 
