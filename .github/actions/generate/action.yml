@@ -1,0 +1,22 @@
+name: 'Cookieplone Templates: Generate codebase'
+description: 'Generate the codebase for a given template'
+inputs:
+  python-version:
+    description: 'Python Version'
+    required: true
+    default: '3.12'
+  template:
+    description: 'Template to be used'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      uses: ./.github/actions/setup_python
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Generate codebase
+      shell: bash
+      run: |
+        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} --no-input

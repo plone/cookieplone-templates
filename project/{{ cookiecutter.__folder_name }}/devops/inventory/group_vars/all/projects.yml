@@ -1,6 +1,0 @@
----
-project_folders:
-  - path: "/srv/{{ cookiecutter.project_slug }}/data"
-    owner: 999
-    group: 999
-    mode: "0750"

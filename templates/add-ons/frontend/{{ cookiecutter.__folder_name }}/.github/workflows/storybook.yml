@@ -1,0 +1,57 @@
+name: Storybook
+on:
+  push:
+    paths:
+      - "*.js"
+      - "*.json"
+      - "*.yaml"
+      - "packages/**"
+      - ".github/workflows/storybook.yml"
+
+env:
+  NODE_VERSION: {{ cookiecutter.__gha_version_node }}
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
+        with:
+          node-version: {{ "${{ env.NODE_VERSION }}" }}
+
+      - name: Enable corepack
+        run: npm i -g corepack@latest && corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+        name: Setup pnpm cache
+        with:
+          path: {{ "${{ env.STORE_PATH }}" }}
+          key: {{ "${{ runner.os }}" }}-pnpm-store-{{ "${{ hashFiles('**/pnpm-lock.yaml') }}" }}
+          restore-keys: |
+            {{ "${{ runner.os }}" }}-pnpm-store-
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Generate Storybook
+        run: |
+          make storybook-build
+
+      - name: Deploy to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@{{ cookiecutter.__gha_version_pages_deploy }}
+        if: {{ "${{ github.ref == 'refs/heads/main' }}" }}
+        with:
+          branch: gh-pages
+          folder: .storybook-build
