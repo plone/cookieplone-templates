@@ -53,7 +53,7 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}"
+Repository = "{{ cookiecutter.__repository_url }}"
 Documentation = "https://MY_READTHEDOCS_PROJECT_SLUG.readthedocs.io/"
 
 [build-system]

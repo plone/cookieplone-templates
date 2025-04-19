@@ -12,6 +12,7 @@
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.python_package_name }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "__feature_headless": "{{ cookiecutter.feature_headless }}",
   "__feature_distribution": "0",
   "__package_path": "{{ cookiecutter.python_package_name | package_path }}",

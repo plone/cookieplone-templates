@@ -4,8 +4,8 @@
 
 [![npm](https://img.shields.io/npm/v/{{ cookiecutter.__npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.__npm_package_name }})
 [![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://{{ cookiecutter.github_organization }}.github.io/{{ cookiecutter.frontend_addon_name }}/)
-[![Code analysis checks]({{ cookiecutter.__repository_url }}/actions/workflows/code.yml/badge.svg)]({{ cookiecutter.__repository_url }}/actions/workflows/code.yml)
-[![Unit tests]({{ cookiecutter.__repository_url }}/actions/workflows/unit.yml/badge.svg)]({{ cookiecutter.__repository_url }}/actions/workflows/unit.yml)
+[![CI]({{ cookiecutter.__repository_url }}/actions/workflows/main.yml/badge.svg)]({{ cookiecutter.__repository_url }}/actions/workflows/main.yml)
+
 
 ## Features
 
@@ -79,8 +79,8 @@ Visit http://localhost:3000/ in a browser, login, and check the awesome new feat
 
 ## Development
 
-The development of this add-on is done in isolation using a new approach using pnpm workspaces and latest `mrs-developer` and other Volto core improvements.
-For this reason, it only works with pnpm and Volto 18 (currently in alpha).
+The development of this add-on is done in isolation using pnpm workspaces, the latest `mrs-developer`, and other Volto core improvements.
+For these reasons, it only works with pnpm and Volto 18.
 
 
 ### Prerequisites ✅
@@ -98,7 +98,7 @@ For this reason, it only works with pnpm and Volto 18 (currently in alpha).
 
     ```shell
     git clone {{ cookiecutter.__repository_git }}.git
-    cd {{ cookiecutter.__project_slug }}
+    cd {{ cookiecutter.__project_slug }}/frontend
     ```
 
 2.  Install this code base.
@@ -110,31 +110,8 @@ For this reason, it only works with pnpm and Volto 18 (currently in alpha).
 
 ### Make convenience commands
 
-Run `make help` to list the available commands.
+Run `make help` to list the available Make commands.
 
-```text
-help                             Show this help
-install                          Installs the add-on in a development environment
-start                            Starts Volto, allowing reloading of the add-on during development
-build                            Build a production bundle for distribution of the project with the add-on
-i18n                             Sync i18n
-ci-i18n                          Check if i18n is not synced
-format                           Format codebase
-lint                             Lint, or catch and remove problems, in code base
-release                          Release the add-on on npmjs.org
-release-dry-run                  Dry-run the release of the add-on on npmjs.org
-test                             Run unit tests
-ci-test                          Run unit tests in CI
-backend-docker-start             Starts a Docker-based backend for development
-storybook-start                  Start Storybook server on port 6006
-storybook-build                  Build Storybook
-acceptance-frontend-dev-start    Start acceptance frontend in development mode
-acceptance-frontend-prod-start   Start acceptance frontend in production mode
-acceptance-backend-start         Start backend acceptance server
-ci-acceptance-backend-start      Start backend acceptance server in headless mode for CI
-acceptance-test                  Start Cypress in interactive mode
-ci-acceptance-test               Run cypress tests in headless mode for CI
-```
 
 ### Development environment set up
 
@@ -215,7 +192,3 @@ make acceptance-test
 ## License
 
 The project is licensed under the MIT license.
-
-## Credits and Acknowledgements 🙏
-
-{{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!

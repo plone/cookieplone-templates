@@ -80,6 +80,7 @@ def generate_addons_backend(context, output_dir):
 
 def generate_addons_frontend(context, output_dir):
     """Run volto generator."""
+    folder_name = "frontend"
     # Handle packages inside an organization
     frontend_addon_name = context.get("frontend_addon_name")
     if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
@@ -91,7 +92,7 @@ def generate_addons_frontend(context, output_dir):
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
-        "frontend",
+        folder_name,
         context,
         FRONTEND_ADDON_REMOVE,
     )

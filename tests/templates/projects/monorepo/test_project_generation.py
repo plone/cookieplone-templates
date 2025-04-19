@@ -62,3 +62,26 @@ def test_json_schema(
 ):
     path = cutter_result.project_path / file_path
     assert schema_validate_file(path, schema_name)
+
+
+@pytest.mark.parametrize(
+    "file_path,bad_url",
+    [
+        ["README.md", "https://github.com/plonegovbr/plonegov.ploneorgbr"],
+        ["README.md", "https://github.com/plonegovbr/volto-ploneorgbr"],
+        ["backend/README.md", "https://github.com/plonegovbr/plonegov.ploneorgbr"],
+        ["backend/pyproject.toml", "https://github.com/plonegovbr/plonegov.ploneorgbr"],
+        ["frontend/README.md", "https://github.com/plonegovbr/volto-ploneorgbr"],
+        [
+            "frontend/packages/volto-ploneorgbr/package.json",
+            "https://github.com/plonegovbr/volto-ploneorgbr",
+        ],
+        [
+            "frontend/packages/volto-ploneorgbr/towncrier.toml",
+            "https://github.com/plonegovbr/volto-ploneorgbr",
+        ],
+    ],
+)
+def test_repository_url(cutter_result, file_path: str, bad_url: str):
+    path = cutter_result.project_path / file_path
+    assert bad_url not in path.read_text()
