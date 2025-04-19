@@ -22,8 +22,8 @@ make create-site
 
 ## Contribute
 
-- [Issue Tracker]({{ cookiecutter.__repository_url }}/issues)
-- [Source Code]({{ cookiecutter.__repository_url }}/)
+- [Issue tracker]({{ cookiecutter.__repository_url }}/issues)
+- [Source code]({{ cookiecutter.__repository_url }}/)
 
 ### Prerequisites ✅
 

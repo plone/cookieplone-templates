@@ -8,13 +8,13 @@ TODO: List our awesome features
 
 ## Installation
 
-Install {{ cookiecutter.python_package_name }} with `pip`:
+Install {{ cookiecutter.python_package_name }} with pip.
 
 ```shell
 pip install {{ cookiecutter.python_package_name }}
 ```
 
-And to create the Plone site:
+Create the Plone site.
 
 ```shell
 make create-site
@@ -22,16 +22,16 @@ make create-site
 
 ## Contribute
 
-- [Issue Tracker]({{ cookiecutter.__repository_url }}/issues)
-- [Source Code]({{ cookiecutter.__repository_url }}/)
+- [Issue tracker]({{ cookiecutter.__repository_url }}/issues)
+- [Source code]({{ cookiecutter.__repository_url }}/)
 
 ### Prerequisites ✅
 
-Ensure you have the following installed:
-
-- UV 🐍
-- git 🔗
-- Docker 🐳
+-   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
+-   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
+-   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
+-   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
+-   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
 
 ### Installation 🔧
 

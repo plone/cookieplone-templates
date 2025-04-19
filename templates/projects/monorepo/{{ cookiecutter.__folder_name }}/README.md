@@ -21,7 +21,20 @@ Ensure you have the following installed:
 
 ### Installation 🔧
 
-1. Clone the repository:
+1.  Clone this repository, then change your working directory.
+
+    ```shell
+    git clone {{ cookiecutter.__repository_git }}.git
+    cd {{ cookiecutter.__project_slug }}
+    ```
+
+2.  Install this code base.
+
+    ```shell
+    make install
+    ```
+
+```
 
 ```shell
 git clone {{ cookiecutter.__repository_git }}.git

@@ -85,23 +85,28 @@ For this reason, it only works with pnpm and Volto 18 (currently in alpha).
 
 ### Prerequisites ✅
 
--   [Node.js](https://6.docs.plone.org/install/create-project.html#node-js)
--   [Make](https://6.docs.plone.org/install/create-project.html#make)
--   [Docker](https://6.docs.plone.org/install/create-project.html#docker)
+-   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
+-   [nvm](https://6.docs.plone.org/install/create-project-cookieplone.html#nvm)
+-   [Node.js and pnpm](https://6.docs.plone.org/install/create-project.html#node-js) {{ cookiecutter.__node_version }}
+-   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
+-   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
+-   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
 
 ### Installation 🔧
 
-1. Clone the repository:
+1.  Clone this repository, then change your working directory.
 
-```shell
-git clone {{ cookiecutter.__repository_git }}.git
-cd {{ cookiecutter.__project_slug }}
-```
-2. Install this codebase
+    ```shell
+    git clone {{ cookiecutter.__repository_git }}.git
+    cd {{ cookiecutter.__project_slug }}
+    ```
 
-```shell
-make install
-```
+2.  Install this code base.
+
+    ```shell
+    make install
+    ```
+
 
 ### Make convenience commands
 
