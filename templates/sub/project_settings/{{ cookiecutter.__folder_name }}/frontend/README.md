@@ -18,7 +18,7 @@ To install your project, you must choose the method appropriate to your version 
 
 ### Volto 18 and later
 
-Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`.
 
 ```json
 "dependencies": {
@@ -26,13 +26,13 @@ Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
 }
 ```
 
-Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
+Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`.
 
 ```javascript
 const addons = ['{{ cookiecutter.__npm_package_name }}'];
 ```
 
-If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
+If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`.
 
 ```javascript
 const theme = '{{ cookiecutter.__npm_package_name }}';
@@ -40,7 +40,8 @@ const theme = '{{ cookiecutter.__npm_package_name }}';
 
 ### Volto 17 and earlier
 
-Create a new Volto project (you can skip this step if you already have one):
+Create a new Volto project.
+You can skip this step if you already have one.
 
 ```
 npm install -g yo @plone/generator-volto
@@ -48,7 +49,7 @@ yo @plone/volto my-volto-project --addon {{ cookiecutter.__npm_package_name }}
 cd my-volto-project
 ```
 
-Add `{{ cookiecutter.__npm_package_name }}` to your package.json:
+Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`.
 
 ```JSON
 "addons": [
@@ -60,13 +61,13 @@ Add `{{ cookiecutter.__npm_package_name }}` to your package.json:
 }
 ```
 
-Download and install the new add-on by running:
+Download and install the new add-on.
 
 ```
 yarn install
 ```
 
-Start volto with:
+Start Volto.
 
 ```
 yarn start
@@ -113,7 +114,7 @@ For these reasons, it only works with pnpm and Volto 18.
 Run `make help` to list the available Make commands.
 
 
-### Development environment set up
+### Set up development environment
 
 Install package requirements.
 

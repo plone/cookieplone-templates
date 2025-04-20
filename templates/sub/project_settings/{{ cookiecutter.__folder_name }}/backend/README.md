@@ -8,10 +8,11 @@ TODO: List our awesome features
 
 ## Installation
 
-Install {{ cookiecutter.python_package_name }} with pip.
+Install {{ cookiecutter.python_package_name }} with uv.
 
 ```shell
-pip install {{ cookiecutter.python_package_name }}
+uv add {{ cookiecutter.python_package_name }}
+```
 ```
 
 Create the Plone site.
