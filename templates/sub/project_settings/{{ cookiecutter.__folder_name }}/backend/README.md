@@ -13,7 +13,6 @@ Install {{ cookiecutter.python_package_name }} with uv.
 ```shell
 uv add {{ cookiecutter.python_package_name }}
 ```
-```
 
 Create the Plone site.
 
