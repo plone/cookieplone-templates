@@ -239,7 +239,7 @@ requires-dist = [
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cookies", specifier = ">=0.7.0" },
-    { name = "pytest-jsonschema", specifier = ">=1.0.0a2" },
+    { name = "pytest-jsonschema", specifier = ">=1.0.0b1" },
     { name = "pytest-md-report", specifier = ">=0.6.3" },
     { name = "tomli", specifier = ">=2.0.1" },
 ]
@@ -642,7 +642,7 @@ wheels = [
 
 [[package]]
 name = "pytest-jsonschema"
-version = "1.0.0a2"
+version = "1.0.0b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
@@ -650,9 +650,9 @@ dependencies = [
     { name = "ruamel-yaml" },
     { name = "tomli", marker = "python_full_version < '3.12'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/15/66/29cb1ab714d33473415aa6232db1468b89c0623732beb26589bc6d75603e/pytest-jsonschema-1.0.0a2.tar.gz", hash = "sha256:9d6e595921fc4bc42fdcb3d255c7fbad03d425ab85612ad7c6d86e4fca29f3bb", size = 88197 }
+sdist = { url = "https://files.pythonhosted.org/packages/65/e6/d6062480a60005050ae0c41b326ca777848dfd6d9821931685bccde688dc/pytest_jsonschema-1.0.0b1.tar.gz", hash = "sha256:6b4f0d890e0eeee64aefd3ea62b272a78930b3a645a9ab876c284767244ebd3c", size = 159225 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/fe/1b417a16d396c6b4272f8d3c853e840befc429a54e3ea80316c50d2f93ef/pytest_jsonschema-1.0.0a2-py3-none-any.whl", hash = "sha256:0140f0973b137d18a0e0527ba5be4bf811fad640388289d7d8a511a613b32bc3", size = 84255 },
+    { url = "https://files.pythonhosted.org/packages/52/63/db04d0f85933a21d2103c2a75074662dfccafef85bcf5e2a648786acbf9c/pytest_jsonschema-1.0.0b1-py3-none-any.whl", hash = "sha256:bbed170a555c71cb1a317f9f2b86430c7a39922384cbf07f99be43427018b853", size = 101935 },
 ]
 
 [[package]]
