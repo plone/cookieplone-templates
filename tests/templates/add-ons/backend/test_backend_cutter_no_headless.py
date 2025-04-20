@@ -26,9 +26,9 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
     for path in paths:
         with open(path) as fh:
             for line in fh:
-                match = variable_pattern.search(line)
+                match = {pattern.search(line) for pattern in variable_pattern}
                 msg = f"cookiecutter variable not replaced in {path}"
-                assert match is None, msg
+                assert match == {None}, msg
 
 
 def test_root_files_generated(cutter_result, root_file_path):

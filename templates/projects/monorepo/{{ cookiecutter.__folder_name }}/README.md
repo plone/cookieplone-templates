@@ -11,47 +11,50 @@
 
 ### Prerequisites ✅
 
-Ensure you have the following installed:
+-   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
+-   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
+-   [nvm](https://6.docs.plone.org/install/create-project-cookieplone.html#nvm)
+-   [Node.js and pnpm](https://6.docs.plone.org/install/create-project.html#node-js) {{ cookiecutter.__node_version }}
+-   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
+-   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
+-   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
 
-- Python 3.11 🐍
-- Node {{ cookiecutter.__node_version }} 🟩
-- pnpm 🧶
-- Docker 🐳
 
 ### Installation 🔧
 
-1. Clone the repository:
+1.  Clone this repository, then change your working directory.
 
-```shell
-git clone git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}.git
-cd {{ cookiecutter.__project_slug }}
-```
+    ```shell
+    git clone {{ cookiecutter.__repository_git }}.git
+    cd {{ cookiecutter.__project_slug }}
+    ```
 
-2. Install both Backend and Frontend:
+2.  Install this code base.
 
-```shell
-make install
-```
+    ```shell
+    make install
+    ```
+
 
 ### Fire Up the Servers 🔥
 
-1. Create a new Plone site on your first run:
+1.  Create a new Plone site on your first run.
 
-```shell
-make backend-create-site
-```
+    ```shell
+    make backend-create-site
+    ```
 
-2. Start the Backend at [http://localhost:8080/](http://localhost:8080/):
+2.  Start the backend at http://localhost:8080/.
 
-```shell
-make backend-start
-```
+    ```shell
+    make backend-start
+    ```
 
-3. In a new terminal, start the Frontend at [http://localhost:3000/](http://localhost:3000/):
+3.  In a new shell session, start the frontend at http://localhost:3000/.
 
-```shell
-make frontend-start
-```
+    ```shell
+    make frontend-start
+    ```
 
 Voila! Your Plone site should be live and kicking! 🎉
 
