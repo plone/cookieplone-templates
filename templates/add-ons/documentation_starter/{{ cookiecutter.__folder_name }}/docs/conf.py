@@ -19,9 +19,9 @@ from plone_sphinx_theme import __version__
 
 # -- Project information -----------------------------------------------------
 
-project = "{{cookiecutter.title}}"
-author = "{{cookiecutter.author}}"
-trademark_name = "{{cookiecutter.github_organization}}"
+project = "{{ cookiecutter.title }}"
+author = "{{ cookiecutter.author }}"
+trademark_name = "{{ cookiecutter.github_organization }}"
 now = datetime.now()
 year = str(now.year)
 copyright = year
@@ -95,7 +95,7 @@ linkcheck_ignore = [
     # Ignore file downloads
     r"^/_static/",
     # Ignore pages that require authentication
-    r"https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}/issues/new",  # requires auth
+    r"{{ cookiecutter.__repository_url }}/issues/new",  # requires auth
     # Ignore github.com pages with anchors
     r"https://github.com/.*#.*",
     # Ignore other specific anchors
@@ -155,7 +155,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}",
+            "url": "{{ cookiecutter.__repository_url }}",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
             "attributes": {
@@ -182,7 +182,7 @@ html_theme_options = {
     "navigation_with_keys": True,
     "path_to_docs": "docs/{{ cookiecutter.__folder_name }}",
     "repository_branch": "main",
-    "repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}",
+    "repository_url": "{{ cookiecutter.__repository_url }}",
     "search_bar_text": "Search",
     "show_toc_level": 2,
     "use_edit_page_button": True,
@@ -192,7 +192,7 @@ html_theme_options = {
 # suggest edit link
 # remark:  is mandatory in "edit_page_url_template"
 # html_context = {
-#     "edit_page_url_template": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__normalized_package_name }}/edit/main/docs/",
+#     "edit_page_url_template": "{{ cookiecutter.__repository_url }}/edit/main/docs/",
 # }
 
 # Announce that we have an opensearch plugin
@@ -201,7 +201,7 @@ html_use_opensearch = "https://MY_READTHEDOCS_PROJECT_SLUG.readthedocs.io"
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = "%(project)s v%(release)s" % {"project": project, "release": release}
+html_title = f"{project} v{release}"
 
 # If false, no index is generated.
 html_use_index = True

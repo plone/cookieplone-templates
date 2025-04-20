@@ -1,5 +1,5 @@
-ALLOWED_MISSING = ["feature_headless", "npm_package_name"]
-ALLOWED_NOT_USED = ["__documentation_starter_format", "__normalized_package_name"]
+ALLOWED_MISSING = ["feature_headless", "initialize_git", "npm_package_name"]
+ALLOWED_NOT_USED = []
 
 
 def test_no_missing_variables(variables_missing):

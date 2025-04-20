@@ -1,11 +1,9 @@
 """Update locales."""
 
-from pathlib import Path
-
 import logging
 import re
 import subprocess
-
+from pathlib import Path
 
 logger = logging.getLogger("i18n")
 logger.setLevel(logging.DEBUG)
@@ -17,7 +15,7 @@ locale_path = Path(__file__).parent.resolve()
 target_path = locale_path.parent.resolve()
 domains = [path.name[:-4] for path in locale_path.glob("*.pot")]
 
-i18ndude = "uv run i18ndude"
+i18ndude = "uvx i18ndude"
 
 # ignore node_modules files resulting in errors
 excludes = '"*.html *json-schema*.xml"'

@@ -7,13 +7,17 @@
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
   "language_code": "en",
+  "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ 'No' | latest_plone }}",
+  "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
   "__feature_distribution": "0",
   "__backend_managed_by_uv": "false",
-  "__project_slug": "{{ cookiecutter.python_package_name }}",
+  "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
   "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
@@ -25,7 +29,12 @@
   "__supported_versions_python": ["{{ cookiecutter.__python_version }}"],
   "__supported_versions_plone": ["{{ cookiecutter.plone_version | as_major_minor }}"],
   "__python_version_identifier": "{{ cookiecutter.__python_version | replace('.', '') }}",
+  "__version_frontend_package": "1.0.0-alpha.0",
+  "__version_plone_volto": "{{ cookiecutter.volto_version }}",
+  "__version_plone_scripts": "^3.6.1",
+  "__version_mrs_developer": "^2.2.0",
   "__version_pnpm": "9.1.1",
+  "__version_release_it": "^17.1.1",
   "_copy_without_render": [],
   "_extensions": [
     "cookieplone.filters.use_prerelease_versions",
@@ -42,5 +51,9 @@
     "cookieplone.filters.latest_plone"
   ],
   "__cookieplone_repository_path": "",
-  "__cookieplone_template": ""
+  "__cookieplone_template": "",
+  "__generator_sha": "",
+  "__generator_template_url": "https://github.com/plone/cookieplone-templates/tree/main/{{ cookiecutter.__cookieplone_template }}",
+  "__generator_date_long": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+  "__generator_signature": "Generated from the [`cookieplone-templates` {{ cookiecutter.__cookieplone_template }} template]({{ cookiecutter.__generator_template_url }}) on {{ cookiecutter.__generator_date_long }}."
 }

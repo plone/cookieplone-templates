@@ -1,8 +1,6 @@
-ALLOWED_MISSING = [
-    "initialize_git",
-]
+ALLOWED_MISSING = []
 ALLOWED_NOT_USED = [
-    "__generator_sha",
+    "__repository_git",
 ]
 
 

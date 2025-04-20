@@ -8,13 +8,13 @@ TODO: List our awesome features
 
 ## Installation
 
-Install {{ cookiecutter.python_package_name }} with `pip`:
+Install {{ cookiecutter.python_package_name }} with uv.
 
 ```shell
-pip install {{ cookiecutter.python_package_name }}
+uv add {{ cookiecutter.python_package_name }}
 ```
 
-And to create the Plone site:
+Create the Plone site.
 
 ```shell
 make create-site
@@ -35,11 +35,11 @@ make create-site
 
 ### Installation 🔧
 
-1.  Clone this repository, then change your working directory.
+1.  Clone this repository.
 
     ```shell
     git clone {{ cookiecutter.__repository_git }}.git
-    cd {{ cookiecutter.__project_slug }}
+    cd {{ cookiecutter.__project_slug }}/backend
     ```
 
 2.  Install this code base.
@@ -52,9 +52,10 @@ make create-site
 ### Add features using `plonecli` or `bobtemplates.plone`
 
 This package provides markers as strings (`<!-- extra stuff goes here -->`) that are compatible with [`plonecli`](https://github.com/plone/plonecli) and [`bobtemplates.plone`](https://github.com/plone/bobtemplates.plone).
-These markers act as hooks to add all kinds of subtemplates, including behaviors, control panels, upgrade steps, or other subtemplates from `plonecli`.
+These markers act as hooks to add all kinds of features through subtemplates, including behaviors, control panels, upgrade steps, or other subtemplates from `bobtemplates.plone`.
+`plonecli` is a command line client for `bobtemplates.plone`, adding autocompletion and other features.
 
-To run `plonecli` with configuration to target this package, run the following command.
+To add a feature as a subtemplate to your package, use the following command pattern.
 
 ```shell
 make add <template_name>
@@ -81,6 +82,6 @@ See also the documentation of [Mockup and Patternslib](https://6.docs.plone.org/
 
 The project is licensed under GPLv2.
 
-## Credits and Acknowledgements 🙏
+## Credits and acknowledgements 🙏
 
 {{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!
