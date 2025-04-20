@@ -1,10 +1,9 @@
 ALLOWED_MISSING = []
 ALLOWED_NOT_USED = [
-        "__documentation_starter_format",
-        "__generator_sha",
-        "__normalized_package_name",
-        "initialize_documentation"
-        ]
+    "__documentation_starter_format",
+    "__generator_sha",
+    "__normalized_package_name",
+]
 
 
 def test_no_missing_variables(variables_missing):

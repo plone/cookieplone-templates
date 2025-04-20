@@ -1,16 +1,13 @@
 # Cookieplone Plone Project 🌟
 
-[![Cookieplone Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/project.yml)
+[![Cookieplone Templates: CI](https://github.com/plone/cookieplone-templates/actions/workflows/main.yml/badge.svg)](https://github.com/plone/cookieplone-templates/blob/main/.github/workflows/main.yml)
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
-![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
-[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![License](https://img.shields.io/github/license/plone/cookieplone-templates)](../../../LICENSE)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Welcome to **Cookieplone Plone Project**! Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency. Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template is designed to save you time and ensure that you get started on the right foot. 🚀
-
-## Features ✨
-
--   Tailored for Plone 6
--   Compatible with Python 3.10, 3.11, 3.12, 3.13
+Welcome to **Cookieplone Plone Project**!
+Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency.
+Powered by [Cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), these templates are designed to save you time and ensure that you get started on the right foot. 🚀
 
 
 ## Prerequisites
@@ -28,7 +25,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 
-### Node.js
+### Node.js and pnpm
 
 Follow the [Plone documentation](https://6.docs.plone.org/install/install-from-packages.html#pre-requisites-for-installation) for detailed instructions.
 
@@ -101,23 +98,23 @@ The table below describes the options you can customize using the [Cookiecutter 
 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `title`       | Your project's human-readable name, capitals and spaces allowed.                                                                                     | **Plone Site**                |
-| `description`         | Describes your project and gets used in places like ``README.md`` and such.                                                                          | **New site for our company.** |
-| `project_slug`        | Your project's slug without spaces. Used to name your repository and Docker images.                                                                  | **plone-site**                |
-| `hostname`            | Hostname where the project will be deployed.                                                                                                         | **site.plone.org**            |
-| `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | **Our Company**               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
-| `use_prerelease_versions`  | Use non-stable versions of Plone and Volto, (The default value could also be set via `USE_PRERELEASE` environment variable.                                   | **Yes**                       |
-| `plone_version`       | Plone version to be used. This queries for the latest available Plone 6 version and presents it to you as the default value.                         | **6.0.0**                     |
-| `volto_version`       | Volto (Plone Frontend) version to be used. This queries for the latest available Volto version and presents it to you as the default value.          | **16.4.1**    |
-| `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces or special characters are allowed. | **plone_site**                |
-| `frontend_addon_name`    | Name of the Volto addon package used to configure your frontend project. No spaces or special characters are allowed.                                | **volto-plone-site**          |
-| `language_code`       | Language to be used on the site.                                                                                                                     | **pt-br**                     |
-| `github_organization` | Used for GitHub, GitLab, and Docker repositories.  GitHub or GitLab username or organization slug from URL.                                           | **collective**                |
-| `container_registry`  | Container registry to be used.                                                                                                                       | **github**                    |
-| `devops_storage`      | Storage backend to be used in the deployment stack.                                                                                                  | **relstorage**                |
-| `devops_ansible`      | Should we create an Ansible playbook to bootstrap and deploy this project?                                                                           | **Yes**                       |
-| `devops_gha_deploy`   | Should we create a GitHub action to deploy this project?                                                                                             | **Yes**                       |
+| `title`       | Your project's human-readable name, capitals and spaces allowed.                                                                                     | `Plone Site`                |
+| `description`         | Describes your project and gets used in places like ``README.md`` and such.                                                                          | `New site for our company.` |
+| `project_slug`        | Your project's slug without spaces. Used to name your repository and Docker images.                                                                  | `plone-site`                |
+| `hostname`            | Hostname where the project will be deployed.                                                                                                         | `site.plone.org`            |
+| `author`              | This is you! The value goes into places like ``LICENSE``, ``setup.py`` and such.                                                                     | `Our Company`               |
+| `email`               | The email address you want to identify yourself in the project.                                                                                      | `email@example.com`         |
+| `use_prerelease_versions`  | Use non-stable versions of Plone and Volto, (The default value could also be set via `USE_PRERELEASE` environment variable.                                   | `Yes`                       |
+| `plone_version`       | Plone version to be used. This queries for the latest available Plone 6 version and presents it to you as the default value.                         | `6.0.0`                     |
+| `volto_version`       | Volto (Plone Frontend) version to be used. This queries for the latest available Volto version and presents it to you as the default value.          | `16.4.1`    |
+| `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces or special characters are allowed. | `plone_site`                |
+| `frontend_addon_name`    | Name of the Volto addon package used to configure your frontend project. No spaces or special characters are allowed.                                | `volto-plone-site`          |
+| `language_code`       | Language to be used on the site.                                                                                                                     | `pt-br`                     |
+| `github_organization` | Used for GitHub, GitLab, and Docker repositories.  GitHub or GitLab username or organization slug from URL.                                           | `collective`                |
+| `container_registry`  | Container registry to be used.                                                                                                                       | `github`                    |
+| `devops_storage`      | Storage backend to be used in the deployment stack.                                                                                                  | `relstorage`                |
+| `devops_ansible`      | Should we create an Ansible playbook to bootstrap and deploy this project?                                                                           | `Yes`                       |
+| `devops_gha_deploy`   | Should we create a GitHub action to deploy this project?                                                                                             | `Yes`                       |
 
 
 ## Dive into your project's structure 🏗️

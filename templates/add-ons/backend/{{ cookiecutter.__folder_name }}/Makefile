@@ -46,7 +46,7 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-requirements-mxdev.txt: ## Generate constraints file
+requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
 	@uvx mxdev -c mx.ini
@@ -61,7 +61,7 @@ sync: $(VENV_FOLDER) ## Sync project dependencies
 	@echo "$(GREEN)==> Sync project dependencies$(RESET)"
 	@uv pip install -r requirements-mxdev.txt
 
-instance/etc/zope.ini instance/etc/zope.conf: ## Create instance configuration
+instance/etc/zope.ini instance/etc/zope.conf: instance.yaml ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
 	@uvx cookiecutter -f --no-input -c 2.1.1 --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 

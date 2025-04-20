@@ -3,6 +3,11 @@ description: "Main workflow for cookieplone-templates"
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 env:
@@ -10,6 +15,11 @@ env:
   python-version: "3.10"
 
 jobs:
+  report-keys:
+    name: "Report keys usage"
+    uses: ./.github/workflows/report.yml
+    with:
+      python-version: "3.13"
 
   test-repository:
     name: "Test repository settings: ${{ matrix.python-version }}"
@@ -23,7 +33,7 @@ jobs:
           - "3.12"
           - "3.13"
     with:
-        python-version: ${{ matrix.python-version }}
+      python-version: ${{ matrix.python-version }}
 
   test-template:
     name: "Test template"
@@ -48,8 +58,8 @@ jobs:
           - name: "sub/project_settings"
             path: "templates/sub/project_settings"
     with:
-        name: ${{ matrix.name }}
-        tests-path: ${{ matrix.path }}
+      name: ${{ matrix.name }}
+      tests-path: ${{ matrix.path }}
 
   backend-functional:
     runs-on: ubuntu-latest
@@ -60,7 +70,6 @@ jobs:
       template: "backend_addon"
       name: "collective.addon"
     steps:
-
       - name: Checkout codebase
         uses: actions/checkout@v4
 
@@ -98,7 +107,6 @@ jobs:
       template: "frontend_addon"
       name: "volto-add-on"
     steps:
-
       - name: Checkout codebase
         uses: actions/checkout@v4
 
@@ -201,18 +209,19 @@ jobs:
   report:
     runs-on: ubuntu-latest
     needs:
+      - report-keys
       - test-repository
       - test-template
       - backend-functional
       - frontend-functional
     steps:
-
       - name: Report
         shell: bash
         run: |
           echo '# Report' >> $GITHUB_STEP_SUMMARY
           echo '| Job | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
+          echo '| Keys usage | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Repository Tests | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Template Generation | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Backend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY

@@ -8,8 +8,8 @@
 
 <div align="center">
 
-![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
-[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+![License](https://img.shields.io/github/license/plone/cookieplone-templates)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 </div>
 
@@ -38,11 +38,12 @@ uvx cookieplone
   3 - Frontend Add-on
 ```
 
-| Template | Description |  |
+| Template | Description | `README.md` |
 | --------- | --------- | --------- |
-| `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read More](./project/README.md) |
-| `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read More](./backend_addon/README.md) |
-| `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read More](./frontend_addon/README.md) |
+| `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read more](./templates/projects/monorepo/README.md) |
+| `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read more](./templates/add-ons/backend/README.md) |
+| `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read more](./templates/add-ons/frontend/README.md) |
+| `Documenation scaffold`  | Create a documentation scaffold for your package. | [Read more](./templates/add-ons/documentation_starter/README.md) |
 
 
 ## Contribute 🤝
@@ -79,6 +80,13 @@ COOKIEPLONE_REPOSITORY=~/YOUR_PATH_TO/cookieplone-templates uvx cookieplone proj
 ```
 
 
+### Run a remote branch of `cookieplone-templates`.
+
+```shell
+COOKIEPLONE_REPOSITORY_TAG=<REMOTE_BRANCH_NAME> uvx cookieplone
+```
+
+
 ### Format the codebase
 
 ```shell
@@ -95,7 +103,7 @@ make format_templates
 
 ### Run tests
 
-[`pytest`](https://docs.pytest.org/) is this package's test runner.
+[`pytest`](https://docs.pytest.org/en/stable/) is this package's test runner.
 
 Run all tests with the following command.
 
@@ -169,6 +177,7 @@ It's currently not supported to check for a unique slug on Read the Docs before 
 
 This project is licensed under the [MIT License](/LICENSE).
 
-## Let's Get Building! 🚀
+
+## Let's get building! 🚀
 
 Happy coding!
