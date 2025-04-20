@@ -1,50 +1,51 @@
-name: Build documentation, check links, spelling, grammar, and style
+name: "Build documentation, check links, spelling, grammar, and style"
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'docs/**'
-  # Build pull requests
-  pull_request:
-    paths:
-      - 'docs/docs/**'
-      - 'docs/styles/**'
-      - '.github/workflows/rtd-pr-preview.yml'
-      - '.github/workflows/test.yml'
-      - 'docs/.readthedocs.yaml'
-      - 'docs/.vale.ini'
-      - 'docs/uv.lock'
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: string
+
+defaults:
+  run:
+    working-directory: backend
 
 jobs:
   docs:
     name: Documentation
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.10', '3.13']
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
         with:
-          # Install a specific version of uv.
-          version: "0.6.5"
+          python-version: {{ "${{ inputs.python-version }}" }}
+          enable-cache: false
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Restore uv cache
+        uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
         with:
-          python-version: {{ "${{ matrix.python-version }}" }}
+          path: {{ "${{ env.UV_CACHE_DIR }}" }}
+          key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}" }}
+          restore-keys: |
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}" }}
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}" }}
 
-      - name: Create Python virtual environment, install requirements
-        run: cd docs && make .venv/bin/python PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+      - name: Install requirements
+        run: |
+          make install
 
       - name: Check for broken links
-        run: cd docs && make linkcheckbroken PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+        run: |
+          make linkcheckbroken
 
       - name: Build HTML documentation
-        run: cd docs && make html PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+        run: |
+          make html
 
       - name: Run vale
-        run: cd docs && make vale VALEOPTS="--minAlertLevel='warning'" PYTHONVERSION={{ "${{ matrix.python-version }}" }}
+        run: |
+          make vale VALEOPTS="--minAlertLevel='warning'"

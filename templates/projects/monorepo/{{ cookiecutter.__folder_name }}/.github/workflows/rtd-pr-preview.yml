@@ -1,5 +1,4 @@
-# .github/workflows/rtd-pr-preview.yml
-name: readthedocs/actions
+name: "Preview PR on readthedocs"
 on:
   pull_request_target:
     types:
@@ -7,12 +6,8 @@ on:
     # Execute this action only on PRs that touch
     # documentation files.
     paths:
-      - "docs/docs/**"
-      - "docs/styles/**"
-      - docs/.readthedocs.yaml
-      - docs/.vale.ini
-      - docs/Makefile
-      - docs/uv.lock
+      - "docs/**"
+      - .readthedocs.yaml
 
 permissions:
   pull-requests: write

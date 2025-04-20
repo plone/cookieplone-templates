@@ -29,9 +29,10 @@ help:  # This help message
 
 # environment management
 .venv/bin/python:  ## Create Python virtual environment and install package requirements
-	@uv python install "$(PYTHONVERSION)"
-	@uv venv --python "$(PYTHONVERSION)"
 	@uv sync
+
+.PHONY: install
+install:  .venv/bin/python ## Sync package requirements
 
 .PHONY: sync
 sync:  ## Sync package requirements
