@@ -63,7 +63,7 @@ def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
 
 
 def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
-    """Clean up gha deploy."""
+    """Clean up GitHub Actions deploy."""
     answer = context.get("initialize_documentation")
     key = f"docs-{answer}"
     files.remove_files(output_dir, POST_GEN_TO_REMOVE[key])
@@ -216,19 +216,19 @@ def main():
         ],
         [
             handle_devops_gha_deploy,
-            "Remove GHA deployment files",
+            "Remove GitHub Actions deployment files",
             not int(
                 context.get("devops_gha_deploy")
             ),  # {{ cookiecutter.devops_gha_deploy }}
         ],
         [
             handle_docs_setup,
-            "Organize Documentation Files",
+            "Organize documentation files",
             int(
                 context.get("initialize_documentation")
             ),  # {{ cookiecutter.initialize_documentation }}
         ],
-        [handle_docs_cleanup, "Remove Documentation Files Not Needed", "1"],
+        [handle_docs_cleanup, "Remove unneeded documentation files", "1"],
         [
             handle_git_initialization,
             "Initialize Git repository",

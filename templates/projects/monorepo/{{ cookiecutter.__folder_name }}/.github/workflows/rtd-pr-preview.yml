@@ -1,4 +1,4 @@
-name: "Preview PR on readthedocs"
+name: "Preview pull request on Read the Docs"
 on:
   pull_request_target:
     types:
