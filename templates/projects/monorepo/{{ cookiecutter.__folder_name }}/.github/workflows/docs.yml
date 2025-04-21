@@ -9,7 +9,7 @@ on:
 
 defaults:
   run:
-    working-directory: backend
+    working-directory: docs
 
 jobs:
   docs:
@@ -29,8 +29,9 @@ jobs:
         uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
         with:
           path: {{ "${{ env.UV_CACHE_DIR }}" }}
-          key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}" }}
+          key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('uv.lock') }}" }}
           restore-keys: |
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('uv.lock') }}" }}
             uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}" }}
             uv-{{ "${{ runner.os }}-${{ inputs.python-version }}" }}
 

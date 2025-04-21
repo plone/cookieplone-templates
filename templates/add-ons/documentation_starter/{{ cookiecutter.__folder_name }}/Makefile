@@ -9,13 +9,11 @@ PAPER           ?=
 # Internal variables.
 GREEN=`tput setaf 2`
 RESET=`tput sgr0`
-SPHINXBUILD     = "$(realpath .venv/bin/sphinx-build)"
-SPHINXAUTOBUILD = "$(realpath .venv/bin/sphinx-autobuild)"
 DOCS_DIR        = ./docs/
-BUILDDIR        = ../_build
+BUILDDIR        = ./_build
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) $(DOCS_DIR)
 VALEFILES       := $(shell find $(DOCS_DIR) -type f -name "*.md" -print)
 VALEOPTS        ?=
 PYTHONVERSION   = >=3.11,<3.14
@@ -52,38 +50,38 @@ clean-python: clean
 # documentation builders
 .PHONY: html
 html: .venv/bin/python  ## Build html
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	cd \$\(DOCS_DIR\) \&\& \$\(SPHINXBUILD\) -b ([^ ]+) \$\(ALLSPHINXOPTS\) \$\(BUILDDIR\)/([^ ]+)
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 .PHONY: livehtml
 livehtml: .venv/bin/python  ## Rebuild Sphinx documentation on changes, with live-reload in the browser
-	cd "$(DOCS_DIR)" && ${SPHINXAUTOBUILD} \
+	@uv run sphinx-autobuild \
 		--ignore "*.swp" \
 		--port 8050 \
-		-b html . "$(BUILDDIR)/html" $(SPHINXOPTS) $(O)
+		-b html $(DOCS_DIR) "$(BUILDDIR)/html" $(SPHINXOPTS) $(O)
 
 .PHONY: dirhtml
 dirhtml: .venv/bin/python
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
+	@uv run sphinx-build -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
 
 .PHONY: singlehtml
 singlehtml: .venv/bin/python
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b singlehtml $(ALLSPHINXOPTS) $(BUILDDIR)/singlehtml
+	@uv run sphinx-build -b singlehtml $(ALLSPHINXOPTS) $(BUILDDIR)/singlehtml
 	@echo
 	@echo "Build finished. The HTML page is in $(BUILDDIR)/singlehtml."
 
 .PHONY: text
 text: .venv/bin/python
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
+	@uv run sphinx-build -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
 	@echo
 	@echo "Build finished. The text files are in $(BUILDDIR)/text."
 
 .PHONY: changes
 changes: .venv/bin/python
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
+	@uv run sphinx-build -b changes $(ALLSPHINXOPTS) $(BUILDDIR)/changes
 	@echo
 	@echo "The overview file is in $(BUILDDIR)/changes."
 
@@ -102,28 +100,28 @@ rtd-pr-preview: rtd-prepare .venv/bin/python ## Build pull request preview on Re
 # test
 .PHONY: linkcheck
 linkcheck: .venv/bin/python  ## Run linkcheck
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
+	@uv run sphinx-build -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 		"or in $(BUILDDIR)/linkcheck/ ."
 
 .PHONY: linkcheckbroken
 linkcheckbroken: .venv/bin/python  ## Run linkcheck and show only broken links
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck | GREP_COLORS='0;31' grep -wi "broken\|redirect" --color=always | GREP_COLORS='0;31' grep -vi "https://github.com/plone/volto/issues/" --color=always && if test $$? = 0; then exit 1; fi || test $$? = 1
+	@uv run sphinx-build -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck | GREP_COLORS='0;31' grep -wi "broken\|redirect" --color=always | GREP_COLORS='0;31' grep -vi "https://github.com/plone/volto/issues/" --color=always && if test $$? = 0; then exit 1; fi || test $$? = 1
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 		"or in $(BUILDDIR)/linkcheck/ ."
 
 .PHONY: doctest
 doctest: .venv/bin/python  ## Test snippets in the documentation
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
+	@uv run sphinx-build -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 .PHONY: vale
 vale: .venv/bin/python  ## Run Vale style, grammar, and spell checks
-	.venv/bin/vale sync
-	.venv/bin/vale --no-wrap $(VALEOPTS) $(VALEFILES)
+	@uv run vale sync
+	@uv run vale --no-wrap $(VALEOPTS) $(VALEFILES)
 	@echo "Vale is finished; look for any errors in the above output."
 	@echo
 
