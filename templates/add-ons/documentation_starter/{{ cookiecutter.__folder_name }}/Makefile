@@ -50,7 +50,7 @@ clean-python: clean
 # documentation builders
 .PHONY: html
 html: .venv/bin/python  ## Build html
-	cd \$\(DOCS_DIR\) \&\& \$\(SPHINXBUILD\) -b ([^ ]+) \$\(ALLSPHINXOPTS\) \$\(BUILDDIR\)/([^ ]+)
+	@uv run sphinx-build -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
