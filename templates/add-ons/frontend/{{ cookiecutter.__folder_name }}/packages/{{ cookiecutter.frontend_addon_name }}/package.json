@@ -34,6 +34,8 @@
   },
   "devDependencies": {
     "@plone/scripts": "{{ cookiecutter.__version_plone_scripts }}",
+    "babel-plugin-react-intl": "5.1.17",
+    "babel-preset-razzle": "4.2.18",
     "release-it": "{{ cookiecutter.__version_release_it }}"
   }
 }
