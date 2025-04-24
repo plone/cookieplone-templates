@@ -34,7 +34,7 @@ EXPECTED_FILES = [
 @pytest.fixture(scope="module")
 def template_folder() -> str:
     """Path to the documentation_starter template directory."""
-    return "add-ons/documentation_starter"
+    return "docs/starter"
 
 
 @pytest.fixture(scope="session")
