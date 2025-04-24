@@ -23,8 +23,9 @@ DOCUMENTATION_STARTER_REMOVE = [
 
 FRONTEND_ADDON_REMOVE = [".github"]
 
-DEVOPS_TO_REMOVE = {
-    "ansible": [
+
+POST_GEN_TO_REMOVE = {
+    "devops-ansible": [
         "devops/.env_dist",
         "devops/.gitignore",
         "devops/ansible.cfg",
@@ -36,11 +37,16 @@ DEVOPS_TO_REMOVE = {
         "devops/tasks",
         "devops/README.md",
     ],
-    "gha": [
+    "devops-gha": [
         ".github/workflows/manual_deploy.yml",
         "devops/.env_gha",
         "devops/README-GHA.md",
     ],
+    "docs-0": [
+        ".github/workflows/docs.yml",
+        ".github/workflows/rtd-pr-preview.yml",
+    ],
+    "docs-1": ["docs/LICENSE.md"],
 }
 
 TEMPLATES_FOLDER = "templates"
@@ -48,12 +54,29 @@ TEMPLATES_FOLDER = "templates"
 
 def handle_devops_ansible(context: OrderedDict, output_dir: Path):
     """Clean up ansible."""
-    files.remove_files(output_dir, DEVOPS_TO_REMOVE["ansible"])
+    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-ansible"])
 
 
 def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
-    """Clean up ansible."""
-    files.remove_files(output_dir, DEVOPS_TO_REMOVE["gha"])
+    """Clean up gha deploy."""
+    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-gha"])
+
+
+def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
+    """Clean up GitHub Actions deploy."""
+    answer = context.get("initialize_documentation")
+    key = f"docs-{answer}"
+    files.remove_files(output_dir, POST_GEN_TO_REMOVE[key])
+
+
+def handle_docs_setup(context: OrderedDict, output_dir: Path):
+    """Move files from /docs to the root."""
+    files_to_move = [
+        ["docs/.readthedocs.yaml", ".readthedocs.yml"],
+    ]
+    for src_path, dst_path in files_to_move:
+        src = output_dir / src_path
+        src.rename(output_dir / dst_path)
 
 
 def handle_git_initialization(context: OrderedDict, output_dir: Path):
@@ -132,6 +155,15 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     )
 
 
+def run_actions(actions: list, output_dir: Path):
+    for func, title, enabled in actions:
+        if not int(enabled):
+            continue
+        new_context = deepcopy(context)
+        console.print(f" -> {title}")
+        func(new_context, output_dir)
+
+
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
@@ -142,32 +174,6 @@ def main():
     backend_format = bool(
         int(context.get("__backend_addon_format"))
     )  # {{ cookiecutter.__backend_addon_format }}
-    # Cleanup / Git
-    actions = [
-        [
-            handle_devops_ansible,
-            "Remove Ansible files",
-            not int(context.get("devops_ansible")),  # {{ cookiecutter.devops_ansible }}
-        ],
-        [
-            handle_devops_gha_deploy,
-            "Remove GHA deployment files",
-            not int(
-                context.get("devops_gha_deploy")
-            ),  # {{ cookiecutter.devops_gha_deploy }}
-        ],
-        [
-            handle_git_initialization,
-            "Initialize Git repository",
-            initialize_git,
-        ],
-    ]
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
 
     subtemplates = context.get(
         "__cookieplone_subtemplates", []
@@ -200,6 +206,36 @@ def main():
         # Run make format in the backend folder
         cmd = f"make -C {backend_folder} format"
         subprocess.call(cmd, shell=True)  # noQA: S602
+
+    # Cleanup / Git
+    actions = [
+        [
+            handle_devops_ansible,
+            "Remove Ansible files",
+            not int(context.get("devops_ansible")),  # {{ cookiecutter.devops_ansible }}
+        ],
+        [
+            handle_devops_gha_deploy,
+            "Remove GitHub Actions deployment files",
+            not int(
+                context.get("devops_gha_deploy")
+            ),  # {{ cookiecutter.devops_gha_deploy }}
+        ],
+        [
+            handle_docs_setup,
+            "Organize documentation files",
+            int(
+                context.get("initialize_documentation")
+            ),  # {{ cookiecutter.initialize_documentation }}
+        ],
+        [handle_docs_cleanup, "Remove unneeded documentation files", "1"],
+        [
+            handle_git_initialization,
+            "Initialize Git repository",
+            initialize_git,
+        ],
+    ]
+    run_actions(actions, output_dir)
 
     # Do a second run add newly created files
     if initialize_git:

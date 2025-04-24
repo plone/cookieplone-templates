@@ -81,6 +81,14 @@ def context_devops_no_gha_deploy(context) -> dict:
 
 
 @pytest.fixture(scope="session")
+def context_no_docs(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["initialize_documentation"] = "0"
+    return new_context
+
+
+@pytest.fixture(scope="session")
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
@@ -119,6 +127,12 @@ def cutter_result_devops_no_gha_deploy(
     return cookies_module.bake(
         extra_context=context_devops_no_gha_deploy, template=template_path
     )
+
+
+@pytest.fixture(scope="module")
+def cutter_result_no_docs(template_path, cookies_module, context_no_docs):
+    """Cookiecutter result."""
+    return cookies_module.bake(extra_context=context_no_docs, template=template_path)
 
 
 @pytest.fixture(scope="module")

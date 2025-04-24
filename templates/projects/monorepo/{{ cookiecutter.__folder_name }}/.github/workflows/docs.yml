@@ -1,0 +1,52 @@
+name: "Build documentation, check links, spelling, grammar, and style"
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: string
+
+defaults:
+  run:
+    working-directory: docs
+
+jobs:
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@{{ cookiecutter.__gha_version_setup_uv }}
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          enable-cache: false
+
+      - name: Restore uv cache
+        uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+        with:
+          path: {{ "${{ env.UV_CACHE_DIR }}" }}
+          key: uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('uv.lock') }}" }}
+          restore-keys: |
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('uv.lock') }}" }}
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('pyproject.toml') }}" }}
+            uv-{{ "${{ runner.os }}-${{ inputs.python-version }}" }}
+
+      - name: Install requirements
+        run: |
+          make install
+
+      - name: Check for broken links
+        run: |
+          make linkcheckbroken
+
+      - name: Build HTML documentation
+        run: |
+          make html
+
+      - name: Run vale
+        run: |
+          make vale VALEOPTS="--minAlertLevel='warning'"

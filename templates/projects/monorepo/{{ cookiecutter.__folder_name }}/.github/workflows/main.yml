@@ -6,6 +6,11 @@ on:
       - "backend/**"
       - "frontend/**"
       - ".github/workflows/backend.yml"
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      - "docs/**"
+      - ".github/workflows/docs.yml"
+      - .readthedocs.yaml
+      {%- endif %}
       - ".github/workflows/frontend.yml"
       - ".github/workflows/main.yml"
       - "devops/**"
@@ -21,6 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      docs: {{ "${{ steps.filter.outputs.docs }}" }}
+      {%- endif %}
       frontend: {{ "${{ steps.filter.outputs.frontend }}" }}
       BASE_TAG: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}
       IMAGE_NAME_PREFIX: {{ "${{ env.IMAGE_NAME_PREFIX }}" }}
@@ -39,12 +47,6 @@ jobs:
           echo "PLONE_VERSION=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("./frontend/mrs.developer.json")); print("VOLTO_VERSION=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
 
-      - name: Test vars
-        run: |
-          echo 'BASE_TAG={{ "${{ steps.vars.outputs.BASE_TAG }}" }}'
-          echo 'PLONE_VERSION={{ "${{ steps.vars.outputs.PLONE_VERSION }}" }}'
-          echo 'VOLTO_VERSION={{ "${{ steps.vars.outputs.VOLTO_VERSION }}" }}'
-
       - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
         id: filter
         with:
@@ -52,9 +54,26 @@ jobs:
             backend:
               - 'backend/**'
               - '.github/workflows/backend.yml'
+            {%- if cookiecutter.initialize_documentation == '1' %}
+            docs:
+              - 'docs/**'
+              - .readthedocs.yaml
+              - '.github/workflows/docs.yml'
+            {%- endif %}
             frontend:
               - 'frontend/**'
               - '.github/workflows/frontend.yml'
+
+      - name: Test vars
+        run: |
+          echo 'BASE_TAG={{ "${{ steps.vars.outputs.BASE_TAG }}" }}'
+          echo 'PLONE_VERSION={{ "${{ steps.vars.outputs.PLONE_VERSION }}" }}'
+          echo 'VOLTO_VERSION={{ "${{ steps.vars.outputs.VOLTO_VERSION }}" }}'
+          echo 'backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          {%- if cookiecutter.initialize_documentation == '1' %}
+          echo 'docs: {{ "${{ steps.filter.outputs.docs }}" }}'
+          {%- endif %}
+          echo 'frontend: {{ "${{ steps.filter.outputs.frontend }}" }}'
 
   backend:
     uses: ./.github/workflows/backend.yml
@@ -71,6 +90,17 @@ jobs:
       contents: read
       packages: write
 
+{%- if cookiecutter.initialize_documentation == '1' %}
+
+  docs:
+    uses: ./.github/workflows/docs.yml
+    needs:
+        - config
+    with:
+        python-version: {{ "${{ needs.config.outputs.PYTHON_VERSION }}" }}
+    if: {{ "${{ needs.config.outputs.docs == 'true' }}" }}
+{%- endif %}
+
   frontend:
     uses: ./.github/workflows/frontend.yml
     needs:
@@ -85,3 +115,27 @@ jobs:
     permissions:
       contents: read
       packages: write
+
+  report:
+    name: "Final report"
+    if: {{ "${{ always() }}" }}
+    runs-on: ubuntu-latest
+    needs:
+      - config
+      - backend
+      - frontend
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      - docs
+      {%- endif %}
+    steps:
+      - name: Write report
+        run: |
+          {{ "echo '# Workflow Report' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| Job ID | Conclusion |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| config | ${{ needs.config.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| backend | ${{ needs.backend.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {%- if cookiecutter.initialize_documentation == '1' %}
+          {{ "echo '| docs | ${{ needs.docs.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {%- endif %}
+          {{ "echo '| frontend | ${{ needs.frontend.result }} |' >> $GITHUB_STEP_SUMMARY" }}

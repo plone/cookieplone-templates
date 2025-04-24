@@ -1,0 +1,1 @@
+Use the proper Read the Docs project slug for find and replace. Unfortunately, I know of no way to check for an available RTD project slug at project generation time. @stevepiercy
