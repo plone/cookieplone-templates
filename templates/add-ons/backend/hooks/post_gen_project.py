@@ -40,12 +40,12 @@ def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
     )
 
 
-def generate_documentation_starter(context, output_dir):
+def generate_docs_starter(context, output_dir):
     """Generate documentation scaffold"""
     output_dir = output_dir
     folder_name = "docs"
     generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/add-ons/documentation_starter",
+        f"{TEMPLATES_FOLDER}/docs/starter",
         output_dir,
         "docs",
         context,

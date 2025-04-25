@@ -23,4 +23,4 @@ jobs:
       - name: Check links in README.mds with awesome_bot
         run: |
           gem install awesome_bot
-          awesome_bot --request-delay 1 --allow-dupe --white-list https://astral.sh/uv/install.sh,http://localhost:8080,http://localhost:3000 --files README.md,templates/add-ons/backend/README.md,templates/add-ons/documentation_starter/README.md,templates/add-ons/frontend/README.md,templates/projects/monorepo/README.md,templates/sub/cache/README.md,templates/sub/frontend_project/README.md,templates/sub/project_settings/README.md
+          awesome_bot --request-delay 1 --allow-dupe --white-list https://astral.sh/uv/install.sh,http://localhost:8080,http://localhost:3000 --files README.md,\templates/add-ons/backend/README.md,templates/add-ons/frontend/README.md,templates/docs/starter/README.md,templates/projects/monorepo/README.md,templates/sub/cache/README.md,templates/sub/frontend_project/README.md,templates/sub/project_settings/README.md
