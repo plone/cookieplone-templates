@@ -52,7 +52,9 @@
       "0": "No"
     }
   },
-  "_copy_without_render": [],
+  "_copy_without_render": [
+    "news/.changelog_template.jinja"
+  ],
   "_extensions": [
     "cookieplone.filters.latest_plone",
     "cookieplone.filters.use_prerelease_versions",
