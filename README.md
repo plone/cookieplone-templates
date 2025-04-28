@@ -136,9 +136,8 @@ To publish your project to your Git service provider, first create an empty remo
 Then navigate to the root of your generated project folder.
 Finally, issue the following commands.
 
-```{note}
-If your remote repository is private, you'll need to manage authorization when you push commits upstream.
-```
+> [!NOTE]
+> If your remote repository is private, you'll need to manage authorization when you push commits upstream.
 
 ```shell
 git status
@@ -168,9 +167,8 @@ Finally, commit and push your changes to your remote repository.
 
 Read the Docs will build documentation and with the next pull request, will build a pull request preview and insert a link to the preview in your pull request.
 
-```{note}
-It's currently not supported to check for a unique slug on Read the Docs before generating your project, especially if you set up a private repository.
-```
+> [!NOTE]
+> It's currently not supported to check for a unique slug on Read the Docs before generating your project, especially if you set up a private repository.
 
 
 ## License 📜
