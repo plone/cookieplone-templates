@@ -4,7 +4,7 @@
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookieplone-templates)
 
-Powered by [Cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone documentation starter](https://github.com/plone/cookieplone-templates/tree/main/templates/add-ons/documentation_starter) is intended to be used by Plone developers to create comprehensive documentation for Plone add-ons using [Sphinx](https://www.sphinx-doc.org/en/master/index.html) and [MyST](https://myst-parser.readthedocs.io/en/latest/) or [reStructuredText](https://www.docutils.org/rst.html).
+Powered by [Cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone documentation starter](https://github.com/plone/cookieplone-templates/tree/main/templates/docs/starter) is intended to be used by Plone developers to create comprehensive documentation for Plone add-ons using [Sphinx](https://www.sphinx-doc.org/en/master/index.html) and [MyST](https://myst-parser.readthedocs.io/en/latest/) or [reStructuredText](https://www.docutils.org/rst.html).
 
 ## Prerequisites
 
