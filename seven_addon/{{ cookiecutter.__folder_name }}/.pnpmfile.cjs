@@ -14,7 +14,7 @@ if (fs.existsSync(catalogPath)) {
 module.exports = {
   hooks: {
     updateConfig(config) {
-      if (config && catalog) {
+      if (config.catalogs) {
         config.catalogs.default ??= catalog;
       }
       return config;
