@@ -75,7 +75,6 @@ module.exports = {
     name: '@storybook/react-webpack5',
     options: { builder: { useSWC: true } },
   },
-  staticDirs: ['../packages/volto-light-theme/src/stories/static'],
   typescript: {
     check: false,
     checkOptions: {},
