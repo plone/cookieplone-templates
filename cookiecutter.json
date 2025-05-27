@@ -2,8 +2,14 @@
   "templates": {
     "project": {
       "path": "./templates/projects/monorepo",
-      "title": "A Plone Project",
-      "description": "Create a new Plone project with backend and frontend components",
+      "title": "A Plone Volto Project",
+      "description": "Create a new Plone project that uses the Volto frontend",
+      "hidden": false
+    },
+    "classic_project": {
+      "path": "./templates/projects/classic",
+      "title": "A Plone Classic UI Project",
+      "description": "Create a new Plone project that uses Classic UI (Python only project)",
       "hidden": false
     },
     "backend_addon": {
@@ -34,6 +40,12 @@
       "path": "./templates/sub/project_settings",
       "title": "Project settings to be applied on top of a mono repo project",
       "description": "Sub template with configuration/settings for a mono repo project.",
+      "hidden": true
+    },
+    "sub/classic_project_settings": {
+      "path": "./templates/sub/classic_project_settings",
+      "title": "Project settings to be applied on top of a classic project",
+      "description": "Sub template with configuration/settings for a classic project.",
       "hidden": true
     },
     "documentation_starter": {
