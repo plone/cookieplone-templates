@@ -16,6 +16,7 @@ RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
 IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
+IMAGE_NAME_SEPARATOR={%- if cookiecutter.container_registry == 'gitlab' %}/{%- else %}-{%- endif %}
 IMAGE_TAG=latest
 
 # Python checks
@@ -134,7 +135,7 @@ test-coverage: $(VENV_FOLDER) ## run tests with coverage
 # Build Docker images
 .PHONY: build-image
 build-image:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 # Acceptance tests
 .PHONY: acceptance-backend-start
@@ -143,7 +144,7 @@ acceptance-backend-start: ## Start backend acceptance server
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)

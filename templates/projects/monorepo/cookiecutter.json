@@ -17,6 +17,7 @@
   "devops_cache": ["1", "0"],
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
+  "devops_gitlab_deploy": ["1", "0"],
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
@@ -113,6 +114,11 @@
     },
     "devops_gha_deploy": {
       "__prompt__": "Add GitHub Action to Deploy this project?",
+      "1": "Yes",
+      "0": "No"
+    },
+    "devops_gitlab_deploy": {
+      "__prompt__": "Add GitLab Action to Deploy this project?",
       "1": "Yes",
       "0": "No"
     },
