@@ -16,7 +16,7 @@ BASE_FOLDER = $(shell git rev-parse --show-toplevel)
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
 
-TEMPLATE = project
+TEMPLATE = classic_project
 PROJECT_FOLDER_NAME = project-title
 
 # Add the following 'help' target to your Makefile
