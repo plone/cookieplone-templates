@@ -51,13 +51,13 @@ Voila! Your Plone site should be live and kicking! 🎉
 
 ### Local Stack Deployment 📦
 
-Deploy a local `Docker Compose` environment that includes:
+Deploy a local Docker Compose environment that includes the following.
 
 - Docker image for Backend 🖼️
-- A stack with a Traefik router and a Postgres database 🗃️
+- A stack with a Traefik router and a PostgreSQL database 🗃️
 - Accessible at [http://{{ cookiecutter.__project_slug }}.localhost](http://{{ cookiecutter.__project_slug }}.localhost) 🌐
 
-Execute the following:
+Run the following commands in a shell session.
 
 ```shell
 make stack-start
@@ -66,24 +66,24 @@ make stack-create-site
 
 And... you're all set! Your Plone site is up and running locally! 🚀
 
-## Project Structure 🏗️
+## Project structure 🏗️
 
 This monorepo consists of the following distinct sections:
 
 - **backend**: Houses the API and Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
-- **devops**: Encompasses Docker Stack, Ansible playbooks, and Cache settings.
+- **devops**: Encompasses Docker stack, Ansible playbooks, and cache settings.
 - **docs**: Scaffold for writing documentation for your project.
 
-### Why This Structure? 🤔
+### Why this structure? 🤔
 
-- All necessary codebases to run the site are contained within the repo (excluding existing addons for Plone and React).
+- All necessary codebases to run the site are contained within the repository (excluding existing add-ons for Plone).
 - Specific GitHub Workflows are triggered based on changes in each codebase (refer to .github/workflows).
 - Simplifies the creation of Docker images for each codebase.
 - Demonstrates Plone installation/setup without buildout.
 
-## Code Quality Assurance 🧐
+## Code quality assurance 🧐
 
-To automatically format your code and ensure it adheres to quality standards, execute:
+To check your code against quality standards, run the following shell command.
 
 ```shell
 make check
@@ -91,7 +91,7 @@ make check
 
 ### Format the codebase
 
-To format the codebase, it is possible to run `format`:
+To format and rewrite the code base, ensuring it adheres to quality standards, run the following shell command.
 
 ```shell
 make format
@@ -124,6 +124,6 @@ Generate translation files for Plone with ease:
 make i18n
 ```
 
-## Credits and Acknowledgements 🙏
+## Credits and acknowledgements 🙏
 
 {{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!

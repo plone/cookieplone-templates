@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/github/license/plone/cookieplone-templates)](../../../LICENSE)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This is a sub-template—used by other templates, in automated tests, and for OCI image generation—accessible with **Cookieplone** at the path `sub/project_settings`.
+This is a subtemplate used by other templates, in automated tests, and for OCI image generation—accessible with **Cookieplone** at the path `sub/project_settings`.
 
 
 ## Prerequisites
@@ -43,8 +43,8 @@ The table below describes the options you can customize using the [Cookiecutter 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | `Project Settings`                |
-| `author`              | This is you! The value goes into places like `LICENSE`, `package.json` and such.                                                                     | `Our Company`               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | `email@example.com`         |
+| `author`              | This is you! Its value goes into places like `LICENSE`, `package.json` and other files.                                                                     | `Our Company`               |
+| `email`               | The email address to contact the project maintainer.                                                                                      | `email@example.com`         |
 | `volto_version` | Volto version to be used. | `18.10.0`    |
 
 

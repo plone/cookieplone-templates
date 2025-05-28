@@ -59,9 +59,9 @@ The table below describes the options you can customize using the [Cookiecutter 
 |-----------------------|----------------------------------------------------------------------------------|-----------------------------------------|
 | `frontend_addon_name` | Your add-on's short name.                                                        | `volto-weather-block`                   |
 | `title`               | Your add-on's human-readable name, capitals and spaces allowed.                  | `Weather Block for Volto`               |
-| `description`         | Describes your add-on and gets used in places like `README.md` and such.         | `Add a weather block to your site.`     |
-| `author`              | This is you! The value goes into places like `LICENSE`, `package.json` and such. | `Our Company`                           |
-| `email`               | The email address you want to identify yourself in the project.                  | `email@example.com`                     |
+| `description`         | Describes your add-on and gets used in places like `README.md` and other files.         | `Add a weather block to your site.`     |
+| `author`              | This is you! Its value goes into places like `LICENSE`, `package.json` and other files. | `Our Company`                           |
+| `email`               | The email address to contact the project maintainer.                  | `email@example.com`                     |
 | `github_organization` | Used for GitHub repositories.                                                    | `collective`                            |
 | `npm_package_name`    | Name of the Node package, including the organization (if any).                   | `@plone-collective/volto-weather-block` |
 | `volto_version`       | Volto version to be used.                                                        | `18.10.0`                               |
