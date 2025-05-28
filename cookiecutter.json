@@ -41,6 +41,12 @@
       "title": "Documentation scaffold for Plone projects",
       "description": "Create a new documentation scaffold for Plone projects",
       "hidden": false
+    },
+    "devops_ansible": {
+      "path": "./templates/devops/ansible",
+      "title": "Ansible Playbooks for Plone",
+      "description": "Ansible setup to manage a Docker Swarm cluster for Plone hosting.",
+      "hidden": false
     }
   }
 }

@@ -1,0 +1,93 @@
+---
+version: '3.9'
+
+services:
+
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SERVICES: 1
+      TASKS: 1
+      NETWORKS: 1
+    networks:
+      - nw-internal
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  traefik:
+    image: "traefik:${TRAEFIK_VERSION}"
+
+    ports:
+      - 80:80
+      - 443:443
+
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+      labels:
+        - "traefik.enable=true"
+        - "traefik.constraint-label=public"
+        - "traefik.http.services.traefik-public.loadbalancer.server.port=8000"
+        ## Basic Authentication
+        - "traefik.http.middlewares.admin-auth.basicauth.users=${TRAEFIK_BASIC_AUTH}"
+{%- if cookiecutter.__devops_traefik_stack_include_ui == 'yes' %}
+        - "traefik.http.routers.traefik-public-https.rule=Host(`${TRAEFIK_HOSTNAME}`)"
+        - "traefik.http.routers.traefik-public-https.entrypoints=https"
+        - "traefik.http.routers.traefik-public-https.tls=true"
+        - "traefik.http.routers.traefik-public-https.service=api@internal"
+        - "traefik.http.routers.traefik-public-https.middlewares=admin-auth"
+{%- endif %}
+        # GENERIC MIDDLEWARES
+        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
+        - "traefik.http.middlewares.gzip.compress=true"
+        - "traefik.http.middlewares.gzip.compress.excludedcontenttypes=image/png, image/jpeg, font/woff2"
+
+        # GENERIC ROUTERS
+        # - "traefik.http.routers.generic-https-redirect.entrypoints=http"
+        # - "traefik.http.routers.generic-https-redirect.rule=HostRegexp(`{host:.*}`)"
+        # - "traefik.http.routers.generic-https-redirect.priority=1"
+        # - "traefik.http.routers.generic-https-redirect.middlewares=https-redirect"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - vol-traefik-certs:/certificates
+
+    command:
+      - --providers.docker
+      - --providers.docker.watch
+      - --providers.docker.endpoint=tcp://socket-proxy:2375
+      - --providers.docker.swarmmode
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network={{ cookiecutter.__devops_swarm_public_network }}
+      - --providers.docker.constraints=Label(`traefik.constraint-label`, `public`)
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --certificatesresolvers.le.acme.email=${TRAEFIK_EMAIL}
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --accesslog
+      - --log
+      - --log.level=INFO
+      - --api
+
+    networks:
+      - nw-public
+      - nw-internal
+
+volumes:
+  vol-traefik-certs: {}
+
+networks:
+  {{ cookiecutter.__devops_swarm_public_network }}:
+    external: true
+  nw-internal:
+    internal: true
+    driver: overlay

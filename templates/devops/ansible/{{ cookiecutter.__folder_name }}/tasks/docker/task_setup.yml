@@ -1,0 +1,35 @@
+# code: language=ansible
+---
+# Setup Docker
+#
+- name: "Docker: Setup Proxy"
+  when: proxy is defined and proxy.https_proxy is defined
+  tags:
+    - docker
+    - proxy
+  block:
+    - name: "Docker: Create /etc/systemd/system/docker.service.d/ folder"
+      ansible.builtin.file:
+        dest: "/etc/systemd/system/docker.service.d"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: "Docker: Create /etc/systemd/system/docker.service.d/http-proxy.conf"
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../etc/docker/systemd/http-proxy.conf.j2"
+        dest: "/etc/systemd/system/docker.service.d/http-proxy.conf"
+        owner: root
+        group: root
+        mode: "0755"
+      notify:
+        - Reload systemd daemon
+        - Restart Docker
+
+- name: "Docker: Install Docker"
+  tags:
+    - docker
+    - install
+  ansible.builtin.include_role:
+    name: "geerlingguy.docker"
