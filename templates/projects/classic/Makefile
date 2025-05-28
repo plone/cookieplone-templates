@@ -48,9 +48,9 @@ generate: $(VENV_FOLDER) ## Create a sample package
 .PHONY: test
 test: $(VENV_FOLDER)## Create a sample package and tests it
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/monorepo
+	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/classic
 
 .PHONY: test-pdb
 test-pdb: $(VENV_FOLDER)## Stop on the first failed test
 	@echo "$(GREEN)==> Test template, stop on first error$(RESET)"
-	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/monorepo -x --pdb
+	@uv run pytest $(BASE_FOLDER)/tests/templates/projects/classic -x --pdb
