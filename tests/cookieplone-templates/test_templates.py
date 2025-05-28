@@ -12,8 +12,8 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
 @pytest.mark.parametrize(
     "template_id,title,hidden",
     [
-        ("project", "A Plone Volto Project", False),
-        ("classic_project", "A Plone Classic UI Project", False),
+        ("project", "Volto Project", False),
+        ("classic_project", "Classic UI Project", False),
         ("backend_addon", "Backend Add-on for Plone", False),
         ("frontend_addon", "Frontend Add-on for Plone", False),
         (
