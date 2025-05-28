@@ -162,7 +162,6 @@ def main():
         func_name = f"generate_{template_slug}"
         func = funcs.get(func_name)
         if not func:
-            breakpoint()
             raise ValueError(f"No handler available for sub_template {template_id}")
         elif not int(enabled):
             console.print(f" -> Ignoring ({title})")
