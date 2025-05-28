@@ -45,8 +45,8 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `title` | Your documentation's human-readable name, capitals and spaces allowed. | `My Project Title` |
 | `description` | Describes your documentation and gets used in places such as `README.md`. | `Create awesome blogs with Plone.` |
 | `github_organization` | Used for GitHub and Docker repositories. | `collective` |
-| `author` | This is you! The value goes into `LICENSE`, `setup.py`, and other files. | `Our Company` |
-| `email` | The email address you want to identify yourself in the project. | `email@example.com` |
+| `author` | This is you! Its value goes into `LICENSE`, `pyproject.toml`, and other files. | `Our Company` |
+| `email` | The email address to contact the project maintainer. | `email@example.com` |
 
 
 ## Build and view documentation 📖

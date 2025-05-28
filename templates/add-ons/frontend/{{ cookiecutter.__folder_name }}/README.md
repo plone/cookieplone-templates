@@ -216,6 +216,6 @@ make acceptance-test
 
 The project is licensed under the MIT license.
 
-## Credits and Acknowledgements 🙏
+## Credits and acknowledgements 🙏
 
 {{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!
