@@ -6,7 +6,6 @@
   "email": "collective@plone.org",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "language_code": "en",
-  "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ 'No' | latest_plone }}",
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
@@ -28,7 +27,6 @@
   "__python_version_identifier": "{{ cookiecutter.__python_version | replace('.', '') }}",
   "_copy_without_render": [],
   "_extensions": [
-    "cookieplone.filters.use_prerelease_versions",
     "cookieplone.filters.extract_host",
     "cookieplone.filters.image_prefix",
     "cookieplone.filters.pascal_case",

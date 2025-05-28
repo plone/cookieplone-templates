@@ -1,5 +1,5 @@
 ALLOWED_MISSING = []
-ALLOWED_NOT_USED = ["__feature_headless", "__generator_sha", "use_prerelease_versions"]
+ALLOWED_NOT_USED = ["__feature_headless", "__generator_sha"]
 
 
 def test_no_missing_variables(variables_missing):

@@ -1,5 +1,5 @@
 ALLOWED_MISSING = ["feature_headless", "initialize_git"]
-ALLOWED_NOT_USED = ["__devops_host", "__devops_swarm_public_network", "__devops_traefik_docker_network", "__devops_traefik_stack_include_ui", "__gha_version_setup_node"]
+ALLOWED_NOT_USED = ["__devops_host"]
 
 
 def test_no_missing_variables(variables_missing):
