@@ -47,6 +47,8 @@ jobs:
         include:
           - name: "project"
             path: "templates/projects/monorepo"
+          - name: "classic_project"
+            path: "templates/projects/classic"
           - name: "backend_addon"
             path: "templates/add-ons/backend"
           - name: "frontend_addon"

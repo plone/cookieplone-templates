@@ -1,0 +1,35 @@
+{
+  "@id": "/Plone",
+  "@type": "Plone Site",
+  "UID": "plone_site_root",
+  "allow_discussion": null,
+  "contributors": [],
+  "creators": [
+    "admin"
+  ],
+  "description": "Welcome to your new Plone site!",
+  "effective": null,
+  "exclude_from_nav": false,
+  "expires": null,
+  "exportimport.constrains": {},
+  "id": "Plone",
+  "is_folderish": true,
+  "items_total": 1,
+  "language": "##DEFAULT##",
+  "lock": {
+    "locked": false,
+    "stealable": true
+  },
+  "review_state": null,
+  "rights": null,
+  "subjects": [],
+  "table_of_contents": false,
+  "text": {
+    "content-type": "text/html",
+    "data": "<h3 tabindex=\"0\" id=\"find-out-more-about-plone\">Find out more about Plone</h3>\r\n<p>Plone is a powerful content management system built on a rock-solid application stack written in the <em>Python</em> and <em>JavaScript</em> programming languages.</p>\r\n<ul>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://plone.org/why-plone/features\" class=\"external\">The features of Plone</a></li>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://docs.plone.org/\" class=\"external\">Plone Documentation</a></li>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://training.plone.org/\" class=\"external\">Plone Training</a></li>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://community.plone.org/\" class=\"external\">Plone Community Forum</a></li>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://github.com/collective/awesome-plone#readme\" class=\"external\">Add-ons for Plone (backend)</a></li>\r\n<li><a rel=\"noopener noreferrer\" href=\"https://github.com/collective/awesome-volto#readme\" class=\"external\">Add-ons for Volto (frontend)</a></li>\r\n</ul>\r\n<p><a href=\"https://plone.org/foundation\" data-linktype=\"external\" data-val=\"https://plone.org/foundation\"><img src=\"resolveuid/a58ccead718140c1baa98d43595fc3e6/@@images/image/teaser\" class=\"image-richtext picture-variant-medium\" data-linktype=\"image\" data-scale=\"teaser\" data-val=\"a58ccead718140c1baa98d43595fc3e6\" data-picturevariant=\"medium\"></a></p>\r\n<p></p>",
+    "encoding": "utf-8"
+  },
+  "title": "Project Title",
+  "type_title": "Plone Site",
+  "workflow_history": {}
+}

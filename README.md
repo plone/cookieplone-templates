@@ -33,14 +33,17 @@ uvx cookieplone
 
 ```text
 [1/1] Select a template
-  1 - A Plone Project
-  2 - Backend Add-on for Plone
-  3 - Frontend Add-on
+  1 - Volto Project
+  2 - Classic UI Project
+  3 - Backend Add-on for Plone
+  4 - Frontend Add-on for Plone
+  5 - Documentation scaffold for Plone projects
 ```
 
 | Template | Description | `README.md` |
 | --------- | --------- | --------- |
-| `A Plone Project`  | Create a new Plone project with backend and frontend components. | [Read more](./templates/projects/monorepo/README.md) |
+| `Volto Project`  | Create a new Plone project that uses the Volto frontend. | [Read more](./templates/projects/monorepo/README.md) |
+| `Classic UI Project`  | Create a new Plone project that uses Classic UI. | [Read More](./templates/projects/classic/README.md) |
 | `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read more](./templates/add-ons/backend/README.md) |
 | `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read more](./templates/add-ons/frontend/README.md) |
 | `Documenation scaffold`  | Create a documentation scaffold for your package. | [Read more](./templates/add-ons/documentation_starter/README.md) |
