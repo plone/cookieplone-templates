@@ -1,11 +1,11 @@
-# Cookieplone Plone Project 🌟
+# Cookieplone Plone Classic UI Project 🌟
 
 [![Cookieplone Templates: CI](https://github.com/plone/cookieplone-templates/actions/workflows/main.yml/badge.svg)](https://github.com/plone/cookieplone-templates/blob/main/.github/workflows/main.yml)
 [![Built with Cookieplone](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 [![License](https://img.shields.io/github/license/plone/cookieplone-templates)](../../../LICENSE)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Welcome to **Cookieplone Plone Classic Project**!
+Welcome to **Cookieplone Plone Classic UI Project**!
 Your one-stop solution to kickstart [Plone](https://plone.org/) 6 projects with ease and efficiency.
 Powered by [Cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), these templates are designed to save you time and ensure that you get started on the right foot. 🚀
 

@@ -30,7 +30,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ),
         (
             "sub/classic_project_settings",
-            "Project settings to be applied on top of a classic project",
+            "Project settings to be applied on top of a Classic UI project",
             True,
         ),
     ],

@@ -9,7 +9,7 @@
     "classic_project": {
       "path": "./templates/projects/classic",
       "title": "A Plone Classic UI Project",
-      "description": "Create a new Plone project that uses Classic UI (Python only project)",
+      "description": "Create a new Plone project that uses Classic UI",
       "hidden": false
     },
     "backend_addon": {
@@ -44,8 +44,8 @@
     },
     "sub/classic_project_settings": {
       "path": "./templates/sub/classic_project_settings",
-      "title": "Project settings to be applied on top of a classic project",
-      "description": "Sub template with configuration/settings for a classic project.",
+      "title": "Project settings to be applied on top of a Classic UI project",
+      "description": "Sub template with configuration/settings for a Classic UI project.",
       "hidden": true
     },
     "documentation_starter": {
