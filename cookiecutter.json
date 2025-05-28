@@ -2,13 +2,13 @@
   "templates": {
     "project": {
       "path": "./templates/projects/monorepo",
-      "title": "A Plone Volto Project",
+      "title": "Volto Project",
       "description": "Create a new Plone project that uses the Volto frontend",
       "hidden": false
     },
     "classic_project": {
       "path": "./templates/projects/classic",
-      "title": "A Plone Classic UI Project",
+      "title": "Classic UI Project",
       "description": "Create a new Plone project that uses Classic UI",
       "hidden": false
     },
