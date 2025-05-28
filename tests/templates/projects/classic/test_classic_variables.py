@@ -1,5 +1,5 @@
-ALLOWED_MISSING = ["feature_headless", "frontend_addon_name", "initialize_git", "volto_version"]
-ALLOWED_NOT_USED = ["__devops_host", "__devops_swarm_public_network", "__devops_traefik_docker_network", "__devops_traefik_stack_include_ui", "__gha_version_setup_node", "__node_version", "__npm_package_name", "__version_frontend_package", "__version_mrs_developer", "__version_plone_scripts", "__version_plone_volto", "__version_pnpm", "__version_release_it"]
+ALLOWED_MISSING = ["feature_headless", "initialize_git"]
+ALLOWED_NOT_USED = ["__devops_host", "__devops_swarm_public_network", "__devops_traefik_docker_network", "__devops_traefik_stack_include_ui", "__gha_version_setup_node"]
 
 
 def test_no_missing_variables(variables_missing):

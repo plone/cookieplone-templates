@@ -22,10 +22,9 @@ def context(annotate_context, cookieplone_root) -> dict:
             "language_code": "en",
             "github_organization": "collective",
             "use_prerelease_versions": "No",
-            "__node_version": "20",
         },
         cookieplone_root,
-        "project_settings",
+        "classic_project_settings",
     )
 
 
@@ -36,5 +35,5 @@ def bad_context() -> dict:
         "title": "Frontend project",
         "author": "Plone Collective",
         "email": "collective@plone.org",
-        "volto_version": "---",
+        "plone_version": "---",
     }

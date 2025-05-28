@@ -1,5 +1,5 @@
 ALLOWED_MISSING = []
-ALLOWED_NOT_USED = ["__feature_headless", "__generator_sha", "__node_version", "__npm_package_name", "__version_frontend_package", "__version_mrs_developer", "__version_plone_scripts", "__version_plone_volto", "__version_pnpm", "__version_release_it"]
+ALLOWED_NOT_USED = ["__feature_headless", "__generator_sha", "use_prerelease_versions"]
 
 
 def test_no_missing_variables(variables_missing):
