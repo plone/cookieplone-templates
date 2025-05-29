@@ -131,6 +131,18 @@ def generate_sub_classic_project_settings(context: OrderedDict, output_dir: Path
         f"{TEMPLATES_FOLDER}/sub/classic_project_settings", output_dir, folder_name, context
     )
 
+def generate_sub_ci_gitlab(context: OrderedDict, output_dir: Path):
+    """ Configure the GitLab CI/CD"""
+    # Use the same base folder
+    folder_name = output_dir.name
+    output_dir = output_dir.parent
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/sub/ci_gitlab",
+        output_dir,
+        folder_name,
+        context,
+    )
+
 
 def run_actions(actions: list, output_dir: Path):
     for func, title, enabled in actions:
