@@ -1,7 +1,9 @@
 """Init and utils."""
 
-import logging
 from zope.i18nmessageid import MessageFactory
+
+import logging
+
 
 __version__ = "{{ cookiecutter.__version_package }}"
 
