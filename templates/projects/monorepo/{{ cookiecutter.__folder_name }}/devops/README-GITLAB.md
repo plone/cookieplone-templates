@@ -14,6 +14,7 @@ Perhaps this is not the most secure setup, but it works.
 
 [Register a runner](https://docs.gitlab.com/runner/register/) in one of your servers.
 Then modify its configuration file `/etc/gitlab-runner/config.toml` as needed.
+The following is an example configuration file.
 
 ```toml
 concurrent = 1
