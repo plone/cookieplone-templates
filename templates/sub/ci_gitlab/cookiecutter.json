@@ -1,0 +1,31 @@
+{
+  "title": "Project Title",
+  "project_slug": "{{ cookiecutter.title | slugify }}",
+  "author": "Plone Foundation",
+  "email": "collective@plone.org",
+  "github_organization": "collective",
+  "container_registry": ["github", "dockerhub", "gitlab"],
+  "devops_cache": ["0", "1"],
+  "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
+  "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+  "__folder_name": "{{ cookiecutter.project_slug }}",
+  "__container_registry_prefix": "registry.gitlab.com/",
+  "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
+  "__gha_version_checkout": "v4",
+  "__gha_version_docker_metadata": "v5",
+  "__gha_version_docker_qemu": "v3",
+  "__gha_version_docker_buildx": "v3",
+  "__gha_version_docker_login": "v3",
+  "__gha_version_docker_build_push": "v4",
+  "__devops_varnish_version": "7.6",
+  "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
+  "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
+  "_copy_without_render": [],
+  "_extensions": [
+    "cookieplone.filters.extract_host",
+    "cookieplone.filters.image_prefix",
+    "cookieplone.filters.package_path"
+  ],
+  "__cookieplone_repository_path": "",
+  "__cookieplone_template": ""
+}

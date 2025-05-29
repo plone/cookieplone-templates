@@ -53,6 +53,12 @@
       "title": "Documentation scaffold for Plone projects",
       "description": "Create a new documentation scaffold for Plone projects",
       "hidden": false
+    },
+    "sub/ci_gitlab": {
+      "path": "./templates/sub/ci_gitlab",
+      "title": "GitLab CI settings for Plone projects",
+      "description": "Subtemplate with configuration and settings for GitLab CI.",
+      "hidden": true
     }
   }
 }
