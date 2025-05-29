@@ -6,7 +6,8 @@ Follow each step carefully to correctly configure your environment and secrets.
 
 ## Runner setup 🛠️
 
-If you use your own runners, you will need to configure your runners to do "Docker-in-Docker". You can read about it in the [GitLab Documentation](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html).
+If you use your own runners, you'll need to configure them to use the "Docker-in-Docker" method to enable Docker commands for your CI/CD jobs.
+You can read about it in the [GitLab Documentation](https://docs.gitlab.com/ci/docker/using_docker_build/#use-docker-in-docker).
 
 A GitLab runner configuration like this works out of the box. Perhaps this is not the most secure setup, but it works.
 
