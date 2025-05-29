@@ -84,7 +84,7 @@ format:  ## Format codebase
 
 .PHONY: lint
 lint:  ## Format codebase
-	@echo "Lint the codebasecodebase"
+	@echo "Lint the codebase"
 	$(MAKE) -C "./backend/" lint
 
 .PHONY: check
