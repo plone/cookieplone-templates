@@ -9,7 +9,8 @@ Follow each step carefully to correctly configure your environment and secrets.
 If you use your own runners, you'll need to configure them to use the "Docker-in-Docker" method to enable Docker commands for your CI/CD jobs.
 You can read about it in the [GitLab Documentation](https://docs.gitlab.com/ci/docker/using_docker_build/#use-docker-in-docker).
 
-A GitLab runner configuration like this works out of the box. Perhaps this is not the most secure setup, but it works.
+A GitLab runner configuration like this works out of the box.
+Perhaps this is not the most secure setup, but it works.
 
 [Register a runner](https://docs.gitlab.com/runner/register/) in one of your servers.
 Then modify its configuration file `/etc/gitlab-runner/config.toml` as needed.
