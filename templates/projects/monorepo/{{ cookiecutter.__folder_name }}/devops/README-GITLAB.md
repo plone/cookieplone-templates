@@ -49,8 +49,8 @@ shutdown_timeout = 0
     volumes = ["/var/run/docker.sock:/var/run/docker.sock", "/certs/client", "/cache"]
     shm_size = 0
     network_mtu = 0
-
 ```
+
 
 ## Repository setup 🛠️
 
