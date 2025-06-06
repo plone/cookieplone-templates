@@ -29,7 +29,6 @@ ROOT_FILES = [
     ".prettierrc",
     ".stylelintrc",
     "cypress.config.js",
-    "jest-addon.config.js",
     "Makefile",
     "mrs.developer.json",
     "package.json",
@@ -42,7 +41,7 @@ ROOT_FILES = [
 PKG_SRC_FILES = [
     ".gitignore",
     ".release-it.json",
-    "babel.config.js",
+    "babel.config.cjs",
     "CHANGELOG.md",
     "locales/de/LC_MESSAGES/volto.po",
     "locales/en/LC_MESSAGES/volto.po",
