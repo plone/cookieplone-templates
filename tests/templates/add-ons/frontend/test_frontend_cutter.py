@@ -29,7 +29,6 @@ ROOT_FILES = [
     ".prettierrc",
     ".stylelintrc",
     "cypress.config.js",
-    "jest-addon.config.js",
     "Makefile",
     "mrs.developer.json",
     "package.json",
