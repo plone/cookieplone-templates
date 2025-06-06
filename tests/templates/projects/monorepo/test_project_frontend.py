@@ -19,7 +19,6 @@ EXPECTED_FILES = [
     ".prettierrc",
     ".stylelintrc",
     "cypress.config.js",
-    "jest-addon.config.js",
     "Dockerfile",
     "Makefile",
     "mrs.developer.json",

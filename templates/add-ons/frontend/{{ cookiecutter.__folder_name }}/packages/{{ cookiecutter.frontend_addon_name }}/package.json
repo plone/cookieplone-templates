@@ -19,6 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "scripts": {
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
     "dry-release": "release-it --dry-run",
@@ -34,6 +35,8 @@
   },
   "devDependencies": {
     "@plone/scripts": "{{ cookiecutter.__version_plone_scripts }}",
-    "release-it": "{{ cookiecutter.__version_release_it }}"
+    "@testing-library/react": "{{ cookiecutter.__version_testing_library_react }}",
+    "release-it": "{{ cookiecutter.__version_release_it }}",
+    "vitest": "{{ cookiecutter.__version_vitest }}"
   }
 }
