@@ -17,7 +17,9 @@ variables:
   # DOCKER_HOST: tcp://docker:2376
   DOCKER_TLS_CERTDIR: "/certs"
   CONTAINER_BACKEND_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/backend
+  {%- if cookiecutter.feature_headless == '1' %}
   CONTAINER_FRONTEND_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/frontend
+  {%- endif %}
   {%- if cookiecutter.devops_cache == '1' %}
   CONTAINER_VARNISH_RELEASE_IMAGE: $CI_REGISTRY_IMAGE/varnish
   {%- endif %}
@@ -33,6 +35,7 @@ check-backend:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
+{%- if cookiecutter.feature_headless == '1' %}
 check-frontend:
   image: node:22-alpine
   stage: check
@@ -47,7 +50,7 @@ check-frontend:
 
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-
+{%- endif %}
 
 test-backend:
   stage: test
@@ -62,6 +65,7 @@ test-backend:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
+{%- if cookiecutter.feature_headless == '1' %}
 test-frontend:
   image: node:22-alpine
   stage: test
@@ -75,6 +79,7 @@ test-frontend:
     - make ci-test
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+{%- endif %}
 
 build-backend:
   stage: build
@@ -89,6 +94,7 @@ build-backend:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
+{%- if cookiecutter.feature_headless == '1' %}
 build-frontend:
   stage: build
   before_script:
@@ -102,6 +108,7 @@ build-frontend:
     - docker push $CONTAINER_FRONTEND_RELEASE_IMAGE:latest
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+{%- endif %}
 
 {%- if cookiecutter.devops_cache == '1' %}
 build-varnish:
