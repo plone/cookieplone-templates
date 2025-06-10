@@ -28,13 +28,13 @@ check-backend:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
   script:
     - cd backend
-    - make check
+    - make lint
 
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 check-frontend:
-  image: node:20-alpine
+  image: node:22-alpine
   stage: check
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
@@ -51,7 +51,7 @@ check-frontend:
 
 test-backend:
   stage: test
-  image: python:3.11-bookworm
+  image: python:3.12-bookworm
   before_script:
     - apt update
     - apt install build-essential python3 python3-dev git -y
@@ -63,7 +63,7 @@ test-backend:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 test-frontend:
-  image: node:20-alpine
+  image: node:22-alpine
   stage: test
   before_script:
     - apk add --no-cache make bash python3 ncurses openssh-client-common git
