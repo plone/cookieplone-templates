@@ -38,6 +38,9 @@ dependencies = [
     "plone.restapi",
     "plone.volto",
     {%- endif %}
+    {% if cookiecutter.__feature_headless == '0' -%}
+    "z3c.jbot",
+    {%- endif %}
 ]
 
 [project.optional-dependencies]
