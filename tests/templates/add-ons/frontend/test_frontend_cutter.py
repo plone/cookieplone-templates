@@ -41,7 +41,7 @@ ROOT_FILES = [
 PKG_SRC_FILES = [
     ".gitignore",
     ".release-it.json",
-    "babel.config.cjs",
+    "babel.config.js",
     "CHANGELOG.md",
     "locales/de/LC_MESSAGES/volto.po",
     "locales/en/LC_MESSAGES/volto.po",
@@ -54,6 +54,7 @@ PKG_SRC_FILES = [
     "src/index.js",
     "towncrier.toml",
     "tsconfig.json",
+    "vitest.config.mjs",
 ]
 
 
