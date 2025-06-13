@@ -15,6 +15,9 @@ context: OrderedDict = {{cookiecutter}}
 # PATH OF CONTENT TO BE REMOVED
 FEATURES_TO_REMOVE = {
     "feature_headless": [
+        "browser",
+    ],
+    "feature_classic": [
         "serializers",
     ]
 }
@@ -30,6 +33,11 @@ TEMPLATES_FOLDER = "templates"
 def handle_feature_headless(context: OrderedDict, output_dir: Path):
     output_dir = output_dir / "src" / "packagename"
     files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_headless"])
+
+
+def handle_feature_classic(context: OrderedDict, output_dir: Path):
+    output_dir = output_dir / "src" / "packagename"
+    files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_classic"])
 
 
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
@@ -67,7 +75,7 @@ def main():
     """Final fixes."""
     output_dir = Path().cwd()
     is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
-    remove_headless = not int(
+    feature_headless = int(
         context.get("feature_headless")
     )  # {{ cookiecutter.__feature_headless }}
     create_namespace_packages = not is_subtemplate
@@ -81,8 +89,13 @@ def main():
     actions = [
         [
             handle_feature_headless,
-            "Remove files used in headless setup",
-            remove_headless,
+            "Remove files used in classic UI setup",
+            feature_headless,
+        ],
+        [
+            handle_feature_classic,
+            "Remove files used in classic UI setup",
+            not feature_headless,
         ],
         [
             handle_create_namespace_packages,
