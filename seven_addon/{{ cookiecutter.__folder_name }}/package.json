@@ -51,7 +51,8 @@
       "@swc/core",
       "cypress",
       "esbuild",
-      "lightningcss-cli"
+      "lightningcss-cli",
+      "unrs-resolver"
     ]
   }
 }
