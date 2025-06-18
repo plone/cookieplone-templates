@@ -34,6 +34,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "__project_git_initialize": "1",
             "container_registry": "github",
             "devops_storage": "relstorage",
+            "ci_gitlab": "0"
         },
         cookieplone_root,
         "project",
@@ -106,6 +107,7 @@ def bad_context() -> dict:
         "github_organization": "plonegovbr",
         "container_registry": " ",  # error
         "devops_storage": " ",  # error
+        "ci_gitlab": "5",  # error"
     }
 
 

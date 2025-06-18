@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 9
+    assert len(all_templates) == 10
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -16,11 +16,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("classic_project", "Classic UI Project", False),
         ("backend_addon", "Backend Add-on for Plone", False),
         ("frontend_addon", "Frontend Add-on for Plone", False),
-        (
-            "documentation_starter",
-            "Documentation scaffold for Plone projects",
-            False
-        ),
+        ("documentation_starter", "Documentation scaffold for Plone projects", False),
         ("sub/cache", "Cache settings for a monorepo Plone project", True),
         ("sub/frontend_project", "A frontend project (used in Container images)", True),
         (
@@ -33,6 +29,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             "Project settings to be applied on top of a Classic UI project",
             True,
         ),
+        ("sub/ci_gitlab", "GitLab CI settings for Plone projects", True),
     ],
 )
 def test_template_settings(
