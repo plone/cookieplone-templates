@@ -38,6 +38,7 @@ dependencies = [
     "plone.classicui",
     {%- endif %}
     "plone.app.caching",
+    "z3c.jbot",
 ]
 
 [project.optional-dependencies]
