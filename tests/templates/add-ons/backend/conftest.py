@@ -39,7 +39,6 @@ PKG_SRC_FILES = [
     "profiles/default/metadata.xml",
     "profiles/default/repositorytool.xml",
     "profiles/default/rolemap.xml",
-    "profiles/default/theme.xml",
     "profiles/default/types.xml",
     "profiles/default/types/.gitkeep",
     "profiles/uninstall/browserlayer.xml",
