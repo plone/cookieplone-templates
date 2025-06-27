@@ -34,7 +34,6 @@ endif
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
-export UV_PYTHON=$(BIN_FOLDER)/python
 
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
@@ -86,15 +85,15 @@ remove-data: ## Remove all content
 
 .PHONY: start
 start: $(VENV_FOLDER) instance/etc/zope.ini ## Start a Plone instance on localhost:8080
-	@uv run runwsgi instance/etc/zope.ini
+	@$(BIN_FOLDER)/runwsgi instance/etc/zope.ini
 
 .PHONY: console
 console: $(VENV_FOLDER) instance/etc/zope.ini ## Start a console into a Plone instance
-	@uv run zconsole debug instance/etc/zope.conf
+	@$(BIN_FOLDER)/zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
 create-site: $(VENV_FOLDER) instance/etc/zope.ini ## Create a new site from scratch
-	@uv run zconsole run instance/etc/zope.conf ./scripts/create_site.py
+	@$(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 # QA
 .PHONY: lint
@@ -119,16 +118,16 @@ check: format lint ## Check and fix code base according to Plone standards
 .PHONY: i18n
 i18n: $(VENV_FOLDER) ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	@uv run python -m {{ cookiecutter.python_package_name }}.locales
+	@$(BIN_FOLDER)/python -m {{ cookiecutter.python_package_name }}.locales
 
 # Tests
 .PHONY: test
 test: $(VENV_FOLDER) ## run tests
-	@uv run pytest
+	@$(BIN_FOLDER)/pytest
 
 .PHONY: test-coverage
 test-coverage: $(VENV_FOLDER) ## run tests with coverage
-	@uv run pytest --cov={{cookiecutter.python_package_name}} --cov-report term-missing
+	@$(BIN_FOLDER)/pytest --cov={{cookiecutter.python_package_name}} --cov-report term-missing
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)
