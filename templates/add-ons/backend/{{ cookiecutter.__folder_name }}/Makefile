@@ -32,7 +32,9 @@ PLONE_VERSION := {{ cookiecutter.plone_version }}
 endif
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
+export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
+export UV_PYTHON=$(BIN_FOLDER)/python
 
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
