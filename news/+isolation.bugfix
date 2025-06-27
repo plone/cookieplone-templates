@@ -1,1 +1,1 @@
-In the backend Makefile, set VIRTUAL_ENV and UV_PYTHON to make sure uv uses the correct virtualenv and Python. @davisagli
+Make sure commands in the backend Makefile always use the Python virtualenv it created. @davisagli
