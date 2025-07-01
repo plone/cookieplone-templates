@@ -1,0 +1,1 @@
+Make sure commands in the backend Makefile always use the Python virtualenv it created. @davisagli
