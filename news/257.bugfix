@@ -1,0 +1,1 @@
+Avoid locking issue when creating site while using filestorage. @tlotze
