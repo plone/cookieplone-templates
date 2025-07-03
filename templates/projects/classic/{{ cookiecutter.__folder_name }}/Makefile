@@ -124,12 +124,12 @@ stack-start:  ## Local Stack: Start Services
 .PHONY: stack-create-site
 stack-create-site:  ## Local Stack: Create a new site
 	@echo "Create a new site in the local Docker stack"
-{%- if cookiecutter.storage == 'filestorage' %}
+{%- if cookiecutter.devops_storage == 'filestorage' %}
 	@echo "(Stack must not run while doing this.)"
 	PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run backend ./docker-entrypoint.sh create-site
-+{%- else %}
-	PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
-+{%- endif %}
+{%- else %}
+        PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
+{%- endif %}
 
 .PHONY: stack-status
 stack-status:  ## Local Stack: Check Status
