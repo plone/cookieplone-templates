@@ -115,16 +115,17 @@ build-images:  ## Build container images
 ###########################################
 # Local Stack
 ###########################################
+.PHONY: stack-create-site
+stack-create-site:  ## Local Stack: Create a new site
+	@echo "Create a new site in the local Docker stack"
+	@echo "(Stack must not be running already.)"
+	PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
+
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
 	PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://{{ cookiecutter.__project_slug }}.localhost"
-
-.PHONY: stack-create-site
-stack-create-site:  ## Local Stack: Create a new site
-	@echo "Create a new site in the local Docker stack"
-	PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
 
 .PHONY: stack-status
 stack-status:  ## Local Stack: Check Status

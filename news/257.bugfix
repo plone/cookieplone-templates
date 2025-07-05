@@ -1,0 +1,1 @@
+Avoid locking issue when creating stack site while using filestorage. @davisagli
