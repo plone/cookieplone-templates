@@ -69,8 +69,8 @@ Deploy a local Docker Compose environment that includes the following.
 Run the following commands in a shell session.
 
 ```shell
-make stack-start
 make stack-create-site
+make stack-start
 ```
 
 And... you're all set! Your Plone site is up and running locally! 🚀
