@@ -25,8 +25,6 @@ PKG_SRC_FILES = [
     "__init__.py",
     "configure.zcml",
     "content/__init__.py",
-    "controlpanel/__init__.py",
-    "controlpanel/configure.zcml",
     "dependencies.zcml",
     "indexers/__init__.py",
     "indexers/configure.zcml",
