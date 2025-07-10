@@ -44,13 +44,15 @@
       "react-refresh": "^0.14.2"
     },
     "ignoredBuiltDependencies": [
+      "@parcel/watcher",
       "@swc/core",
       "core-js",
       "core-js-pure",
       "cypress",
-      "es5-ext",
       "esbuild",
+      "es5-ext",
       "full-icu",
+      "unrs-resolver",
       "why"
     ],
     "onlyBuiltDependencies": [
