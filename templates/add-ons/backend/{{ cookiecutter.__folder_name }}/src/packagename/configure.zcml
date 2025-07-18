@@ -14,9 +14,9 @@
 
   <include file="dependencies.zcml" />
   <include file="profiles.zcml" />
-  <include file="permissions.zcml"/>
+  <include file="permissions.zcml" />
 
-  <include package=".controlpanel" />
+  <include package=".controlpanels" />
   <include package=".indexers" />
   {%- if cookiecutter.__feature_headless == '1' %}
   <include package=".serializers" />
