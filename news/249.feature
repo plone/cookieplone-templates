@@ -1,0 +1,1 @@
+Add browser-module with jbot- and static-setup for classic addons and projects. @pbauer
