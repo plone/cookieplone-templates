@@ -20,5 +20,6 @@
     "cookieplone.filters.package_path"
   ],
   "__cookieplone_repository_path": "",
-  "__cookieplone_template": ""
+  "__cookieplone_template": "",
+  "feature_headless": ["0", "1"]
 }
