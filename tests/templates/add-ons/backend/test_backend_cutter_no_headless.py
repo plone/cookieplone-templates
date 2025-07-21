@@ -55,3 +55,19 @@ def test_pkg_src_headless_files_not_generated(
     src_path = cutter_result.project_path / "src" / package_path
     path = src_path / pkg_file_path_headless
     assert path.exists() is False
+
+
+GENERATED_FILES = [
+    "browser/configure.zcml",
+    "browser/overrides/.gitkeep",
+    "browser/static/.gitkeep",
+]
+
+
+@pytest.mark.parametrize("file_path", GENERATED_FILES)
+def test_created_files_for_classic(cutter_result, file_path: str):
+    package_path = cutter_result.context["__package_path"]
+    src_path = cutter_result.project_path / "src" / package_path
+    path = src_path / file_path
+    assert path.exists()
+    assert path.is_file()
