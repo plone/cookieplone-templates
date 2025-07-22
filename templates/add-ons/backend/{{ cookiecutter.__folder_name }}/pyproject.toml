@@ -191,3 +191,6 @@ parallel = true
 omit = [
   "src/{{ cookiecutter.__package_path }}/locales/*.py",
 ]
+
+[tool.zest-releaser]
+python-file-with-version = "src/{{ cookiecutter.__package_path }}/__init__.py"
