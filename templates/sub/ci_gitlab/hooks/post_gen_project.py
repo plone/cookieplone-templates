@@ -14,7 +14,7 @@ def main():
     if context.get("feature_headless", "0") == "0":
         # We need to remove the frontend folder, because
         # We are using the classic template and it doesn't have it
-        shutil.rmtree(output_path / "frontend", dir_fd=True)
+        shutil.rmtree(output_path / "frontend")
 
 
 if __name__ == "__main__":
