@@ -161,7 +161,7 @@ def generate_sub_ci_gitlab(context: OrderedDict, output_dir: Path):
     folder_name = output_dir.name
     output_dir = output_dir.parent
     # Pass the feature_headless option to the subtemplate
-    context['feature_headless'] = context['__feature_headless']
+    context["feature_headless"] = context["__feature_headless"]
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/sub/ci_gitlab",
         output_dir,

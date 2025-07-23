@@ -23,7 +23,6 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
                 assert match == {None}, msg
 
 
-
 @pytest.mark.parametrize(
     "file_path",
     [

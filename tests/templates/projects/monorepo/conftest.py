@@ -34,7 +34,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "__project_git_initialize": "1",
             "container_registry": "github",
             "devops_storage": "relstorage",
-            "ci_gitlab": "0"
+            "ci_gitlab": "0",
         },
         cookieplone_root,
         "project",
@@ -179,6 +179,7 @@ def cutter_devops_result_no_gitlab(
     return cookies_module.bake(
         extra_context=context_devops_no_gitlab, template=template_path
     )
+
 
 @pytest.fixture(scope="module")
 def cutter_devops_result_gitlab(template_path, cookies_module, context_devops_gitlab):

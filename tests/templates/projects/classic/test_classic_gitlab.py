@@ -2,7 +2,6 @@
 
 import pytest
 
-
 GITLAB_FILES = [
     ".gitlab-ci.yml",
 ]
@@ -22,4 +21,3 @@ def test_project_no_gitlab_files(cutter_devops_result_no_gitlab, filepath: str):
     folder = cutter_devops_result_no_gitlab.project_path
     path = folder / filepath
     assert path.exists() is False
-
