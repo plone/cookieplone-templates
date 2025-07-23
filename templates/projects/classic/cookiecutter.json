@@ -144,7 +144,7 @@
     ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
     ["sub/classic_project_settings", "Classic Setup Project Settings", "1"],
-    ["sub/ci_gitlab", "CI/CD configuration that uses GitLab CI/CD", "1"]
+    ["sub/ci_gitlab", "CI/CD configuration that uses GitLab CI/CD", "{{cookiecutter.ci_gitlab}}"]
   ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": "classic",
