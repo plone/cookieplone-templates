@@ -148,3 +148,35 @@ def cutter_result_devops_no_cache(
     return cookies_module.bake(
         extra_context=context_devops_no_cache, template=template_path
     )
+
+@pytest.fixture(scope="session")
+def context_devops_gitlab(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["ci_gitlab"] = "1"
+    return new_context
+
+
+@pytest.fixture(scope="session")
+def context_devops_no_gitlab(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["ci_gitlab"] = "0"
+    return new_context
+
+
+@pytest.fixture(scope="module")
+def cutter_devops_result_no_gitlab(
+    template_path, cookies_module, context_devops_no_gitlab
+):
+    """Cookiecutter result."""
+    return cookies_module.bake(
+        extra_context=context_devops_no_gitlab, template=template_path
+    )
+
+@pytest.fixture(scope="module")
+def cutter_devops_result_gitlab(template_path, cookies_module, context_devops_gitlab):
+    """Cookiecutter result."""
+    return cookies_module.bake(
+        extra_context=context_devops_gitlab, template=template_path
+    )
