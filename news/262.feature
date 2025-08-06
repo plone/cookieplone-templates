@@ -1,1 +1,1 @@
-add version marker file for zest.releaser @erral
+Reference zest.releaser to the file where the Python version is determined. Add make target "release". @erral @ksuess
