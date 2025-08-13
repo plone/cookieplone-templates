@@ -18,6 +18,7 @@
   "devops_ansible": ["1", "0"],
   "devops_gha_deploy": ["1", "0"],
   "initialize_documentation": ["1", "0"],
+  "ci_gitlab": ["1", "0"],
   "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
@@ -120,6 +121,11 @@
       "__prompt__": "Would you like to add a documentation scaffold to your project?",
       "1": "Yes",
       "0": "No"
+    },
+    "ci_gitlab": {
+      "__prompt__": "Would you like to add CI/CD configuration using GitLab CI/CD?",
+      "1": "Yes",
+      "0": "No"
     }
   },
   "_copy_without_render": [
@@ -150,7 +156,8 @@
       "{{cookiecutter.initialize_documentation}}"
     ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
-    ["sub/project_settings", "Setup Project Settings", "1"]
+    ["sub/project_settings", "Setup Project Settings", "1"],
+    ["sub/ci_gitlab", "CI/CD configuration that uses GitLab CI/CD", "{{cookiecutter.ci_gitlab}}"]
   ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": "project",

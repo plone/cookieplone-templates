@@ -19,7 +19,7 @@ FEATURES_TO_REMOVE = {
     ],
     "feature_classic": [
         "serializers",
-    ]
+    ],
 }
 
 DOCUMENTATION_STARTER_REMOVE = [

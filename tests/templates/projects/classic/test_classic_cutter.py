@@ -1,4 +1,3 @@
-
 """Test cookiecutter generation."""
 
 from pathlib import Path

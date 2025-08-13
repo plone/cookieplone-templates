@@ -1,6 +1,5 @@
 """Test Generator: ./"""
 
-import json
 
 import pytest
 
