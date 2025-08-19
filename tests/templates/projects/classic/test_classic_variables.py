@@ -1,5 +1,5 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git"]
-ALLOWED_NOT_USED = ["__devops_host"]
+ALLOWED_MISSING = ["feature_headless", "frontend_addon_name", "initialize_git"]
+ALLOWED_NOT_USED = ["__devops_host", "__npm_package_name"]
 
 
 def test_no_missing_variables(variables_missing):
