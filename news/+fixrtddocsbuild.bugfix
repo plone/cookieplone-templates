@@ -1,0 +1,1 @@
+Fixed missing `SPHINXBUILD` env var from docs Makefile for RTD build. @sneridagh
