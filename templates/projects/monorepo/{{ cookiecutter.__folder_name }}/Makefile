@@ -58,7 +58,7 @@ frontend-test:  ## Test frontend codebase
 ###########################################
 .PHONY: backend-install
 backend-install:  ## Create virtualenv and install Plone
-	$(MAKE) -C "./backend/" install
+	cd ./backend/ && $(MAKE) install && cd ..
 	$(MAKE) backend-create-site
 
 .PHONY: backend-build
