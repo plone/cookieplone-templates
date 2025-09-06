@@ -46,10 +46,11 @@
     "overrides": {
       "react": "^19.0.0",
       "react-dom": "^19.0.0",
-      "rollup": "4.40.0"
+      "rollup": "^4.40.0"
     },
     "onlyBuiltDependencies": [
       "@swc/core",
+      "@tailwindcss/oxide",
       "cypress",
       "esbuild",
       "lightningcss-cli",
