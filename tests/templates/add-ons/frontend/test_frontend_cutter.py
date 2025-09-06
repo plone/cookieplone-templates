@@ -29,7 +29,6 @@ ROOT_FILES = [
     ".prettierrc",
     ".stylelintrc",
     "cypress.config.js",
-    "jest-addon.config.js",
     "Makefile",
     "mrs.developer.json",
     "package.json",
@@ -55,6 +54,7 @@ PKG_SRC_FILES = [
     "src/index.js",
     "towncrier.toml",
     "tsconfig.json",
+    "vitest.config.mjs",
 ]
 
 
