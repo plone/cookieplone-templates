@@ -1,0 +1,239 @@
+---
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:{{ cookiecutter.__devops_traefik_version }}
+
+    ports:
+      - 80:80
+      - 443:443
+
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=public
+        - traefik.http.services.traefik-public.loadbalancer.server.port=8000
+{%- if cookiecutter.__devops_traefik_stack_include_ui == 'yes' %}
+        ## Basic Authentication
+        ### Note: all dollar signs in the hash need to be doubled for escaping.
+        ### To create user:password pair, it's possible to use this command:
+        ### echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+        ### Defaults to admin:admin
+        - traefik.http.middlewares.admin-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
+        - traefik.http.routers.traefik-public-https.rule=Host(`traefik-{{ cookiecutter.hostname }}`)
+        - traefik.http.routers.traefik-public-https.entrypoints=https
+        - traefik.http.routers.traefik-public-https.tls=true
+        - traefik.http.routers.traefik-public-https.service=api@internal
+        - traefik.http.routers.traefik-public-https.middlewares=admin-auth
+{%- else %}
+        ## Basic Authentication
+        ### Note: all dollar signs in the hash need to be doubled for escaping.
+        ### To create user:password pair, it's possible to use this command:
+        ### echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+        ### Defaults to admin:admin
+        #- traefik.http.middlewares.admin-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
+        #- traefik.http.routers.traefik-public-https.rule=Host(`traefik-{{ cookiecutter.hostname }}`)
+        #- traefik.http.routers.traefik-public-https.entrypoints=https
+        #- traefik.http.routers.traefik-public-https.tls=true
+        #- traefik.http.routers.traefik-public-https.service=api@internal
+        #- traefik.http.routers.traefik-public-https.middlewares=admin-auth
+{%- endif %}
+
+        # GENERIC MIDDLEWARES
+        - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+        - traefik.http.middlewares.gzip.compress=true
+        - traefik.http.middlewares.gzip.compress.excludedcontenttypes=image/png, image/jpeg, font/woff2
+
+        # GENERIC ROUTERS
+        - traefik.http.routers.generic-https-redirect.entrypoints=http
+        - traefik.http.routers.generic-https-redirect.rule=HostRegexp(`{host:.*}`)
+        - traefik.http.routers.generic-https-redirect.priority=1
+        - traefik.http.routers.generic-https-redirect.middlewares=https-redirect
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - vol-traefik-certs:/certificates
+
+    command:
+      - --providers.docker
+      - --providers.docker.constraints=Label(`traefik.constraint-label`, `public`)
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.swarmmode
+      - --providers.docker.network={{ cookiecutter.__devops_traefik_docker_network }}
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --certificatesresolvers.le.acme.email={{ cookiecutter.email }}
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --accesslog
+      - --log
+      - --log.level=INFO
+      - --api
+
+    networks:
+      - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+
+{%- if cookiecutter.devops_cache == '1' %}
+
+  purger:
+    image: ghcr.io/kitconcept/cluster-purger:latest
+    environment:
+      PURGER_SERVICE_NAME: varnish
+      PURGER_SERVICE_PORT: 80
+      PURGER_PUBLIC_SITES: "['{{ cookiecutter.hostname }}']"
+    networks:
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+
+  varnish:
+    image: {{ cookiecutter.__container_image_prefix }}-varnish:${STACK_PARAM:-latest}
+    command:
+      - '-p'
+      - 'nuke_limit=2000'
+      - '-p'
+      - 'workspace_client=192k'
+      - '-p'
+      - 'workspace_backend=192k'
+    depends_on:
+      - traefik
+      - backend
+    networks:
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=public
+        # Services
+        - traefik.http.services.svc-varnish.loadbalancer.server.port=80
+        # Routers
+        ## Router: Varnish Public
+        - traefik.http.routers.rt-varnish-public.rule=Host(`{{ cookiecutter.hostname }}`)
+        - traefik.http.routers.rt-varnish-public.entrypoints=https
+        - traefik.http.routers.rt-varnish-public.tls=true
+        - traefik.http.routers.rt-varnish-public.tls.certresolver=le
+        - traefik.http.routers.rt-varnish-public.service=svc-varnish
+        - traefik.http.routers.rt-varnish-public.middlewares=gzip
+{%- endif %}
+
+  backend:
+    image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
+{%- if cookiecutter.devops_storage == 'relstorage' %}
+    environment:
+      RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
+    depends_on:
+      - db
+{%- elif cookiecutter.devops_storage == 'zeo' %}
+    environment:
+      ZEO_ADDRESS: "zeo:8100"
+    depends_on:
+      - zeo
+{%- else %}
+    volumes:
+      - vol-site-data:/data
+{%- endif %}
+    networks:
+      - {{ cookiecutter.__devops_swarm_public_network }}
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+    deploy:
+{%- if cookiecutter.devops_storage in ('relstorage', 'zeo') %}
+      replicas: 2
+{%- else %}
+      replicas: 1
+{%- endif %}
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=public
+        # Services
+        - traefik.http.services.svc-backend.loadbalancer.server.port=8080
+        # Middleware
+        ## VHM points to /Plone
+        - "traefik.http.middlewares.mw-backend-vhm-classic.addprefix.prefix=/VirtualHostBase/https/{{ cookiecutter.hostname }}/Plone/VirtualHostRoot/"
+
+        # Routes
+{%- if cookiecutter.devops_cache == '0' %}
+        ## From incoming directly to backend
+        - traefik.http.routers.rt-backend-public.rule=Host(`{{ cookiecutter.hostname }}`)
+        - traefik.http.routers.rt-backend-public.entrypoints=https
+        - traefik.http.routers.rt-backend-public.tls=true
+        - traefik.http.routers.rt-backend-public.tls.certresolver=le
+        - traefik.http.routers.rt-backend-public.service=svc-backend
+        - traefik.http.routers.rt-backend-public.middlewares=gzip,mw-backend-vhm-classic
+{%- endif %}
+{%- if cookiecutter.devops_cache == '1' %}
+        ## Router: from Varnish to backend (internal)
+        - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.hostname }}`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-backend-internal.entrypoints=http
+        - traefik.http.routers.rt-backend-internal.service=svc-backend
+        - traefik.http.routers.rt-backend-internal.middlewares=mw-backend-vhm-classic
+{%- endif %}
+
+{%- if cookiecutter.devops_storage == 'relstorage' %}
+
+  db:
+    image: postgres:{{ cookiecutter.__devops_db_version }}
+    environment:
+      POSTGRES_USER: plone
+      POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
+      POSTGRES_DB: plone
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1s
+        order: stop-first
+    volumes:
+      - vol-site-data:/var/lib/postgresql/data
+    networks:
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+{%- elif cookiecutter.devops_storage == 'zeo' %}
+
+  zeo:
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 1s
+        order: stop-first
+    volumes:
+      - vol-site-data:/data
+    networks:
+      - {{ cookiecutter.__devops_swarm_stack_network }}
+{%- endif %}
+
+volumes:
+  vol-traefik-certs: {}
+  vol-site-data:
+    driver_opts:
+      type: none
+      device: "/srv/{{ cookiecutter.__project_slug }}/data"
+      o: bind
+
+networks:
+  {{ cookiecutter.__devops_swarm_public_network }}:
+    external: true
+  {{ cookiecutter.__devops_swarm_stack_network }}:
+    internal: true
+    driver: overlay

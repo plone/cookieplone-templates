@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 7
+    assert len(all_templates) == 9
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -12,7 +12,8 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
 @pytest.mark.parametrize(
     "template_id,title,hidden",
     [
-        ("project", "A Plone Project", False),
+        ("project", "Volto Project", False),
+        ("classic_project", "Classic UI Project", False),
         ("backend_addon", "Backend Add-on for Plone", False),
         ("frontend_addon", "Frontend Add-on for Plone", False),
         (
@@ -25,6 +26,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "sub/project_settings",
             "Project settings to be applied on top of a mono repo project",
+            True,
+        ),
+        (
+            "sub/classic_project_settings",
+            "Project settings to be applied on top of a Classic UI project",
             True,
         ),
     ],

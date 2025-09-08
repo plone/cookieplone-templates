@@ -53,9 +53,9 @@ The table below describes the options you can customize using the [Cookiecutter 
 | Option                | Description                                                                                                                                           | Example                            |
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `title`               | Your add-on's human-readable name, capitals and spaces allowed.                                                                                       | `Plone Blog`                       |
-| `description`         | Describes your add-on and gets used in places like `README.md` and such.                                                                              | `Create awesome blogs with Plone.` |
-| `author`              | This is you! The value goes into places like `LICENSE`, `setup.py` and such.                                                                          | `Our Company`                      |
-| `email`               | The email address you want to identify yourself in the project.                                                                                       | `email@example.com`                |
+| `description`         | Describes your add-on and gets used in places like `README.md` and other files.                                                                              | `Create awesome blogs with Plone.` |
+| `author`              | This is you! Its value goes into places like `LICENSE`, `pyproject.toml` and other files.                                                                          | `Our Company`                      |
+| `email`               | The email address to contact the project maintainer.                                                                                       | `email@example.com`                |
 | `github_organization` | Used for GitHub and Docker repositories.                                                                                                              | `collective`                       |
 | `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces, or special characters are allowed. | `collective.blog`                  |
 

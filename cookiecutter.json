@@ -2,8 +2,14 @@
   "templates": {
     "project": {
       "path": "./templates/projects/monorepo",
-      "title": "A Plone Project",
-      "description": "Create a new Plone project with backend and frontend components",
+      "title": "Volto Project",
+      "description": "Create a new Plone project that uses the Volto frontend",
+      "hidden": false
+    },
+    "classic_project": {
+      "path": "./templates/projects/classic",
+      "title": "Classic UI Project",
+      "description": "Create a new Plone project that uses Classic UI",
       "hidden": false
     },
     "backend_addon": {
@@ -21,19 +27,25 @@
     "sub/cache": {
       "path": "./templates/sub/cache",
       "title": "Cache settings for a monorepo Plone project",
-      "description": "Sub template with cache settings to be applied to a project.",
+      "description": "Subtemplate with cache settings to be applied to a project.",
       "hidden": true
     },
     "sub/frontend_project": {
       "path": "./templates/sub/frontend_project",
       "title": "A frontend project (used in Container images)",
-      "description": "Sub template with configuration used in container images for frontend project.",
+      "description": "Subtemplate with configuration used in container images for frontend project.",
       "hidden": true
     },
     "sub/project_settings": {
       "path": "./templates/sub/project_settings",
       "title": "Project settings to be applied on top of a mono repo project",
-      "description": "Sub template with configuration/settings for a mono repo project.",
+      "description": "Subtemplate with configuration and settings for a mono repo project.",
+      "hidden": true
+    },
+    "sub/classic_project_settings": {
+      "path": "./templates/sub/classic_project_settings",
+      "title": "Project settings to be applied on top of a Classic UI project",
+      "description": "Subtemplate with configuration and settings for a Classic UI project.",
       "hidden": true
     },
     "documentation_starter": {

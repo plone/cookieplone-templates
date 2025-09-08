@@ -35,8 +35,8 @@ The table below describes the options you can customize using the [Cookiecutter 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | `Cache Settings`                |
-| `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | `Our Company`               |
-| `email`               | The email address you want to identify yourself in the project.                                                                                      | `email@example.com`         |
+| `author`              | This is you! Its value goes into places like ``LICENSE``, ``package.json`` and other files.                                                                     | `Our Company`               |
+| `email`               | The email address to contact the project maintainer.                                                                                      | `email@example.com`         |
 | `volto_version` | Volto version to be used. | `18.10.0`    |
 
 

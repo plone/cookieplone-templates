@@ -9,7 +9,7 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo
+TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo projects/classic
 SUB_TEMPLATES = sub/cache sub/frontend_project sub/project_settings
 
 # Python checks

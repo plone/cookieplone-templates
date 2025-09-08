@@ -108,7 +108,7 @@ format:  ## Format codebase
 
 .PHONY: lint
 lint:  ## Format codebase
-	@echo "Lint the codebasecodebase"
+	@echo "Lint the codebase"
 	$(MAKE) -C "./backend/" lint
 	$(MAKE) -C "./frontend/" lint
 
@@ -142,16 +142,17 @@ build-images:  ## Build container images
 ###########################################
 # Local Stack
 ###########################################
+.PHONY: stack-create-site
+stack-create-site:  ## Local Stack: Create a new site
+	@echo "Create a new site in the local Docker stack"
+	@echo "(Stack must not be running already.)"
+	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
+
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
 	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://{{ cookiecutter.__project_slug }}.localhost"
-
-.PHONY: stack-create-site
-stack-create-site:  ## Local Stack: Create a new site
-	@echo "Create a new site in the local Docker stack"
-	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
 
 .PHONY: stack-status
 stack-status:  ## Local Stack: Check Status

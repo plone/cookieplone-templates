@@ -1,9 +1,11 @@
 """Update locales."""
 
+from pathlib import Path
+
 import logging
 import re
 import subprocess
-from pathlib import Path
+
 
 logger = logging.getLogger("i18n")
 logger.setLevel(logging.DEBUG)

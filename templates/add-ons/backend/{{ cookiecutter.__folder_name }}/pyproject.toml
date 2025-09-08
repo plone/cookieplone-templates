@@ -38,6 +38,9 @@ dependencies = [
     "plone.restapi",
     "plone.volto",
     {%- endif %}
+    {% if cookiecutter.__feature_headless == '0' -%}
+    "z3c.jbot",
+    {%- endif %}
 ]
 
 [project.optional-dependencies]
@@ -51,6 +54,11 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-plone>=0.5.0",
+]
+release = [
+    "zest.releaser[recommended]",
+    "zestreleaser.towncrier",
+    "zest.pocompile",
 ]
 
 [project.urls]
@@ -188,3 +196,6 @@ parallel = true
 omit = [
   "src/{{ cookiecutter.__package_path }}/locales/*.py",
 ]
+
+[tool.zest-releaser]
+python-file-with-version = "src/{{ cookiecutter.__package_path }}/__init__.py"

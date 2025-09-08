@@ -81,6 +81,6 @@ See also the documentation of [Mockup and Patternslib](https://6.docs.plone.org/
 
 The project is licensed under GPLv2.
 
-## Credits and Acknowledgements 🙏
+## Credits and acknowledgements 🙏
 
 {{ cookiecutter.__generator_signature }}. A special thanks to all contributors and supporters!

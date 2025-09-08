@@ -27,7 +27,7 @@ def asbool(s):
 
 
 DELETE_EXISTING = asbool(os.getenv("DELETE_EXISTING"))
-EXAMPLE_CONTENT = asbool(os.getenv("EXAMPLE_CONTENT", "1"))  # Create example content by default
+EXAMPLE_CONTENT = asbool(os.getenv("EXAMPLE_CONTENT", "1"))
 
 app = makerequest(globals()["app"])
 

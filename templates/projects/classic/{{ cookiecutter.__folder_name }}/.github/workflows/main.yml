@@ -1,0 +1,112 @@
+name: {{ cookiecutter.title }} CI
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      - "docs/**"
+      - ".github/workflows/docs.yml"
+      - .readthedocs.yaml
+      {%- endif %}
+      - ".github/workflows/main.yml"
+      - "devops/**"
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME_PREFIX: {{ cookiecutter.__container_image_prefix }}
+  PYTHON_VERSION: "{{ cookiecutter.__python_version }}"
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      docs: {{ "${{ steps.filter.outputs.docs }}" }}
+      {%- endif %}
+      BASE_TAG: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}
+      IMAGE_NAME_PREFIX: {{ "${{ env.IMAGE_NAME_PREFIX }}" }}
+      PYTHON_VERSION: {{ "${{ env.PYTHON_VERSION }}" }}
+      PLONE_VERSION: {{ "${{ steps.vars.outputs.PLONE_VERSION }}" }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        run: |
+          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "PLONE_VERSION=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
+
+      - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend.yml'
+            {%- if cookiecutter.initialize_documentation == '1' %}
+            docs:
+              - 'docs/**'
+              - .readthedocs.yaml
+              - '.github/workflows/docs.yml'
+            {%- endif %}
+
+      - name: Test vars
+        run: |
+          echo 'BASE_TAG={{ "${{ steps.vars.outputs.BASE_TAG }}" }}'
+          echo 'PLONE_VERSION={{ "${{ steps.vars.outputs.PLONE_VERSION }}" }}'
+          echo 'backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          {%- if cookiecutter.initialize_documentation == '1' %}
+          echo 'docs: {{ "${{ steps.filter.outputs.docs }}" }}'
+          {%- endif %}
+
+  backend:
+    uses: ./.github/workflows/backend.yml
+    needs:
+        - config
+    with:
+        base-tag: {{ "${{ needs.config.outputs.BASE_TAG }}" }}
+        image-name-prefix: {{ "${{ needs.config.outputs.IMAGE_NAME_PREFIX }}" }}
+        image-name-suffix: backend
+        python-version: {{ "${{ needs.config.outputs.PYTHON_VERSION }}" }}
+        plone-version: {{ "${{ needs.config.outputs.PLONE_VERSION }}" }}
+    if: {{ "${{ needs.config.outputs.backend == 'true' }}" }}
+    permissions:
+      contents: read
+      packages: write
+
+{%- if cookiecutter.initialize_documentation == '1' %}
+
+  docs:
+    uses: ./.github/workflows/docs.yml
+    needs:
+        - config
+    with:
+        python-version: {{ "${{ needs.config.outputs.PYTHON_VERSION }}" }}
+    if: {{ "${{ needs.config.outputs.docs == 'true' }}" }}
+{%- endif %}
+
+  report:
+    name: "Final report"
+    if: {{ "${{ always() }}" }}
+    runs-on: ubuntu-latest
+    needs:
+      - config
+      - backend
+      {%- if cookiecutter.initialize_documentation == '1' %}
+      - docs
+      {%- endif %}
+    steps:
+      - name: Write report
+        run: |
+          {{ "echo '# Workflow Report' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| Job ID | Conclusion |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| config | ${{ needs.config.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {{ "echo '| backend | ${{ needs.backend.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {%- if cookiecutter.initialize_documentation == '1' %}
+          {{ "echo '| docs | ${{ needs.docs.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {%- endif %}

@@ -1,0 +1,196 @@
+[project]
+name = "{{ cookiecutter.python_package_name }}"
+dynamic = ["version"]
+description = "{{ cookiecutter.description }}"
+readme = "README.md"
+license = "GPL-2.0-only"
+requires-python = ">={{ cookiecutter.__supported_versions_python[0] }}"
+authors = [
+    { name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" },
+]
+keywords = [
+    "CMS",
+    "Plone",
+    "Python",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Plone",
+    {%- for version in cookiecutter.__supported_versions_plone -%}
+    "Framework :: Plone :: {{ version }}",
+    {%- endfor %}
+    "Framework :: Plone :: Addon",
+    {%- if cookiecutter.__feature_distribution == '1' %}
+    "Framework :: Plone :: Distribution",
+    {%- endif %}
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    {%- for version in cookiecutter.__supported_versions_python -%}
+    "Programming Language :: Python :: {{ version }}",
+    {%- endfor %}
+]
+dependencies = [
+    "Products.CMFPlone=={{ cookiecutter.plone_version }}",
+    "plone.api",
+    {% if cookiecutter.plone_version >= "6.1" -%}
+    "plone.classicui",
+    {%- endif %}
+    "plone.app.caching",
+    "z3c.jbot",
+]
+
+[project.optional-dependencies]
+test = [
+    "horse-with-no-namespace",
+    "plone.app.testing",
+    "plone.app.robotframework",
+    "pytest",
+    "pytest-cov",
+    "pytest-plone>=0.5.0",
+]
+
+[project.urls]
+Homepage = "{{ cookiecutter.__repository_url }}"
+PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
+Source = "{{ cookiecutter.__repository_url }}"
+Tracker = "{{ cookiecutter.__repository_url }}/issues"
+
+{% if cookiecutter.plone_version.startswith('6.1') is true %}
+[project.entry-points."plone.autoinclude.plugin"]
+{%- else %}
+[project.entry-points."z3c.autoinclude.plugin"]
+{%- endif %}
+target = "plone"
+
+[tool.uv]
+managed = {{ cookiecutter.__backend_managed_by_uv }}
+
+[tool.hatch.version]
+path = "src/{{ cookiecutter.__package_path }}/__init__.py"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+strict-naming = true
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.github",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["{{ cookiecutter.python_package_name | package_namespace_path }}"]
+
+[tool.towncrier]
+directory = "news/"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+title_format = "## {version} ({project_date})"
+template = "news/.changelog_template.jinja"
+issue_format = "[#{issue}]({{ cookiecutter.__repository_url }}/issues/{issue})"
+underlines = ["", "", ""]
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking changes:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "feature"
+name = "New features:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bug fixes:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "internal"
+name = "Internal:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation:"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "tests"
+name = "Tests"
+showcontent = true
+
+[tool.ruff]
+target-version = "py{{ cookiecutter.__python_version_identifier }}"
+line-length = 88
+fix = true
+lint.select = [
+    # flake8-2020
+    "YTT",
+    # flake8-bandit
+    "S",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E", "W",
+    # pyflakes
+    "F",
+    # pygrep-hooks
+    "PGH",
+    # pyupgrade
+    "UP",
+    # ruff
+    "RUF",
+]
+lint.ignore = [
+    # DoNotAssignLambda
+    "E731",
+]
+
+[tool.ruff.lint.isort]
+case-sensitive = false
+no-sections = true
+force-single-line = true
+from-first = true
+lines-after-imports = 2
+lines-between-types = 1
+order-by-type = false
+
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501", "RUF001", "S101"]
+
+[tool.check-manifest]
+ignore = [
+    ".editorconfig",
+    ".flake8",
+    "dependabot.yml",
+    "mx.ini",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source_pkgs = ["{{ cookiecutter.python_package_name }}", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/{{ cookiecutter.__package_path }}/locales/*.py",
+]
