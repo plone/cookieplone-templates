@@ -1,0 +1,1 @@
+Be explicit about the Python version when running uv venv locally in backend. @wesleybl
