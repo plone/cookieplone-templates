@@ -1,0 +1,27 @@
+# code: language=ansible
+---
+# Setup User
+#
+- name: "Add user {{ users.default.name }}"
+  ansible.builtin.user:
+    name: "{{ users.default.name }}"
+    group: sudo
+    shell: /bin/bash
+    generate_ssh_key: true
+    ssh_key_file: .ssh/id_ed25519
+    ssh_key_type: "ed25519"
+
+- name: "Allow default user to sudo without password"
+  ansible.builtin.copy:
+    content: "{{ users.default.name }} ALL=(ALL) NOPASSWD: ALL"
+    dest: "/etc/sudoers.d/{{ users.default.name }}"
+    mode: "0640"
+
+- name: "Config ssh for default user"
+  become: true
+  become_user: "{{ users.default.name }}"
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../etc/ssh/default_ssh_config.j2"
+    dest: "/home/{{ users.default.name }}/.ssh/config"
+    owner: "{{ users.default.name }}"
+    mode: "0600"

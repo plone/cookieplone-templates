@@ -1,0 +1,31 @@
+---
+# Playbook: playbooks/_connect.yml
+# Description: Check connectivity to servers, report OS version
+#
+# Usage:
+#
+#  # All servers
+#  uv run ansible-playbook playbooks/_connect.yml
+#
+#  # One server
+#  uv run ansible-playbook playbooks/_connect.yml --limit cluster_manager
+#
+- name: "Check connectivity"
+  hosts: "all"
+  remote_user: "{{ users.default.name }}"
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: "Display OS version information"
+      ansible.builtin.debug:
+        msg: "{{ ansible_hostname }}: {{ ansible_lsb.description }}"
+
+    - name: "Display IP Addresses"
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ ansible_all_ipv4_addresses }}"
+
+  handlers:
+    - name: "Include default handlers"
+      ansible.builtin.import_tasks: ../tasks/handlers/common.yml

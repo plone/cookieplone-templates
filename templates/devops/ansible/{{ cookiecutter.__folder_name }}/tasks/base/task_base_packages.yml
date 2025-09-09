@@ -1,0 +1,31 @@
+# code: language=ansible
+---
+# Base packages
+#
+- name: "Base: Install Base Packages"
+  tags:
+    - base
+  ansible.builtin.apt:
+    name: "{{ base_packages.install }}"
+    update_cache: true
+    state: present
+
+- name: "Base: Remove Packages"
+  tags:
+    - base
+  ansible.builtin.apt:
+    name: "{{ base_packages.remove }}"
+    purge: true
+    state: absent
+
+- name: "Base: Install Python Packages"
+  tags:
+    - base
+  ansible.builtin.pip:
+    break_system_packages: true
+    name:
+      - docker
+      - jsondiff
+      - pyyaml
+      - uv
+    state: present

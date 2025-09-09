@@ -1,0 +1,19 @@
+# code: language=ansible
+---
+# Setup proxies
+#
+- name: "Proxy: Setup /etc/environment"
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/../etc/base/environment.j2"
+    dest: "/etc/environment"
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: "Proxy: Setup /etc/apt/apt.conf.d/95proxies"
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/../etc/base/apt_proxy.j2"
+    dest: "/etc/apt/apt.conf.d/95proxies"
+    owner: root
+    group: root
+    mode: "0755"

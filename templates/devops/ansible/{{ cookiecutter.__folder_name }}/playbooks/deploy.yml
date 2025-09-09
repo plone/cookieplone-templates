@@ -1,0 +1,48 @@
+---
+# Playbook: playbooks/deploy.yml
+# Description: Deploy a stack in the cluster
+#
+# Usage:
+#
+#  # All Stacks
+#  uv run ansible-playbook playbooks/deploy.yml --limit cluster_manager
+#
+#  # All Stacks in staging
+#  uv run ansible-playbook playbooks/deploy.yml --limit cluster_manager_staging
+#
+#  # All Stacks in production
+#  uv run ansible-playbook playbooks/deploy.yml --limit cluster_manager_production
+#
+#  # One app
+#  uv run ansible-playbook playbooks/deploy.yml --tags traefik
+#  uv run ansible-playbook playbooks/deploy.yml --tags cronjob
+#  uv run ansible-playbook playbooks/deploy.yml --tags project
+#
+- name: "Deploy Stacks"
+  hosts: "cluster_manager"
+  remote_user: "{{ users.default.name }}"
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: "Traefik: Deploy"
+      tags:
+        - traefik
+      vars:
+        stack: "{{ stacks.traefik }}"
+      ansible.builtin.import_tasks: ../tasks/stacks/task_deploy.yml
+
+    - name: "Cronjob: Deploy"
+      tags:
+        - cronjob
+      vars:
+        stack: "{{ stacks.cronjob }}"
+      ansible.builtin.import_tasks: ../tasks/stacks/task_deploy.yml
+
+    - name: "Project: Deploy"
+      tags:
+        - project
+      vars:
+        stack: "{{ stacks.project }}"
+      ansible.builtin.import_tasks: ../tasks/stacks/task_deploy.yml
