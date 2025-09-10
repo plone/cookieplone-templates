@@ -54,7 +54,8 @@ PKG_SRC_FILES = [
     "news/.gitkeep",
     "package.json",
     "src/components/.gitkeep",
-    "src/index.js",
+    "src/config/settings.ts",
+    "src/index.ts",
     "towncrier.toml",
     "tsconfig.json",
 ]

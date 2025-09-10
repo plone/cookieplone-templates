@@ -26,6 +26,8 @@ EXPECTED_FILES = [
     "Makefile",
     "mrs.developer.json",
     "packages/volto-ploneorgbr/.release-it.json",
+    "packages/volto-ploneorgbr/src/config/settings.ts",
+    "packages/volto-ploneorgbr/src/index.ts",
     "package.json",
     "pnpm-workspace.yaml",
     "README.md",

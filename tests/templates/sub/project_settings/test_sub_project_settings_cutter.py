@@ -55,7 +55,7 @@ GENERATED_FILES = [
     "frontend/.dockerignore",
     "frontend/Dockerfile",
     "frontend/Makefile",
-    "frontend/packages/volto-project-title/src/index.js",
+    "frontend/packages/volto-project-title/src/config/settings.ts",
 ]
 
 

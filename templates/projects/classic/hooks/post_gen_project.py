@@ -128,7 +128,10 @@ def generate_sub_classic_project_settings(context: OrderedDict, output_dir: Path
     folder_name = output_dir.name
     output_dir = output_dir.parent
     generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/sub/classic_project_settings", output_dir, folder_name, context
+        f"{TEMPLATES_FOLDER}/sub/classic_project_settings",
+        output_dir,
+        folder_name,
+        context,
     )
 
 

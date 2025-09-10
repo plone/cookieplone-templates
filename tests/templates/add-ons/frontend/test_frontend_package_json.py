@@ -37,6 +37,10 @@ def test_frontend_root_settings(traverse, cutter_result, load_config, path, expe
     [
         ("name", "@plone-collective/volto-addon"),
         ("version", "1.0.0-alpha.0"),
+        ("main", "src/index.ts"),
+        ("peerDependencies/'@plone/registry'", "workspace:*"),
+        ("peerDependencies/'@plone/types'", "workspace:*"),
+        ("devDependencies/'@plone/scripts'", "workspace:*"),
     ],
 )
 def test_package_settings(traverse, cutter_result, load_config, path, expected):
