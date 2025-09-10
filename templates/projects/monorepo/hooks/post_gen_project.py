@@ -1,5 +1,6 @@
 """Post generation hook."""
 
+import json
 import subprocess
 from collections import OrderedDict
 from copy import deepcopy
@@ -112,13 +113,25 @@ def generate_addons_frontend(context, output_dir):
         context["npm_package_name"] = npm_package_name
         context["frontend_addon_name"] = frontend_addon_name
     context["initialize_documentation"] = "0"
-    generator.generate_subtemplate(
+    path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
         folder_name,
         context,
         FRONTEND_ADDON_REMOVE,
     )
+    # Handle .release-it.json
+    release_it_path = path / "packages" / frontend_addon_name / ".release-it.json"
+    if release_it_path.is_file():
+        data = json.loads(release_it_path.read_text())
+        # Disable GitHub releases
+        data["github"]["release"] = False
+        # Disable plonePrePublish
+        data["plonePrePublish"]["publish"] = False
+        # Disable npm
+        data["npm"]["publish"] = False
+        # Update file
+        release_it_path.write_text(json.dumps(data, indent=2))
 
 
 def generate_docs_starter(context, output_dir):
