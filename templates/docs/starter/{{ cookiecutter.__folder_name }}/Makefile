@@ -96,8 +96,6 @@ rtd-prepare:  ## Prepare environment on Read the Docs
 rtd-pr-preview: rtd-prepare .venv/bin/python ## Build pull request preview on Read the Docs
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
 
-
-
 .PHONY: build
 build: html  ## Build documentation in HTML format
 
