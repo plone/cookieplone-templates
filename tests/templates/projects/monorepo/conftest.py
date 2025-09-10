@@ -89,6 +89,14 @@ def context_no_docs(context) -> dict:
 
 
 @pytest.fixture(scope="session")
+def context_scoped_frontend_package(context) -> dict:
+    """Cookiecutter context."""
+    new_context = deepcopy(context)
+    new_context["frontend_addon_name"] = "@plone-collective/volto-ploneorgbr"
+    return new_context
+
+
+@pytest.fixture(scope="session")
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
@@ -150,4 +158,14 @@ def cutter_result_devops_no_cache(
     """Cookiecutter result."""
     return cookies_module.bake(
         extra_context=context_devops_no_cache, template=template_path
+    )
+
+
+@pytest.fixture(scope="module")
+def cutter_result_scoped_frontend_package(
+    template_path, cookies_module, context_scoped_frontend_package
+):
+    """Cookiecutter result."""
+    return cookies_module.bake(
+        extra_context=context_scoped_frontend_package, template=template_path
     )

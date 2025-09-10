@@ -23,7 +23,7 @@ def check_errors(context: dict) -> data.ContextValidatorResult:
         data.ItemValidator(
             "python_package_name", validators.validate_python_package_name
         ),
-        data.ItemValidator("frontend_addon_name", validators.validate_volto_addon_name),
+        data.ItemValidator("frontend_addon_name", validators.validate_npm_package_name),
     ]
     result = validators.run_context_validations(context, validations)
     return result
