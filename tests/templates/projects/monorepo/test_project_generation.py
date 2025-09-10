@@ -4,22 +4,21 @@ import json
 
 import pytest
 
+TOP_LEVEL_FILES = [
+    ".editorconfig",
+    ".gitignore",
+    ".vscode/extensions.json",
+    ".vscode/settings.json",
+    "dependabot.yml",
+    "CHANGELOG.md",
+    "Makefile",
+    "README.md",
+    "repository.toml",
+    "version.txt",
+]
 
-@pytest.mark.parametrize(
-    "filepath",
-    [
-        ".editorconfig",
-        ".gitignore",
-        ".vscode/extensions.json",
-        ".vscode/settings.json",
-        "dependabot.yml",
-        "CHANGELOG.md",
-        "Makefile",
-        "README.md",
-        "repository.toml",
-        "version.txt",
-    ],
-)
+
+@pytest.mark.parametrize("filepath", TOP_LEVEL_FILES)
 def test_project_files(cutter_result, filepath: str):
     """Test created files."""
     folder = cutter_result.project_path
@@ -29,7 +28,8 @@ def test_project_files(cutter_result, filepath: str):
 
 @pytest.mark.parametrize(
     "filepath",
-    [
+    [f for f in TOP_LEVEL_FILES if f.endswith(".json")]
+    + [
         "frontend/mrs.developer.json",
         "frontend/package.json",
     ],
