@@ -9,7 +9,7 @@
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
   "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
-  "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+  "frontend_addon_name": "@plone-collective/volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
   "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
