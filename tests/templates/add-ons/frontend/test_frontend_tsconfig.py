@@ -19,35 +19,35 @@ def test_tsconfig_template_contains_modern_typescript_options():
         / "tsconfig.json"
     )
 
-    assert (
-        tsconfig_template_path.exists()
-    ), f"tsconfig.json template should exist at {tsconfig_template_path}"
+    assert tsconfig_template_path.exists(), (
+        f"tsconfig.json template should exist at {tsconfig_template_path}"
+    )
 
     # Read and parse the tsconfig.json template
     with open(tsconfig_template_path) as f:
         tsconfig_content = json.load(f)
 
     # Validate basic structure
-    assert (
-        "compilerOptions" in tsconfig_content
-    ), "compilerOptions should be present in tsconfig.json"
+    assert "compilerOptions" in tsconfig_content, (
+        "compilerOptions should be present in tsconfig.json"
+    )
 
     compiler_options = tsconfig_content["compilerOptions"]
 
     # Test for modern TypeScript options
-    assert (
-        "moduleDetection" in compiler_options
-    ), "moduleDetection should be present in compilerOptions"
-    assert (
-        compiler_options["moduleDetection"] == "force"
-    ), "moduleDetection should be set to 'force'"
+    assert "moduleDetection" in compiler_options, (
+        "moduleDetection should be present in compilerOptions"
+    )
+    assert compiler_options["moduleDetection"] == "force", (
+        "moduleDetection should be set to 'force'"
+    )
 
-    assert (
-        "verbatimModuleSyntax" in compiler_options
-    ), "verbatimModuleSyntax should be present in compilerOptions"
-    assert (
-        compiler_options["verbatimModuleSyntax"] is True
-    ), "verbatimModuleSyntax should be set to true"
+    assert "verbatimModuleSyntax" in compiler_options, (
+        "verbatimModuleSyntax should be present in compilerOptions"
+    )
+    assert compiler_options["verbatimModuleSyntax"] is True, (
+        "verbatimModuleSyntax should be set to true"
+    )
 
     # Also validate other expected TypeScript configurations
     expected_options = {
@@ -56,9 +56,9 @@ def test_tsconfig_template_contains_modern_typescript_options():
     }
 
     for option, expected_value in expected_options.items():
-        assert (
-            option in compiler_options
-        ), f"{option} should be present in compilerOptions"
+        assert option in compiler_options, (
+            f"{option} should be present in compilerOptions"
+        )
         assert compiler_options[option] == expected_value, (
             f"{option} should be set to {expected_value}, "
             f"but got {compiler_options[option]}"
@@ -88,6 +88,6 @@ def test_tsconfig_template_include_patterns():
     expected_includes = ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 
     for pattern in expected_includes:
-        assert (
-            pattern in include_patterns
-        ), f"Include pattern {pattern} should be present"
+        assert pattern in include_patterns, (
+            f"Include pattern {pattern} should be present"
+        )
