@@ -9,3 +9,10 @@ class HiddenProfiles:
         return [
             "{{ cookiecutter.python_package_name }}:uninstall",
         ]
+
+    def getNonInstallableProducts(self):
+        """Hide the upgrades package from site-creation and quickinstaller."""
+        return [
+            "{{ cookiecutter.python_package_name }}:upgrades",
+        ]
+
