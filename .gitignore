@@ -8,4 +8,6 @@ collective.plonedistribution
 .pytest_cache
 .reports/*.csv
 .reports/*.json
-*/__pycache__/
+.reports/*.md
+__pycache__/
+.venv

@@ -1,9 +1,0 @@
-{
-  "core": {
-    "output": "./",
-    "package": "@plone/volto",
-    "url": "git@github.com:plone/volto.git",
-    "https": "https://github.com/plone/volto.git",
-    "tag": "{{ cookiecutter.__version_plone_volto }}"
-  }
-}

@@ -1,0 +1,52 @@
+name: "{{ cookiecutter.python_package_name }} CI"
+
+on:
+  push:
+
+env:
+  python-version: "{{ cookiecutter.__gha_python_version }}"
+  plone-version: "{{ cookiecutter.__gha_plone_version }}"
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      python-version: {{ "${{ env.python-version }}" }}
+      plone-version: {{ "${{ env.plone-version }}" }}
+    steps:
+      - name: Test vars
+        run: |
+          echo 'python-version={{ "${{ env.python-version }}" }}'
+          echo 'plone-version={{ "${{ env.plone-version }}" }}'
+
+  lint:
+    name: "Backend: Lint"
+    needs:
+      - config
+    uses: plone/meta/.github/workflows/backend-lint.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    with:
+      python-version: {{ "${{ needs.config.outputs.python-version }}" }}
+      plone-version: {{ "${{ needs.config.outputs.plone-version }}" }}
+
+  test:
+    name: "Backend: Test"
+    needs:
+      - config
+    uses: plone/meta/.github/workflows/backend-pytest.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    strategy:
+      matrix:
+        python-version: {{ cookiecutter.__gha_python_versions }}
+        plone-version: {{ cookiecutter.__gha_plone_versions }}
+    with:
+      python-version: {{ "${{ matrix.python-version }}" }}
+      plone-version: {{ "${{ matrix.plone-version }}" }}
+
+  coverage:
+    name: "Backend: Test Coverage"
+    uses: plone/meta/.github/workflows/backend-pytest-coverage.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    needs:
+      - config
+      - test
+    with:
+      python-version: {{ "${{ needs.config.outputs.python-version }}" }}
+      plone-version: {{ "${{ needs.config.outputs.plone-version }}" }}

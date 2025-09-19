@@ -1,7 +1,0 @@
-{
-    "recommendations": [
-        "charliermarsh.ruff",
-        "ms-python.python",
-        "redhat.vscode-yaml"
-    ]
-}

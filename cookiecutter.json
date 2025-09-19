@@ -1,24 +1,64 @@
 {
   "templates": {
     "project": {
-      "path": "./project",
-      "title": "A Plone Project",
-      "description": "Create a new Plone project with backend and frontend components"
+      "path": "./templates/projects/monorepo",
+      "title": "Volto Project",
+      "description": "Create a new Plone project that uses the Volto frontend",
+      "hidden": false
+    },
+    "classic_project": {
+      "path": "./templates/projects/classic",
+      "title": "Classic UI Project",
+      "description": "Create a new Plone project that uses Classic UI",
+      "hidden": false
     },
     "backend_addon": {
-      "path": "./backend_addon",
+      "path": "./templates/add-ons/backend",
       "title": "Backend Add-on for Plone",
-      "description": "Create a new Python package to be used with Plone"
+      "description": "Create a new Python package to be used with Plone",
+      "hidden": false
     },
     "frontend_addon": {
-      "path": "./frontend_addon",
+      "path": "./templates/add-ons/frontend",
       "title": "Frontend Add-on for Plone",
-      "description": "Create a new Node package to be used with Volto"
+      "description": "Create a new Node package to be used with Volto",
+      "hidden": false
     },
     "seven_addon": {
-      "path": "./seven_addon",
+      "path": "./templates/add-ons/seven_addon",
       "title": "Seven Add-on for Plone",
-      "description": "Create a new Node package to be used with Seven"
+      "description": "Create a new Node package to be used with Seven",
+      "hidden": false
+    },
+    "sub/cache": {
+      "path": "./templates/sub/cache",
+      "title": "Cache settings for a monorepo Plone project",
+      "description": "Subtemplate with cache settings to be applied to a project.",
+      "hidden": true
+    },
+    "sub/frontend_project": {
+      "path": "./templates/sub/frontend_project",
+      "title": "A frontend project (used in Container images)",
+      "description": "Subtemplate with configuration used in container images for frontend project.",
+      "hidden": true
+    },
+    "sub/project_settings": {
+      "path": "./templates/sub/project_settings",
+      "title": "Project settings to be applied on top of a mono repo project",
+      "description": "Subtemplate with configuration and settings for a mono repo project.",
+      "hidden": true
+    },
+    "sub/classic_project_settings": {
+      "path": "./templates/sub/classic_project_settings",
+      "title": "Project settings to be applied on top of a Classic UI project",
+      "description": "Subtemplate with configuration and settings for a Classic UI project.",
+      "hidden": true
+    },
+    "documentation_starter": {
+      "path": "./templates/docs/starter",
+      "title": "Documentation scaffold for Plone projects",
+      "description": "Create a new documentation scaffold for Plone projects",
+      "hidden": false
     }
   }
 }

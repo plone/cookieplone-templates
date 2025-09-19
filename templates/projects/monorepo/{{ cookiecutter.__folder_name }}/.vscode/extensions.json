@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "ExecutableBookProject.myst-highlight",
+    "github.vscode-github-actions",
+    "ms-python.python",
+    "ms-vscode-remote.remote-containers",
+    "redhat.vscode-yaml",
+    "stylelint.vscode-stylelint",
+    "plone.plone-vs-utilities"
+  ]
+}

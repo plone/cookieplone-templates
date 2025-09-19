@@ -1,0 +1,61 @@
+[project]
+name = "{{ cookiecutter.title.replace(' ', '_').replace('-', '_').replace('.', '_') }}_Documentation"
+description = "{{ cookiecutter.description }}"
+keywords = [
+    "{{ cookiecutter.title }}",
+    "documentation",
+    "Plone",
+    "Diátaxis",
+]
+version="1.0.0"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = { file = "LICENSE" }
+maintainers = [
+    { name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" },
+]
+authors = [
+    { name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" },
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[dependency-groups]
+dev = [
+    "graphviz",
+    "linkify-it-py",
+    "myst-parser",
+    "plone-sphinx-theme>=1.4.1",  # Use the latest stable version or a minimum
+    "setuptools",  # required by sphinxcontrib.httpexample, remove when it migrates to importlib. See https://github.com/collective/sphinxcontrib-httpexample/issues/106
+    "sphinx-autobuild",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-examples",
+    "sphinx-notfound-page",
+    "sphinx-reredirects",
+    "sphinx-sitemap",
+    "sphinx-tippy",
+    "sphinxcontrib-httpdomain",
+    "sphinxcontrib-httpexample",
+    "sphinxcontrib-mermaid",
+    "sphinxcontrib-video",
+    "sphinxcontrib-youtube",
+    "sphinxext-opengraph",
+    "vale",
+]
+
+[project.urls]
+Repository = "{{ cookiecutter.__repository_url }}"
+Documentation = "https://MY_READTHEDOCS_PROJECT_SLUG.readthedocs.io/"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
