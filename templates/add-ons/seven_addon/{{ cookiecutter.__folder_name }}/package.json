@@ -19,7 +19,7 @@
     "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
     "i18n": "pnpm --filter {{ cookiecutter.__npm_package_name }} i18n && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n",
-    "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
+    "test": "pnpm --filter {{ cookiecutter.__npm_package_name }} exec vitest --passWithNoTests",
     "lint": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/*.{js,jsx,ts,tsx}'",
