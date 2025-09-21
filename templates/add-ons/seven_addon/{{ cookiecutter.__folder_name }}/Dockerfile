@@ -6,6 +6,7 @@ COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{
 COPY --chown=node registry.config.ts /app/
 COPY --chown=node Makefile /app/Makefile
 COPY --chown=node pnpm-workspace.yaml /app/pnpm-workspace.yaml
+COPY --chown=node .pnpmfile.cjs /app/.pnpmfile.cjs
 COPY --chown=node package.json /app/package.json.temp
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
