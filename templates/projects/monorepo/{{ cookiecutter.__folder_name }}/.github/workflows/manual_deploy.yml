@@ -13,7 +13,7 @@ jobs:
     needs:
       - config
     runs-on: ubuntu-latest
-    environment: {{ "${{ needs.meta.outputs.environment }}" }}
+    environment: {{ "${{ needs.config.outputs.environment }}" }}
     steps:
       - name: Checkout
         uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}

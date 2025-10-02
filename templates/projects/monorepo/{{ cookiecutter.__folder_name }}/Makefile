@@ -14,7 +14,7 @@ GIT_FOLDER=$(CURRENT_DIR)/.git
 PROJECT_NAME={{ cookiecutter.__project_slug }}
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
-VOLTO_VERSION=$(shell cat frontend/mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
+VOLTO_VERSION=$(shell cat frontend/mrs.developer.json | python3 -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 PLONE_VERSION=$(shell cat backend/version.txt)
 
 # We like colors
