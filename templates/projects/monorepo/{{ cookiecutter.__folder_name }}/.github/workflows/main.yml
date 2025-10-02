@@ -5,14 +5,11 @@ on:
     paths:
       - "backend/**"
       - "frontend/**"
-      - ".github/workflows/backend.yml"
+      - ".github/workflows/*.yml"
       {%- if cookiecutter.initialize_documentation == '1' %}
       - "docs/**"
-      - ".github/workflows/docs.yml"
       - .readthedocs.yaml
       {%- endif %}
-      - ".github/workflows/frontend.yml"
-      - ".github/workflows/main.yml"
       - "devops/**"
   workflow_dispatch:
 
