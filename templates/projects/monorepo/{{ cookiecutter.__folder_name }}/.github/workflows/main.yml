@@ -73,6 +73,9 @@ jobs:
         image-name-prefix: {{ "${{ needs.config.outputs.image-name-prefix }}" }}
         image-name-suffix: varnish
     if: {{ "${{ needs.config.outputs.varnish == 'true' }}" }}
+    permissions:
+      contents: read
+      packages: write
 {%- endif %}
 
   report:
