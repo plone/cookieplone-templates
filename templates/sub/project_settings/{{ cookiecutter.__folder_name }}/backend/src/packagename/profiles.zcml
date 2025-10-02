@@ -21,14 +21,6 @@
       pre_handler=".setuphandlers.initial.create_example_content"
       />
 
-  <genericsetup:registerProfile
-      name="uninstall"
-      title="{{ cookiecutter.title }}: Uninstall"
-      description="Uninstall {{ cookiecutter.title }} setup."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      directory="profiles/uninstall"
-      />
-
   <!-- Hide Uninstall Profile-->
   <utility
       factory=".setuphandlers.HiddenProfiles"
