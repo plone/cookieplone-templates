@@ -85,6 +85,10 @@ jobs:
       volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}
 
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
       - name: Compute several vars needed for the CI
         id: vars
         shell: bash
