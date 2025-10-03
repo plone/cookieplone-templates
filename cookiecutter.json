@@ -26,7 +26,7 @@
     },
     "seven_addon": {
       "path": "./templates/add-ons/seven_addon",
-      "title": "Seven Add-on for Plone",
+      "title": "Seven Frontend Add-on for Plone",
       "description": "Create a new Node package to be used with Seven",
       "hidden": false
     },
