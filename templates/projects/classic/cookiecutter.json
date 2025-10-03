@@ -8,7 +8,7 @@
   "use_prerelease_versions": "{{ 'No' | use_prerelease_versions }}",
   "plone_version": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
-  "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],
+  "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "sv"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
   "devops_storage": ["relstorage", "zeo", "filestorage"],
@@ -76,7 +76,7 @@
       "it": "Italiano",
       "pt-br": "Português (Brasil)",
       "nl": "Nederlands",
-      "se": "Svenska"
+      "sv": "Svenska"
     },
     "github_organization": "GitHub or GitLab username or organization slug from URL",
     "container_registry": {
