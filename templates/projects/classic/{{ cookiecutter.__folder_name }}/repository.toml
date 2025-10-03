@@ -1,16 +1,12 @@
 [repository]
 name = "{{ cookiecutter.__project_slug }}"
-managed_by_uv = {{ cookiecutter.__backend_managed_by_uv }}
 changelog = "CHANGELOG.md"
 version = "version.txt"
-compose = "docker-compose.yml"
+compose = ["docker-compose.yml"]
 
 [repository.towncrier]
 section = "Project"
 settings = "towncrier.toml"
-
-[backend]
-path = "backend"
 
 [backend.package]
 name = "{{ cookiecutter.python_package_name }}"

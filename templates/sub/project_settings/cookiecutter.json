@@ -14,7 +14,7 @@
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
   "__feature_distribution": "0",
-  "__backend_managed_by_uv": "false",
+  "__backend_managed_by_uv": "true",
   "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
   "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",

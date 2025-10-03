@@ -66,6 +66,19 @@ def test_created_files(cutter_result, file_path: str):
     assert path.is_file()
 
 
+REMOVED_FILES = [
+    "backend/src/packagename/profiles/uninstall/browserlayer.xml",
+    "backend/tests/setup/test_setup_uninstall.py",
+    "backend/mx.ini",
+]
+
+
+@pytest.mark.parametrize("file_path", REMOVED_FILES)
+def test_removed_files(cutter_result, file_path: str):
+    path = (cutter_result.project_path / file_path).resolve()
+    assert not path.exists()
+
+
 @pytest.mark.parametrize(
     "file_path", [f for f in GENERATED_FILES if f.endswith(".json")]
 )
