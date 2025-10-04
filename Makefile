@@ -71,7 +71,7 @@ lint: $(VENV_FOLDER) ## Lint code
 .PHONY: test
 test: $(VENV_FOLDER) ## Test all cookiecutters
 	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
-	@uv run pytest tests
+	@uv run pytest tests $(filter-out $@ --,$(MAKECMDGOALS))
 
 .PHONY: test-pdb
 test-pdb: $(VENV_FOLDER) ## Test all cookiecutters (and stop on error)
