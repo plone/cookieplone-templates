@@ -13,7 +13,7 @@
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "react-jsx",
     "paths": {
-      "{{ cookiecutter.__npm_package_name }}/*": ["./src/*"]
+      "{{ cookiecutter.__npm_package_name }}/*": ["./*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

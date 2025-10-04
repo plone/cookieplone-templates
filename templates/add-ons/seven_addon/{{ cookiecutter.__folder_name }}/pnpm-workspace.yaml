@@ -3,6 +3,8 @@ packages:
   - 'core/apps/seven'
   - 'core/packages/*'
   - 'packages/*'
+  # Support for external packages in another repos
+  - 'packages/**/packages/*'
   - '!core/packages/volto*'
   - '!core/packages/coresandbox'
 
