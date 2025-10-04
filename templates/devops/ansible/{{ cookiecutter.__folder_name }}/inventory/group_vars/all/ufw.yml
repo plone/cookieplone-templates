@@ -1,0 +1,5 @@
+---
+ssh_port: "{{ "{{ sshd.port }}" }}"
+additional_ports:
+  - 80
+  - 443

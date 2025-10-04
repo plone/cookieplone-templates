@@ -1,0 +1,4 @@
+---
+timezone: UTC
+devops:
+  email: {{ cookiecutter.email }}

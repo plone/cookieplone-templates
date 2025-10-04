@@ -1,0 +1,44 @@
+# code: language=ansible
+---
+- name: "Reload systemd daemon"
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become_user: root
+  become: true
+
+- name: "Restart ufw"
+  ansible.builtin.service:
+    name: ufw
+    state: restarted
+  become: true
+  become_user: root
+
+- name: "Restart ssh"
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+  become: true
+  become_user: root
+
+- name: "Restart Docker"
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  become_user: root
+  become: true
+
+- name: "Restart multipathd"
+  ansible.builtin.service:
+    name: multipathd
+    state: reloaded
+  become_user: root
+  become: true
+
+- name: "Restart rpcbind"
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: rpcbind.socket
+    enabled: true
+    state: restarted
+  become_user: root
+  become: true

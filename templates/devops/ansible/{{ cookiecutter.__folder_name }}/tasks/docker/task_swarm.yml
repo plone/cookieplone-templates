@@ -1,0 +1,135 @@
+# code: language=ansible
+---
+# Docker Swarm
+
+- name: "Docker Swarm: Basic facts"
+  tags:
+    - swarm
+    - setup
+  ansible.builtin.set_fact:
+    is_manager: "{{ inventory_hostname in groups['cluster_manager'] }}"
+    is_additional_manager: "{{ inventory_hostname in groups['cluster_managers_additional'] }}"
+    is_worker: "{{ inventory_hostname in groups['cluster_workers'] }}"
+    cluster_manager: "{{ groups['cluster_manager'][0] }}"
+
+- name: "Docker Swarm: Cluster Manager Info"
+  tags:
+    - swarm
+    - setup
+  ansible.builtin.setup:
+  delegate_to: "{{ cluster_manager }}"
+  delegate_facts: true
+
+- name: "Docker Swarm: Initial Setup"
+  tags:
+    - swarm
+    - setup
+  when: is_manager
+  block:
+    - name: "Docker Swarm: Init Swarm"
+      community.docker.docker_swarm:
+        state: present
+        advertise_addr: "{{ swarm.advertise_addr }}"
+
+- name: "Docker Swarm: Get Swarm facts"
+  tags:
+    - swarm
+    - setup
+  delegate_to: "{{ cluster_manager }}"
+  delegate_facts: true
+  community.docker.docker_swarm_info:
+    services: false
+  ignore_errors: true
+  register: raw_swarm_info
+
+- name: "Docker Swarm: Swarm Info"
+  tags:
+    - swarm
+    - setup
+  ansible.builtin.set_fact:
+    token_manager: "{{ raw_swarm_info.swarm_facts.JoinTokens.Manager }}"
+    token_worker: "{{ raw_swarm_info.swarm_facts.JoinTokens.Worker }}"
+    manager_ip: "{{ hostvars[cluster_manager]['ansible_default_ipv4']['address'] }}"
+
+- name: "Docker Swarm: Register Node"
+  tags:
+    - swarm
+    - setup
+  when: not is_manager
+  block:
+    - name: "Docker Swarm: Add manager to cluster"
+      community.docker.docker_swarm:
+        state: join
+        advertise_addr: "{{ swarm.advertise_addr }}"
+        join_token: "{{ token_manager }}"
+        remote_addrs:
+          - "{{ manager_ip }}"
+      when: is_additional_manager
+
+    - name: "Docker Swarm: Add Worker to cluster"
+      community.docker.docker_swarm:
+        state: join
+        advertise_addr: "{{ swarm.advertise_addr }}"
+        join_token: "{{ token_worker }}"
+        remote_addrs:
+          - "{{ manager_ip }}"
+      when: is_worker
+
+- name: "Docker Swarm: Add labels to node"
+  community.docker.docker_node:
+    hostname: "{{ host }}"
+    labels: "{{ swarm_node.labels }}"
+    labels_state: merge
+  delegate_to: "{{ cluster_manager }}"
+
+- name: "Docker Swarm: Set public network"
+  tags:
+    - swarm
+    - network
+  become: true
+  become_user: "{{ users.default.name }}"
+  when: is_manager
+  block:
+    - name: "Docker Swarm: Check for public network"
+      community.docker.docker_network_info:
+        name: "{{ swarm.public_network }}"
+      register: docker_swarm_net_public
+
+    - name: "Docker Swarm: Create public network"
+      community.docker.docker_network:
+        name: "{{ swarm.public_network }}"
+        internal: false
+        attachable: true
+        driver: overlay
+        driver_options:
+          "com.docker.network.driver.mtu": "{{ docker_daemon_options.mtu }}"
+      when: not docker_swarm_net_public.exists
+
+- name: "Docker Swarm: Cronjob to purge data"
+  tags:
+    - swarm
+    - cron
+  become: true
+  become_user: "{{ users.default.name }}"
+  block:
+    - name: "Docker Swarm: Purge old containers"
+      ansible.builtin.cron:
+        name: "Purge old containers"
+        job: "/usr/bin/docker container prune -f"
+        hour: "*"
+        minute: 5
+        state: present
+    - name: "Docker Swarm: Purge old images"
+      ansible.builtin.cron:
+        name: "Purge old images"
+        job: "/usr/bin/docker image prune -f"
+        hour: "*"
+        minute: 10
+        state: present
+    - name: "Docker Swarm: Purge old volumes"
+      ansible.builtin.cron:
+        name: "Purge old volumes"
+        job: "/usr/bin/docker volume prune -f"
+        hour: "*"
+        minute: 15
+        state: present

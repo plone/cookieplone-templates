@@ -1,0 +1,33 @@
+# code: language=ansible
+---
+# Deploy Stack
+#
+- name: "Stack: Prepare Deployment"
+  when: stack.enabled | bool
+  block:
+
+    - name: "Stack: Create folders"
+      ansible.builtin.file:
+        dest: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      with_items: "{{ stack.folders }}"
+
+    - name: "Stack: Copy stack config"
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../{{ stack.stack_file }}"
+        dest: "{{ stack.main_folder }}/{{ stack.stack_name }}.yml"
+        owner: "{{ users.default.name }}"
+        group: root
+        mode: "0755"
+
+- name: "Stack: Deploy Stack"
+  when: stack.enabled | bool
+  community.docker.docker_stack:
+    state: present
+    name: "{{ stack.stack_name }}"
+    compose:
+      - "{{ stack.main_folder }}/{{ stack.stack_name }}.yml"
+  environment: "{{ stack.env_vars }}"

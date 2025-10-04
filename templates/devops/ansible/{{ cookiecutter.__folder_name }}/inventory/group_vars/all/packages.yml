@@ -1,0 +1,18 @@
+---
+base_packages:
+  install:
+    - acl
+    - apt-transport-https
+    - aptitude
+    - ca-certificates
+    - cron
+    - curl
+    - iputils-ping
+    - netcat-traditional
+    - python3-apt
+    - python3-minimal
+    - python3-pip
+    - python3-venv
+    - sudo
+  remove:
+    - nftables

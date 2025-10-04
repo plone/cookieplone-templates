@@ -1,0 +1,23 @@
+# code: language=ansible
+---
+- name: "FS: Configure mountpoints"
+  when: additional_mounts
+  tags:
+    - disk
+  block:
+    - name: "Create filesystem on disk"
+      community.general.filesystem:
+        fstype: "{{ item.value.fstype }}"
+        state: "present"
+        dev: "{{ item.value.src }}"
+      when: item.value.path
+      loop: "{{ lookup('ansible.builtin.dict', additional_mounts, wantlist=True) }}"
+
+    - name: "Configure additional mountpoints"
+      ansible.posix.mount:
+        path: "{{ item.value.path }}"
+        src: "{{ item.value.src }}"
+        fstype: "{{ item.value.fstype }}"
+        state: "{{ item.value.state }}"
+      when: item.value.path
+      loop: "{{ lookup('ansible.builtin.dict', additional_mounts, wantlist=True) }}"
