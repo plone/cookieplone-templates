@@ -89,13 +89,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
 
+      - name: Setup uv
+        uses: plone/meta/.github/actions/setup_uv@2.x
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          working-directory: '.'
+
       - name: Compute several vars needed for the CI
         id: vars
         shell: bash
         run: |
-          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "plone-version=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
-          python3 -c 'import json; data = json.load(open("./frontend/mrs.developer.json")); print("volto-version=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
+          REPOSITORY_SETTINGS="$(uvx repoplone settings dump)"
+          echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Filter paths
         uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
