@@ -24,6 +24,12 @@
       "description": "Create a new Node package to be used with Volto",
       "hidden": false
     },
+    "seven_addon": {
+      "path": "./templates/add-ons/seven_addon",
+      "title": "Seven Frontend Add-on for Plone",
+      "description": "Create a new Node package to be used with Seven",
+      "hidden": false
+    },
     "sub/cache": {
       "path": "./templates/sub/cache",
       "title": "Cache settings for a monorepo Plone project",
