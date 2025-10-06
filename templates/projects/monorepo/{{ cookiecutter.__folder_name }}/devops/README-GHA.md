@@ -46,12 +46,11 @@ This variable is referenced in the `.github/workflows/manual_deploy.yml` file.
 
 ## Manual Deployment 🚀
 
-Ensure that both Backend and Frontend tests have been successfully executed:
+Ensure that the CI workflow have been successfully executed:
 
-- [Backend Tests Workflow]({{ cookiecutter.__repository_url }}/actions/workflows/backend.yml)
-- [Frontend Tests Workflow]({{ cookiecutter.__repository_url }}/actions/workflows/frontend.yml)
+- [CI Workflow]({{ cookiecutter.__repository_url }}/actions/workflows/main.yml)
 
-Upon successful completion of the tests, Docker images for the Backend (`{{ cookiecutter.__container_image_prefix }}-backend`) and Frontend (`{{ cookiecutter.__container_image_prefix }}-frontend`) will be available.
+Upon successful completion of the tests, Docker images for the Backend (`{{ cookiecutter.__container_image_prefix }}-backend`) and Frontend (`{{ cookiecutter.__container_image_prefix }}-frontend`) should be available.
 
 ### Initiating Manual Deployment
 

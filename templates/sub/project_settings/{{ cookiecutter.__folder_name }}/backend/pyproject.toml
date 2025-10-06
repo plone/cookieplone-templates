@@ -38,15 +38,22 @@ dependencies = [
     "plone.volto",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     "horse-with-no-namespace",
     "plone.app.testing",
     "plone.restapi[test]",
     "pytest",
     "pytest-cov",
-    "pytest-plone>=0.5.0",
+    "pytest-plone>=1.0.0a2",
 ]
+container = [
+    "plone.app.upgrade",
+    "psycopg2==2.9.10",
+    "relstorage==4.1.1",
+    "zeo==6.0.0",
+]
+
 
 [project.urls]
 Homepage = "{{ cookiecutter.__repository_url }}"
@@ -54,15 +61,13 @@ PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
 Source = "{{ cookiecutter.__repository_url }}"
 Tracker = "{{ cookiecutter.__repository_url }}/issues"
 
-{% if cookiecutter.plone_version.startswith('6.1') is true %}
 [project.entry-points."plone.autoinclude.plugin"]
-{%- else %}
-[project.entry-points."z3c.autoinclude.plugin"]
-{%- endif %}
 target = "plone"
 
 [tool.uv]
 managed = {{ cookiecutter.__backend_managed_by_uv }}
+default-groups = ["test"]
+constraint-dependencies = []
 
 [tool.hatch.version]
 path = "src/{{ cookiecutter.__package_path }}/__init__.py"

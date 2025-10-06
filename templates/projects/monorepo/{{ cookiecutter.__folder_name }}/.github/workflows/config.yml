@@ -1,0 +1,150 @@
+name: "Compute Config variables"
+
+on:
+  workflow_call:
+    inputs:
+      image-name-prefix:
+        required: false
+        type: string
+        default: "{{ cookiecutter.__container_image_prefix }}"
+      node-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.__node_version }}"
+      python-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.__python_version }}"
+      stack-name:
+        required: false
+        type: string
+        default: "{{ cookiecutter.hostname | replace('.', '-') }}"
+      environment:
+        required: false
+        type: string
+        default: "{{ cookiecutter.hostname }}"
+    outputs:
+      acceptance:
+        description: "Flag reporting if we should run the acceptance jobs"
+        value: {{ "${{ jobs.config.outputs.acceptance }}" }}
+      backend:
+        description: "Flag reporting if we should run the backend jobs"
+        value: {{ "${{ jobs.config.outputs.backend }}" }}
+      devops:
+        description: "Flag reporting if we should run the devops jobs"
+        value: {{ "${{ jobs.config.outputs.devops }}" }}
+      docs:
+        description: "Flag reporting if we should run the docs jobs"
+        value: {{ "${{ jobs.config.outputs.docs }}" }}
+      frontend:
+        description: "Flag reporting if we should run the frontend jobs"
+        value: {{ "${{ jobs.config.outputs.frontend }}" }}
+      varnish:
+        description: "Flag reporting if we should run the varnish jobs"
+        value: {{ "${{ jobs.config.outputs.varnish }}" }}
+      base-tag:
+        description: "Base tag to be used when creating container images"
+        value: {{ "${{ jobs.config.outputs.base-tag }}" }}
+      event-name:
+        description: "Event name triggering the workflow"
+        value: {{ "${{ github.event_name }}" }}
+      image-name-prefix:
+        description: "Image name prefix for container images"
+        value: {{ "${{ inputs.image-name-prefix }}" }}
+      stack-name:
+        description: "Stack name for the deployment"
+        value: {{ "${{ inputs.stack-name }}" }}
+      environment:
+        description: "Environment to be used for the deployment"
+        value: {{ "${{ inputs.environment }}" }}
+      node-version:
+        description: "Node version to be used"
+        value: {{ "${{ inputs.node-version }}" }}
+      python-version:
+        description: "Python version to be used"
+        value: {{ "${{ inputs.python-version }}" }}
+      plone-version:
+        description: "Plone version to be used"
+        value: {{ "${{ jobs.config.outputs.plone-version }}" }}
+      volto-version:
+        description: "Volto version to be used"
+        value: {{ "${{ jobs.config.outputs.volto-version }}" }}
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}
+      backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      devops: {{ "${{ steps.filter.outputs.devops }}" }}
+      docs: {{ "${{ steps.filter.outputs.docs }}" }}
+      frontend: {{ "${{ steps.filter.outputs.frontend }}" }}
+      varnish: {{ "${{ steps.filter.outputs.varnish }}" }}
+      base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
+      plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
+      volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Setup uv
+        uses: plone/meta/.github/actions/setup_uv@2.x
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          working-directory: '.'
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        shell: bash
+        run: |
+          REPOSITORY_SETTINGS="$(uvx repoplone settings dump)"
+          echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Filter paths
+        uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+        id: filter
+        with:
+          filters: |
+            acceptance:
+              - '.github/workflows/backend*'
+              - '.github/workflows/frontend*'
+              - '.github/workflows/config*'
+              - 'backend/**'
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend*'
+              - '.github/workflows/config*'
+            devops:
+              - 'devops/**'
+              - '.github/workflows/config*'
+            docs:
+              - '.readthedocs.yaml'
+              - 'docs/**'
+              - '.github/workflows/docs.yaml'
+              - '.github/workflows/config*'
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/frontend*'
+              - '.github/workflows/config*'
+            varnish:
+              - 'devops/varnish/**'
+              - '.github/workflows/varnish*'
+              - '.github/workflows/config*'
+
+      - name: Test vars
+        run: |
+          echo "base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}"
+          echo 'plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}'
+          echo 'volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}'
+          echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
+          echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          echo 'Paths - devops: {{ "${{ steps.filter.outputs.devops }}" }}'
+          echo 'Paths - docs: {{ "${{ steps.filter.outputs.docs }}" }}'
+          echo 'Paths - frontend: {{ "${{ steps.filter.outputs.frontend }}" }}'
+          echo 'Paths - varnish: {{ "${{ steps.filter.outputs.varnish }}" }}'

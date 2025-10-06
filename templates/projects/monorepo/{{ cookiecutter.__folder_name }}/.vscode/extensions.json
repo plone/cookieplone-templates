@@ -7,6 +7,7 @@
     "ExecutableBookProject.myst-highlight",
     "github.vscode-github-actions",
     "ms-python.python",
+    "ms-azuretools.vscode-containers",
     "ms-vscode-remote.remote-containers",
     "redhat.vscode-yaml",
     "stylelint.vscode-stylelint",

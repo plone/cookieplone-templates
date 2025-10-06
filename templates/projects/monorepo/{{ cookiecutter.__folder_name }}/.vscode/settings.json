@@ -1,5 +1,6 @@
 {
   "eslint.workingDirectories": ["./frontend"],
+  "files.encoding": "utf8",
   "stylelint.enable": true,
   "css.validate": false,
   "less.validate": false,

@@ -19,18 +19,27 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-PLONE_VERSION=6
+REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+
+VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
+PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
-ADDON_NAME='{{ cookiecutter.__npm_package_name }}'
+ADDON_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.name')
+
 IMAGE_NAME={{cookiecutter.__container_image_prefix}}-frontend
 IMAGE_TAG=latest
-VOLTO_VERSION = $(shell cat ./mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 
 .PHONY: help
 help: ## Show this help
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
+
+.PHONY: debug-settings
+debug-settings:  ## Debug settings
+	@echo "VOLTO_VERSION: $(VOLTO_VERSION)"
+	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 
 # Dev Helpers
 .PHONY: clean

@@ -74,7 +74,7 @@ jobs:
       - name: Report
         if: {{ "${{ success() || failure() }}" }}
         run: |
-          echo '# Code Analysis' >> $GITHUB_STEP_SUMMARY
+          echo '# Frontend Code Analysis' >> $GITHUB_STEP_SUMMARY
           echo '| Test | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
           echo '| Lint | {{ "${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }}" }} |' >> $GITHUB_STEP_SUMMARY
