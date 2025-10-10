@@ -19,6 +19,8 @@
   "__version_mrs_developer": "^2.2.0",
   "__version_pnpm": "9.1.1",
   "__version_release_it": "^17.1.1",
+  "__version_testing_library_react": "^16.2.0",
+  "__version_vitest": "^3.1.2",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__gha_version_node": "{{ cookiecutter.__node_version }}",
   "__gha_version_checkout": "v4",
@@ -27,6 +29,7 @@
   "__gha_version_background_action": "v1",
   "__gha_version_upload_artifact": "v4",
   "__gha_version_pages_deploy": "v4",
+  "__test_framework": "{{ 'vitest' if cookiecutter.volto_version >= '19' else 'jest'}}",
   "__prompts__": {
     "frontend_addon_name": "Add-on (Short name of the addon)",
     "title": "Add-on Title",
