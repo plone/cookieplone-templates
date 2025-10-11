@@ -1,4 +1,18 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git", "npm_package_name"]
+ALLOWED_MISSING = [
+    "container_image_prefix",
+    "cookieplone_template",
+    "feature_headless",
+    "folder_name",
+    "generator_sha",
+    "github_organization",
+    "hostname_or_ip",
+    "initial_version",
+    "initialize_git",
+    "npm_package_name",
+    "stack_location",
+    "stack_name",
+    "stack_prefix",
+]
 ALLOWED_NOT_USED = []
 
 

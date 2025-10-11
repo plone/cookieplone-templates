@@ -26,6 +26,19 @@ def test_project_files(cutter_result, filepath: str):
     assert path.is_file()
 
 
+def test_version(cutter_result):
+    """Test project version."""
+    from datetime import date
+
+    expected_version = date.today().strftime("%Y%m%d.0")
+    folder = cutter_result.project_path
+    path = folder / "version.txt"
+    assert path.is_file()
+    version = path.read_text().strip()
+    assert len(version) == 10  # YYYYMMDD.X
+    assert version == expected_version
+
+
 @pytest.mark.parametrize(
     "filepath",
     [f for f in TOP_LEVEL_FILES if f.endswith(".json")]

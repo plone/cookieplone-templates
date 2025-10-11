@@ -14,7 +14,6 @@ backend traefik_loadbalancer {
 /* Only allow PURGE from localhost and API-Server */
 acl purge {
   "localhost";
-  "backend";
   "127.0.0.1";
   "172.16.0.0/12";
   "10.0.0.0/8";
@@ -31,10 +30,12 @@ sub detect_debug{
   # information about requests
   unset req.http.x-vcl-debug;
   # Should be changed after switch to live
-  #if (req.http.x-varnish-debug) {
-  #    set req.http.x-vcl-debug = false;
-  #}
-  set req.http.x-vcl-debug = true;
+  if (req.http.x-varnish-debug) {
+     set req.http.x-vcl-debug = true;
+  } else {
+     set req.http.x-vcl-debug = false;
+  }
+
 }
 
 sub detect_auth{

@@ -1,0 +1,27 @@
+---
+# Playbook: playbooks/stacks.yml
+# Description: Information about stacks in the cluster
+#
+# Usage:
+#
+#  # All Stacks
+#  uv run ansible-playbook playbooks/stacks.yml
+#
+#
+- name: "Stacks Information"
+  hosts: "cluster_manager"
+  remote_user: "{{ users.default.name }}"
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: "Gather stacks information"
+      community.docker.docker_stack_info:
+      register: stacks
+
+    - name: "Show results"
+      ansible.builtin.include_tasks: ../tasks/docker/task_stack.yml
+      loop: "{{ stacks.results }}"
+      loop_control:
+        loop_var: stack

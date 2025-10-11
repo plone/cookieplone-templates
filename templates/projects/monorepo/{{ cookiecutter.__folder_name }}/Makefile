@@ -202,12 +202,12 @@ acceptance-test:
 .PHONY: acceptance-frontend-image-build
 acceptance-frontend-image-build:
 	@echo "Build acceptance frontend image"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+	@docker build frontend -t {{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
 
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:
 	@echo "Build acceptance backend image"
-	@docker build backend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build backend -t {{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 .PHONY: acceptance-images-build
 acceptance-images-build: ## Build Acceptance frontend/backend images
@@ -217,12 +217,12 @@ acceptance-images-build: ## Build Acceptance frontend/backend images
 .PHONY: acceptance-frontend-container-start
 acceptance-frontend-container-start:
 	@echo "Start acceptance frontend"
-	@docker run --rm -p 3000:3000 --name {{ cookiecutter.__project_slug }}-frontend-acceptance --link {{ cookiecutter.__project_slug }}-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance
+	@docker run --rm -p 3000:3000 --name {{ cookiecutter.__project_slug }}-frontend-acceptance --link {{ cookiecutter.__project_slug }}-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d {{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance
 
 .PHONY: acceptance-backend-container-start
 acceptance-backend-container-start:
 	@echo "Start acceptance backend"
-	@docker run --rm -p 55001:55001 --name {{ cookiecutter.__project_slug }}-backend-acceptance -d {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-backend:acceptance
+	@docker run --rm -p 55001:55001 --name {{ cookiecutter.__project_slug }}-backend-acceptance -d {{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}-backend:acceptance
 
 .PHONY: acceptance-containers-start
 acceptance-containers-start: ## Start Acceptance containers

@@ -1,0 +1,19 @@
+# code: language=ansible
+---
+- name: "Stack information: {{ stack.Name }}"
+  ansible.builtin.debug:
+    msg: "{{ stack.Name }} - {{ stack.Services }}"
+
+- name: "Get services for {{ stack.Name }}"
+  community.docker.docker_swarm_info:
+    services: true
+    services_filters:
+      name: "{{ stack.Name }}"
+  register: services
+
+- name: "Display services for {{ stack.Name }}"
+  ansible.builtin.debug:
+    msg: "{{ service.Name }} - {{ service.Image }} - {{ service.Replicas }}"
+  loop: "{{ services.services }}"
+  loop_control:
+    loop_var: service

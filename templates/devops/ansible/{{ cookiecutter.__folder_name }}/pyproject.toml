@@ -1,0 +1,18 @@
+[project]
+name = "devops"
+version = "0.1.0"
+description = "{{ cookiecutter.description }}"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "ansible==11.0.0",
+  "dnspython==2.7.0",
+  "python-gitlab==5.0.0",
+  "python-dateutil==2.9.0",
+  "passlib==1.7.4",
+  "ansible-lint==24.10.0",
+]
+
+[tool.uv]
+environments = ["platform_system != 'Windows'"]
+package = false

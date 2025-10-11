@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 9
+    assert len(all_templates) == 10
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -29,6 +29,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             "Project settings to be applied on top of a Classic UI project",
             True,
         ),
+        ("devops_ansible", "Ansible Playbooks for Plone", True),
     ],
 )
 def test_template_settings(

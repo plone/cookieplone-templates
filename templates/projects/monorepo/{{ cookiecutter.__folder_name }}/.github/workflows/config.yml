@@ -3,10 +3,6 @@ name: "Compute Config variables"
 on:
   workflow_call:
     inputs:
-      image-name-prefix:
-        required: false
-        type: string
-        default: "{{ cookiecutter.__container_image_prefix }}"
       node-version:
         required: false
         type: string
@@ -50,7 +46,7 @@ on:
         value: {{ "${{ github.event_name }}" }}
       image-name-prefix:
         description: "Image name prefix for container images"
-        value: {{ "${{ inputs.image-name-prefix }}" }}
+        value: {{ "${{ jobs.config.outputs.image-name-prefix }}" }}
       stack-name:
         description: "Stack name for the deployment"
         value: {{ "${{ inputs.stack-name }}" }}
@@ -83,6 +79,7 @@ jobs:
       base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
       plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
       volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}
+      image-name-prefix: {{ "${{ steps.vars.outputs.image-name-prefix }}" }}
 
     steps:
 
@@ -100,6 +97,7 @@ jobs:
         shell: bash
         run: |
           REPOSITORY_SETTINGS="$(uvx repoplone settings dump)"
+          echo "image-name-prefix=$(jq -r '.container_images_prefix' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
@@ -138,13 +136,17 @@ jobs:
 
       - name: Test vars
         run: |
-          echo "base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}"
-          echo 'plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}'
-          echo 'volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}'
-          echo 'event-name: {{ "${{ github.event_name }}" }}'
-          echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
-          echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
-          echo 'Paths - devops: {{ "${{ steps.filter.outputs.devops }}" }}'
-          echo 'Paths - docs: {{ "${{ steps.filter.outputs.docs }}" }}'
-          echo 'Paths - frontend: {{ "${{ steps.filter.outputs.frontend }}" }}'
-          echo 'Paths - varnish: {{ "${{ steps.filter.outputs.varnish }}" }}'
+          echo '# Config Settings' >> $GITHUB_STEP_SUMMARY
+          echo '| Variable | Value |' >> $GITHUB_STEP_SUMMARY
+          echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
+          echo "| base-tag | {{ "${{ steps.vars.outputs.base-tag }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| plone-version | {{ "${{ steps.vars.outputs.plone-version }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| volto-version | {{ "${{ steps.vars.outputs.volto-version }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| image-name-prefix | {{ "${{ steps.vars.outputs.image-name-prefix }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| event-name | {{ "${{ github.event_name }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| acceptance | {{ "${{ steps.filter.outputs.acceptance }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| backend | {{ "${{ steps.filter.outputs.backend }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| devops | {{ "${{ steps.filter.outputs.devops }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| docs | {{ "${{ steps.filter.outputs.docs }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| frontend | {{ "${{ steps.filter.outputs.frontend }}" }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| varnish | {{ "${{ steps.filter.outputs.varnish }}" }} |" >> $GITHUB_STEP_SUMMARY

@@ -1,4 +1,4 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git"]
+ALLOWED_MISSING = ["feature_headless", "initial_version", "initialize_git"]
 ALLOWED_NOT_USED = ["__devops_host"]
 
 

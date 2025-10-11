@@ -24,7 +24,6 @@ classifiers = [
     {%- if cookiecutter.__feature_distribution == '1' %}
     "Framework :: Plone :: Distribution",
     {%- endif %}
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     {%- for version in cookiecutter.__supported_versions_python -%}
@@ -32,7 +31,7 @@ classifiers = [
     {%- endfor %}
 ]
 dependencies = [
-    "Products.CMFPlone=={{ cookiecutter.plone_version }}",
+    "{{ cookiecutter.__backend_base_package_name }}=={{ cookiecutter.__backend_base_package_version }}",
     "plone.api",
     "plone.restapi",
     "plone.volto",
@@ -57,7 +56,6 @@ container = [
 
 [project.urls]
 Homepage = "{{ cookiecutter.__repository_url }}"
-PyPI = "https://pypi.org/project/{{ cookiecutter.python_package_name }}"
 Source = "{{ cookiecutter.__repository_url }}"
 Tracker = "{{ cookiecutter.__repository_url }}/issues"
 
@@ -65,7 +63,7 @@ Tracker = "{{ cookiecutter.__repository_url }}/issues"
 target = "plone"
 
 [tool.uv]
-managed = {{ cookiecutter.__backend_managed_by_uv }}
+managed = true
 default-groups = ["test"]
 constraint-dependencies = []
 
@@ -177,14 +175,6 @@ preview = true
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E501", "RUF001", "S101"]
-
-[tool.check-manifest]
-ignore = [
-    ".editorconfig",
-    ".flake8",
-    "dependabot.yml",
-    "mx.ini",
-]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

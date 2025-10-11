@@ -18,6 +18,8 @@ def repository_settings(cutter_result) -> dict:
     "key,expected",
     [
         ["repository.name", "plone.org.br"],
+        ["repository.version_format", "calver"],
+        ["repository.container_images_prefix", "ghcr.io/collective/plone.org.br"],
         ["repository.towncrier.section", "Project"],
         ["repository.towncrier.settings", "towncrier.toml"],
         ["backend.package.name", "plonegov.ploneorgbr"],

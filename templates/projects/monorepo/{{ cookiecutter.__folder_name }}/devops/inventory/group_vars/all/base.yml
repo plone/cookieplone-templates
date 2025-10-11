@@ -1,3 +1,0 @@
----
-devops:
-  email: {{ cookiecutter.email }}

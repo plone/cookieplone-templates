@@ -4,6 +4,7 @@ import json
 import subprocess
 from collections import OrderedDict
 from copy import deepcopy
+from datetime import date
 from pathlib import Path
 
 from cookieplone import generator
@@ -11,6 +12,7 @@ from cookieplone.utils import console, files, git, npm, plone
 
 context: OrderedDict = {{cookiecutter}}
 
+calver_date = f"{date.today().strftime('%Y%m%d')}.0"  # YYYYMMDD
 
 BACKEND_ADDON_REMOVE = [
     ".github",
@@ -26,18 +28,6 @@ FRONTEND_ADDON_REMOVE = [".github"]
 
 
 POST_GEN_TO_REMOVE = {
-    "devops-ansible": [
-        "devops/.env_dist",
-        "devops/.gitignore",
-        "devops/ansible.cfg",
-        "devops/etc",
-        "devops/inventory",
-        "devops/Makefile",
-        "devops/playbooks",
-        "devops/requirements",
-        "devops/tasks",
-        "devops/README.md",
-    ],
     "devops-gha": [
         ".github/workflows/manual_deploy.yml",
         "devops/.env_gha",
@@ -64,9 +54,10 @@ def _fix_frontend_addon_name(context: OrderedDict) -> OrderedDict:
     return context
 
 
-def handle_devops_ansible(context: OrderedDict, output_dir: Path):
-    """Clean up ansible."""
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-ansible"])
+def handle_version(context: OrderedDict, output_dir: Path):
+    """Update version.txt."""
+    version_path = output_dir / "version.txt"
+    version_path.write_text(calver_date)
 
 
 def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
@@ -100,6 +91,7 @@ def generate_addons_backend(context, output_dir):
     """Run Plone Addon generator."""
     output_dir = output_dir
     folder_name = "backend"
+    context["initial_version"] = f"{calver_date}"
     # Headless
     context["feature_headless"] = "1"
     context["initialize_documentation"] = "0"
@@ -119,6 +111,7 @@ def generate_addons_frontend(context, output_dir):
     # Handle packages inside an organization
     context = _fix_frontend_addon_name(context)
     frontend_addon_name = context["frontend_addon_name"]
+    context["initial_version"] = f"{calver_date}.0"
     context["initialize_documentation"] = "0"
     path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
@@ -139,6 +132,26 @@ def generate_addons_frontend(context, output_dir):
         data["npm"]["publish"] = False
         # Update file
         release_it_path.write_text(json.dumps(data, indent=2))
+
+
+def generate_devops_ansible(context, output_dir):
+    """Run Devops - Ansible generator."""
+    output_dir = output_dir
+    folder_name = "devops/ansible"
+
+    context["stack_location"] = f"../stacks/{context['hostname']}.yml"
+    context["stack_name"] = f"{context['__devops_stack_name']}"
+    context["stack_prefix"] = f"{context['__devops_stack_prefix']}"
+    context["hostname_or_ip"] = f"{context['hostname']}"
+
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/devops/ansible",
+        output_dir,
+        folder_name,
+        context,
+        BACKEND_ADDON_REMOVE,
+    )
+    files.remove_files(output_dir / folder_name, BACKEND_ADDON_REMOVE)
 
 
 def generate_docs_starter(context, output_dir):
@@ -171,6 +184,9 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     folder_name = output_dir.name
     output_dir = output_dir.parent
     context = _fix_frontend_addon_name(context)
+    context["container_image_prefix"] = f"{context['__container_image_prefix']}"
+    context["cookieplone_template"] = f"{context['__cookieplone_template']}"
+    context["generator_sha"] = f"{context['__generator_sha']}"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/sub/project_settings", output_dir, folder_name, context
     )
@@ -231,9 +247,9 @@ def main():
     # Cleanup / Git
     actions = [
         [
-            handle_devops_ansible,
-            "Remove Ansible files",
-            not int(context.get("devops_ansible")),  # {{ cookiecutter.devops_ansible }}
+            handle_version,
+            "Update version.txt",
+            True,
         ],
         [
             handle_devops_gha_deploy,

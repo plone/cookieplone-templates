@@ -3,7 +3,7 @@
 {{ cookiecutter.description }}
 
 [![npm](https://img.shields.io/npm/v/{{ cookiecutter.__npm_package_name }})](https://www.npmjs.com/package/{{ cookiecutter.__npm_package_name }})
-[![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://{{ cookiecutter.github_organization }}.github.io/{{ cookiecutter.frontend_addon_name }}/)
+[![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://{{ cookiecutter.organization }}.github.io/{{ cookiecutter.frontend_addon_name }}/)
 [![CI]({{ cookiecutter.__repository_url }}/actions/workflows/main.yml/badge.svg)]({{ cookiecutter.__repository_url }}/actions/workflows/main.yml)
 
 

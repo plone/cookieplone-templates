@@ -9,7 +9,7 @@ Welcome to the DevOps operations guide for deploying your project using GitHub A
 ### Step 1: Create a New Environment
 
 1. Visit [GitHub](https://github.com/) and log in with your credentials.
-2. Go to your repository at [{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}]({{ cookiecutter.__repository_url }}).
+2. Go to your repository at [{{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}]({{ cookiecutter.__repository_url }}).
 3. Click on `Settings` at the top-right corner.
 4. In the left sidebar, click on `Environments`.
 5. Press `New environment`.

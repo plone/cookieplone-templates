@@ -1,0 +1,91 @@
+---
+# Playbook: playbooks/setup.yml
+# Description: Bootstrap a new server, or a group of servers
+#
+# Usage:
+#
+# - Run in all cluster servers
+#  uv run ansible-playbook playbooks/setup.yml --limit cluster
+#
+- name: "Bootstrap a server"
+  hosts: "all"
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: "Proxy: Setup"
+      ansible.builtin.import_tasks: ../tasks/base/task_proxy.yml
+
+    - name: "Base Packages: Setup"
+      ansible.builtin.import_tasks: ../tasks/base/task_base_packages.yml
+
+  roles:
+    - role: geerlingguy.swap
+
+  tasks:
+
+    - name: "Hostname"
+      tags:
+        - base
+        - hostname
+      ansible.builtin.import_tasks: ../tasks/base/task_hostname.yml
+
+    - name: "Timezone"
+      tags:
+        - base
+        - timezone
+      become: true
+      community.general.timezone:
+        name: "{{ timezone }}"
+
+    - name: "Disks"
+      tags:
+        - base
+        - disks
+      ansible.builtin.import_tasks: ../tasks/base/task_mount_points.yml
+
+    - name: "Setup default user"
+      tags:
+        - base
+        - user
+      ansible.builtin.import_tasks: ../tasks/base/task_user.yml
+
+    - name: "SSH: Setup"
+      tags:
+        - base
+        - ssh
+      ansible.builtin.import_tasks: ../tasks/base/task_ssh.yml
+
+    - name: "Docker: Setup"
+      tags:
+        - base
+        - docker
+      ansible.builtin.import_tasks: ../tasks/docker/task_setup.yml
+
+    - name: "Docker Swarm: Setup"
+      tags:
+        - base
+        - swarm
+      when: inventory_hostname in groups['cluster']
+      ansible.builtin.import_tasks: ../tasks/docker/task_swarm.yml
+
+    - name: "Docker Swarm: Initial Stacks"
+      tags:
+        - base
+        - swarm
+      when: inventory_hostname in groups['cluster_manager']
+      block:
+        - name: "Docker Swarm: Deploy Traefik"
+          vars:
+            stack: "{{ stacks.traefik }}"
+          ansible.builtin.import_tasks: ../tasks/stacks/task_deploy.yml
+
+        - name: "Docker Swarm: Deploy Cronjob"
+          vars:
+            stack: "{{ stacks.cronjob }}"
+          ansible.builtin.import_tasks: ../tasks/stacks/task_deploy.yml
+
+
+  handlers:
+    - name: "Include default handlers"
+      ansible.builtin.import_tasks: ../tasks/handlers/common.yml
