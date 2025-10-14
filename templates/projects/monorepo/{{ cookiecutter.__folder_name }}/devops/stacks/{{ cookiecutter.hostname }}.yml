@@ -90,7 +90,7 @@ services:
     image: {{ cookiecutter.__container_image_prefix }}-backend:${IMAGE_TAG:-latest}
 {%- if cookiecutter.devops_storage == 'relstorage' %}
     environment:
-      RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-{ cookiecutter.__devops_stack_name}}_db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
+      RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-{{ cookiecutter.__devops_stack_name}}_db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
 {%- elif cookiecutter.devops_storage == 'zeo' %}
     environment:
       ZEO_ADDRESS: "{ cookiecutter.__devops_stack_name}}_db:8100"
