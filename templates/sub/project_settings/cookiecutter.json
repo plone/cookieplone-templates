@@ -20,7 +20,7 @@
   "__backend_base_package_name": "Products.CMFPlone",
   "__backend_base_package_version": "{{ cookiecutter.plone_version }}",
   "__project_slug": "{{ cookiecutter.project_slug }}",
-  "__repository_url": "h{{ cookiecutter.repository_url }}",
+  "__repository_url": "{{ cookiecutter.repository_url }}",
   "__repository_git": "git@github.com:{{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}",
   "__container_image_prefix": "{{ cookiecutter.container_image_prefix }}",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
