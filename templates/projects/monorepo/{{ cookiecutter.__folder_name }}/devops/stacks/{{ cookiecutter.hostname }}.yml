@@ -181,11 +181,7 @@ services:
 
 volumes:
   vol-traefik-certs: {}
-  vol-site-data:
-    driver_opts:
-      type: none
-      device: "/srv/{{ cookiecutter.__project_slug }}/data"
-      o: bind
+  vol-site-data: {}
 
 networks:
   {{ cookiecutter.__devops_swarm_public_network }}:
