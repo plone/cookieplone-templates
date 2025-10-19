@@ -42,7 +42,10 @@
     "overrides": {
       "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
       "react-refresh": "^0.14.2"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "lightningcss-cli"
+    ]
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@{{ cookiecutter.__version_pnpm }}"
 }

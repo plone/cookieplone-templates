@@ -35,7 +35,7 @@
   "__version_frontend_package": "1.0.0-alpha.0",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_mrs_developer": "^2.2.0",
-  "__version_pnpm": "9.1.1",
+  "__version_pnpm": "{{ '10.18.3' if cookiecutter.volto_version >= '19' else '9.1.1' }}",
   "__version_release_it": "^17.1.1",
   "__test_framework": "{{ 'vitest' if cookiecutter.volto_version >= '19' else 'jest'}}",
   "_copy_without_render": [],
