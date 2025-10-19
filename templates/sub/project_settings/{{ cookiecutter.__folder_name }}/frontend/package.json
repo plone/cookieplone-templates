@@ -50,6 +50,7 @@
       "react-refresh": "^0.14.2"
     },
     "onlyBuiltDependencies": [
+      "cypress",
       "lightningcss-cli"
     ]
   },
