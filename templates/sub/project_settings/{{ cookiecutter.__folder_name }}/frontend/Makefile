@@ -98,9 +98,9 @@ ci-test: ## Run unit tests in CI
 	# Unit Tests need the i18n to be built
 	VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n
 {%- if cookiecutter.__test_framework == 'jest' %}
-	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests
+	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm run --filter @plone/volto test --passWithNoTests
 {%- else %}
-	CI=1 pnpm test -- --passWithNoTests
+	CI=1 pnpm run test --passWithNoTests
 {%- endif %}
 
 .PHONY: backend-docker-start
