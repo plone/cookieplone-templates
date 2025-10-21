@@ -1,0 +1,1 @@
+Updates cache keys of the `frontend-functional` job to invalidate the cache if `package.json` or `mrs.developer.json` are changed. @wesleybl
