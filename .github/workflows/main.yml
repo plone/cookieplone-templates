@@ -132,7 +132,7 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('templates/add-ons/frontend/{{ cookiecutter.__folder_name }}/package.json','templates/add-ons/frontend/cookiecutter.json') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -141,7 +141,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: binary-${{ env.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: binary-${{ env.node-version }}-${{ hashFiles('templates/add-ons/frontend/{{ cookiecutter.__folder_name }}/package.json','templates/add-ons/frontend/cookiecutter.json') }}
 
       - name: Install generated package
         working-directory: ${{ env.name }}
