@@ -17,7 +17,7 @@
   "__version_frontend_package": "1.0.0-alpha.0",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_mrs_developer": "^2.2.0",
-  "__version_pnpm": "10.13.1",
+  "__version_pnpm": "10.18.3",
   "__version_release_it": "^17.1.1",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__gha_version_node": "{{ cookiecutter.__node_version }}",

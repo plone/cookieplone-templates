@@ -1,2 +1,2 @@
 
-Update pnpm to 10.13.1. @wesleybl
+Update pnpm to 10.18.3. @wesleybl
