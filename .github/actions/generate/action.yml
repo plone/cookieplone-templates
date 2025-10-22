@@ -8,6 +8,10 @@ inputs:
   template:
     description: 'Template to be used'
     required: true
+  frontend-use-prerelease-versions:
+    description: 'Use prerelease versions (frontend templates only)'
+    required: false
+    default: 'No'
 runs:
   using: "composite"
   steps:
@@ -19,4 +23,4 @@ runs:
     - name: Generate codebase
       shell: bash
       run: |
-        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} --no-input
+        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} use_prerelease_versions=${{ inputs.frontend-use-prerelease-versions }} --no-input
