@@ -42,11 +42,12 @@
     "overrides": {
       "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
       "react-refresh": "^0.14.2"
-    },
+    }{%- if cookiecutter.volto_version >= '19' %},
     "onlyBuiltDependencies": [
       "cypress",
       "lightningcss-cli"
     ]
+    {%- endif %}
   },
   "packageManager": "pnpm@{{ cookiecutter.__version_pnpm }}"
 }
