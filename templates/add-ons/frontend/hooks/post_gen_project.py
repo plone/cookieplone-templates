@@ -32,6 +32,18 @@ def generate_docs_starter(context, output_dir):
     files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
+def remove_conditional_files(context, output_dir):
+    if context["__test_framework"] == "jest":
+        (
+            output_dir
+            / "packages"
+            / context["frontend_addon_name"]
+            / "vitest.config.mjs"
+        ).unlink()
+    else:
+        (output_dir / "jest-addon.config.js").unlink()
+
+
 def main():
     """Final fixes."""
 
@@ -52,6 +64,8 @@ def main():
         new_context = deepcopy(context)
         console.print(f" -> {title}")
         func(new_context, output_dir)
+
+    remove_conditional_files(context, output_dir)
 
     msg = """
         [bold blue]{{ cookiecutter.frontend_addon_name }}[/bold blue]
