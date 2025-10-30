@@ -8,10 +8,11 @@ COPY --chown=node Makefile /app/Makefile
 COPY --chown=node pnpm-workspace.yaml /app/pnpm-workspace.yaml
 COPY --chown=node .pnpmfile.cjs /app/.pnpmfile.cjs
 COPY --chown=node package.json /app/package.json.temp
+COPY --chown=node pnpm-lock.yaml /app/pnpm-lock.yaml
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     set -e
-    python3 -c "import json; data = json.load(open('package.json.temp')); deps = data['dependencies']; data['dependencies'].update(deps); json.dump(data, open('package.json', 'w'), indent=2)"
+    python3 -c "import json; orig_data = json.load(open('package.json.temp')); orig_deps = orig_data['dependencies']; data = json.load(open('package.json')); data['dependencies'].update(orig_deps); json.dump(data, open('package.json', 'w'), indent=2)"
     rm package.json.temp
     (cd core && git fetch --depth 1 origin seven:seven && git checkout seven)
     pnpm install && make build-deps
