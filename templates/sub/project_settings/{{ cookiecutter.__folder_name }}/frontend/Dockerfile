@@ -7,6 +7,7 @@ COPY --chown=node volto.config.js /app/
 COPY --chown=node package.json /app/package.json.temp
 COPY --chown=node mrs.developer.json /app/
 COPY --chown=node pnpm-workspace.yaml /app/
+COPY --chown=node pnpm-lock.yaml /app/pnpm-lock.yaml
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     set -e
