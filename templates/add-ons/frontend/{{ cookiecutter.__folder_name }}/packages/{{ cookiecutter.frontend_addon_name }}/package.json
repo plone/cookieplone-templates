@@ -36,6 +36,11 @@
   },
   "devDependencies": {
     "@plone/scripts": "workspace:*",
-    "release-it": "{{ cookiecutter.__version_release_it }}"
+    "@plone/types": "workspace:*",
+    "@types/react": "18",
+    "@types/react-dom": "18",
+    "release-it": "{{ cookiecutter.__version_release_it }}",
+    "typescript": "{{ cookiecutter.__version_typescript }}",
+    "vitest": "{{ cookiecutter.__version_vitest }}"
   }
 }
