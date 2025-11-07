@@ -50,7 +50,7 @@
       "react-refresh": "^0.14.2"
     }{%- if cookiecutter.volto_version >= '19' %},
     "ignoredBuiltDependencies": [
-      "@parcel/watcher",
+      "@parcel/watcher"
     ],
     "onlyBuiltDependencies": [
       "core-js",
