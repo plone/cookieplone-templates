@@ -49,9 +49,18 @@
       "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
       "react-refresh": "^0.14.2"
     }{%- if cookiecutter.volto_version >= '19' %},
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+    ],
     "onlyBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
       "cypress",
-      "lightningcss-cli"
+      "es5-ext",
+      "esbuild",
+      "full-icu",
+      "lightningcss-cli",
+      "unrs-resolver"
     ]
     {%- endif %}
   },

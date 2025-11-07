@@ -4,7 +4,7 @@
   "author": "Plone Community",
   "__folder_name": "app",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
-  "__version_pnpm": "{{ '10.18.3' if cookiecutter.volto_version >= '19' else '9.1.1' }}",
+  "__version_pnpm": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.1.1' }}",
   "__prompts__": {
     "title": "Project name",
     "volto_version": "Volto version"
