@@ -36,6 +36,12 @@
   },
   "devDependencies": {
     "@plone/scripts": "workspace:*",
+{%- if cookiecutter.__test_framework == 'jest' %}
     "release-it": "{{ cookiecutter.__version_release_it }}"
+{%- else %}
+    "@testing-library/react": "{{ cookiecutter.__version_testing_library_react }}",
+    "release-it": "{{ cookiecutter.__version_release_it }}",
+    "vitest": "{{ cookiecutter.__version_vitest }}"
+{%- endif %}
   }
 }
