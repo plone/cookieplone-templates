@@ -12,6 +12,7 @@ on:
 
 env:
   node-version: 22.x
+  node-version-prerelease: 24.x
   python-version: "3.10"
 
 jobs:
@@ -112,6 +113,11 @@ jobs:
       - name: Checkout codebase
         uses: actions/checkout@v4
 
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node-version }}
+
       - name: Generate
         uses: ./.github/actions/generate
         with:
@@ -142,6 +148,120 @@ jobs:
         with:
           path: ~/.cache/Cypress
           key: binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+
+      - name: Install generated package
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Run unit tests
+        working-directory: ${{ env.name }}
+        run: |
+          make ci-test
+
+      - name: Run i18n tests
+        working-directory: ${{ env.name }}
+        run: |
+          make i18n
+
+      - name: Run linting
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Run formatting
+        working-directory: ${{ env.name }}
+        run: |
+          make format
+
+      - name: Run Storybook
+        working-directory: ${{ env.name }}
+        run: |
+          make storybook-build
+
+      - name: Start Servers
+        uses: JarvusInnovations/background-action@v1
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make ci-acceptance-backend-start &
+            make acceptance-frontend-prod-start &
+          # your step-level and job-level environment variables are available to your commands as-is
+          # npm install will count towards the wait-for timeout
+          # whenever possible, move unrelated scripts to a different step
+          # to background multiple processes: add & to the end of the command
+
+          wait-on: |
+            http-get://localhost:55001/plone
+            http://localhost:3000
+          # IMPORTANT: to use environment variables in wait-on, you must use this form: ${{ env.VAR }}
+          # See wait-on section below for all resource types and prefixes
+
+          tail: true # true = stderr,stdout
+          # This will allow you to monitor the progress live
+
+          log-output-resume: stderr
+          # Eliminates previosuly output stderr log entries from post-run output
+
+          wait-for: 10m
+
+          log-output: stderr,stdout # same as true
+
+          log-output-if: failure
+
+      - name: Run acceptance tests
+        working-directory: ${{ env.name }}
+        run: |
+          make ci-acceptance-test
+
+  frontend-functional-prerelease:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "frontend_addon"
+      name: "volto-add-on"
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ env.node-version-prerelease }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node-version-prerelease }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+          frontend-use-prerelease-versions: 'Yes'
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cache Cypress Binary
+        id: cache-cypress-binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: binary-${{ env.node-version-prerelease }}-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
 
       - name: Install generated package
         working-directory: ${{ env.name }}
