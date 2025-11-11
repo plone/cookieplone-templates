@@ -9,6 +9,7 @@
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "__year": "{% now 'local', '%Y' %}",
   "initial_version": "1.0.0a0",
+  "configuration_version": "1000",
   "feature_headless": ["1", "0"],
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.python_package_name }}",
@@ -30,7 +31,7 @@
   "__python_version_identifier": "{{ cookiecutter.__supported_versions_python[0] | replace('.', '') }}",
   "__profile_language": "en",
   "__version_package": "{{ cookiecutter.initial_version }}",
-  "__profile_version": "1000",
+  "__profile_version": "{{ cookiecutter.configuration_version }}",
   "__backend_addon_git_initialize": "1",
   "__backend_addon_format": "1",
   "__prompts__": {
@@ -43,6 +44,7 @@
     "author": "Author",
     "email": "Author E-mail",
     "initial_version": "Package version",
+    "configuration_version": "Configuration version",
     "feature_headless": {
       "__prompt__": "Support headless Plone?",
       "1": "Yes",

@@ -1,4 +1,5 @@
 ALLOWED_MISSING = [
+    "configuration_version",
     "container_image_prefix",
     "cookieplone_template",
     "feature_headless",

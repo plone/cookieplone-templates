@@ -40,5 +40,6 @@ var/
 /reports/
 /sources/
 /venv/
+.mxdev_cache
 constraints*.txt
 requirements*.txt

@@ -13,6 +13,7 @@ from cookieplone.utils import console, files, git, npm, plone
 context: OrderedDict = {{cookiecutter}}
 
 calver_date = f"{date.today().strftime('%Y%m%d')}.0"  # YYYYMMDD
+configuration_version = f"{date.today().strftime('%Y%m%d')}001"  # YYYYMMDD
 
 BACKEND_ADDON_REMOVE = [
     ".github",
@@ -92,6 +93,7 @@ def generate_addons_backend(context, output_dir):
     output_dir = output_dir
     folder_name = "backend"
     context["initial_version"] = f"{calver_date}"
+    context["configuration_version"] = f"{configuration_version}"
     # Headless
     context["feature_headless"] = "1"
     context["initialize_documentation"] = "0"
