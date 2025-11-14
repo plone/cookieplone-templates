@@ -1,0 +1,22 @@
+{
+  "recommendations": [
+    "plone.plone-vs-utilities",
+    "editorconfig.editorconfig",
+    "ExecutableBookProject.myst-highlight",
+{%- if cookiecutter.has_backend == '1' %}
+    "charliermarsh.ruff",
+    "ms-python.python",
+{%- endif %}
+{%- if cookiecutter.has_frontend == '1' %}
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
+{%- endif %}
+{%- if cookiecutter.has_github == '1' %}
+    "github.vscode-github-actions",
+{%- endif %}
+    "ms-azuretools.vscode-containers",
+    "ms-vscode-remote.remote-containers",
+    "redhat.vscode-yaml"
+  ]
+}

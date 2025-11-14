@@ -140,13 +140,15 @@
   "__cookieplone_subtemplates": [
     ["add-ons/backend", "Setup Backend", "1"],
     ["add-ons/frontend", "Setup Frontend", "1"],
+    ["ci/github", "Setup CI", "1"],
     [
       "docs/starter",
-      "Generate documentation scaffold",
+      "Setup Documentation",
       "{{cookiecutter.initialize_documentation}}"
     ],
     ["devops/ansible", "Setup Ansible", "{{cookiecutter.devops_ansible}}"],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
+    ["sub/vscode", "Setup VSCode", "1"],
     ["sub/project_settings", "Setup Project Settings", "1"]
   ],
   "__cookieplone_repository_path": "",

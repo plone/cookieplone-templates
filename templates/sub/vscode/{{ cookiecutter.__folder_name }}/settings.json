@@ -1,0 +1,30 @@
+{
+  "files.encoding": "utf8",
+{%- if cookiecutter.has_frontend == '1' %}
+  "eslint.workingDirectories": ["./{{ cookiecutter.__path_frontend }}"],
+  "stylelint.enable": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "[css][less][scss]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+{%- endif %}
+{%- if cookiecutter.has_backend == '1' %}
+  "ruff.organizeImports": true,
+  "python.terminal.activateEnvironment": true,
+  "python.testing.pytestArgs": [
+    "{{ cookiecutter.__path_backend }}/tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+{%- endif %}
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
+}

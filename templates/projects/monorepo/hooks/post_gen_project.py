@@ -194,6 +194,45 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     )
 
 
+def generate_sub_vscode(context: OrderedDict, output_dir: Path):
+    """Configure VSCode settings."""
+    # Use the same base folder
+    output_dir = output_dir
+    folder_name = ".vscode"
+    context["folder_name"] = folder_name
+    context["cookieplone_template"] = f"{context['__cookieplone_template']}"
+    context["generator_sha"] = f"{context['__generator_sha']}"
+    context["has_frontend"] = "1"
+    context["has_backend"] = "1"
+    context["has_github"] = "1"
+    context["is_monorepo"] = "1"
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/sub/vscode", output_dir, folder_name, context
+    )
+
+
+def generate_ci_github(context, output_dir):
+    """Run CI - GitHub."""
+    output_dir = output_dir
+    folder_name = ".github"
+
+    context["folder_name"] = ".github"
+    context["has_backend"] = "1"
+    context["has_frontend"] = "1"
+    context["has_docs"] = "{{ cookiecutter.initialize_documentation }}"
+    context["has_varnish"] = "{{ cookiecutter.devops_cache }}"
+    context["has_gha_deploy"] = "{{ cookiecutter.devops_gha_deploy }}"
+    context["cookieplone_template"] = "{{ cookiecutter.__cookieplone_template }}"
+
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/github",
+        output_dir,
+        folder_name,
+        context,
+        [],
+    )
+
+
 def run_actions(actions: list, output_dir: Path):
     for func, title, enabled in actions:
         if not int(enabled):

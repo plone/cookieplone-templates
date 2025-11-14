@@ -5,11 +5,11 @@ description = "Collection of templates for Plone integrators to use through Cook
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "cookieplone>=0.9.7",
+    "cookieplone>=0.9.10",
     "gitpython>=3.1.43",
     "pytest>=8.3.5",
     "pytest-cookies>=0.7.0",
-    "pytest-jsonschema>=1.0.0b1",
+    "pytest-jsonschema>=1.0.0",
     "pytest-md-report>=0.6.3",
     "tomli>=2.0.1",
 ]

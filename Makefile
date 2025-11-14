@@ -9,8 +9,8 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo projects/classic
-SUB_TEMPLATES = sub/cache sub/frontend_project sub/project_settings
+TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend add-ons/monorepo projects/monorepo projects/classic
+SUB_TEMPLATES = ci/github sub/cache sub/frontend_project sub/addon_settings sub/classic_project_settings sub/project_settings  sub/vscode
 
 # Python checks
 UV?=uv
@@ -88,3 +88,7 @@ report-keys-usage: $(VENV_FOLDER) ## Generate a report of usage of context keys
 	@echo "$(GREEN)==> Generate a report of usage of context keys$(RESET)"
 	@uv run .scripts/report_keys_usage.py
 
+.PHONY: run
+run: $(VENV_FOLDER) ## Run cookieplone
+	@echo "$(GREEN)==> Run cookieplone$(RESET)"
+	COOKIEPLONE_REPOSITORY=$(CURRENT_DIR) uv run cookieplone

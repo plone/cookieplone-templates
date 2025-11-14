@@ -6,7 +6,7 @@ on:
       - "backend/**"
       - "frontend/**"
       - ".github/workflows/*.yml"
-      {%- if cookiecutter.initialize_documentation == '1' %}
+      {%- if cookiecutter.has_docs == '1' %}
       - "docs/**"
       - .readthedocs.yaml
       {%- endif %}
@@ -17,6 +17,7 @@ jobs:
   config:
     uses: ./.github/workflows/config.yml
 
+{%- if cookiecutter.has_backend == '1' %}
   backend:
     uses: ./.github/workflows/backend.yml
     needs:
@@ -31,8 +32,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+{%- endif %}
 
-{%- if cookiecutter.initialize_documentation == '1' %}
+{%- if cookiecutter.has_docs == '1' %}
 
   docs:
     uses: ./.github/workflows/docs.yml
@@ -42,8 +44,10 @@ jobs:
         python-version: {{ "${{ needs.config.outputs.python-version }}" }}
         working-directory: docs
     if: {{ "${{ needs.config.outputs.docs == 'true' }}" }}
+
 {%- endif %}
 
+{%- if cookiecutter.has_frontend == '1' %}
   frontend:
     uses: ./.github/workflows/frontend.yml
     needs:
@@ -58,8 +62,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+{%- endif %}
 
-{%- if cookiecutter.devops_cache == '1' %}
+{%- if cookiecutter.has_varnish == '1' %}
 
   varnish:
     uses: ./.github/workflows/varnish.yml
@@ -81,12 +86,16 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - config
+      {%- if cookiecutter.has_backend == '1' %}
       - backend
+      {%- endif %}
+      {%- if cookiecutter.has_frontend == '1' %}
       - frontend
-      {%- if cookiecutter.initialize_documentation == '1' %}
+      {%- endif %}
+      {%- if cookiecutter.has_docs == '1' %}
       - docs
       {%- endif %}
-      {%- if cookiecutter.devops_cache == '1' %}
+      {%- if cookiecutter.has_varnish == '1' %}
       - varnish
       {%- endif %}
     steps:
@@ -96,11 +105,15 @@ jobs:
           {{ "echo '| Job ID | Conclusion |' >> $GITHUB_STEP_SUMMARY" }}
           {{ "echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY" }}
           {{ "echo '| config | ${{ needs.config.result }} |' >> $GITHUB_STEP_SUMMARY" }}
+          {%- if cookiecutter.has_backend == '1' %}
           {{ "echo '| backend | ${{ needs.backend.result }} |' >> $GITHUB_STEP_SUMMARY" }}
-          {%- if cookiecutter.initialize_documentation == '1' %}
+          {%- endif %}
+          {%- if cookiecutter.has_docs == '1' %}
           {{ "echo '| docs | ${{ needs.docs.result }} |' >> $GITHUB_STEP_SUMMARY" }}
           {%- endif %}
+          {%- if cookiecutter.has_frontend == '1' %}
           {{ "echo '| frontend | ${{ needs.frontend.result }} |' >> $GITHUB_STEP_SUMMARY" }}
-          {%- if cookiecutter.devops_cache == '1' %}
+          {%- endif %}
+          {%- if cookiecutter.has_varnish == '1' %}
           {{ "echo '| varnish | ${{ needs.varnish.result }} |' >> $GITHUB_STEP_SUMMARY" }}
           {%- endif %}

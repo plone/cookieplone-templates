@@ -3,25 +3,31 @@
     "project": {
       "path": "./templates/projects/monorepo",
       "title": "Volto Project",
-      "description": "Create a new Plone project that uses the Volto frontend",
+      "description": "Plone project that uses the Volto frontend",
       "hidden": false
     },
     "classic_project": {
       "path": "./templates/projects/classic",
       "title": "Classic UI Project",
-      "description": "Create a new Plone project that uses Classic UI",
+      "description": "Plone project that uses Classic UI",
+      "hidden": false
+    },
+    "monorepo_addon": {
+      "path": "./templates/add-ons/monorepo",
+      "title": "Add-on for Plone (with backend and frontend)",
+      "description": "Codebase for a Plone add-on with backend and frontend parts",
       "hidden": false
     },
     "backend_addon": {
       "path": "./templates/add-ons/backend",
       "title": "Backend Add-on for Plone",
-      "description": "Create a new Python package to be used with Plone",
+      "description": "Python package to be used with Plone",
       "hidden": false
     },
     "frontend_addon": {
       "path": "./templates/add-ons/frontend",
       "title": "Frontend Add-on for Plone",
-      "description": "Create a new Node package to be used with Volto",
+      "description": "Node package to be used with Volto",
       "hidden": false
     },
     "sub/cache": {
@@ -36,6 +42,12 @@
       "description": "Subtemplate with configuration used in container images for frontend project.",
       "hidden": true
     },
+    "sub/addon_settings": {
+      "path": "./templates/sub/addon_settings",
+      "title": "Settings to be applied on top of a mono repo add-on codebase",
+      "description": "Subtemplate with configuration and settings for a mono repo add-on.",
+      "hidden": true
+    },
     "sub/project_settings": {
       "path": "./templates/sub/project_settings",
       "title": "Project settings to be applied on top of a mono repo project",
@@ -48,11 +60,23 @@
       "description": "Subtemplate with configuration and settings for a Classic UI project.",
       "hidden": true
     },
+    "sub/vscode": {
+      "path": "./templates/sub/vscode",
+      "title": "VSCode settings",
+      "description": "Subtemplate with configuration and settings for VSCode.",
+      "hidden": true
+    },
     "documentation_starter": {
       "path": "./templates/docs/starter",
       "title": "Documentation scaffold for Plone projects",
       "description": "Create a new documentation scaffold for Plone projects",
       "hidden": false
+    },
+    "ci_github": {
+      "path": "./templates/ci/github",
+      "title": "GitHub CI configuration for Plone projects",
+      "description": "Create a new GitHub CI configuration for Plone projects",
+      "hidden": true
     },
     "devops_ansible": {
       "path": "./templates/devops/ansible",

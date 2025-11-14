@@ -39,7 +39,6 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
-        ".github/workflows/varnish.yml",
         "backend/src/packagename/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",
         "backend/src/packagename/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",
         "devops/varnish/etc/varnish.vcl",
