@@ -27,8 +27,6 @@
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
-  "__profile_language": "{{ cookiecutter.language_code|gs_language_code }}",
-  "__locales_language": "{{ cookiecutter.language_code|locales_language_code }}",
   "__python_version": "3.12",
   "__supported_versions_python": ["{{ cookiecutter.__python_version }}"],
   "__supported_versions_plone": ["{{ cookiecutter.plone_version | as_major_minor }}"],
