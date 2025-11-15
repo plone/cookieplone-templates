@@ -97,3 +97,12 @@ def test_pkg_src_files_generated_with_two_namespaces(
     path = src_path / pkg_file_path
     assert path.exists()
     assert path.is_file()
+
+
+def test_gitignore_entries(cutter_result, gitignore_entry: str):
+    """Check if .gitignore contains required entries."""
+    gitignore_path = cutter_result.project_path / ".gitignore"
+    assert gitignore_path.exists()
+    assert gitignore_path.is_file()
+    content = gitignore_path.read_text()
+    assert gitignore_entry in content
