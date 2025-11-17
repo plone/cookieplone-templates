@@ -38,6 +38,7 @@ export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
 
 # Environment variables to be exported
+export UV_VENV_CLEAR := 1
 export PYTHONWARNINGS := ignore
 export DOCKER_BUILDKIT := 1
 

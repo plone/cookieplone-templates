@@ -37,7 +37,7 @@ dependencies = [
     "plone.volto",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 test = [
     "horse-with-no-namespace",
     "plone.app.testing",
@@ -46,6 +46,8 @@ test = [
     "pytest-cov",
     "pytest-plone>=1.0.0a2",
 ]
+
+[dependency-groups]
 container = [
     "plone.app.upgrade",
     "psycopg2==2.9.10",
