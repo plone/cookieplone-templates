@@ -9,6 +9,7 @@ PAPER           ?=
 # Internal variables.
 GREEN=`tput setaf 2`
 RESET=`tput sgr0`
+SPHINXBUILD     = "$(realpath .venv/bin/sphinx-build)"
 DOCS_DIR        = ./docs/
 BUILDDIR        = ./_build
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -93,7 +94,11 @@ rtd-prepare:  ## Prepare environment on Read the Docs
 
 .PHONY: rtd-pr-preview  ## Build pull request previews on Read the Docs
 rtd-pr-preview: rtd-prepare .venv/bin/python ## Build pull request preview on Read the Docs
-	cd $(DOCS_DIR) && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${READTHEDOCS_OUTPUT}/html/
+
+.PHONY: build
+build: html  ## Build documentation in HTML format
+
 # /documentation builders
 
 

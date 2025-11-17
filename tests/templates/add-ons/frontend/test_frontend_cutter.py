@@ -1,5 +1,7 @@
 """Test cookiecutter generation with all features enabled."""
 
+import json
+
 import pytest
 
 GITHUB_ACTIONS = [
@@ -52,7 +54,8 @@ PKG_SRC_FILES = [
     "news/.gitkeep",
     "package.json",
     "src/components/.gitkeep",
-    "src/index.js",
+    "src/config/settings.ts",
+    "src/index.ts",
     "towncrier.toml",
     "tsconfig.json",
 ]
@@ -118,3 +121,14 @@ def test_json_schema(
 ):
     path = cutter_result.project_path / file_path
     assert schema_validate_file(path, schema_name)
+
+
+def test_release_it_settings(cutter_result):
+    """Test .release-it.json settings are correct."""
+    frontend_folder = cutter_result.project_path
+    filename = "packages/volto-addon/.release-it.json"
+    path = frontend_folder / filename
+    data = json.loads(path.read_text())
+    assert data["github"]["release"] is True
+    assert data["npm"]["publish"] is False
+    assert data["plonePrePublish"]["publish"] is True

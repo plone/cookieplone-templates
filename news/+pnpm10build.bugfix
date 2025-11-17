@@ -1,0 +1,1 @@
+Fixed Dockerfile build command because pnpm complains about ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY. @sneridagh

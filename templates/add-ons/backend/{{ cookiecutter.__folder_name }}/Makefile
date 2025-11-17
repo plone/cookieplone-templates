@@ -54,7 +54,11 @@ requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
+ifdef CI
+	@uv venv $(VENV_FOLDER)
+else
 	@uv venv --python={{ cookiecutter.__supported_versions_python[0] }} $(VENV_FOLDER)
+endif
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync
@@ -132,3 +136,9 @@ test-coverage: $(VENV_FOLDER) ## run tests with coverage
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)
 	@uvx plonecli add $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: release
+release: $(VENV_FOLDER) ## Create a release
+	@echo "$(GREEN)==> Create a release$(RESET)"
+	@uv pip install -e ".[release]"
+	@uv run fullrelease

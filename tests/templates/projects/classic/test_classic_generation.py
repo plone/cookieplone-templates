@@ -4,27 +4,42 @@ import json
 
 import pytest
 
+TOP_LEVEL_FILES = [
+    ".editorconfig",
+    ".gitignore",
+    ".vscode/extensions.json",
+    ".vscode/settings.json",
+    "dependabot.yml",
+    "CHANGELOG.md",
+    "Makefile",
+    "README.md",
+    "repository.toml",
+    "version.txt",
+]
+
 
 @pytest.mark.parametrize(
     "filepath",
-    [
-        ".editorconfig",
-        ".gitignore",
-        ".vscode/extensions.json",
-        ".vscode/settings.json",
-        "dependabot.yml",
-        "CHANGELOG.md",
-        "Makefile",
-        "README.md",
-        "repository.toml",
-        "version.txt",
-    ],
+    TOP_LEVEL_FILES,
 )
 def test_project_files(cutter_result, filepath: str):
     """Test created files."""
     folder = cutter_result.project_path
     path = folder / filepath
     assert path.is_file()
+
+
+@pytest.mark.parametrize(
+    "filepath",
+    [f for f in TOP_LEVEL_FILES if f.endswith(".json")],
+)
+def test_valid_json_files(cutter_result, filepath: str):
+    """Test json files can be read."""
+    folder = cutter_result.project_path
+    path = folder / filepath
+    with open(path) as fh:
+        content = json.load(fh)
+    assert content
 
 
 @pytest.mark.parametrize(

@@ -1,5 +1,7 @@
 import json
+import re
 from pathlib import Path
+from typing import Any
 
 import pytest
 from pytest_cookies.plugin import Cookies
@@ -147,3 +149,48 @@ def mock_pypi_packages(monkeypatch, plone_versions):
     monkeypatch.setattr(
         versions, "get_pypi_package_versions", get_pypi_package_versions
     )
+
+
+@pytest.fixture(scope="session")
+def load_json():
+    def func(path: Path) -> dict | list:
+        data = {}
+        if path.exists():
+            data = json.loads(path.read_text())
+        return data
+
+    return func
+
+
+@pytest.fixture(scope="session")
+def traverse():
+    pattern = re.compile(r"'([^']+)'|([^/]+)")
+
+    def func(data: dict | list, path: str) -> Any:
+        func = None
+        path_parts = path.split(":")
+        if len(path_parts) == 2:
+            func, path = path_parts
+        else:
+            path = path_parts[0]
+        path_groups = pattern.findall(path)
+        parts = [part[0] or part[1] for part in path_groups]
+        value = data
+        for part in parts:
+            if isinstance(value, list):
+                part = int(part)
+            value = value[part]
+        match func:
+            # Add other functions here
+            case "len":
+                value = len(value)
+            case "type":
+                # This makes it easier to compare
+                value = type(value).__name__
+            case "is_uuid4":
+                value = len(value) == 32 and value[15] == "4"
+            case "keys":
+                value = list(value.keys()) if isinstance(value, dict) else []
+        return value
+
+    return func

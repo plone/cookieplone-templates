@@ -10,7 +10,7 @@
   "volto_version": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
   "python_package_name": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
   "frontend_addon_name": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
-  "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "se"],
+  "language_code": ["en", "de", "es", "pt-br", "nl", "fi", "it", "sv"],
   "github_organization": "collective",
   "container_registry": ["github", "docker_hub", "gitlab"],
   "devops_storage": ["relstorage", "zeo", "filestorage"],
@@ -32,7 +32,7 @@
   "__python_version": "3.12",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
-  "__version_pnpm": "9.1.1",
+  "__version_pnpm": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.1.1' }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
   "__container_image_prefix": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
   "__profile_version": "{% now 'utc', '%Y%m%d001' %}",
@@ -86,7 +86,7 @@
       "it": "Italiano",
       "pt-br": "Português (Brasil)",
       "nl": "Nederlands",
-      "se": "Svenska"
+      "sv": "Svenska"
     },
     "github_organization": "GitHub or GitLab username or organization slug from URL",
     "container_registry": {

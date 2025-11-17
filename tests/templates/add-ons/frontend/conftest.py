@@ -49,3 +49,13 @@ def bad_context() -> dict:
         "author": "Plone Collective",
         "email": "collective@plone.org",
     }
+
+
+@pytest.fixture(scope="module")
+def cutter_result_no_organization(
+    template_path, cookies_module, context_no_npm_organization
+):
+    """Cookiecutter result."""
+    return cookies_module.bake(
+        extra_context=context_no_npm_organization, template=template_path
+    )

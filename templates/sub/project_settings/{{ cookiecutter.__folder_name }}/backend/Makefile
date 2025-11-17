@@ -54,7 +54,11 @@ requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
+ifdef CI
+	@uv venv $(VENV_FOLDER)
+else
 	@uv venv --python={{ cookiecutter.__supported_versions_python[0] }} $(VENV_FOLDER)
+endif
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync

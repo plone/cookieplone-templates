@@ -1,5 +1,7 @@
 """Test Generator: /frontend."""
 
+import json
+
 import pytest
 
 EXPECTED_FILES = [
@@ -23,6 +25,9 @@ EXPECTED_FILES = [
     "Dockerfile",
     "Makefile",
     "mrs.developer.json",
+    "packages/volto-ploneorgbr/.release-it.json",
+    "packages/volto-ploneorgbr/src/config/settings.ts",
+    "packages/volto-ploneorgbr/src/index.ts",
     "package.json",
     "pnpm-workspace.yaml",
     "README.md",
@@ -32,7 +37,18 @@ EXPECTED_FILES = [
 
 @pytest.mark.parametrize("filename", EXPECTED_FILES)
 def test_frontend_files(cutter_result, filename: str):
-    """Test @plone/volto generator files exist."""
+    """Test frontend files exist."""
     frontend_folder = cutter_result.project_path / "frontend"
     path = frontend_folder / filename
     assert path.is_file()
+
+
+def test_release_it_settings(cutter_result):
+    """Test .release-it.json settings are correct."""
+    frontend_folder = cutter_result.project_path / "frontend"
+    filename = "packages/volto-ploneorgbr/.release-it.json"
+    path = frontend_folder / filename
+    data = json.loads(path.read_text())
+    assert data["github"]["release"] is False
+    assert data["npm"]["publish"] is False
+    assert data["plonePrePublish"]["publish"] is False

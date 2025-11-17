@@ -1,5 +1,6 @@
 """Post generation hook."""
 
+import json
 import subprocess
 from collections import OrderedDict
 from copy import deepcopy
@@ -50,6 +51,17 @@ POST_GEN_TO_REMOVE = {
 }
 
 TEMPLATES_FOLDER = "templates"
+
+
+def _fix_frontend_addon_name(context: OrderedDict) -> OrderedDict:
+    """Fix frontend_addon_name if it is a scoped package."""
+    frontend_addon_name: str = context["frontend_addon_name"]
+    if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
+        npm_package_name = frontend_addon_name
+        frontend_addon_name = npm.unscoped_package_name(npm_package_name)
+        context["npm_package_name"] = npm_package_name
+        context["frontend_addon_name"] = frontend_addon_name
+    return context
 
 
 def handle_devops_ansible(context: OrderedDict, output_dir: Path):
@@ -105,20 +117,28 @@ def generate_addons_frontend(context, output_dir):
     """Run volto generator."""
     folder_name = "frontend"
     # Handle packages inside an organization
-    frontend_addon_name = context.get("frontend_addon_name")
-    if frontend_addon_name.startswith("@") and "/" in frontend_addon_name:
-        npm_package_name = frontend_addon_name
-        frontend_addon_name = npm.unscoped_package_name(npm_package_name)
-        context["npm_package_name"] = npm_package_name
-        context["frontend_addon_name"] = frontend_addon_name
+    context = _fix_frontend_addon_name(context)
+    frontend_addon_name = context["frontend_addon_name"]
     context["initialize_documentation"] = "0"
-    generator.generate_subtemplate(
+    path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
         folder_name,
         context,
         FRONTEND_ADDON_REMOVE,
     )
+    # Handle .release-it.json
+    release_it_path = path / "packages" / frontend_addon_name / ".release-it.json"
+    if release_it_path.is_file():
+        data = json.loads(release_it_path.read_text())
+        # Disable GitHub releases
+        data["github"]["release"] = False
+        # Disable plonePrePublish
+        data["plonePrePublish"]["publish"] = False
+        # Disable npm
+        data["npm"]["publish"] = False
+        # Update file
+        release_it_path.write_text(json.dumps(data, indent=2))
 
 
 def generate_docs_starter(context, output_dir):
@@ -150,6 +170,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     # Use the same base folder
     folder_name = output_dir.name
     output_dir = output_dir.parent
+    context = _fix_frontend_addon_name(context)
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/sub/project_settings", output_dir, folder_name, context
     )
