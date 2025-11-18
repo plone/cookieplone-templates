@@ -102,7 +102,7 @@ services:
       - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
   db:
-    image: postgres:{{ cookiecutter.__devops_db_version }}
+    image: postgres:{{ cookiecutter.__devops_postgres_version }}
     environment:
       POSTGRES_USER: plone
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}

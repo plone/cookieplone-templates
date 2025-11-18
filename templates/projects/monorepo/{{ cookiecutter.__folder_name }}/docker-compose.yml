@@ -162,7 +162,7 @@ services:
 {%- if cookiecutter.devops_storage == 'relstorage' %}
 
   db:
-    image: postgres:{{ cookiecutter.__devops_db_version }}
+    image: postgres:{{ cookiecutter.__devops_postgres_version }}
     environment:
       POSTGRES_USER: plone
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}

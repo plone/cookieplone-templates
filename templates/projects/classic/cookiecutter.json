@@ -51,7 +51,7 @@
   "__devops_traefik_stack_include_ui": "no",
   "__devops_traefik_docker_network": "{{ cookiecutter.__devops_stack_name }}_{{ cookiecutter.__devops_swarm_stack_network }}",
   "__devops_varnish_version": "7.6",
-  "__devops_db_version": "14.15",
+  "__devops_postgres_version": "18.1",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
   "__devops_zeo_version": "6.0.0",
   "__backend_addon_git_initialize": "0",

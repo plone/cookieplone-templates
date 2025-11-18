@@ -25,7 +25,7 @@
   "__devops_compose_name": "{{ cookiecutter.project_slug | replace('_', '-') }}",
   "__devops_traefik_version": "v2.11",
   "__devops_traefik_local_include_ui": "yes",
-  "__devops_db_version": "14.15",
+  "__devops_postgres_version": "18.1",
   "__devops_db_password": "{{ random_ascii_string(12) }}",
   "__devops_zeo_version": "6.0.0",
   "__folder_name": "{{ cookiecutter.project_slug }}",
