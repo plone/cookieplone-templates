@@ -29,8 +29,8 @@ DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
 ADDON_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.name')
 IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
-
-IMAGE_TAG=latest
+IMAGE_NAME := $(IMAGE_NAME_PREFIX)-frontend
+IMAGE_TAG := latest
 
 .PHONY: help
 help: ## Show this help
@@ -105,8 +105,12 @@ test: ## Run unit tests
 .PHONY: ci-test
 ci-test: ## Run unit tests in CI
 	# Unit Tests need the i18n to be built
-	VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n
-	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests
+	VOLTOCONFIG=$(CURRENT_DIR)/volto.config.js pnpm --filter @plone/volto i18n
+{%- if cookiecutter.__test_framework == 'jest' %}
+	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm run --filter @plone/volto test --passWithNoTests
+{%- else %}
+	CI=1 pnpm run test --passWithNoTests
+{%- endif %}
 
 .PHONY: backend-docker-start
 backend-docker-start:	## Starts a Docker-based backend for development

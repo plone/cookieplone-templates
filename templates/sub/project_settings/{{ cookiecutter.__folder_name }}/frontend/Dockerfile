@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG VOLTO_VERSION
+ARG VOLTO_VERSION=latest
 FROM plone/frontend-builder:${VOLTO_VERSION} AS builder
 
 COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
@@ -16,6 +16,8 @@ RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     pnpm dlx mrs-developer missdev --no-config --fetch-https
     pnpm install && pnpm build:deps
     pnpm build
+    # This is necessary because the build is trying to recreate the node_modules folder
+    # by telling it to CI=1 it will just recreate them
     CI=1 pnpm install --prod
 EOT
 
@@ -30,7 +32,7 @@ COPY --from=builder /app/ /app/
 
 RUN <<EOT
     set -e
-    npm i -g corepack@latest && corepack enable pnpm
-    corepack use pnpm@{{ cookiecutter.__version_pnpm }}
-    corepack prepare pnpm@{{ cookiecutter.__version_pnpm }} --activate
+    CI=1 npm i -g corepack@latest && corepack enable pnpm
+    CI=1 corepack use pnpm@{{ cookiecutter.__version_pnpm }}
+    CI=1 corepack prepare pnpm@{{ cookiecutter.__version_pnpm }} --activate
 EOT
