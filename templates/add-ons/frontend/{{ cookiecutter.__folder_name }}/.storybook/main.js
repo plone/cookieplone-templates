@@ -5,8 +5,11 @@ const path = require('path');
 const projectRootPath = path.resolve('.');
 const lessPlugin = require('@plone/volto/webpack-plugins/webpack-less-plugin');
 const RelativeResolverPlugin = require('@plone/volto/webpack-plugins/webpack-relative-resolver');
+{%- if cookiecutter.volto_version >= '19' %}
+const scssPlugin = require('@plone/volto/webpack-plugins/webpack-scss-plugin');
+{%- else %}
 const scssPlugin = require('razzle-plugin-scss');
-
+{%- endif %}
 const createConfig = require('razzle/config/createConfigAsync.js');
 const razzleConfig = require(path.join(projectRootPath, 'razzle.config.js'));
 
