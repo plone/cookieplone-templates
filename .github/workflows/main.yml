@@ -138,7 +138,7 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -147,12 +147,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+          key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
 
       - name: Install generated package
         working-directory: ${{ env.name }}
         run: |
           make install
+
+      - name: Install Cypress if not in cache
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        working-directory: ${{ env.name }}
+        shell: bash
+        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
@@ -261,12 +267,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: binary-${{ env.node-version-prerelease }}-${{ hashFiles('volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+          key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
 
       - name: Install generated package
         working-directory: ${{ env.name }}
         run: |
           make install
+
+      - name: Install Cypress if not in cache
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        working-directory: ${{ env.name }}
+        shell: bash
+        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
