@@ -57,6 +57,11 @@ PKG_SRC_FEATURE_HEADLESS = [
 ]
 
 
+GITIGNORE_ENTRIES = [
+    "/.mxdev_cache/",
+]
+
+
 @pytest.fixture(scope="module")
 def template_folder() -> str:
     return "add-ons/backend"
@@ -145,3 +150,5 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("pkg_file_path", PKG_SRC_FILES)
     if "pkg_file_path_headless" in metafunc.fixturenames:
         metafunc.parametrize("pkg_file_path_headless", PKG_SRC_FEATURE_HEADLESS)
+    if "gitignore_entry" in metafunc.fixturenames:
+        metafunc.parametrize("gitignore_entry", GITIGNORE_ENTRIES)
