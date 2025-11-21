@@ -34,6 +34,7 @@ endif
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
+LOCKFILE=pip-lock.txt
 
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
@@ -75,7 +76,8 @@ config: instance/etc/zope.ini
 
 .PHONY: install
 install: $(VENV_FOLDER) config ## Install Plone and dependencies
-
+	@uv pip compile pyproject.toml requirements-mxdev.txt -o ${LOCKFILE}
+	@uv pip install -r $(LOCKFILE)
 
 .PHONY: clean
 clean: ## Clean installation and instance (data left intact)
