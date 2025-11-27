@@ -152,4 +152,4 @@ acceptance-image-build:  ## Build Docker Images
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)
-	@uvx plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+	@uvx plonecli add $(filter-out $@,$(MAKECMDGOALS))
