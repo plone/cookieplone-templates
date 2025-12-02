@@ -27,6 +27,7 @@
     "release-alpha": "release-it --preRelease=alpha"
   },
   "addons": [],
+  "theme": "",
   "dependencies": {},
   "peerDependencies": {
     "react": "^18.2.0",
