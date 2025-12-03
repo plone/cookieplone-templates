@@ -43,6 +43,10 @@ POST_GEN_TO_REMOVE = {
         "devops/.env_gha",
         "devops/README-GHA.md",
     ],
+    "devops-gitlab": [
+        ".gitlab-ci.yml",
+        "devops/README-GITLAB.md",
+    ],
     "docs-0": [
         ".github/workflows/docs.yml",
         ".github/workflows/rtd-pr-preview.yml",
@@ -84,6 +88,11 @@ def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
     files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-gha"])
 
 
+def handle_devops_gitlab_deploy(context: OrderedDict, output_dir: Path):
+    """Clean up gitlab deploy."""
+    files.remove_files(output_dir, POST_GEN_TO_REMOVE["gitlab"])
+
+
 def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
     """Clean up GitHub Actions deploy."""
     answer = context.get("initialize_documentation")
@@ -105,6 +114,31 @@ def handle_git_initialization(context: OrderedDict, output_dir: Path):
     """Initialize a GIT repository for the project codebase."""
     git.initialize_repository(output_dir)
 
+
+def handle_container_registry_gitlab(context: OrderedDict, output_dir: Path):
+    """ show a warning when using GitLab as container registry"""
+
+    msg = """
+        [bold blue]{{ cookiecutter.title }}[/bold blue]
+
+        You have selected GitLab as your container registry.
+
+        This template uses `registry.gitlab.com` as the default registry
+        for your containers.
+
+        If you are using your own GitLab instance, please go the the relevant
+        Makefiles and change the container registry address, replacing
+        `registry.gitlab.com` with the URL of your GitLab instance's registry.
+
+        Sorry for the convenience,
+        The Plone Community.
+    """
+    console.panel(
+        title="GitLab container registry information",
+        subtitle="",
+        msg=msg,
+        url="https://plone.org/",
+    )
 
 def generate_addons_backend(context, output_dir):
     """Run Plone Addon generator."""
@@ -263,6 +297,19 @@ def main():
             not int(
                 context.get("devops_gha_deploy")
             ),  # {{ cookiecutter.devops_gha_deploy }}
+        ],
+        [
+            handle_devops_gitlab_deploy,
+            "Remove GitLab Actions deployment files",
+            not int(
+                context.get("devops_gitlab_deploy")
+            ),  # {{ cookiecutter.devops_gitlab_deploy }}
+        ],
+        [
+            handle_container_registry_gitlab,
+            "Remove GitLab Actions deployment files",
+            context.get("container_registry", "") == "gitlab"
+            # {{ cookiecutter.container_registry }}
         ],
         [
             handle_docs_setup,
