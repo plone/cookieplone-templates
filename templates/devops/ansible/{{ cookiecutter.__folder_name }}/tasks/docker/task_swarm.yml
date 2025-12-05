@@ -105,7 +105,7 @@
           "com.docker.network.driver.mtu": "{{ docker_daemon_options.mtu }}"
       when: not docker_swarm_net_public.exists
 
-- name: "Docker Swarm: Cronjob to purge data"
+- name: "Docker Swarm: Cronjob to purge old Docker resources"
   tags:
     - swarm
     - cron
