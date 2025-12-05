@@ -64,6 +64,16 @@ def _fix_frontend_addon_name(context: OrderedDict) -> OrderedDict:
     return context
 
 
+def _find_replace_in_folder(folder: Path, replacements: dict[str, str]):
+    """Find and replace in all files in a folder."""
+    for file_path in folder.rglob("*"):
+        if file_path.is_file():
+            content = file_path.read_text()
+            for find, replace in replacements.items():
+                content = content.replace(find, replace)
+            file_path.write_text(content)
+
+
 def handle_devops_ansible(context: OrderedDict, output_dir: Path):
     """Clean up ansible."""
     files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-ansible"])
@@ -139,6 +149,18 @@ def generate_addons_frontend(context, output_dir):
         data["npm"]["publish"] = False
         # Update file
         release_it_path.write_text(json.dumps(data, indent=2))
+
+    # Replace Repository URL in all files
+    frontend_repo_path = (
+        "{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}"
+    )
+    frontend_addon_repo_url = f"https://github.com/{frontend_repo_path}"
+    frontend_addon_repo_git = f"git@github.com:{frontend_repo_path}"
+    replacements = {
+        frontend_addon_repo_url: "{{ cookiecutter.__repository_url }}",
+        frontend_addon_repo_git: "{{ cookiecutter.__repository_git }}",
+    }
+    _find_replace_in_folder(path, replacements)
 
 
 def generate_docs_starter(context, output_dir):
