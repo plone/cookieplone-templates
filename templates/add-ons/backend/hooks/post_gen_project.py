@@ -44,7 +44,7 @@ def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
     plone.create_namespace_packages(
         output_dir / "src/packagename",
         context.get("python_package_name"),
-        style="pkgutil",
+        style="native"
     )
 
 
