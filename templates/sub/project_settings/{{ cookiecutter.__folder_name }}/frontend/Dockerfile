@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG VOLTO_VERSION
+ARG VOLTO_VERSION=latest
 FROM plone/frontend-builder:${VOLTO_VERSION} AS builder
 
 COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
@@ -32,7 +32,7 @@ COPY --from=builder /app/ /app/
 
 RUN <<EOT
     set -e
-    npm i -g corepack@latest && corepack enable pnpm
-    corepack use pnpm@{{ cookiecutter.__version_pnpm }}
-    corepack prepare pnpm@{{ cookiecutter.__version_pnpm }} --activate
+    CI=1 npm i -g corepack@latest && corepack enable pnpm
+    CI=1 corepack use pnpm@{{ cookiecutter.__version_pnpm }}
+    CI=1 corepack prepare pnpm@{{ cookiecutter.__version_pnpm }} --activate
 EOT

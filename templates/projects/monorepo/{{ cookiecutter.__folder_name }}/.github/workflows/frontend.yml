@@ -69,7 +69,7 @@ jobs:
       - name: Unit Tests
         id: unit
         if: {{ "${{ success() || failure() }}" }}
-        run: make test
+        run: make ci-test
 
       - name: Report
         if: {{ "${{ success() || failure() }}" }}
