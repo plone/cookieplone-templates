@@ -92,3 +92,9 @@ def test_git_repo_is_the_project(cutter_result):
     repo = git.repo_from_path(path)
     assert Path(repo.working_dir) != backend_path
     assert Path(repo.working_dir) == path
+
+def test_native_namespace_generated(cutter_result):
+    """Check if distribution uses native namespace."""
+    project = cutter_result.project_path
+    path = project / "backend" / "src" / "plonegov" / "__init__.py"
+    assert not path.exists()
