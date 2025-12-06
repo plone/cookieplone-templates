@@ -1,0 +1,26 @@
+---
+exclude_paths:
+  - .cache/  # implicit unless exclude_paths is defined in config
+  - .github/
+  - .ansible-lint
+  - etc/
+  - keys/
+  - roles/
+  - "~/.ansible/roles/"
+  - "inventory/**/vault.yml"
+
+enable_list:
+  - fqcn-builtins
+  - no-log-password  # opt-in
+  - no-same-owner  # opt-in
+
+kinds:
+  - playbook: "./playbooks/**/*.{yml,yaml}"
+  - tasks: "./tasks/**/*.{yml,yaml}"
+  - yaml: "./inventory/.{yml,yaml}"
+
+skip_list:
+  - role-name
+
+# Offline mode disables installation of requirements.yml
+offline: true
