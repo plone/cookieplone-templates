@@ -1,0 +1,20 @@
+---
+# geerlingguy.docker settings
+docker_edition: 'ce'
+docker_packages:
+  - "{{ "docker-{{ docker_edition }}" }}"
+  - "{{ "docker-{{ docker_edition }}-cli" }}"
+  - "{{ "docker-{{ docker_edition }}-rootless-extras" }}"
+docker_packages_state: present
+
+docker_users:
+  - "{{ "{{ users.default.name }}" }}"
+
+# See all options in https://docs.docker.com/reference/cli/dockerd/#on-linux
+docker_daemon_options:
+  mtu: 1450
+  data-root: "/var/lib/docker"
+  log-driver: "json-file"
+  log-opts:
+    max-size: "5m"
+    max-file: "3"

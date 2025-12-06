@@ -1,0 +1,63 @@
+# code: language=ansible
+---
+# Setup SSH
+#
+- name: "SSH: Generate a deployment key"
+  community.crypto.openssh_keypair:
+    path: "{{ playbook_dir }}/../etc/keys/{{ users.default.name }}_prod_deploy_ed25519"
+    type: "ed25519"
+  delegate_to: localhost
+  become: false
+
+- name: "SSH: Read authorized_keys from {{ users.setup.name }}"
+  ansible.builtin.command:
+    cmd: "cat {{ users.setup.homedir }}/.ssh/authorized_keys"
+  become_user: "{{ users.setup.name }}"
+  become: true
+  register: main_keys
+  changed_when: false
+
+- name: "SSH: Set setup keys for the new user"
+  ansible.posix.authorized_key:
+    user: "{{ users.default.name }}"
+    key: "{{ item }}"
+  loop: "{{ main_keys.stdout_lines }}"
+  become_user: "{{ users.default.name }}"
+  become: true
+
+- name: "SSH: Additional keys"
+  ansible.posix.authorized_key:
+    user: "{{ users.default.name }}"
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - "{{ playbook_dir }}/../etc/keys/*.pub"
+  become_user: "{{ users.default.name }}"
+  become: true
+
+- name: Disallow password authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+
+- name: Set root SSH access
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin {{ sshd.allow_root }}"
+    state: present
+
+- name: Set AllowUsers in SSH
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    insertafter: "^# Authentication"
+    line: "AllowUsers {{ sshd.allow_users }}"
+  notify: Restart ssh
+
+- name: "SSH: Listen to port {{ sshd.port }}"
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    insertafter: "^#Port 22"
+    line: "Port {{ sshd.port }}"
+  notify: Restart ssh

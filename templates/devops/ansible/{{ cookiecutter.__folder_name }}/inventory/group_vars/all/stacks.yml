@@ -1,0 +1,59 @@
+---
+stacks:
+
+  traefik:
+    enabled: true
+    stack_file: "etc/stacks/traefik.yml"
+    stack_name: "traefik"
+    main_folder: "/srv/traefik"
+    env_vars:
+      TRAEFIK_VERSION: "{{ cookiecutter.__devops_traefik_version}}"
+      TRAEFIK_HOSTNAME: "traefik.{{ cookiecutter.hostname }}"
+      TRAEFIK_EMAIL:  "{{ "{{ devops.email }}" }}"
+      ### To create user:password pair, it's possible to use this command:
+      ### echo $(htpasswd -nb user password)
+      ### Defaults to admin:admin
+      TRAEFIK_BASIC_AUTH: "user:$apr1$M13lILVS$TqQMZMnUtV.1.qlm99Nam1"
+    folders:
+      - path: "/srv/traefik"
+        owner: "{{ "{{ users.default.name }}" }}"
+        group: root
+        mode: "0755"
+
+  cronjob:
+    enabled: true
+    stack_file: "etc/stacks/cronjob.yml"
+    stack_name: "cronjob"
+    main_folder: "/srv/cronjob"
+    env_vars:
+      TZ: "UTC"
+      LOG_LEVEL: "info"
+      LOG_JSON: "false"
+      CRONJOB_VERSION: "{{ cookiecutter.__devops_cronjob_version}}"
+    folders:
+      - path: "/srv/cronjob"
+        owner: "{{ "{{ users.default.name }}" }}"
+        group: root
+        mode: "0755"
+
+  project:
+    enabled: true
+    stack_file: "{{ cookiecutter.stack_location }}"
+    stack_name: "{{ cookiecutter.stack_name }}"
+    main_folder: "/srv/{{ cookiecutter.stack_prefix }}"
+    env_vars:
+      IMAGE_NAME_PREFIX: "{{ cookiecutter.__container_image_prefix }}"
+      IMAGE_TAG: "latest"
+      STACK_NAME: "{{ cookiecutter.stack_name}}"
+      STACK_HOSTNAME: "{{ cookiecutter.hostname }}"
+      STACK_PREFIX: "{{ cookiecutter.__devops_stack_prefix }}"
+      CERTRESOLVER: "le"
+    folders:
+      - path: "/srv/{{ cookiecutter.stack_prefix }}"
+        owner: "{{ "{{ users.default.name }}" }}"
+        group: root
+        mode: "0755"
+      - path: "/srv/{{ cookiecutter.stack_prefix }}/data"
+        owner: {{ cookiecutter.__devops_project_user }}
+        group: root
+        mode: "0750"
