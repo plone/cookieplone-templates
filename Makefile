@@ -9,7 +9,7 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo projects/classic
+TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo projects/classic migration/transmute
 SUB_TEMPLATES = sub/cache sub/frontend_project sub/project_settings
 
 # Python checks
@@ -87,4 +87,3 @@ report-context: $(VENV_FOLDER) ## Generate a report of all context options
 report-keys-usage: $(VENV_FOLDER) ## Generate a report of usage of context keys
 	@echo "$(GREEN)==> Generate a report of usage of context keys$(RESET)"
 	@uv run .scripts/report_keys_usage.py
-
