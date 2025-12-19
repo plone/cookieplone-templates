@@ -1,0 +1,52 @@
+# code: language=ansible
+---
+# Setup ufw
+#
+- name: "UFW: Install package"
+  ansible.builtin.apt:
+    name:
+      - ufw
+    state: present
+    update_cache: true
+  tags:
+    - ufw
+
+- name: "UFW: Configuration"
+  tags:
+    - ufw
+  block:
+    - name: "UFW: Set logging to {{ ufw.logging }}"
+      community.general.ufw:
+        logging: "{{ ufw.logging }}"
+      notify:
+        - Restart ufw
+
+    - name: "UFW: Configure default values"
+      community.general.ufw:
+        direction: "{{ item.direction }}"
+        policy: "{{ item.policy }}"
+      with_items:
+        - direction: 'incoming'
+          policy: 'deny'
+        - direction: 'outgoing'
+          policy: 'allow'
+      notify:
+        - Restart ufw
+
+    - name: "UFW: Configure rules"
+      community.general.ufw:
+        rule: "{{ item.rule }}"
+        port: "{{ item.port }}"
+        proto: "{{ item.proto }}"
+        from_ip: "{{ item.from_ip | default('any') }}"
+      with_items: "{{ ufw.rules }}"
+      notify:
+        - Restart ufw
+
+- name: "UFW: Setup Service"
+  tags:
+    - ufw
+  block:
+    - name: "UFW: Enable firewall"
+      community.general.ufw:
+        state: enabled

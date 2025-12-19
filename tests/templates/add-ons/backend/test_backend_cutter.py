@@ -41,6 +41,14 @@ def test_pkg_src_files_generated(cutter_result, pkg_file_path: str):
     assert path.is_file()
 
 
+def test_native_namespace_generated(cutter_result):
+    """Check if distribution uses native namespace."""
+    package_path = cutter_result.context["__package_path"]
+    src_path = cutter_result.project_path / "src" / package_path
+    namespace_init_file = (src_path.parent) / "__init__.py"
+    assert not namespace_init_file.exists()
+
+
 def test_pkg_src_feature_files_generated(cutter_result, pkg_file_path_headless: str):
     """Check if feature-specific files were generated."""
     package_path = cutter_result.context["__package_path"]

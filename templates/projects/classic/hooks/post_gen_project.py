@@ -177,7 +177,7 @@ def main():
     plone.create_namespace_packages(
         output_dir / "backend/src/packagename",
         context.get("python_package_name"),
-        style="pkgutil",
+        style="native"
     )
 
     # Run format
