@@ -1,1 +1,1 @@
-Remove the `-dev`  from the backend acceptance make command. @boss6825
+Removed `-dev` from the backend acceptance make command. @boss6825
