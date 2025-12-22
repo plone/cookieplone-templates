@@ -175,7 +175,7 @@ stack-rm:  ## Local Stack: Remove Services and Volumes
 # Acceptance
 ###########################################
 .PHONY: acceptance-backend-start
-acceptance-backend-dev-start:
+acceptance-backend-start:
 	@echo "Start acceptance backend"
 	$(MAKE) -C "./backend/" acceptance-backend-start
 
