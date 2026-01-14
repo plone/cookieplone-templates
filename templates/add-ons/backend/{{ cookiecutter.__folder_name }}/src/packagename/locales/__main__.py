@@ -43,6 +43,7 @@ def locale_folder_setup(domain: str):
 def _rebuild(domain: str):
     cmd = (
         f"{i18ndude} rebuild-pot --pot {locale_path}/{domain}.pot "
+        f"--merge {locale_path}/{domain}-manual.pot "
         f"--exclude {excludes} "
         f"--create {domain} {target_path}"
     )
