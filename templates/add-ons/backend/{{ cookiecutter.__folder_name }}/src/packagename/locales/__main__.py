@@ -15,7 +15,7 @@ PATTERN = r"^[a-z]{2}.*"
 
 locale_path = Path(__file__).parent.resolve()
 target_path = locale_path.parent.resolve()
-domains = [path.name[:-4] for path in locale_path.glob("*.pot")]
+domains = [path.name[:-4] for path in locale_path.glob("*.pot") if path.find('-manual.pot') == -1]
 
 i18ndude = "uvx i18ndude"
 
