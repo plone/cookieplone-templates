@@ -1,0 +1,1 @@
+Replace the usage of from Products.CMFPlone.interfaces import INonInstallable by from plone.base.interfaces.installable import INonInstallable in the backend add-on template. @ericof
