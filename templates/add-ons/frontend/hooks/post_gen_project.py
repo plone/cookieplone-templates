@@ -43,6 +43,9 @@ def remove_conditional_files(context, output_dir):
     else:
         (output_dir / "jest-addon.config.js").unlink()
 
+    if context["volto_version"] < "19":
+        (output_dir / ".pnpmfile.cjs").unlink()
+
 
 def main():
     """Final fixes."""
