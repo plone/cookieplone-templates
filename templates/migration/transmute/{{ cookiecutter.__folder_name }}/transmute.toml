@@ -1,0 +1,192 @@
+[config]
+debug = false
+log_file = "./logs/transmute.log"
+reports_location="./reports"
+prepare_data_location="./data"
+report = 1000
+
+
+[pipeline]
+do_not_add_drop = [
+    "process_paths",
+    "process_default_page",
+]
+report_steps = [
+    "collective.transmute.reports.paths.write_paths_report",
+    "collective.transmute.reports.final_state.report_final_state",
+    "collective.transmute.reports.dropped.report_dropped_by_path_prefix",
+]
+prepare_steps = []
+steps = [
+    "collective.transmute.steps.ids.process_export_prefix",
+    "collective.transmute.steps.uids.drop_item_by_uid",
+    "collective.transmute.steps.dates.filter_by_date",
+    "collective.transmute.steps.ids.process_ids",
+    "collective.transmute.steps.paths.process_paths",
+    "collective.transmute.steps.portal_type.process_type",
+    "collective.transmute.steps.basic_metadata.process_title",
+    "collective.transmute.steps.basic_metadata.process_title_description",
+    "collective.transmute.steps.review_state.process_review_state",
+    "collective.transmute.steps.default_page.process_default_page",
+    "collective.transmute.steps.image.process_image_to_preview_image_link",
+    "collective.transmute.steps.data_override.process_data_override",
+    "collective.transmute.steps.creators.process_creators",
+    "collective.transmute.steps.constraints.process_constraints",
+    "collective.transmute.steps.blocks.process_blocks",
+    "collective.transmute.steps.blobs.process_blobs",
+    "collective.transmute.steps.sanitize.process_cleanup",
+]
+
+
+[site_root]
+src = "/{{ cookiecutter.src_site_id }}"
+dest = "/{{ cookiecutter.dst_site_id }}"
+
+
+[principals]
+remove = [
+    "admin",
+]
+default = "Plone"
+
+
+[default_pages]
+keys_from_parent = [
+    "@id",
+    "id",
+    "UID",
+    "id",
+    "title",
+    "description",
+]
+keep = false
+
+
+[review_state.filter]
+allowed = [
+    "published",
+]
+
+
+[review_state.rewrite.states]
+
+
+[review_state.rewrite.workflows]
+
+
+[paths]
+export_prefixes = [
+    "http://localhost:8080/{{ cookiecutter.src_site_id }}",
+]
+
+[paths.filter]
+drop = []
+allowed = []
+
+
+[paths.cleanup]
+"/_" = "/"
+
+
+[paths.portal_type]
+
+
+[images]
+to_preview_image_link=[
+    "News Item",
+]
+
+
+[sanitize]
+block_keys = [
+    "item_count",
+    "items_total",
+    "limit",
+    "query",
+    "sort_on",
+    "sort_reversed",
+    "text",
+    "template_layout",
+    "tiles",
+]
+drop_keys = [
+    "is_folderish",
+    "items",
+    "layout",
+    "limit",
+    "lock",
+    "nextPreviousEnabled",
+    "parent",
+]
+
+
+[data_override]
+
+
+[types]
+processor = "collective.transmute.steps.portal_type.default.processor"
+
+
+[types."News Item"]
+portal_type = "News Item"
+override_blocks = [
+    { "@type" = "title", "fixed"= true, "required"= true },
+    { "@type" = "description", "fixed"= true, "required"= true },
+]
+
+
+[types.Document]
+portal_type = "Document"
+override_blocks = [
+    { "@type" = "title", "fixed"= true, "required"= true },
+    { "@type" = "description", "fixed"= false, "required"= false },
+]
+
+
+[types.Event]
+portal_type = "Event"
+override_blocks = [
+    { "@type" = "title", "fixed"= true, "required"= true },
+    { "@type" = "description", "fixed"= false, "required"= false },
+    { "@type" = "event-metadata", "fixed"= true, "required"= true },
+]
+
+
+[types.File]
+portal_type = "File"
+
+
+[types.Link]
+portal_type = "Link"
+
+
+[types.Image]
+portal_type = "Image"
+
+
+[types.Folder]
+portal_type = "Document"
+
+
+[types.Collection]
+portal_type = "Document"
+processor = "{{ cookiecutter.python_package_name }}.processors.process_collection"
+
+
+[types.Topic]
+portal_type = "Document"
+processor = "{{ cookiecutter.python_package_name }}.processors.process_collection"
+
+
+[steps.blocks.variations]
+listing_view = "listing"
+summary_view = "summary"
+tabular_view = "listing"
+full_view = "summary"
+album_view = "imageGallery"
+grid_view = "grid"
+galeria_de_fotos = "imageGallery"
+galeria_de_albuns = "imageGallery"
+
+
+[steps.paths.prefix_replacement]
