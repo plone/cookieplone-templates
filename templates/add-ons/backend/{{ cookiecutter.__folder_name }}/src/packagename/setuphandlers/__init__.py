@@ -1,4 +1,4 @@
-from Products.CMFPlone.interfaces import INonInstallable
+from plone.base.interfaces.installable import INonInstallable
 from zope.interface import implementer
 
 
@@ -15,4 +15,3 @@ class HiddenProfiles:
         return [
             "{{ cookiecutter.python_package_name }}.upgrades",
         ]
-
