@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 11
+    assert len(all_templates) == 12
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -28,6 +28,16 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "sub/classic_project_settings",
             "Project settings to be applied on top of a Classic UI project",
+            True,
+        ),
+        (
+            "devops_ansible",
+            "Ansible Playbooks for Plone",
+            True,
+        ),
+        (
+            "ci_gh_frontend_addon",
+            "CI: GitHub Actions for Frontend Add-on",
             True,
         ),
     ],

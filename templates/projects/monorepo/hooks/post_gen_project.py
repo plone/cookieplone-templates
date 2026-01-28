@@ -22,7 +22,7 @@ DOCUMENTATION_STARTER_REMOVE = [
     ".git",
 ]
 
-FRONTEND_ADDON_REMOVE = [".github"]
+FRONTEND_ADDON_REMOVE = []
 
 
 POST_GEN_TO_REMOVE = {
@@ -130,6 +130,7 @@ def generate_addons_frontend(context, output_dir):
     context = _fix_frontend_addon_name(context)
     frontend_addon_name = context["frontend_addon_name"]
     context["initialize_documentation"] = "0"
+    context["initialize_ci"] = "0"
     path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
@@ -240,7 +241,7 @@ def main():
     plone.create_namespace_packages(
         output_dir / "backend/src/packagename",
         context.get("python_package_name"),
-        style="native"
+        style="native",
     )
 
     # Run format

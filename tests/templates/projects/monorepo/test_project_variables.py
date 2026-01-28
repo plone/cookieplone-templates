@@ -1,4 +1,9 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git", "npm_package_name"]
+ALLOWED_MISSING = [
+    "feature_headless",
+    "initialize_ci",
+    "initialize_git",
+    "npm_package_name",
+]
 ALLOWED_NOT_USED = []
 
 
