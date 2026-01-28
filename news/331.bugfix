@@ -1,0 +1,1 @@
+Fix repository.toml frontend.package.path setting for scoped packages. @ericof
