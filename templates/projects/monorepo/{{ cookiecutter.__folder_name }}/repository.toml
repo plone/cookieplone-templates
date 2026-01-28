@@ -25,9 +25,9 @@ path = "frontend"
 
 [frontend.package]
 name = "{{ cookiecutter.frontend_addon_name }}"
-path = "frontend/packages/{{ cookiecutter.frontend_addon_name }}"
-changelog = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/CHANGELOG.md"
-towncrier_settings = "frontend/packages/{{ cookiecutter.frontend_addon_name }}/towncrier.toml"
+path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
+changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGELOG.md"
+towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
 base_package = "@plone/volto"
 publish = false
 

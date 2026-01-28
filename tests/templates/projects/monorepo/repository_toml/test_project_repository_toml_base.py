@@ -26,6 +26,7 @@ def repository_settings(cutter_result) -> dict:
         ["backend.package.changelog", "backend/CHANGELOG.md"],
         ["frontend.package.name", "volto-ploneorgbr"],
         ["frontend.package.publish", False],
+        ["frontend.package.path", "frontend/packages/volto-ploneorgbr"],
         [
             "frontend.package.towncrier_settings",
             "frontend/packages/volto-ploneorgbr/towncrier.toml",

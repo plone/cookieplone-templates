@@ -26,6 +26,7 @@
   "__feature_headless": "1",
   "__feature_distribution": "0",
   "__backend_managed_by_uv": "false",
+  "__frontend_package_name": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
@@ -138,6 +139,7 @@
     "cookieplone.filters.pascal_case",
     "cookieplone.filters.locales_language_code",
     "cookieplone.filters.gs_language_code",
+    "cookieplone.filters.unscoped_package_name",
     "cookieplone.filters.latest_volto",
     "cookieplone.filters.latest_plone"
   ],
