@@ -66,6 +66,12 @@
       "description": "Ansible setup to manage a Docker Swarm cluster for Plone hosting.",
       "hidden": true
     },
+    "ci_gh_backend_addon": {
+      "path": "./templates/ci/gh_backend_addon",
+      "title": "CI: GitHub Actions for Backend Add-on",
+      "description": "GitHub Actions configuration for CI of a Plone Backend Add-on",
+      "hidden": true
+    },
     "ci_gh_frontend_addon": {
       "path": "./templates/ci/gh_frontend_addon",
       "title": "CI: GitHub Actions for Frontend Add-on",

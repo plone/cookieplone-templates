@@ -13,7 +13,6 @@ context: OrderedDict = {{cookiecutter}}
 
 
 BACKEND_ADDON_REMOVE = [
-    ".github",
     ".git",
 ]
 
@@ -112,6 +111,7 @@ def generate_addons_backend(context, output_dir):
     folder_name = "backend"
     # Headless
     context["feature_headless"] = "1"
+    context["initialize_ci"] = "0"
     context["initialize_documentation"] = "0"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/backend",
