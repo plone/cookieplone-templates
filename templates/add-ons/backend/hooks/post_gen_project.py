@@ -44,7 +44,23 @@ def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
     plone.create_namespace_packages(
         output_dir / "src/packagename",
         context.get("python_package_name"),
-        style="native"
+        style="native",
+    )
+
+
+def generate_ci_gh_backend_addon(context, output_dir):
+    """Generate GitHub CI."""
+    output_dir = output_dir
+    ci_context = OrderedDict({
+        "plone_version": context["plone_version"],
+        "python_version": context["__supported_versions_python"][-1],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_backend_addon",
+        output_dir,
+        ".github",
+        ci_context,
     )
 
 

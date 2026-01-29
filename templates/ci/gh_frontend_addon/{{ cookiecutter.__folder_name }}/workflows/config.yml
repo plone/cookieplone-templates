@@ -1,0 +1,38 @@
+name: "Compute Config variables"
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.__gha_version_node }}"
+    outputs:
+      base-tag:
+        description: "Base tag to be used when creating container images"
+        value: {{ "${{ jobs.config.outputs.base-tag }}" }}
+      node-version:
+        description: "Node version to be used"
+        value: {{ "${{ inputs.node-version }}" }}
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      base-tag: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}
+      plone-version: {{ "${{ inputs.node-version }}" }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        run: |
+          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Test vars
+        run: |
+          echo "base-tag: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}"
+          echo 'node-version: {{ "${{ inputs.node-version }}" }}'
+          echo 'event-name: {{ "${{ github.event_name }}" }}'

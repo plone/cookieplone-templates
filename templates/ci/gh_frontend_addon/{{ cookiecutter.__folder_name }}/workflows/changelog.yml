@@ -7,7 +7,7 @@ on:
 
 env:
   NODE_VERSION: {{ cookiecutter.__gha_version_node }}
-  ADDON_NAME: {{ cookiecutter.frontend_addon_name }}
+  ADDON_NAME: {{ cookiecutter.npm_package_name |  unscoped_package_name }}
 
 jobs:
   build:
@@ -34,11 +34,11 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: {{ "${{ env.STORE_PATH }}" }}
-          key: {{ "${{ runner.os }}" }}-pnpm-store-{{ "${{ hashFiles('**/pnpm-lock.yaml') }}" }}
+          key: {{ "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}" }}
           restore-keys: |
             {{ "${{ runner.os }}" }}-pnpm-store-
 

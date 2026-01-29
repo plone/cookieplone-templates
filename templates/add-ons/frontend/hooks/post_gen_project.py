@@ -1,9 +1,9 @@
 """Post generation hook."""
 
 import os
+from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
-from typing import OrderedDict
 
 from cookieplone import generator
 from cookieplone.utils import console, files
@@ -30,6 +30,22 @@ def generate_docs_starter(context, output_dir):
         DOCUMENTATION_STARTER_REMOVE,
     )
     files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
+
+
+def generate_ci_gh_frontend_addon(context, output_dir):
+    """Generate GitHub CI."""
+    output_dir = output_dir
+    ci_context = OrderedDict({
+        "npm_package_name": context["__npm_package_name"],
+        "node_version": context["__node_version"],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_frontend_addon",
+        output_dir,
+        ".github",
+        ci_context,
+    )
 
 
 def remove_conditional_files(context, output_dir):

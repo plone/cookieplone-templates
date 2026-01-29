@@ -40,7 +40,6 @@
   "__profile_language": "{{ cookiecutter.language_code|gs_language_code }}",
   "__locales_language": "{{ cookiecutter.language_code|locales_language_code }}",
   "__gha_version_checkout": "v4",
-  "__gha_version_setup_node": "v4",
   "__gha_version_setup_uv": "v5",
   "__gha_version_cache": "v4",
   "__gha_version_docker_stack": "v1.2.0",

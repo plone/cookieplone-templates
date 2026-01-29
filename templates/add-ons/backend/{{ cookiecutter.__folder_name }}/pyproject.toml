@@ -23,13 +23,13 @@ classifiers = [
     "Framework :: Plone :: Addon",
     {%- if cookiecutter.__feature_distribution == '1' %}
     "Framework :: Plone :: Distribution",
-    {%- endif %}
+    {% endif %}
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     {%- for version in cookiecutter.__supported_versions_python -%}
     "Programming Language :: Python :: {{ version }}",
-    {%- endfor %}
+    {% endfor %}
 ]
 dependencies = [
     "Products.CMFPlone",
@@ -53,7 +53,7 @@ test = [
     "plone.restapi[test]",
     "pytest",
     "pytest-cov",
-    "pytest-plone>=0.5.0",
+    "pytest-plone>=1.0.0a2",
 ]
 release = [
     "zest.releaser[recommended]",
