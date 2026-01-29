@@ -25,6 +25,7 @@ jobs:
       - config
     uses: plone/meta/.github/workflows/backend-pytest.yml@{{ cookiecutter.__gha_version_plone_meta }}
     strategy:
+      fail-fast: false
       matrix:
         python-version: {{ cookiecutter.__gha_python_versions }}
         plone-version: {{ cookiecutter.__gha_plone_versions }}
@@ -37,7 +38,6 @@ jobs:
     uses: plone/meta/.github/workflows/backend-pytest-coverage.yml@{{ cookiecutter.__gha_version_plone_meta }}
     needs:
       - config
-      - test
     with:
       python-version: {{ "${{ needs.config.outputs.python-version }}" }}
       plone-version: {{ "${{ needs.config.outputs.plone-version }}" }}
