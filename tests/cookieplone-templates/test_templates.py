@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 14
+    assert len(all_templates) == 15
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -48,6 +48,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "ci_gh_monorepo_addon",
             "CI: GitHub Actions for Monorepo Add-on",
+            True,
+        ),
+        (
+            "ci_gh_project",
+            "CI: GitHub Actions for Project",
             True,
         ),
     ],

@@ -38,13 +38,8 @@ POST_GEN_TO_REMOVE = {
         "devops/README.md",
     ],
     "devops-gha": [
-        ".github/workflows/manual_deploy.yml",
         "devops/.env_gha",
         "devops/README-GHA.md",
-    ],
-    "docs-0": [
-        ".github/workflows/docs.yml",
-        ".github/workflows/rtd-pr-preview.yml",
     ],
     "docs-1": ["docs/LICENSE.md"],
 }
@@ -75,19 +70,22 @@ def _find_replace_in_folder(folder: Path, replacements: dict[str, str]):
 
 def handle_devops_ansible(context: OrderedDict, output_dir: Path):
     """Clean up ansible."""
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-ansible"])
+    to_remove = POST_GEN_TO_REMOVE.get("devops-ansible", [])
+    files.remove_files(output_dir, to_remove)
 
 
 def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
     """Clean up gha deploy."""
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-gha"])
+    to_remove = POST_GEN_TO_REMOVE.get("devops-gha", [])
+    files.remove_files(output_dir, to_remove)
 
 
 def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
     """Clean up GitHub Actions deploy."""
     answer = context.get("initialize_documentation")
     key = f"docs-{answer}"
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE[key])
+    to_remove = POST_GEN_TO_REMOVE.get(key, [])
+    files.remove_files(output_dir, to_remove)
 
 
 def handle_docs_setup(context: OrderedDict, output_dir: Path):
@@ -196,6 +194,27 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
     context = _fix_frontend_addon_name(context)
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/sub/project_settings", output_dir, folder_name, context
+    )
+
+
+def generate_ci_gh_project(context, output_dir):
+    """Generate GitHub CI."""
+    output_dir = output_dir
+    ci_context = OrderedDict({
+        "npm_package_name": context["__npm_package_name"],
+        "container_image_prefix": context["__container_image_prefix"],
+        "python_version": context["__python_version"],
+        "node_version": context["__node_version"],
+        "has_cache": context["devops_cache"],
+        "has_docs": context["initialize_documentation"],
+        "has_deploy": context["devops_gha_deploy"],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_project",
+        output_dir,
+        ".github",
+        ci_context,
     )
 
 

@@ -1,4 +1,5 @@
-name: "Preview pull request on Read the Docs"
+# .github/workflows/rtd-pr-preview.yml
+name: readthedocs/actions
 on:
   pull_request_target:
     types:
@@ -6,9 +7,12 @@ on:
     # Execute this action only on PRs that touch
     # documentation files.
     paths:
-      - "docs/**"
-      - .github/workflows/docs.yml
-      - .readthedocs.yaml
+      - "docs/docs/**"
+      - "docs/styles/**"
+      - docs/.readthedocs.yaml
+      - docs/.vale.ini
+      - docs/Makefile
+      - docs/uv.lock
 
 permissions:
   pull-requests: write
@@ -19,5 +23,5 @@ jobs:
     steps:
       - uses: readthedocs/actions/preview@v1
         with:
-          project-slug: "MY_READTHEDOCS_PROJECT_SLUG"
+          project-slug: "plone-sphinx-theme"
           single-version: "true"

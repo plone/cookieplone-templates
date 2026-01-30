@@ -83,6 +83,12 @@
       "title": "CI: GitHub Actions for Monorepo Add-on",
       "description": "GitHub Actions configuration for CI of a Plone Monorepo Add-on",
       "hidden": true
+    },
+    "ci_gh_project": {
+      "path": "./templates/ci/gh_project",
+      "title": "CI: GitHub Actions for Project",
+      "description": "GitHub Actions configuration for CI of a Plone Project",
+      "hidden": true
     }
   }
 }
