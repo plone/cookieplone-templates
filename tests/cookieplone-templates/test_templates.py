@@ -57,7 +57,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ),
         (
             "ci_gh_classic_project",
-            "CI: GitHub Actions for Classic Project",
+            "CI: GitHub Actions for a Classic Project",
             True,
         ),
     ],

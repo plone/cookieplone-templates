@@ -92,7 +92,7 @@
     },
     "ci_gh_classic_project": {
       "path": "./templates/ci/gh_classic_project",
-      "title": "CI: GitHub Actions for a ClassicProject",
+      "title": "CI: GitHub Actions for a Classic Project",
       "description": "GitHub Actions configuration for CI of a Plone Classic Project",
       "hidden": true
     }
