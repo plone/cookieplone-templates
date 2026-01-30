@@ -1,16 +1,5 @@
-ALLOWED_MISSING = [
-    "container_image_prefix",
-    "feature_headless",
-    "has_cache",
-    "has_deploy",
-    "has_docs",
-    "initialize_ci",
-    "initialize_git",
-    "python_version",
-]
-ALLOWED_NOT_USED = [
-    "__devops_host",
-]
+ALLOWED_MISSING = []
+ALLOWED_NOT_USED = []
 
 
 def test_no_missing_variables(variables_missing):

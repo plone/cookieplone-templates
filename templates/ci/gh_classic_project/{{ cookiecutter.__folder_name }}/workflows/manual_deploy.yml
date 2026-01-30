@@ -3,7 +3,6 @@ name: Manual Deployment of {{ cookiecutter.hostname }}
 on:
   workflow_dispatch:
 
-
 jobs:
 
   meta:

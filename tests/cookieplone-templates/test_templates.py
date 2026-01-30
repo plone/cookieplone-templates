@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 15
+    assert len(all_templates) == 16
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -53,6 +53,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "ci_gh_project",
             "CI: GitHub Actions for Project",
+            True,
+        ),
+        (
+            "ci_gh_classic_project",
+            "CI: GitHub Actions for Classic Project",
             True,
         ),
     ],

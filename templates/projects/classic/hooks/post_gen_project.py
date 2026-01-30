@@ -135,6 +135,25 @@ def generate_sub_classic_project_settings(context: OrderedDict, output_dir: Path
     )
 
 
+def generate_ci_gh_classic_project(context, output_dir):
+    """Generate GitHub CI."""
+    output_dir = output_dir
+    ci_context = OrderedDict({
+        "container_image_prefix": context["__container_image_prefix"],
+        "python_version": context["__python_version"],
+        "has_cache": context["devops_cache"],
+        "has_docs": context["initialize_documentation"],
+        "has_deploy": context["devops_gha_deploy"],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_classic_project",
+        output_dir,
+        ".github",
+        ci_context,
+    )
+
+
 def run_actions(actions: list, output_dir: Path):
     for func, title, enabled in actions:
         if not int(enabled):
