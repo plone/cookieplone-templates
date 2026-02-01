@@ -65,6 +65,12 @@
       "title": "Ansible Playbooks for Plone",
       "description": "Ansible setup to manage a Docker Swarm cluster for Plone hosting.",
       "hidden": true
+    },
+    "migration_transmute": {
+      "path": "./templates/migration/transmute",
+      "title": "Migration scaffold using collective.transmute",
+      "description": "Create a Plone migration ETL using collective.transmute",
+      "hidden": false
     }
   }
 }
