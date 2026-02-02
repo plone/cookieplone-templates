@@ -95,6 +95,12 @@
       "title": "CI: GitHub Actions for a Classic Project",
       "description": "GitHub Actions configuration for CI of a Plone Classic Project",
       "hidden": true
+    },
+    "agents_instructions": {
+      "path": "./templates/agents/instructions",
+      "title": "Agents / LLM: Instructions",
+      "description": "Instructions for Agents / LLM used in Plone projects",
+      "hidden": true
     }
   }
 }

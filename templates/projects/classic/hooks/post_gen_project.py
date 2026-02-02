@@ -146,6 +146,7 @@ def generate_ci_gh_classic_project(context, output_dir):
         "has_deploy": context["devops_gha_deploy"],
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
+
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/ci/gh_classic_project",
         output_dir,

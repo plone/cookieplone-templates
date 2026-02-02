@@ -1,4 +1,6 @@
 ---
+name: "TypeScript and React Coding Standards"
+description: "Standards and guidelines for TypeScript and React code in Volto projects."
 applyTo: "**/*.ts,**/*.tsx"
 ---
 # Project coding standards for TypeScript and React
@@ -16,7 +18,6 @@ applyTo: "**/*.ts,**/*.tsx"
 
 - Use functional components with hooks
 - Follow the React hooks rules (no conditional hooks)
-- Use React.FC type for components with children
 - Keep components small and focused
 
 ## Volto Guidelines

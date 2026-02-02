@@ -24,6 +24,9 @@
   "_extensions": [
     "cookieplone.filters.unscoped_package_name"
   ],
+  "__cookieplone_subtemplates": [
+    ["agents/instructions", "Add instructions", "1"]
+  ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": ""
 }

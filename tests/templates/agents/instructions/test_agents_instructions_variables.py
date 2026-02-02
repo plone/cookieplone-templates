@@ -1,4 +1,4 @@
-ALLOWED_MISSING = ["docs_file", "has_volto"]
+ALLOWED_MISSING = []
 ALLOWED_NOT_USED = []
 
 

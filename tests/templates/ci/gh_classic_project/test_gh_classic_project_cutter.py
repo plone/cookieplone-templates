@@ -42,6 +42,7 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
+        "instructions/general/docs.md",
         "instructions/docs.instructions.md",
         "workflows/changelog.yml",
         "workflows/backend.yml",

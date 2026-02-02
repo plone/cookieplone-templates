@@ -1,35 +1,4 @@
----
-applyTo: "docs/docs/**/*.md,docs/README.md,README.md"
----
-# Project documentation standards
-
-## 0. README.md and docs/README.md
-
-- All files below must follow these rules:
-    - ALWAYS use emojis in section titles for a friendly tone.
-    - ALWAYS recommend using `make` commands for installation and starting the project:
-        - ALWAYS recommend using `make install` to install the project, as this handles all dependencies and setup.
-        - ALWAYS recommend using `make start` to start the Volto process, as this ensures proper configuration.
-    - NEVER recomend using `pnpm install` or `pnpm start` directly.
-    - NEVER edit the paragraph refering to `cookieplone`. Usually starting with **Generated using**.
-
-- The top level README.md:
-    - Must provide a clear overview of the project
-    - Will be viewed on GitHub and NPM
-    - Must provide installation instructions for end users.
-    - Must provide installation for developers willing to contribute to this add-on.
-    - Must describe the features.
-        - Example:
-            - ✅: `- Crops the image. Supports many aspect ratios` .
-            - ❌: `- Crop` .
-        - Review the code if necessary to explain it.
-    - ADDING THIS ADD-ON TO YOUR PROJECT:
-        - NEVER recommend editing the top-level `package.json` manually
-        - ALWAYS recommend editing the 'policy package' `package.json` instead.
-        - THIS 'policy package' will always be available under `packages` folder.
-        - ALWAYS recommend adding this add-on to the "addons" array in package.json:
-- docs/README.md
-    - Must provide detailed documentation for developers **documenting** the project
+# Plone Instructions for documentation
 
 ## 1. Documentation First
 
