@@ -1,0 +1,87 @@
+name: "Compute Config variables"
+
+on:
+  workflow_call:
+    inputs:
+      image-name-prefix:
+        required: false
+        type: string
+        default: "{{ cookiecutter.__container_image_prefix }}"
+      python-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.python_version }}"
+    outputs:
+      acceptance:
+        description: "Flag reporting if we should run the acceptance jobs"
+        value: {{ "${{ jobs.config.outputs.acceptance }}" }}
+      backend:
+        description: "Flag reporting if we should run the backend jobs"
+        value: {{ "${{ jobs.config.outputs.backend }}" }}
+      devops:
+        description: "Flag reporting if we should run the devops jobs"
+        value: {{ "${{ jobs.config.outputs.devops }}" }}
+      docs:
+        description: "Flag reporting if we should run the docs jobs"
+        value: {{ "${{ jobs.config.outputs.docs }}" }}
+      base-tag:
+        description: "Base tag to be used when creating container images"
+        value: {{ "${{ jobs.config.outputs.base-tag }}" }}
+      image-name-prefix:
+        description: "Image name prefix for container images"
+        value: {{ "${{ inputs.image-name-prefix }}" }}
+      python-version:
+        description: "Python version to be used"
+        value: {{ "${{ inputs.python-version }}" }}
+      plone-version:
+        description: "Plone version to be used"
+        value: {{ "${{ jobs.config.outputs.plone-version }}" }}
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}
+      backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      devops: {{ "${{ steps.filter.outputs.devops }}" }}
+      docs: {{ "${{ steps.filter.outputs.docs }}" }}
+      base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
+      plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        shell: bash
+        run: |
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "plone-version=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
+
+      - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+        id: filter
+        with:
+          filters: |
+            acceptance:
+              - '.github/workflows/*'
+              - 'backend/**'
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend*'
+            devops:
+              - 'devops/**'
+            docs:
+              - '.readthedocs.yaml'
+              - 'docs/**'
+              - '.github/workflows/docs.yaml'
+
+      - name: Test vars
+        run: |
+          echo "base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}"
+          echo 'plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}'
+          echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
+          echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          echo 'Paths - devops: {{ "${{ steps.filter.outputs.devops }}" }}'
+          echo 'Paths - docs: {{ "${{ steps.filter.outputs.docs }}" }}'

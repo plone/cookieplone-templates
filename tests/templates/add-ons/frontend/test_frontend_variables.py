@@ -1,5 +1,6 @@
 ALLOWED_MISSING = [
     "initialize_git",
+    "node_version",
 ]
 ALLOWED_NOT_USED = [
     "__generator_sha",

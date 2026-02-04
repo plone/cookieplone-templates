@@ -65,6 +65,42 @@
       "title": "Ansible Playbooks for Plone",
       "description": "Ansible setup to manage a Docker Swarm cluster for Plone hosting.",
       "hidden": true
+    },
+    "ci_gh_backend_addon": {
+      "path": "./templates/ci/gh_backend_addon",
+      "title": "CI: GitHub Actions for Backend Add-on",
+      "description": "GitHub Actions configuration for CI of a Plone Backend Add-on",
+      "hidden": true
+    },
+    "ci_gh_frontend_addon": {
+      "path": "./templates/ci/gh_frontend_addon",
+      "title": "CI: GitHub Actions for Frontend Add-on",
+      "description": "GitHub Actions configuration for CI of a Volto Frontend Add-on",
+      "hidden": true
+    },
+    "ci_gh_monorepo_addon": {
+      "path": "./templates/ci/gh_monorepo_addon",
+      "title": "CI: GitHub Actions for Monorepo Add-on",
+      "description": "GitHub Actions configuration for CI of a Plone Monorepo Add-on",
+      "hidden": true
+    },
+    "ci_gh_project": {
+      "path": "./templates/ci/gh_project",
+      "title": "CI: GitHub Actions for Project",
+      "description": "GitHub Actions configuration for CI of a Plone Project",
+      "hidden": true
+    },
+    "ci_gh_classic_project": {
+      "path": "./templates/ci/gh_classic_project",
+      "title": "CI: GitHub Actions for a Classic Project",
+      "description": "GitHub Actions configuration for CI of a Plone Classic Project",
+      "hidden": true
+    },
+    "agents_instructions": {
+      "path": "./templates/agents/instructions",
+      "title": "Agents / LLM: Instructions",
+      "description": "Instructions for Agents / LLM used in Plone projects",
+      "hidden": true
     }
   }
 }

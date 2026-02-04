@@ -1,4 +1,15 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git", "npm_package_name"]
+ALLOWED_MISSING = [
+    "container_image_prefix",
+    "feature_headless",
+    "has_cache",
+    "has_deploy",
+    "has_docs",
+    "initialize_ci",
+    "initialize_git",
+    "node_version",
+    "npm_package_name",
+    "python_version",
+]
 ALLOWED_NOT_USED = []
 
 

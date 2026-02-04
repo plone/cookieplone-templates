@@ -5,17 +5,20 @@ import json
 import pytest
 
 GITHUB_ACTIONS = [
-    ".github/workflows/acceptance.yml",
     ".github/workflows/changelog.yml",
-    ".github/workflows/code.yml",
-    ".github/workflows/i18n.yml",
-    ".github/workflows/storybook.yml",
-    ".github/workflows/unit.yml",
+    ".github/workflows/config.yml",
+    ".github/workflows/main.yml",
+]
+
+GITHUB_INSTRUCTIONS = [
+    ".github/instructions/docs.instructions.md",
+    ".github/instructions/volto.instructions.md",
 ]
 
 
 ROOT_FILES = [
     *GITHUB_ACTIONS,
+    *GITHUB_INSTRUCTIONS,
     ".storybook/main.js",
     ".storybook/preview.jsx",
     "cypress/support/commands.js",
@@ -105,12 +108,9 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
 @pytest.mark.parametrize(
     "file_path,schema_name",
     [
-        [".github/workflows/acceptance.yml", "github-workflow"],
         [".github/workflows/changelog.yml", "github-workflow"],
-        [".github/workflows/code.yml", "github-workflow"],
-        [".github/workflows/i18n.yml", "github-workflow"],
-        [".github/workflows/storybook.yml", "github-workflow"],
-        [".github/workflows/unit.yml", "github-workflow"],
+        [".github/workflows/config.yml", "github-workflow"],
+        [".github/workflows/main.yml", "github-workflow"],
         ["package.json", "package"],
         ["packages/volto-addon/package.json", "package"],
         ["packages/volto-addon/tsconfig.json", "tsconfig"],

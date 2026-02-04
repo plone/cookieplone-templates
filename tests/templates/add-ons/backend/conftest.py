@@ -6,7 +6,9 @@ import pytest
 
 ROOT_FILES = [
     ".editorconfig",
-    ".github/workflows/ci.yml",
+    ".github/workflows/changelog.yml",
+    ".github/workflows/config.yml",
+    ".github/workflows/main.yml",
     ".gitignore",
     "CHANGELOG.md",
     "CONTRIBUTORS.md",

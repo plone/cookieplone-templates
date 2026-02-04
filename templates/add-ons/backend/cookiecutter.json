@@ -9,6 +9,7 @@
   "python_package_name": "{{ cookiecutter.github_organization|lower }}.{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
   "__year": "{% now 'local', '%Y' %}",
   "feature_headless": ["1", "0"],
+  "initialize_ci": ["1", "0"],
   "initialize_documentation": ["1", "0"],
   "__project_slug": "{{ cookiecutter.python_package_name }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
@@ -19,13 +20,8 @@
   "__folder_name": "{{ cookiecutter.python_package_name }}",
   "__python_package_name_upper": "{{ cookiecutter.python_package_name | pascal_case }}",
   "__supported_versions_python": ["3.10", "3.11", "3.12", "3.13"],
-  "__supported_versions_plone": ["6.0", "6.1"],
+  "__supported_versions_plone": ["6.0", "6.1", "6.2"],
   "__backend_managed_by_uv": "false",
-  "__gha_version_plone_meta": "2.x",
-  "__gha_python_versions": ["3.10", "3.11", "3.12", "3.13"],
-  "__gha_python_version": "3.12",
-  "__gha_plone_versions": ["6.1-latest", "6.0-latest"],
-  "__gha_plone_version": "{{ cookiecutter.plone_version }}",
   "__python_version_identifier": "{{ cookiecutter.__supported_versions_python[0] | replace('.', '') }}",
   "__profile_language": "en",
   "__version_package": "1.0.0a0",
@@ -43,6 +39,11 @@
     "email": "Author E-mail",
     "feature_headless": {
       "__prompt__": "Support headless Plone?",
+      "1": "Yes",
+      "0": "No"
+    },
+    "initialize_ci": {
+      "__prompt__": "Would you like to add a CI configuration to your project?",
       "1": "Yes",
       "0": "No"
     },
@@ -73,6 +74,7 @@
       "docs/starter",
       "Generate documentation scaffold",
       "{{cookiecutter.initialize_documentation}}"
-    ]
+    ],
+    ["ci/gh_backend_addon", "Setup GitHub CI", "{{cookiecutter.initialize_ci}}"]
   ]
 }
