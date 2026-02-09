@@ -64,6 +64,7 @@
       "Setup Documentation Scaffold",
       "{{cookiecutter.initialize_documentation}}"
     ],
+    ["ide/vscode", "Setup VSCode configuration", "{{cookiecutter.initialize_ci}}"],
     ["ci/gh_frontend_addon", "Setup GitHub CI", "{{cookiecutter.initialize_ci}}"]
   ]
 }

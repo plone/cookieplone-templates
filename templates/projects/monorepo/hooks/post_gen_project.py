@@ -105,7 +105,7 @@ def handle_git_initialization(context: OrderedDict, output_dir: Path):
 
 def generate_addons_backend(context, output_dir):
     """Run Plone Addon generator."""
-    output_dir = output_dir
+
     folder_name = "backend"
     # Headless
     context["feature_headless"] = "1"
@@ -164,7 +164,7 @@ def generate_addons_frontend(context, output_dir):
 
 def generate_docs_starter(context, output_dir):
     """Generate documentation scaffold"""
-    output_dir = output_dir
+
     folder_name = "docs"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/docs/starter",
@@ -199,7 +199,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path):
 
 def generate_ci_gh_project(context, output_dir):
     """Generate GitHub CI."""
-    output_dir = output_dir
+
     ci_context = OrderedDict({
         "npm_package_name": context["__npm_package_name"],
         "container_image_prefix": context["__container_image_prefix"],
@@ -215,6 +215,21 @@ def generate_ci_gh_project(context, output_dir):
         output_dir,
         ".github",
         ci_context,
+    )
+
+
+def generate_ide_vscode(context, output_dir):
+    """Generate VS Code configuration."""
+
+    ansible_path = "devops/ansible" if context.get("devops_ansible") == "1" else ""
+    vscode_context = OrderedDict({
+        "backend_path": "/backend",
+        "frontend_path": "/frontend",
+        "ansible_path": ansible_path,
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
     )
 
 

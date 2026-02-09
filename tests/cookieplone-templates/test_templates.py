@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 17
+    assert len(all_templates) == 18
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -63,6 +63,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "agents_instructions",
             "Agents / LLM: Instructions",
+            True,
+        ),
+        (
+            "ide_vscode",
+            "VSCode IDE Configuration",
             True,
         ),
     ],

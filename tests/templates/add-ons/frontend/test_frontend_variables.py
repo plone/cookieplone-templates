@@ -1,4 +1,7 @@
 ALLOWED_MISSING = [
+    "ansible_path",
+    "backend_path",
+    "frontend_path",
     "initialize_git",
     "node_version",
 ]

@@ -75,6 +75,7 @@
       "Generate documentation scaffold",
       "{{cookiecutter.initialize_documentation}}"
     ],
+    ["ide/vscode", "Setup VSCode configuration", "{{cookiecutter.initialize_ci}}"],
     ["ci/gh_backend_addon", "Setup GitHub CI", "{{cookiecutter.initialize_ci}}"]
   ]
 }

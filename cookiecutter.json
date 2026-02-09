@@ -101,6 +101,12 @@
       "title": "Agents / LLM: Instructions",
       "description": "Instructions for Agents / LLM used in Plone projects",
       "hidden": true
+    },
+    "ide_vscode": {
+      "path": "./templates/ide/vscode",
+      "title": "VSCode IDE Configuration",
+      "description": "Configuration files for Visual Studio Code IDE used in Plone projects",
+      "hidden": true
     }
   }
 }

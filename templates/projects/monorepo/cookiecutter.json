@@ -142,6 +142,7 @@
     ],
     ["sub/cache", "Setup Cache", "{{cookiecutter.devops_cache}}"],
     ["sub/project_settings", "Setup Project Settings", "1"],
+    ["ide/vscode", "Setup VSCode configuration", "1"],
     ["ci/gh_project", "Setup GitHub CI", "1"]
   ],
   "__cookieplone_repository_path": "",

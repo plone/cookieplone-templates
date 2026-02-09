@@ -15,10 +15,17 @@ GITHUB_INSTRUCTIONS = [
     ".github/instructions/volto.instructions.md",
 ]
 
+VSCODE_SETTINGS = [
+    ".vscode/extensions.json",
+    ".vscode/launch.json",
+    ".vscode/settings.json",
+]
+
 
 ROOT_FILES = [
     *GITHUB_ACTIONS,
     *GITHUB_INSTRUCTIONS,
+    *VSCODE_SETTINGS,
     ".storybook/main.js",
     ".storybook/preview.jsx",
     "cypress/support/commands.js",

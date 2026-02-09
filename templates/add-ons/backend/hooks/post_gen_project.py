@@ -50,7 +50,7 @@ def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
 
 def generate_ci_gh_backend_addon(context, output_dir):
     """Generate GitHub CI."""
-    output_dir = output_dir
+
     ci_context = OrderedDict({
         "plone_version": context["plone_version"],
         "python_version": context["__supported_versions_python"][-1],
@@ -66,7 +66,7 @@ def generate_ci_gh_backend_addon(context, output_dir):
 
 def generate_docs_starter(context, output_dir):
     """Generate documentation scaffold"""
-    output_dir = output_dir
+
     folder_name = "docs"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/docs/starter",
@@ -76,6 +76,20 @@ def generate_docs_starter(context, output_dir):
         DOCUMENTATION_STARTER_REMOVE,
     )
     files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
+
+
+def generate_ide_vscode(context, output_dir):
+    """Generate VS Code configuration."""
+
+    vscode_context = OrderedDict({
+        "backend_path": "/",
+        "frontend_path": "",
+        "ansible_path": "",
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+    )
 
 
 def handle_format(context: OrderedDict, output_dir: Path):

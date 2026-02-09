@@ -10,6 +10,7 @@ TOP_LEVEL_FILES = [
     ".github/instructions/volto.instructions.md",
     ".gitignore",
     ".vscode/extensions.json",
+    ".vscode/launch.json",
     ".vscode/settings.json",
     "dependabot.yml",
     "CHANGELOG.md",
