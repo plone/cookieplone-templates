@@ -58,6 +58,9 @@ jobs:
         image-name-prefix: {{ "${{ needs.config.outputs.image-name-prefix }}" }}
         image-name-suffix: varnish
     if: {{ "${{ needs.config.outputs.cache == 'true' }}" }}
+    permissions:
+      contents: read
+      packages: write
   {%- endif %}
 
   frontend:
