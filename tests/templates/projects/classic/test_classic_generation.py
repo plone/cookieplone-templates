@@ -9,6 +9,7 @@ TOP_LEVEL_FILES = [
     ".gitignore",
     ".github/instructions/docs.instructions.md",
     ".vscode/extensions.json",
+    ".vscode/launch.json",
     ".vscode/settings.json",
     "dependabot.yml",
     "CHANGELOG.md",

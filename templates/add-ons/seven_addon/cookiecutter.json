@@ -37,6 +37,9 @@
   },
   "_copy_without_render": [],
   "_extensions": ["cookieplone.filters.latest_volto"],
+  "__cookieplone_subtemplates": [
+    ["ide/vscode", "Setup VSCode configuration", "1"]
+  ],
   "__cookieplone_repository_path": "",
   "__cookieplone_template": ""
 }
