@@ -18,6 +18,9 @@ on:
       backend:
         description: "Flag reporting if we should run the backend jobs"
         value: {{ "${{ jobs.config.outputs.backend }}" }}
+      cache:
+        description: "Flag reporting if we should run the cache jobs"
+        value: {{ "${{ jobs.config.outputs.cache }}" }}
       devops:
         description: "Flag reporting if we should run the devops jobs"
         value: {{ "${{ jobs.config.outputs.devops }}" }}
@@ -43,6 +46,7 @@ jobs:
     outputs:
       acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}
       backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      cache: {{ "${{ steps.filter.outputs.cache }}" }}
       devops: {{ "${{ steps.filter.outputs.devops }}" }}
       docs: {{ "${{ steps.filter.outputs.docs }}" }}
       base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
@@ -69,6 +73,9 @@ jobs:
             backend:
               - 'backend/**'
               - '.github/workflows/backend*'
+            cache:
+              - 'devops/varnish/**'
+              - '.github/workflows/varnish*'
             devops:
               - 'devops/**'
             docs:
@@ -83,5 +90,6 @@ jobs:
           echo 'event-name: {{ "${{ github.event_name }}" }}'
           echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
           echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          echo 'Paths - cache: {{ "${{ steps.filter.outputs.cache }}" }}'
           echo 'Paths - devops: {{ "${{ steps.filter.outputs.devops }}" }}'
           echo 'Paths - docs: {{ "${{ steps.filter.outputs.docs }}" }}'
