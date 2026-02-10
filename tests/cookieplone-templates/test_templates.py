@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 18
+    assert len(all_templates) == 20
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -16,6 +16,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("classic_project", "Classic UI Project", False),
         ("backend_addon", "Backend Add-on for Plone", False),
         ("frontend_addon", "Frontend Add-on for Plone", False),
+        ("monorepo_addon", "Add-on for Plone (Backend + Volto)", False),
         ("seven_addon", "Seven Frontend Add-on for Plone", False),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
         ("sub/cache", "Cache settings for a monorepo Plone project", True),
@@ -23,6 +24,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "sub/project_settings",
             "Project settings to be applied on top of a mono repo project",
+            True,
+        ),
+        (
+            "sub/addon_settings",
+            "Add-on settings to be applied on top of a mono repo project",
             True,
         ),
         (

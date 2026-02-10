@@ -2,7 +2,7 @@
 name = "{{ cookiecutter.__project_slug }}"
 changelog = "CHANGELOG.md"
 version = "version.txt"
-version_format = "calver"
+version_format = "semver"
 container_images_prefix = "{{ cookiecutter.__container_image_prefix }}"
 compose = ["docker-compose.yml"]
 
@@ -16,15 +16,15 @@ path = "backend"
 changelog = "backend/CHANGELOG.md"
 towncrier_settings = "backend/pyproject.toml"
 base_package = "Products.CMFPlone"
-publish = false
+publish = true
 
 [frontend.package]
-name = "{{ cookiecutter.frontend_addon_name }}"
+name = "{{ cookiecutter.npm_package_name }}"
 path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
 changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGELOG.md"
 towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
 base_package = "@plone/volto"
-publish = false
+publish = true
 
 [cookieplone]
 template = "{{ cookiecutter.__cookieplone_template }}"
