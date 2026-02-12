@@ -21,10 +21,6 @@ classifiers = [
     "Framework :: Plone :: {{ version }}",
     {%- endfor %}
     "Framework :: Plone :: Addon",
-    {%- if cookiecutter.__feature_distribution == '1' %}
-    "Framework :: Plone :: Distribution",
-    {%- endif %}
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     {%- for version in cookiecutter.__supported_versions_python -%}
