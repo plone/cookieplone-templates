@@ -62,6 +62,7 @@ BACKEND_FILES = [
     "backend/src/collective/addon/upgrades/configure.zcml",
     "backend/src/collective/addon/vocabularies/__init__.py",
     "backend/src/collective/addon/vocabularies/configure.zcml",
+    "backend/version.txt",
 ]
 
 FRONTEND_FILES = [
