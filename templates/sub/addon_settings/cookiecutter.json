@@ -24,10 +24,8 @@
   "__folder_name": "{{ cookiecutter.project_slug }}",
   "__package_path": "{{ cookiecutter.python_package_name | package_path }}",
   "__python_version": "3.12",
-  "__supported_versions_python": ["{{ cookiecutter.__python_version }}"],
-  "__supported_versions_plone": [
-    "{{ cookiecutter.plone_version | as_major_minor }}"
-  ],
+  "__supported_versions_python": ["3.11", "3.12", "3.13"],
+  "__supported_versions_plone": ["6.1", "6.2"],
   "__python_version_identifier": "{{ cookiecutter.__python_version | replace('.', '') }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
   "__version_pnpm": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.1.1' }}",

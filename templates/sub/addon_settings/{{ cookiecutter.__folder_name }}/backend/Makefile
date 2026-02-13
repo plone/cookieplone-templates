@@ -15,9 +15,6 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
-IMAGE_TAG=latest
-
 # Python checks
 UV?=uv
 
@@ -26,10 +23,15 @@ ifeq (, $(shell which $(UV) ))
   $(error "UV=$(UV) not found in $(PATH)")
 endif
 
+REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_TAG=latest
+IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
+
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-PLONE_VERSION=$(shell cat $(BACKEND_FOLDER)/version.txt)
-EXAMPLE_CONTENT_FOLDER=${BACKEND_FOLDER}/src/{{ cookiecutter.__package_path }}/setuphandlers/examplecontent
+EXAMPLE_CONTENT_FOLDER := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.code_path')/setuphandlers/examplecontent
+PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
@@ -38,6 +40,8 @@ BIN_FOLDER=$(VENV_FOLDER)/bin
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
 export DOCKER_BUILDKIT := 1
+export PYTHON_VERSION := {{ cookiecutter.__supported_versions_python[0] }}
+export PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
 all: build
 
@@ -46,6 +50,15 @@ all: build
 .PHONY: help
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+
+.PHONY: debug-settings
+debug-settings:  ## Debug settings
+	@echo "PLONE_VERSION: $(PLONE_VERSION)"
+	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
+	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
+	@echo "IMAGE_NAME: $(IMAGE_NAME)"
+
 
 requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
@@ -57,7 +70,7 @@ $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 ifdef CI
 	@uv venv $(VENV_FOLDER)
 else
-	@uv venv --python={{ cookiecutter.__supported_versions_python[0] }} $(VENV_FOLDER)
+	@uv venv --python=$(PYTHON_VERSION) $(VENV_FOLDER)
 endif
 	@uv pip install -r requirements-mxdev.txt
 
@@ -125,7 +138,7 @@ format: ## Check and fix code base according to Plone standards
 .PHONY: i18n
 i18n: $(VENV_FOLDER) ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	@$(BIN_FOLDER)/python -m {{ cookiecutter.python_package_name }}.locales
+	@$(BIN_FOLDER)/python -m $(PACKAGE_NAME).locales
 
 # Tests
 .PHONY: test
@@ -134,17 +147,17 @@ test: $(VENV_FOLDER) ## run tests
 
 .PHONY: test-coverage
 test-coverage: $(VENV_FOLDER) ## run tests with coverage
-	@$(BIN_FOLDER)/pytest --cov={{ cookiecutter.python_package_name }} --cov-report term-missing
+	@$(BIN_FOLDER)/pytest --cov=$(PACKAGE_NAME) --cov-report term-missing
 
 # Build Docker images
 .PHONY: build-image
 build-image:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 # Acceptance tests
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="{{ cookiecutter.python_package_name }}:default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,{{ cookiecutter.python_package_name }}" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,$(PACKAGE_NAME)" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
