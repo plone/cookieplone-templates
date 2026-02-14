@@ -17,20 +17,20 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
     "Framework :: Plone",
+    {%- for version in cookiecutter.__supported_versions_plone %}
+    "Framework :: Plone :: {{ version }}",
+    {%- endfor %}
     {%- if cookiecutter.__feature_distribution == '0' %}
     "Framework :: Plone :: Addon",
-    {%- endif %}
-    {% for version in cookiecutter.__supported_versions_plone -%}
-    "Framework :: Plone :: {{ version }}",
-    {% endfor %}
+    {% endif -%}
     {%- if cookiecutter.__feature_distribution == '1' %}
     "Framework :: Plone :: Distribution",
-    {% endif %}
+    {% endif -%}
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    {% for version in cookiecutter.__supported_versions_python -%}
+    {%- for version in cookiecutter.__supported_versions_python %}
     "Programming Language :: Python :: {{ version }}",
-    {% endfor %}
+    {%- endfor %}
 ]
 dependencies = [
     "Products.CMFPlone",
