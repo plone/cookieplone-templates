@@ -67,7 +67,7 @@ jobs:
       - name: Setup uv
         uses: plone/meta/.github/actions/setup_uv@{{ cookiecutter.__gha_version_plone_meta }}
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: {{ "${{ inputs.python-version }}" }}
           working-directory: '.'
 
       - name: Compute several vars needed for the CI
