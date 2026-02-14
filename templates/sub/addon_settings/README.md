@@ -1,0 +1,1 @@
+# Cookieplone add-on settings

@@ -16,7 +16,7 @@ BASE_FOLDER = $(shell git rev-parse --show-toplevel)
 VENV_FOLDER = ${BASE_FOLDER}/.venv
 BIN_FOLDER = ${VENV_FOLDER}/bin
 
-TEMPLATE = $(shell basename $(CURRENT_DIR))
+TEMPLATE = sub/$(shell basename $(CURRENT_DIR))
 PROJECT_FOLDER_NAME = project-title
 
 

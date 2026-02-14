@@ -24,6 +24,12 @@
       "description": "Create a new Node package to be used with Volto",
       "hidden": false
     },
+    "monorepo_addon": {
+      "path": "./templates/add-ons/monorepo",
+      "title": "Add-on for Plone (Backend + Volto)",
+      "description": "Create a new codebase for a Plone add-on that includes both backend and Volto frontend",
+      "hidden": false
+    },
     "seven_addon": {
       "path": "./templates/add-ons/seven_addon",
       "title": "Seven Frontend Add-on for Plone",
@@ -46,6 +52,12 @@
       "path": "./templates/sub/project_settings",
       "title": "Project settings to be applied on top of a mono repo project",
       "description": "Subtemplate with configuration and settings for a mono repo project.",
+      "hidden": true
+    },
+    "sub/addon_settings": {
+      "path": "./templates/sub/addon_settings",
+      "title": "Add-on settings to be applied on top of a mono repo project",
+      "description": "Subtemplate with configuration and settings for a mono repo add-on.",
       "hidden": true
     },
     "sub/classic_project_settings": {

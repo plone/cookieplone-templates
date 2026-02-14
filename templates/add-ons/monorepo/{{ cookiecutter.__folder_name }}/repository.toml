@@ -1,0 +1,32 @@
+[repository]
+name = "{{ cookiecutter.__project_slug }}"
+changelog = "CHANGELOG.md"
+version = "version.txt"
+version_format = "semver"
+container_images_prefix = "{{ cookiecutter.__container_image_prefix }}"
+compose = ["docker-compose.yml"]
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
+
+[backend.package]
+name = "{{ cookiecutter.python_package_name }}"
+path = "backend"
+changelog = "backend/CHANGELOG.md"
+towncrier_settings = "backend/pyproject.toml"
+base_package = "Products.CMFPlone"
+publish = true
+
+[frontend.package]
+name = "{{ cookiecutter.npm_package_name }}"
+path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
+changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGELOG.md"
+towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
+base_package = "@plone/volto"
+publish = true
+
+[cookieplone]
+template = "{{ cookiecutter.__cookieplone_template }}"
+template_version = "{{ cookiecutter.__generator_sha }}"
+generated_date = "{{ cookiecutter.__generator_date_long }}"
