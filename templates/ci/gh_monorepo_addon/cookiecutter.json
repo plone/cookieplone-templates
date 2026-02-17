@@ -1,6 +1,5 @@
 {
   "npm_package_name": "@plone-collective/volto-addon",
-  "container_image_prefix": "ghcr.io/collective/volto-addon",
   "python_version": "3.13",
   "node_version": "24",
   "has_docs": ["0", "1"],
@@ -12,7 +11,6 @@
   "__gha_plone_versions": ["6.2-latest", "6.1-latest", "6.0-latest"],
   "__gha_version_setup_node": "v4",
   "__gha_version_node": "{{ cookiecutter.node_version }}",
-  "__container_image_prefix": "{{ cookiecutter.container_image_prefix }}",
   "__prompts__": {
     "has_docs": {
       "__prompt__": "Do you want to include documentation CI workflows?",
