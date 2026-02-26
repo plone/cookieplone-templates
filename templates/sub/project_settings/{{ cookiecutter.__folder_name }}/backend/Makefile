@@ -26,14 +26,26 @@ ifeq (, $(shell which $(UV) ))
   $(error "UV=$(UV) not found in $(PATH)")
 endif
 
+REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_TAG=latest
+IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
+
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 PLONE_VERSION=$(shell cat $(BACKEND_FOLDER)/version.txt)
 EXAMPLE_CONTENT_FOLDER=${BACKEND_FOLDER}/src/{{ cookiecutter.__package_path }}/setuphandlers/examplecontent
+PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
+
+ifdef CI
+UV_VENV_ARGS :=
+else
+UV_VENV_ARGS := --python={{ cookiecutter.__supported_versions_python[0] }}
+endif
 
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
@@ -47,6 +59,13 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: debug-settings
+debug-settings:  ## Debug settings
+	@echo "PLONE_VERSION: $(PLONE_VERSION)"
+	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
+	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
+	@echo "IMAGE_NAME: $(IMAGE_NAME)"
+
 requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
@@ -54,11 +73,7 @@ requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
-ifdef CI
-	@uv venv $(VENV_FOLDER)
-else
-	@uv venv --python={{ cookiecutter.__supported_versions_python[0] }} $(VENV_FOLDER)
-endif
+	@if [[ -d "$(VENV_FOLDER)" ]]; then echo "$(YELLOW)==> Environment already exists at $(VENV_FOLDER)$(RESET)"; else uv venv $(UV_VENV_ARGS) $(VENV_FOLDER); fi
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync
