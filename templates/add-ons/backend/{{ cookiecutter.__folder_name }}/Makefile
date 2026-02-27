@@ -31,6 +31,12 @@ else
 PLONE_VERSION := {{ cookiecutter.plone_version }}
 endif
 
+ifdef CI
+UV_VENV_ARGS :=
+else
+UV_VENV_ARGS := --python={{ cookiecutter.__supported_versions_python[0] }}
+endif
+
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
@@ -54,11 +60,7 @@ requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
-ifdef CI
-	@uv venv $(VENV_FOLDER)
-else
-	@uv venv --python={{ cookiecutter.__supported_versions_python[0] }} $(VENV_FOLDER)
-endif
+	@if [[ -d "$(VENV_FOLDER)" ]]; then echo "$(YELLOW)==> Environment already exists at $(VENV_FOLDER)$(RESET)"; else uv venv $(UV_VENV_ARGS) $(VENV_FOLDER); fi
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync

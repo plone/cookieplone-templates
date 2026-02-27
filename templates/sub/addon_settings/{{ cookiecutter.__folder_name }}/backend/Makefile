@@ -43,6 +43,13 @@ export DOCKER_BUILDKIT := 1
 export PYTHON_VERSION := {{ cookiecutter.__supported_versions_python[0] }}
 export PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
+ifdef CI
+UV_VENV_ARGS :=
+else
+UV_VENV_ARGS := --python=$(PYTHON_VERSION)
+endif
+
+
 all: build
 
 # Add the following 'help' target to your Makefile
@@ -67,11 +74,7 @@ requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
-ifdef CI
-	@uv venv $(VENV_FOLDER)
-else
-	@uv venv --python=$(PYTHON_VERSION) $(VENV_FOLDER)
-endif
+	@if [[ -d "$(VENV_FOLDER)" ]]; then echo "$(YELLOW)==> Environment already exists at $(VENV_FOLDER)$(RESET)"; else uv venv $(UV_VENV_ARGS) $(VENV_FOLDER); fi
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync
