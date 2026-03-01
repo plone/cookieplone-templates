@@ -17,7 +17,7 @@
   "__backend_managed_by_uv": "false",
   "__project_slug": "{{ cookiecutter.project_slug }}",
   "__repository_url": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
-  "__repository_git": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+  "__repository_git": "git+https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}.git",
   "__node_version": "{{ cookiecutter.volto_version | node_version_for_volto }}",
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__container_registry_prefix": "{{ cookiecutter.container_registry | image_prefix }}",
