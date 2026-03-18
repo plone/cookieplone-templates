@@ -181,4 +181,4 @@ acceptance-image-build:  ## Build Docker Images
 # Plone CLI
 ############################################
 add: $(VENV_FOLDER)
-	@uvx plonecli add -b .mrbob.ini $(filter-out $@,$(MAKECMDGOALS))
+	@uvx plonecli add $(filter-out $@,$(MAKECMDGOALS))
