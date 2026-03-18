@@ -40,7 +40,7 @@ dependencies = [
     "plone.volto",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 test = [
     "horse-with-no-namespace",
     "plone.app.testing",
@@ -48,6 +48,13 @@ test = [
     "pytest",
     "pytest-cov",
     "pytest-plone>=1.0.0a2",
+]
+
+container = [
+    "plone.app.upgrade",
+    "psycopg2==2.9.11",
+    "relstorage==4.2.0",
+    "zeo==6.1",
 ]
 
 [project.urls]
@@ -65,6 +72,8 @@ target = "plone"
 
 [tool.uv]
 managed = {{ cookiecutter.__backend_managed_by_uv }}
+default-groups = ["test"]
+constraint-dependencies = []
 
 [tool.hatch.version]
 path = "src/{{ cookiecutter.__package_path }}/__init__.py"
