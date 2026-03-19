@@ -25,7 +25,7 @@
   "__version_frontend_package": "1.0.0-alpha.0",
   "__feature_headless": "1",
   "__feature_distribution": "0",
-  "__backend_managed_by_uv": "false",
+  "__backend_managed_by_uv": "true",
   "__frontend_package_name": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
   "__npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
   "__folder_name": "{{ cookiecutter.project_slug }}",
