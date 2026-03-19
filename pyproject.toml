@@ -12,6 +12,7 @@ dependencies = [
     "pytest-jsonschema>=1.0.0",
     "pytest-md-report>=0.6.3",
     "tomli>=2.0.1",
+    "repoplone"
 ]
 
 [tool.pytest.ini_options]
@@ -67,7 +68,7 @@ preview = true
 "tests/*" = ["S101"]
 
 [tool.towncrier]
-package = "cookieplone-templates"
+name = "cookieplone-templates"
 directory = "news/"
 filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"

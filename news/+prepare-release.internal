@@ -1,0 +1,4 @@
+Prepare the first release of `cookieplone-templates`. @ericof
+    - Adds `repoplone` as a Python dependency
+    - Adds `make changelog` and `make release` to `Makefile`
+    - Update README.md
