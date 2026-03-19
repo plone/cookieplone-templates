@@ -33,19 +33,13 @@ IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-PLONE_VERSION=$(shell cat $(BACKEND_FOLDER)/version.txt)
-EXAMPLE_CONTENT_FOLDER=${BACKEND_FOLDER}/src/{{ cookiecutter.__package_path }}/setuphandlers/examplecontent
+PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+EXAMPLE_CONTENT_FOLDER := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.code_path')/setuphandlers/examplecontent
 PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
-
-ifdef CI
-UV_VENV_ARGS :=
-else
-UV_VENV_ARGS := --python={{ cookiecutter.__supported_versions_python[0] }}
-endif
 
 # Environment variables to be exported
 export PYTHONWARNINGS := ignore
@@ -61,26 +55,15 @@ help: ## This help message
 
 .PHONY: debug-settings
 debug-settings:  ## Debug settings
+	@echo "Virtual Environment: $(VENV_FOLDER)"
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
 	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
 	@echo "IMAGE_NAME: $(IMAGE_NAME)"
 
-requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
-	@echo "$(GREEN)==> Generate constraints file$(RESET)"
-	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
-	@uvx mxdev -c mx.ini
-
-$(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
-	@echo "$(GREEN)==> Install environment$(RESET)"
-	@if [[ -d "$(VENV_FOLDER)" ]]; then echo "$(YELLOW)==> Environment already exists at $(VENV_FOLDER)$(RESET)"; else uv venv $(UV_VENV_ARGS) $(VENV_FOLDER); fi
-	@uv pip install -r requirements-mxdev.txt
-
-.PHONY: sync
-sync: $(VENV_FOLDER) ## Sync project dependencies
-	@echo "$(GREEN)==> Sync project dependencies$(RESET)"
-	@uv pip install -r requirements-mxdev.txt
-
+############################################
+# Config
+############################################
 instance/etc/zope.ini instance/etc/zope.conf: instance.yaml ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
 	@uvx cookiecutter -f --no-input -c 2.4.1 --config-file instance.yaml gh:plone/cookiecutter-zope-instance
@@ -88,8 +71,21 @@ instance/etc/zope.ini instance/etc/zope.conf: instance.yaml ## Create instance c
 .PHONY: config
 config: instance/etc/zope.ini
 
+############################################
+# Installation / Cleanup
+############################################
+.PHONY: update-constraints
+update-constraints: ## Update backend constraints
+	@echo "$(GREEN)==> Update backend constraints$(RESET)"
+	@uvx repoplone deps constraints
+
+.PHONY: sync
+sync: update-constraints ## Sync project dependencies
+	@echo "$(GREEN)==> Sync project dependencies$(RESET)"
+	@uv sync
+
 .PHONY: install
-install: $(VENV_FOLDER) config ## Install Plone and dependencies
+install: sync config ## Install Plone and dependencies
 
 .PHONY: clean
 clean: ## Clean installation and instance
@@ -101,26 +97,33 @@ remove-data: ## Remove all content
 	@echo "$(RED)==> Removing all content$(RESET)"
 	rm -rf $(VENV_FOLDER) instance/var
 
+############################################
+# Server Actions
+############################################
 .PHONY: start
 start: $(VENV_FOLDER) instance/etc/zope.ini ## Start a Plone instance on localhost:8080
-	@$(BIN_FOLDER)/runwsgi instance/etc/zope.ini
+	@uv run runwsgi instance/etc/zope.ini
 
 .PHONY: console
 console: $(VENV_FOLDER) instance/etc/zope.ini ## Start a console into a Plone instance
-	@$(BIN_FOLDER)/zconsole debug instance/etc/zope.conf
+	@uv run zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
 create-site: $(VENV_FOLDER) instance/etc/zope.ini ## Create a new site from scratch
-	@$(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
+	@uv run zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
+############################################
 # Example Content
+############################################
 .PHONY: update-example-content
 update-example-content: $(VENV_FOLDER) ## Export example content inside package
 	@echo "$(GREEN)==> Export example content into $(EXAMPLE_CONTENT_FOLDER) $(RESET)"
 	if [ -d $(EXAMPLE_CONTENT_FOLDER)/content ]; then rm -r $(EXAMPLE_CONTENT_FOLDER)/* ;fi
-	@$(BIN_FOLDER)/plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
+	@uv run plone-exporter instance/etc/zope.conf $(PLONE_SITE_ID) $(EXAMPLE_CONTENT_FOLDER)
 
+############################################
 # QA
+############################################
 .PHONY: lint
 lint: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Lint codebase$(RESET)"
@@ -136,35 +139,46 @@ format: ## Check and fix code base according to Plone standards
 	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx zpretty@latest -i src
 
+############################################
 # i18n
+############################################
 .PHONY: i18n
 i18n: $(VENV_FOLDER) ## Update locales
 	@echo "$(GREEN)==> Updating locales$(RESET)"
-	@$(BIN_FOLDER)/python -m {{ cookiecutter.python_package_name }}.locales
+	@uv run python -m $(PACKAGE_NAME).locales
 
+############################################
 # Tests
+############################################
 .PHONY: test
 test: $(VENV_FOLDER) ## run tests
-	@$(BIN_FOLDER)/pytest
+	@uv run pytest
 
 .PHONY: test-coverage
 test-coverage: $(VENV_FOLDER) ## run tests with coverage
-	@$(BIN_FOLDER)/pytest --cov={{ cookiecutter.python_package_name }} --cov-report term-missing
+	@uv run pytest --cov=$(PACKAGE_NAME) --cov-report term-missing
 
-# Build Docker images
+############################################
+# Container images
+############################################
 .PHONY: build-image
-build-image:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+build-image:  ## Build Container Images
+	@echo "$(GREEN)==> Building image $(IMAGE_NAME) $(RESET)"
+	@docker build . -t $(IMAGE_NAME) --progress plain -f Dockerfile
 
-# Acceptance tests
+############################################
+# Acceptance Tests
+############################################
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="{{ cookiecutter.python_package_name }}:default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,{{ cookiecutter.python_package_name }}" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,$(PACKAGE_NAME)" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
 	@docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
-## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
+############################################
+# Plone CLI
+############################################
 add: $(VENV_FOLDER)
 	@uvx plonecli add $(filter-out $@,$(MAKECMDGOALS))
