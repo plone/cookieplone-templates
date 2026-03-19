@@ -33,7 +33,7 @@
   ],
   "__python_version_identifier": "{{ cookiecutter.__python_version | replace('.', '') }}",
   "__version_plone_volto": "{{ cookiecutter.volto_version }}",
-  "__version_pnpm": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.1.1' }}",
+  "__version_pnpm": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
   "__test_framework": "{{ 'vitest' if cookiecutter.volto_version >= '19' else 'jest'}}",
   "_copy_without_render": [],
   "_extensions": [
