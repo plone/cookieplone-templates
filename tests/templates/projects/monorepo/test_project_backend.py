@@ -11,7 +11,6 @@ BACKEND_FILES = [
     "Dockerfile",
     "instance.yaml",
     "Makefile",
-    "mx.ini",
     "pyproject.toml",
     "version.txt",
 ]
@@ -36,7 +35,6 @@ BACKEND_PACKAGE_FILES_PYTEST = [
     "src/plonegov/ploneorgbr/testing.py",
     "tests/conftest.py",
     "tests/setup/test_setup_install.py",
-    "tests/setup/test_setup_uninstall.py",
 ]
 
 
