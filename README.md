@@ -32,21 +32,81 @@ uvx cookieplone
 ```
 
 ```text
-[1/1] Select a template
-  1 - Volto Project
-  2 - Classic UI Project
-  3 - Backend Add-on for Plone
-  4 - Frontend Add-on for Plone
-  5 - Documentation scaffold for Plone projects
+╭───────────────────────────────────────────────────────────── cookieplone ──────────────────────────────────────────────────────────────╮
+│                                                                                                                                        │
+│                                  *******                                                                                               │
+│                              ***************                                                                                           │
+│                            ***             ***        *********     ***                                    ***                         │
+│                          ***    ***          ***      ***********   ***                                   * R *                        │
+│                         ***    *****          ***     ***      ***  ***                                    ***                         │
+│                        ***      ***            ***    ***       *** ***       ****     ***  ***       ****                             │
+│                        ***               ***   ***    ***      ***  ***     ********   *********    ********                           │
+│                        ***              *****  ***    ***********   ***    ***    ***  ****   ***  ***    ***                          │
+│                        ***      ***      ***   ***    *********     ***    ***    ***  ***    ***  **********                          │
+│                         ***    *****          ***     ***           ***    ***    ***  ***    ***  *********                           │
+│                          ***    ***          ***      ***           ****   ***    ***  ***    ***  ***    ...                          │
+│                            ***             ***        ***            *****  ********   ***    ***   ********                           │
+│                              ***************          ***              ***    ****     ***    ***     ****                             │
+│                                  *******                                                                                               │
+│                                                                                                                                        │
+│ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │
+│ │                                                             Templates                                                              │ │
+│ │ ┏━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ │ │
+│ │ ┃ # ┃ Title                                     ┃ Description                                                                    ┃ │ │
+│ │ ┡━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩ │ │
+│ │ │ 1 │ Volto Project                             │ Create a new Plone project that uses the Volto frontend                        │ │ │
+│ │ │ 2 │ Classic UI Project                        │ Create a new Plone project that uses Classic UI                                │ │ │
+│ │ │ 3 │ Backend Add-on for Plone                  │ Create a new Python package to be used with Plone                              │ │ │
+│ │ │ 4 │ Frontend Add-on for Plone                 │ Create a new Node package to be used with Volto                                │ │ │
+│ │ │ 5 │ Add-on for Plone (Backend + Volto)        │ Create a new codebase for a Plone add-on that includes both backend and Volto  │ │ │
+│ │ │   │                                           │ frontend                                                                       │ │ │
+│ │ │ 6 │ Seven Frontend Add-on for Plone           │ Create a new Node package to be used with Seven                                │ │ │
+│ │ │ 7 │ Documentation scaffold for Plone projects │ Create a new documentation scaffold for Plone projects                         │ │ │
+│ │ └───┴───────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────┘ │ │
+│ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+Select a template [1/2/3/4/5/6/7] (1):
 ```
 
-| Template | Description | `README.md` |
-| --------- | --------- | --------- |
-| `Volto Project`  | Create a new Plone project that uses the Volto frontend. | [Read more](./templates/projects/monorepo/README.md) |
-| `Classic UI Project`  | Create a new Plone project that uses Classic UI. | [Read More](./templates/projects/classic/README.md) |
-| `Backend Add-on for Plone`  | Create a new Python package to be used with Plone. | [Read more](./templates/add-ons/backend/README.md) |
-| `Frontend Add-on for Plone`  | Create a new Node.js package to be used with Volto. | [Read more](./templates/add-ons/frontend/README.md) |
-| `Documenation scaffold`  | Create a documentation scaffold for your package. | [Read more](./templates/add-ons/documentation_starter/README.md) |
+### Publish to Git service provider
+
+To publish your project to your Git service provider, first create an empty remote repository with your Git service provider.
+Then navigate to the root of your generated project folder.
+Finally, issue the following commands.
+
+> [!NOTE]
+> If your remote repository is private, you'll need to manage authorization when you push commits upstream.
+
+```shell
+git status
+git commit -m "first commit"
+git remote add origin https://<git_service_provider>/<organization_or_username>/<project_slug>.git
+git branch -M main
+git push
+```
+
+Your remote repository should now be populated with your generated project.
+
+
+### Publish documentation to Read the Docs
+
+The Cookieplone template `documentation_starter` supports publishing documentation and pull request preview builds on Read the Docs.
+
+First, create an account on Read the Docs, then follow their documentation to add a documentation project and configure pull request previews.
+
+-   [Adding a documentation project](https://docs.readthedocs.com/platform/stable/intro/add-project.html)
+-   [How to configure pull request builds](https://docs.readthedocs.com/platform/stable/guides/pull-requests.html)
+-   [Pull request previews](https://docs.readthedocs.com/platform/stable/pull-requests.html)
+
+Next, update your documentation files.
+Search for the string `MY_READTHEDOCS_PROJECT_SLUG` throughout your project, and replace it your project's slug that Read the Docs assigned to your project.
+
+Finally, commit and push your changes to your remote repository.
+
+Read the Docs will build documentation and with the next pull request, will build a pull request preview and insert a link to the preview in your pull request.
+
+> [!NOTE]
+> It's currently not supported to check for a unique slug on Read the Docs before generating your project, especially if you set up a private repository.
 
 
 ## Contribute 🤝
@@ -132,47 +192,42 @@ Run only tests that match `test_template_has_required_keys`, but stop on the fir
 uv run pytest -k test_template_has_required_keys -x --pdb
 ```
 
+### Releasing 🏷️
 
-### Publish to Git service provider
+Releases of `cookieplone-templates` use [CalVer](https://calver.org/) versioning in the format `YYYYMMDD.N`, where `N` is a sequential counter that disambiguates multiple releases on the same day (e.g. `20260319.1`).
 
-To publish your project to your Git service provider, first create an empty remote repository with your Git service provider.
-Then navigate to the root of your generated project folder.
-Finally, issue the following commands.
+Each release:
 
-> [!NOTE]
-> If your remote repository is private, you'll need to manage authorization when you push commits upstream.
+- Generates and commits a changelog from [towncrier](https://towncrier.readthedocs.io/) news fragments.
+- Creates a Git tag matching the version.
+- Publishes a GitHub release with the changelog as its body.
+
+#### Preview the changelog
+
+Before releasing, preview what the changelog will look like without making any changes:
 
 ```shell
-git status
-git commit -m "first commit"
-git remote add origin https://<git_service_provider>/<organization_or_username>/<project_slug>.git
-git branch -M main
-git push
+make changelog
 ```
 
-Your remote repository should now be populated with your generated project.
+#### Publish a new release
 
+When ready to release, run:
 
-### Publish documentation to Read the Docs
+```shell
+make release
+```
 
-The Cookieplone template `documentation_starter` supports publishing documentation and pull request preview builds on Read the Docs.
+This will:
 
-First, create an account on Read the Docs, then follow their documentation to add a documentation project and configure pull request previews.
-
--   [Adding a documentation project](https://docs.readthedocs.com/platform/stable/intro/add-project.html)
--   [How to configure pull request builds](https://docs.readthedocs.com/platform/stable/guides/pull-requests.html)
--   [Pull request previews](https://docs.readthedocs.com/platform/stable/pull-requests.html)
-
-Next, update your documentation files.
-Search for the string `MY_READTHEDOCS_PROJECT_SLUG` throughout your project, and replace it your project's slug that Read the Docs assigned to your project.
-
-Finally, commit and push your changes to your remote repository.
-
-Read the Docs will build documentation and with the next pull request, will build a pull request preview and insert a link to the preview in your pull request.
+1. Determine the next CalVer version.
+2. Show a changelog preview and prompt for confirmation.
+3. Generate and commit the changelog.
+4. Push the tag to the remote.
+5. Create the GitHub release.
 
 > [!NOTE]
-> It's currently not supported to check for a unique slug on Read the Docs before generating your project, especially if you set up a private repository.
-
+> A valid `GITHUB_TOKEN` with write access to the repository must be present in your environment.
 
 ## License 📜
 
