@@ -12,7 +12,7 @@ dependencies = [
     "pytest-jsonschema>=1.0.0",
     "pytest-md-report>=0.6.3",
     "tomli>=2.0.1",
-    "repoplone"
+    "repoplone==1.0.0b10"
 ]
 
 [tool.pytest.ini_options]
