@@ -1,3 +1,15 @@
+
+# Change log
+
+<!--
+   You should *NOT* be adding new change log entries to this file.
+   You should create a file in the news directory instead.
+   For helpful instructions, please see:
+   https://github.com/plone/plone.releaser/blob/master/ADD-A-NEWS-ITEM.rst
+-->
+
+<!-- towncrier release notes start -->
+
 ## 20260320.1 (2026-03-20)
 
 
@@ -41,15 +53,15 @@
 - Use pnpm 9.15.9 in Volto 18. @wesleybl [#344](https://github.com/plone/cookieplone-templates/issues/344)
 - Project: Manage backend installation with uv. @ericof
    - Modify Makefiles to use repoplone to obtain information about versions and image [#350](https://github.com/plone/cookieplone-templates/issues/350)
-- Added filterBlobs option in mrs-developer clone by default. @sneridagh 
-- Added full support for Volto 19 (prerelease). @sneridagh 
-- Added support ?react icons in Seven add-on. @sneridagh 
-- Adds a new hidden template DevOps Ansible to be used by other templates. @ericof 
-- Catalog support for Volto 19 projects. @sneridagh 
+- Added filterBlobs option in mrs-developer clone by default. @sneridagh
+- Added full support for Volto 19 (prerelease). @sneridagh
+- Added support ?react icons in Seven add-on. @sneridagh
+- Adds a new hidden template DevOps Ansible to be used by other templates. @ericof
+- Catalog support for Volto 19 projects. @sneridagh
 - Implement a sub-template (`agents_instructions`) to configure instructions for LLMs.
-   - This initFollowing the [recomended approach for VSCode and GitHub Co-Pilot](https://code.visualstudio.com/docs/copilot/customization/custom-instructions). @ericof 
-- Update the version of cookiecutter-zope-instance @erral 
-- Volto 19 has adopted `razzle-scss-plugin` in core. @sneridagh 
+   - This initFollowing the [recomended approach for VSCode and GitHub Co-Pilot](https://code.visualstudio.com/docs/copilot/customization/custom-instructions). @ericof
+- Update the version of cookiecutter-zope-instance @erral
+- Volto 19 has adopted `razzle-scss-plugin` in core. @sneridagh
 
 
 ### Bug fixes:
@@ -80,18 +92,18 @@
 - Replace the usage of from Products.CMFPlone.interfaces import INonInstallable by from plone.base.interfaces.installable import INonInstallable in the backend add-on template. @ericof [#327](https://github.com/plone/cookieplone-templates/issues/327)
 - Fix repository.toml frontend.package.path setting for scoped packages. @ericof [#331](https://github.com/plone/cookieplone-templates/issues/331)
 - GHA: Fix backend tests "Failed to create virtual environment". @ericof [#342](https://github.com/plone/cookieplone-templates/issues/342)
-- Added the missing Webpack resolver for relative shadowing. @sneridagh 
-- Be explicit about the Python version when running uv venv locally in backend. @wesleybl 
-- Fix plonecli compatibility removing usage of mrbob.ini file @erral 
-- Fix varnish CI. @mauritsvanrees 
-- Fixed Dockerfile build command because pnpm complains about ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY. @sneridagh 
-- Fixed missing `SPHINXBUILD` env var from docs Makefile for RTD build. @sneridagh 
-- Fixed preset name in frontend scaffold to support the new razzle fork. @sneridagh 
-- Fixes for projects using Volto 19. @ericof 
-- In the frontend image, use the same pnpm-lock.yaml that was used during development. @davisagli 
-- Make sure commands in the backend Makefile always use the Python virtualenv it created. @davisagli 
-- Recursively find packages in workspace. @TimoBroeskamp 
-- Rename last razzle import in Storybook config. @sneridagh 
+- Added the missing Webpack resolver for relative shadowing. @sneridagh
+- Be explicit about the Python version when running uv venv locally in backend. @wesleybl
+- Fix plonecli compatibility removing usage of mrbob.ini file @erral
+- Fix varnish CI. @mauritsvanrees
+- Fixed Dockerfile build command because pnpm complains about ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY. @sneridagh
+- Fixed missing `SPHINXBUILD` env var from docs Makefile for RTD build. @sneridagh
+- Fixed preset name in frontend scaffold to support the new razzle fork. @sneridagh
+- Fixes for projects using Volto 19. @ericof
+- In the frontend image, use the same pnpm-lock.yaml that was used during development. @davisagli
+- Make sure commands in the backend Makefile always use the Python virtualenv it created. @davisagli
+- Recursively find packages in workspace. @TimoBroeskamp
+- Rename last razzle import in Storybook config. @sneridagh
 
 
 ### Internal:
@@ -103,17 +115,17 @@
 - Updates cache keys of the `frontend-functional` job to invalidate the cache if `package.json` or `mrs.developer.json` are changed. @wesleybl [#294](https://github.com/plone/cookieplone-templates/issues/294)
 - Add support for prerelease Volto versions in codebase generation. @wesleybl [#299](https://github.com/plone/cookieplone-templates/issues/299)
 - Update dependencies. @wesleybl [#303](https://github.com/plone/cookieplone-templates/issues/303)
-- Backend Add On: Do not render the `news/.changelog_template.jinja` file @ericof 
-- Implement version and change log support. @ericof 
+- Backend Add On: Do not render the `news/.changelog_template.jinja` file @ericof
+- Implement version and change log support. @ericof
 - Prepare the first release of `cookieplone-templates`. @ericof
       - Adds `repoplone` as a Python dependency
       - Adds `make changelog` and `make release` to `Makefile`
-      - Update README.md 
-- Refactor GHA workflows @ericof 
-- Remove unused namespace definition from permissions.zcml @ericof 
-- Require cookieplone 0.9.4 or above @ericof 
-- Trigger GitHub Actions workflow for external pull requests. @davisagli 
-- Use uv to manage project and project dependencies. @ericof 
+      - Update README.md
+- Refactor GHA workflows @ericof
+- Remove unused namespace definition from permissions.zcml @ericof
+- Require cookieplone 0.9.4 or above @ericof
+- Trigger GitHub Actions workflow for external pull requests. @davisagli
+- Use uv to manage project and project dependencies. @ericof
 
 
 ### Documentation:
@@ -125,15 +137,4 @@
   Replace CI badge, as individual workflows can't be checked with the new CI structure. @stevepiercy
   Minor grammar and formatting fixes. @stevepiercy [#210](https://github.com/plone/cookieplone-templates/issues/210)
 - Add command for running a remote branch. @stevepiercy, @erral [#222](https://github.com/plone/cookieplone-templates/issues/222)
-- Fixes GitHub actions CI badges on the README.md file for a monorepo Project. @ericof 
-
-# Change log
-
-<!--
-   You should *NOT* be adding new change log entries to this file.
-   You should create a file in the news directory instead.
-   For helpful instructions, please see:
-   https://github.com/plone/plone.releaser/blob/master/ADD-A-NEWS-ITEM.rst
--->
-
-<!-- towncrier release notes start -->
+- Fixes GitHub actions CI badges on the README.md file for a monorepo Project. @ericof
