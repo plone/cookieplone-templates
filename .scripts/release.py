@@ -3,6 +3,7 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 import requests
+from repoplone.integrations.uv import UV
 from repoplone.utils import _git as git
 from repoplone.utils import _github as gh
 from repoplone.utils import changelog
@@ -23,6 +24,23 @@ def sanity_github(session: requests.Session, origin: str) -> bool:
         response = session.get(f"https://api.github.com/repos/{remote_path}/releases")
         status = response.status_code == 200
     return status
+
+
+def bump_version(version: str, dry_run: bool) -> str:
+    """Bump package version on pyproject.toml.
+
+    :param version: The target version string to set (e.g. ``20260320.1``).
+    :param dry_run: If ``True``, skip writing the version and only read back
+        the current value.
+    :returns: The version string now recorded in ``pyproject.toml``.
+    :rtype: str
+    """
+    uv = UV()
+    if not dry_run:
+        uv._run(uv.command, ["version", version])
+    result = uv._run(uv.command, ["version", "--short"])
+    new_version = result.stdout.strip()
+    return new_version
 
 
 def create_release(
@@ -108,12 +126,12 @@ def main(dry_run: bool = True) -> None:
 
     repo = git.repo_for_project(cwd)
     if not (origin := git._get_remote(repo)):
-        # Has no remote
+        print("❌ No remote configured for this repository.")
         return
 
     session = gh.gh_session()
     if not (session and sanity_github(session, origin.url)):
-        print("❌ GITHUB_TOKEN not configured or incorrect remote")
+        print("❌ GitHub token not configured or repository is not accessible.")
         return
 
     origin.fetch()
@@ -131,8 +149,16 @@ def main(dry_run: bool = True) -> None:
     print("📋 Changelog preview")
     print("─" * 50)
     print(generate_changelog(pyproject, tag, True))
+    print("🔧 Version bump")
+    print("─" * 50)
+    new_version = bump_version(version=tag, dry_run=dry_run)
+    print(f"pyproject.toml version → {new_version}\n")
     if not dry_run:
-        input("Press Enter to proceed with the release: ")
+        input(
+            f"About to commit the changelog, push tag {tag}, "
+            "and create the GitHub release.\n"
+            "Press Enter to proceed, or Ctrl+C to abort: "
+        )
         print(f"\n🚀 Releasing {tag}...")
         # Generate changelog
         release_changelog = generate_changelog(pyproject, tag, False)
@@ -140,7 +166,7 @@ def main(dry_run: bool = True) -> None:
         # Commit any changes
         git.finish_release(repo, tag)
         print("  ✅ Changes committed and pushed")
-        msg = create_release(session, origin.name, release_changelog, tag)
+        msg = create_release(session, origin.url, release_changelog, tag)
         print(f"  ✅ {msg}")
     else:
         print("👋 Dry run complete — no changes were made.")
