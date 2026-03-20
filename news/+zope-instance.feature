@@ -1,1 +1,0 @@
-Update the version of cookiecutter-zope-instance @erral

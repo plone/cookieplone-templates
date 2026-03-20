@@ -457,7 +457,7 @@ wheels = [
 
 [[package]]
 name = "cookieplone-templates"
-version = "0.1.0"
+version = "20260320.1"
 source = { virtual = "." }
 dependencies = [
     { name = "cookieplone" },

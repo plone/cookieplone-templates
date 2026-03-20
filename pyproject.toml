@@ -1,6 +1,6 @@
 [project]
 name = "cookieplone-templates"
-version = "0.1.0"
+version = "20260320.1"
 description = "Collection of templates for Plone integrators to use through Cookieplone"
 readme = "README.md"
 requires-python = ">=3.10"
