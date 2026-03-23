@@ -231,7 +231,7 @@ This will:
 
 ## License 📜
 
-This project is licensed under the [MIT License](/LICENSE).
+This project is licensed under the [MIT License](https://github.com/plone/cookieplone-templates/blob/main/LICENSE).
 
 
 ## Let's get building! 🚀
