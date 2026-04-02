@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from pytest_cookies.plugin import Cookies
 
 CONFIG_FILE = "cookiecutter.json"
 VALID_HOOK_NAMES = [
@@ -69,32 +68,10 @@ def cookieplone_root() -> dict:
     return folder.parent.resolve()
 
 
-@pytest.fixture(scope="module")
-def cookies_module(request, tmpdir_factory, _cookiecutter_config_file):
-    """Yield an instance of the Cookies helper class that can be used to
-    generate a project from a template.
-
-    Run cookiecutter:
-        result = cookies.bake(extra_context={
-            'variable1': 'value1',
-            'variable2': 'value2',
-        })
-    """
-    template_dir = request.config.option.template
-
-    output_dir = tmpdir_factory.mktemp(f"cookies-{request.module.__name__}")
-    output_factory = output_dir.mkdir
-
-    yield Cookies(template_dir, output_factory, _cookiecutter_config_file)
-
-    # Add option to keep generated output directories.
-    if not request.config.option.keep_baked_projects:
-        output_dir.remove()
-
 
 @pytest.fixture
 def volto_versions():
-    versions = ["17.15.5", "16.31.4", "18.0.0-alpha.27"]
+    versions = ["18.10.0", "18.0.0-alpha.27", "17.15.5", "16.31.4"]
     return versions
 
 
