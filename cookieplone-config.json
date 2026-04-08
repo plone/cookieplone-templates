@@ -1,4 +1,52 @@
 {
+  "version": "1.0",
+  "title": "Plone Community Templates",
+  "description": "Official Cookieplone templates for the Plone community",
+  "extends": "",
+  "groups": {
+    "projects": {
+      "title": "Projects",
+      "description": "Generators that create a new Plone project",
+      "templates": ["project", "classic_project"],
+      "hidden": false
+    },
+    "add-ons": {
+      "title": "Add-ons",
+      "description": "Extend Plone with add-ons",
+      "templates": ["monorepo_addon", "backend_addon", "frontend_addon", "seven_addon"],
+      "hidden": false
+    },
+    "documentation": {
+      "title": "Documentation",
+      "description": "Documentation templates for Plone projects",
+      "templates": ["documentation_starter"],
+      "hidden": false
+    },
+    "devops": {
+      "title": "DevOps",
+      "description": "DevOps templates for Plone projects",
+      "templates": ["devops_ansible"],
+      "hidden": false
+    },
+    "ci": {
+      "title": "CI / CD",
+      "description": "Continuous Integration and Continuous Deployment templates for Plone projects",
+      "templates": ["ci_gh_backend_addon", "ci_gh_frontend_addon", "ci_gh_monorepo_addon", "ci_gh_project", "ci_gh_classic_project"],
+      "hidden": true
+    },
+    "other": {
+      "title": "Other",
+      "description": "Other templates used by our community",
+      "templates": ["agents_instructions", "ide_vscode"],
+      "hidden": true
+    },
+    "sub": {
+      "title": "Sub-Templates",
+      "description": "Templates used only for internal purposes",
+      "templates": ["sub/cache", "sub/frontend_project", "sub/project_settings", "sub/addon_settings", "sub/classic_project_settings"],
+      "hidden": true
+    }
+  },
   "templates": {
     "project": {
       "path": "./templates/projects/monorepo",
@@ -119,6 +167,33 @@
       "title": "VSCode IDE Configuration",
       "description": "Configuration files for Visual Studio Code IDE used in Plone projects",
       "hidden": true
+    }
+  },
+  "config": {
+    "versions": {
+      "backend_python": "3.13",
+      "devops_cronjob_version": "1.14",
+      "devops_db_version": "14.15",
+      "devops_traefik_version": "v2.11",
+      "devops_varnish_version": "7.6",
+      "devops_zeo_version": "6.0.0",
+      "frontend_mrs_developer": "^2.2.0",
+      "frontend_pnpm": "10.20.0",
+      "frontend_release_it": "^19.0.5",
+      "frontend_testing_library_react": "^16.2.0",
+      "frontend_typescript": "^5.7.3",
+      "frontend_vitest": "^3.1.2",
+      "gha_version_background_action": "v1",
+      "gha_version_cache": "v4",
+      "gha_version_checkout": "v6",
+      "gha_version_docker_stack": "v1.4.0",
+      "gha_version_node": "22.x",
+      "gha_version_pages_deploy": "v4",
+      "gha_version_paths_filter": "v3.0.2",
+      "gha_version_plone_meta": "2.x",
+      "gha_version_setup_node": "v4",
+      "gha_version_upload_artifact": "v4",
+      "tools_pre_commit": "3.7.1"
     }
   }
 }

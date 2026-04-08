@@ -44,7 +44,7 @@ def context(annotate_context, cookieplone_root) -> dict:
 def context_devops_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_cache"] = "1"
+    new_context["devops_cache"] = True
     return new_context
 
 
@@ -60,7 +60,7 @@ def context_no_git(context) -> dict:
 def context_devops_no_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_cache"] = "0"
+    new_context["devops_cache"] = False
     return new_context
 
 
@@ -68,7 +68,7 @@ def context_devops_no_cache(context) -> dict:
 def context_devops_no_ansible(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_ansible"] = "0"
+    new_context["devops_ansible"] = False
     return new_context
 
 
@@ -76,7 +76,7 @@ def context_devops_no_ansible(context) -> dict:
 def context_devops_no_gha_deploy(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_gha_deploy"] = "0"
+    new_context["devops_gha_deploy"] = False
     return new_context
 
 
@@ -84,7 +84,7 @@ def context_devops_no_gha_deploy(context) -> dict:
 def context_no_docs(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["initialize_documentation"] = "0"
+    new_context["initialize_documentation"] = False
     return new_context
 
 

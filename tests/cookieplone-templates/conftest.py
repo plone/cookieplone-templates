@@ -7,12 +7,11 @@ from cookieplone.repository import get_template_options
 
 @pytest.fixture(scope="session")
 def all_templates(templates_folder) -> list[Path]:
-    candidates = templates_folder.glob("**/cookiecutter.json")
-    all_templates = []
-    for candidate in candidates:
-        parent = candidate.parent
-        all_templates.append(parent)
-    return all_templates
+    all_templates: set[Path] = set()
+    for name in ("cookiecutter.json", "cookieplone.json"):
+        for candidate in templates_folder.glob(f"**/{name}"):
+            all_templates.add(candidate.parent)
+    return sorted(all_templates)
 
 
 @pytest.fixture(scope="session")

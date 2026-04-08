@@ -4,9 +4,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from pytest_cookies.plugin import Cookies
 
-CONFIG_FILE = "cookiecutter.json"
+CONFIG_FILE_V1 = "cookiecutter.json"
+CONFIG_FILE_V2 = "cookieplone.json"
 VALID_HOOK_NAMES = [
     "pre_prompt.py",
     "pre_gen_project.py",
@@ -24,11 +24,18 @@ def templates_folder() -> Path:
 @pytest.fixture(scope="session")
 def read_config():
     def func(path: Path) -> dict:
-        config = {}
-        data = path / CONFIG_FILE
-        if data.exists():
-            config = json.loads(data.read_text())
-        return config
+        v2 = path / CONFIG_FILE_V2
+        if v2.exists():
+            data = json.loads(v2.read_text())
+            schema = data.get("schema", {})
+            properties = schema.get("properties", {})
+            # Flatten v2 schema to a {key: default} dict so tests that check for
+            # presence of property names keep working with both formats.
+            return {key: prop.get("default", "") for key, prop in properties.items()}
+        v1 = path / CONFIG_FILE_V1
+        if v1.exists():
+            return json.loads(v1.read_text())
+        return {}
 
     return func
 
@@ -69,32 +76,10 @@ def cookieplone_root() -> dict:
     return folder.parent.resolve()
 
 
-@pytest.fixture(scope="module")
-def cookies_module(request, tmpdir_factory, _cookiecutter_config_file):
-    """Yield an instance of the Cookies helper class that can be used to
-    generate a project from a template.
-
-    Run cookiecutter:
-        result = cookies.bake(extra_context={
-            'variable1': 'value1',
-            'variable2': 'value2',
-        })
-    """
-    template_dir = request.config.option.template
-
-    output_dir = tmpdir_factory.mktemp(f"cookies-{request.module.__name__}")
-    output_factory = output_dir.mkdir
-
-    yield Cookies(template_dir, output_factory, _cookiecutter_config_file)
-
-    # Add option to keep generated output directories.
-    if not request.config.option.keep_baked_projects:
-        output_dir.remove()
-
 
 @pytest.fixture
 def volto_versions():
-    versions = ["17.15.5", "16.31.4", "18.0.0-alpha.27"]
+    versions = ["18.10.0", "18.0.0-alpha.27", "17.15.5", "16.31.4"]
     return versions
 
 
