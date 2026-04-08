@@ -380,7 +380,7 @@ wheels = [
 [[package]]
 name = "cookieplone"
 version = "2.0.0a1.dev0"
-source = { git = "https://github.com/plone/cookieplone.git?rev=main#f913005953647cf6f35e5dd9baab5e2ae5411a4a" }
+source = { git = "https://github.com/plone/cookieplone.git?rev=main#c076f362491443c1da315c28a4b9c0fdacdbff3b" }
 dependencies = [
     { name = "cookiecutter" },
     { name = "gitpython" },
