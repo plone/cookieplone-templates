@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   traefik:
-    image: traefik:{{ versions.devops_traefik_version }}
+    image: traefik:{{ cookiecutter.__devops_traefik_version }}
 
     ports:
       - 80:80
@@ -81,7 +81,7 @@ services:
       - {{ cookiecutter.__devops_swarm_public_network }}
       - {{ cookiecutter.__devops_swarm_stack_network }}
 
-{%- if cookiecutter.devops_cache  %}
+{%- if cookiecutter.devops_cache == '1' %}
 
   purger:
     image: ghcr.io/kitconcept/cluster-purger:latest
@@ -156,7 +156,7 @@ services:
         # Service
         - traefik.http.services.svc-frontend.loadbalancer.server.port=3000
         # Routers
-{%- if not cookiecutter.devops_cache  %}
+{%- if cookiecutter.devops_cache == '0' %}
         ## /
         - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`)
         - traefik.http.routers.rt-frontend.entrypoints=https
@@ -221,7 +221,7 @@ services:
         - traefik.http.middlewares.mw-backend-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
 
         # Routes
-{%- if not cookiecutter.devops_cache  %}
+{%- if cookiecutter.devops_cache == '0' %}
         ## /++api++
         - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`)
         - traefik.http.routers.rt-backend-api.entrypoints=https
@@ -245,7 +245,7 @@ services:
 {%- if cookiecutter.devops_storage == 'relstorage' %}
 
   db:
-    image: postgres:{{ versions.devops_db_version }}
+    image: postgres:{{ cookiecutter.__devops_db_version }}
     environment:
       POSTGRES_USER: plone
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
@@ -263,7 +263,7 @@ services:
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:
-    image: plone/plone-zeo:{{ versions.devops_zeo_version }}
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
     deploy:
       replicas: 1
       update_config:

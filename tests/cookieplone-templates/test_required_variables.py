@@ -3,7 +3,7 @@ import pytest
 
 @pytest.mark.parametrize(
     "key_name",
-    ["__cookieplone_repository_path", "__folder_name"],
+    ["__cookieplone_repository_path", "__cookieplone_template", "__folder_name"],
 )
 def test_template_has_required_keys(templates, key_name: str):
     for template_id, template_info in templates.items():

@@ -24,7 +24,7 @@ def repository_settings(cutter_result) -> dict:
         ["backend.package.publish", False],
         ["backend.package.towncrier_settings", "backend/pyproject.toml"],
         ["backend.package.changelog", "backend/CHANGELOG.md"],
-        ["cookieplone.template", "classic"],
+        ["cookieplone.template", "project"],
     ],
 )
 def test_repository_toml_settings(repository_settings, key: str, expected: Any):

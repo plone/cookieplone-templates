@@ -5,10 +5,10 @@ description = "Collection of templates for Plone integrators to use through Cook
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "cookieplone @ git+https://github.com/plone/cookieplone.git@main",
+    "cookieplone>=0.9.7",
     "gitpython>=3.1.43",
     "pytest>=8.3.5",
-    "pytest-xdist>=3.5.0",
+    "pytest-cookies>=0.7.0",
     "pytest-jsonschema>=1.0.0",
     "pytest-md-report>=0.6.3",
     "tomli>=2.0.1",
@@ -17,7 +17,6 @@ dependencies = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["-n", "2"]
 md_report = true
 md_report_verbose = 0
 md_report_color = "auto"

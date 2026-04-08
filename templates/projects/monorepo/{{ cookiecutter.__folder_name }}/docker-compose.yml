@@ -3,7 +3,7 @@ name: {{ cookiecutter.__devops_compose_name }}
 
 services:
   traefik:
-    image: traefik:{{ versions.devops_traefik_version }}
+    image: traefik:{{ cookiecutter.__devops_traefik_version }}
 
     ports:
       - 80:80
@@ -34,7 +34,7 @@ services:
       - --log
       - --api
 
-{%- if cookiecutter.devops_cache  %}
+{%- if cookiecutter.devops_cache == '1' %}
   purger:
     image: ghcr.io/kitconcept/cluster-purger:latest
     environment:
@@ -71,13 +71,13 @@ services:
       - traefik.http.services.svc-frontend.loadbalancer.server.port=3000
       # Routers
       ## /
-      {%- if not cookiecutter.devops_cache  %}
+      {%- if cookiecutter.devops_cache == '0' %}
       - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`)
       - traefik.http.routers.rt-frontend.entrypoints=http
       - traefik.http.routers.rt-frontend.service=svc-frontend
       - traefik.http.routers.rt-frontend.middlewares=gzip
       {%- endif %}
-      {%- if cookiecutter.devops_cache  %}
+      {%- if cookiecutter.devops_cache == '1' %}
       ### Router: Varnish Public
       - traefik.http.routers.rt-frontend-public.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`)
       - traefik.http.routers.rt-frontend-public.entrypoints=http
@@ -131,13 +131,13 @@ services:
       - traefik.http.middlewares.mw-backend-auth.basicauth.headerField=X-Auth-ClassicUI
       - traefik.http.middlewares.mw-backend-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
       # Routers
-      {%- if not cookiecutter.devops_cache  %}
+      {%- if cookiecutter.devops_cache == '0' %}
       - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && (PathPrefix(`/++api++`))
       - traefik.http.routers.rt-backend-api.entrypoints=http
       - traefik.http.routers.rt-backend-api.service=svc-backend
       - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-api
       {%- endif %}
-      {%- if cookiecutter.devops_cache  %}
+      {%- if cookiecutter.devops_cache == '1' %}
       ## /++api++/
       ### Router: Varnish Public
       - traefik.http.routers.rt-backend-api-public.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && PathPrefix(`/++api++`)
@@ -160,7 +160,7 @@ services:
 {%- if cookiecutter.devops_storage == 'relstorage' %}
 
   db:
-    image: postgres:{{ versions.devops_db_version }}
+    image: postgres:{{ cookiecutter.__devops_db_version }}
     environment:
       POSTGRES_USER: plone
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
@@ -170,7 +170,7 @@ services:
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:
-    image: plone/plone-zeo:{{ versions.devops_zeo_version }}
+    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
     volumes:
       - vol-site-data:/data
 {%- endif %}
