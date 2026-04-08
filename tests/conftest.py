@@ -5,7 +5,8 @@ from typing import Any
 
 import pytest
 
-CONFIG_FILE = "cookiecutter.json"
+CONFIG_FILE_V1 = "cookiecutter.json"
+CONFIG_FILE_V2 = "cookieplone.json"
 VALID_HOOK_NAMES = [
     "pre_prompt.py",
     "pre_gen_project.py",
@@ -23,11 +24,18 @@ def templates_folder() -> Path:
 @pytest.fixture(scope="session")
 def read_config():
     def func(path: Path) -> dict:
-        config = {}
-        data = path / CONFIG_FILE
-        if data.exists():
-            config = json.loads(data.read_text())
-        return config
+        v2 = path / CONFIG_FILE_V2
+        if v2.exists():
+            data = json.loads(v2.read_text())
+            schema = data.get("schema", {})
+            properties = schema.get("properties", {})
+            # Flatten v2 schema to a {key: default} dict so tests that check for
+            # presence of property names keep working with both formats.
+            return {key: prop.get("default", "") for key, prop in properties.items()}
+        v1 = path / CONFIG_FILE_V1
+        if v1.exists():
+            return json.loads(v1.read_text())
+        return {}
 
     return func
 
