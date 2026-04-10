@@ -1,0 +1,363 @@
+{
+    "id": "monorepo_addon",
+    "schema": {
+        "title": "Plone Add-on (Backend + Frontend)",
+        "description": "A new add-on for Plone that includes both backend and Volto frontend",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Add-on Title",
+                "description": "Human-readable name for the add-on, used in README and documentation.",
+                "default": "Collective Addon",
+                "validator": ""
+            },
+            "description": {
+                "type": "string",
+                "title": "Description of the add-on",
+                "description": "Short summary of the add-on, used in package metadata and README.",
+                "default": "A new add-on for Plone that includes both backend and Volto frontend",
+                "validator": ""
+            },
+            "project_slug": {
+                "type": "string",
+                "title": "Slug (Used for repository id)",
+                "description": "URL-friendly identifier used as the repository name and output folder.",
+                "default": "{{ cookiecutter.title | slugify }}",
+                "validator": ""
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "description": "Name of the add-on author or organization.",
+                "default": "Plone Foundation",
+                "validator": ""
+            },
+            "email": {
+                "type": "string",
+                "title": "Author E-mail",
+                "description": "Contact email for the add-on author.",
+                "default": "collective@plone.org",
+                "format": "email",
+                "validator": ""
+            },
+            "use_prerelease_versions": {
+                "type": "boolean",
+                "title": "Should we use prerelease versions?",
+                "description": "Whether to include alpha, beta, and release candidate versions when resolving Plone and Volto versions.",
+                "default": false,
+                "validator": ""
+            },
+            "plone_version": {
+                "type": "string",
+                "title": "Plone Version",
+                "description": "Plone backend version to use. Automatically resolved to the latest available release.",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
+                "validator": "cookieplone.validators.plone_version"
+            },
+            "volto_version": {
+                "type": "string",
+                "title": "Volto Version",
+                "description": "Volto frontend version to use. Automatically resolved to the latest available release.",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
+                "validator": "cookieplone.validators.volto_version"
+            },
+            "python_package_name": {
+                "type": "string",
+                "title": "Python Package Name",
+                "description": "Dotted Python package name for the backend add-on (e.g. collective.addon).",
+                "default": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
+                "validator": "cookieplone.validators.python_package_name"
+            },
+            "npm_package_name": {
+                "type": "string",
+                "title": "Volto Addon Name",
+                "description": "Name of the Volto frontend add-on package (e.g. volto-myaddon).",
+                "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+                "validator": "cookieplone.validators.npm_package_name"
+            },
+            "github_organization": {
+                "type": "string",
+                "title": "GitHub or GitLab username or organization slug from URL",
+                "description": "Organization or username used to build the repository URL and container image paths.",
+                "default": "collective",
+                "validator": ""
+            },
+            "container_registry": {
+                "type": "string",
+                "title": "Container Registry",
+                "description": "Container registry where Docker images will be published.",
+                "default": "github",
+                "validator": "",
+                "oneOf": [
+                    {
+                        "const": "github",
+                        "title": "GitHub Container Registry"
+                    },
+                    {
+                        "const": "docker_hub",
+                        "title": "Docker Hub"
+                    },
+                    {
+                        "const": "gitlab",
+                        "title": "GitLab"
+                    }
+                ]
+            },
+            "initialize_documentation": {
+                "type": "boolean",
+                "title": "Would you like to add a documentation scaffold to your project?",
+                "description": "Generate a Sphinx-based documentation structure using the Plone documentation starter.",
+                "default": true,
+                "validator": ""
+            },
+            "__project_slug": {
+                "type": "string",
+                "title": "__project_slug",
+                "default": "{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__repository_url": {
+                "type": "string",
+                "title": "__repository_url",
+                "default": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__repository_git": {
+                "type": "string",
+                "title": "__repository_git",
+                "default": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_package": {
+                "type": "string",
+                "title": "__version_package",
+                "default": "1.0.0a0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_frontend_package": {
+                "type": "string",
+                "title": "__version_frontend_package",
+                "default": "1.0.0-alpha.0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__feature_headless": {
+                "type": "string",
+                "title": "__feature_headless",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__feature_distribution": {
+                "type": "string",
+                "title": "__feature_distribution",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_managed_by_uv": {
+                "type": "string",
+                "title": "__backend_managed_by_uv",
+                "default": "false",
+                "validator": "",
+                "format": "computed"
+            },
+            "__npm_package_name": {
+                "type": "string",
+                "title": "__npm_package_name",
+                "default": "{{ cookiecutter.npm_package_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__frontend_addon_name": {
+                "type": "string",
+                "title": "__frontend_addon_name",
+                "default": "{{ cookiecutter.__npm_package_name|unscoped_package_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__frontend_package_name": {
+                "type": "string",
+                "title": "__frontend_package_name",
+                "default": "{{ cookiecutter.__frontend_addon_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__python_package_name_upper": {
+                "type": "string",
+                "title": "__python_package_name_upper",
+                "default": "{{ cookiecutter.python_package_name | pascal_case }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__node_version": {
+                "type": "string",
+                "title": "__node_version",
+                "default": "{{ cookiecutter.volto_version | node_version_for_volto }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_plone_volto": {
+                "type": "string",
+                "title": "__version_plone_volto",
+                "default": "{{ cookiecutter.volto_version }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_pnpm": {
+                "type": "string",
+                "title": "__version_pnpm",
+                "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_registry_prefix": {
+                "type": "string",
+                "title": "__container_registry_prefix",
+                "default": "{{ cookiecutter.container_registry | image_prefix }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_image_prefix": {
+                "type": "string",
+                "title": "__container_image_prefix",
+                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_traefik_local_include_ui": {
+                "type": "string",
+                "title": "__devops_traefik_local_include_ui",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__profile_version": {
+                "type": "string",
+                "title": "__profile_version",
+                "default": "1000",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_addon_git_initialize": {
+                "type": "string",
+                "title": "__backend_addon_git_initialize",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_addon_format": {
+                "type": "string",
+                "title": "__backend_addon_format",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__project_git_initialize": {
+                "type": "string",
+                "title": "__project_git_initialize",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_sha": {
+                "type": "string",
+                "title": "__generator_sha",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_template_url": {
+                "type": "string",
+                "title": "__generator_template_url",
+                "default": "https://github.com/plone/cookieplone-templates/tree/main/{{ cookiecutter.__cookieplone_template }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_date_long": {
+                "type": "string",
+                "title": "__generator_date_long",
+                "default": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_signature": {
+                "type": "string",
+                "title": "__generator_signature",
+                "default": "This was generated by [the cookieplone-templates {{ cookiecutter.__cookieplone_template }} template]({{ cookiecutter.__generator_template_url }}) on {{ cookiecutter.__generator_date_long }}",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.use_prerelease_versions",
+            "cookieplone.filters.node_version_for_volto",
+            "cookieplone.filters.image_prefix",
+            "cookieplone.filters.pascal_case",
+            "cookieplone.filters.locales_language_code",
+            "cookieplone.filters.gs_language_code",
+            "cookieplone.filters.package_namespace_path",
+            "cookieplone.filters.package_path",
+            "cookieplone.filters.as_major_minor",
+            "cookieplone.filters.unscoped_package_name",
+            "cookieplone.filters.latest_volto",
+            "cookieplone.filters.latest_plone"
+        ],
+        "no_render": [
+            "news/.changelog_template.jinja"
+        ],
+        "subtemplates": [
+            {
+                "id": "add-ons/backend",
+                "title": "Setup Backend",
+                "enabled": "1"
+            },
+            {
+                "id": "add-ons/frontend",
+                "title": "Setup Frontend",
+                "enabled": "1"
+            },
+            {
+                "id": "docs/starter",
+                "title": "Generate documentation scaffold",
+                "enabled": "{{ '1' if cookiecutter.initialize_documentation else '0' }}"
+            },
+            {
+                "id": "sub/addon_settings",
+                "title": "Setup Add-on Settings",
+                "enabled": "1"
+            },
+            {
+                "id": "ide/vscode",
+                "title": "Setup VSCode configuration",
+                "enabled": "1"
+            },
+            {
+                "id": "ci/gh_monorepo_addon",
+                "title": "Setup GitHub CI",
+                "enabled": "1"
+            }
+        ]
+    }
+}

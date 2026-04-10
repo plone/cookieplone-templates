@@ -13,6 +13,7 @@ settings = "towncrier.toml"
 [backend.package]
 name = "{{ cookiecutter.python_package_name }}"
 path = "backend"
+code_path = "src/{{ cookiecutter.python_package_name | package_path }}"
 changelog = "backend/CHANGELOG.md"
 towncrier_settings = "backend/pyproject.toml"
 base_package = "Products.CMFPlone"
@@ -21,6 +22,7 @@ publish = true
 [frontend.package]
 name = "{{ cookiecutter.npm_package_name }}"
 path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
+code_path = "src"
 changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGELOG.md"
 towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
 base_package = "@plone/volto"
