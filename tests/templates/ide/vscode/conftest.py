@@ -13,9 +13,9 @@ def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
-            "backend_path": "/backend",
-            "frontend_path": "/frontend",
-            "ansible_path": "/devops/ansible",
+            "backend_path": "backend",
+            "frontend_path": "frontend",
+            "ansible_path": "devops/ansible",
         },
         cookieplone_root,
         "ide_vscode",
@@ -28,7 +28,7 @@ def context_frontend_addon(annotate_context, cookieplone_root) -> dict:
     return annotate_context(
         {
             "backend_path": "",
-            "frontend_path": "/",
+            "frontend_path": "./",
             "ansible_path": "",
         },
         cookieplone_root,
@@ -41,7 +41,7 @@ def context_backend_addon(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
-            "backend_path": "/",
+            "backend_path": "./",
             "frontend_path": "",
             "ansible_path": "",
         },
@@ -55,8 +55,8 @@ def context_monorepo_addon(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
-            "backend_path": "/backend",
-            "frontend_path": "/frontend",
+            "backend_path": "backend",
+            "frontend_path": "frontend",
             "ansible_path": "",
         },
         cookieplone_root,
@@ -69,9 +69,9 @@ def context_classic_project(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
-            "backend_path": "/backend",
+            "backend_path": "backend",
             "frontend_path": "",
-            "ansible_path": "/devops/ansible",
+            "ansible_path": "devops/ansible",
         },
         cookieplone_root,
         "ide_vscode",

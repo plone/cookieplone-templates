@@ -160,7 +160,7 @@ def generate_ide_vscode(context, output_dir):
 
     ansible_path = "devops/ansible" if context.get("devops_ansible") == "1" else ""
     vscode_context = OrderedDict({
-        "backend_path": "/backend",
+        "backend_path": "backend",
         "frontend_path": "",
         "ansible_path": ansible_path,
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],

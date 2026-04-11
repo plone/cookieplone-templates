@@ -1,0 +1,70 @@
+{
+    "id": "agents_instructions",
+    "schema": {
+        "title": "Agents: Instructions",
+        "description": "Instruction files for AI coding agents (GitHub Copilot, Cursor) tailored to the target Plone codebase.",
+        "version": "2.0",
+        "properties": {
+            "docs_file": {
+                "type": "string",
+                "title": "Documentation Instructions",
+                "description": "Documentation instruction set to ship with the agent files, matched to the target codebase layout.",
+                "default": "backend-addon-docs.instructions.md",
+                "validator": "",
+                "format": "computed",
+                "oneOf": [
+                    {
+                        "const": "backend-addon-docs.instructions.md",
+                        "title": "Backend Addon"
+                    },
+                    {
+                        "const": "frontend-addon-docs.instructions.md",
+                        "title": "Frontend Addon"
+                    },
+                    {
+                        "const": "monorepo-addon-docs.instructions.md",
+                        "title": "Monorepo Addon"
+                    },
+                    {
+                        "const": "project-docs.instructions.md",
+                        "title": "Project with backend and frontend documentation"
+                    },
+                    {
+                        "const": "classic-project-docs.instructions.md",
+                        "title": "Project with backend documentation"
+                    }
+                ]
+            },
+            "has_volto": {
+                "type": "string",
+                "title": "Include Volto Instructions",
+                "description": "Whether to include Volto-specific instructions (`1`) or omit them (`0`).",
+                "default": "0",
+                "validator": "",
+                "format": "computed",
+                "oneOf": [
+                    {"const": "0", "title": "No"},
+                    {"const": "1", "title": "Yes"}
+                ]
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "instructions",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [],
+        "no_render": []
+    }
+}
