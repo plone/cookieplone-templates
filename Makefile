@@ -69,14 +69,14 @@ lint: $(VENV_FOLDER) ## Lint code
 	@uv run ruff check hooks .scripts tests
 
 .PHONY: test
-test: $(VENV_FOLDER) ## Test all cookiecutters
-	@echo "$(GREEN)==> Test all cookiecutters$(RESET)"
+test: $(VENV_FOLDER) ## Test all templates
+	@echo "$(GREEN)==> Test all templates$(RESET)"
 	@uv run pytest tests $(filter-out $@ --,$(MAKECMDGOALS))
 
 .PHONY: test-pdb
-test-pdb: $(VENV_FOLDER) ## Test all cookiecutters (and stop on error)
-	@echo "$(GREEN)==> Test all cookiecutters (and stop on error)$(RESET)"
-	@uv run pytest tests -x --pdb
+test-pdb: $(VENV_FOLDER) ## Test all templates (and stop on error)
+	@echo "$(GREEN)==> Test all templates (and stop on error)$(RESET)"
+	@uv run pytest tests -n0 -x --pdb
 
 .PHONY: report-context
 report-context: $(VENV_FOLDER) ## Generate a report of all context options

@@ -82,7 +82,7 @@ def generate_ide_vscode(context, output_dir):
     """Generate VS Code configuration."""
 
     vscode_context = OrderedDict({
-        "backend_path": "/",
+        "backend_path": "./",
         "frontend_path": "",
         "ansible_path": "",
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
