@@ -12,7 +12,7 @@ jobs:
       STACK_NAME: {{ "${{ steps.vars.outputs.STACK_NAME }}" }}
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Set Env Vars
         id: vars
@@ -29,10 +29,10 @@ jobs:
     environment: {{ "${{ needs.meta.outputs.ENVIRONMENT }}" }}
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Deploy to cluster
-        uses: kitconcept/docker-stack-deploy@{{ cookiecutter.__gha_version_docker_stack }}
+        uses: kitconcept/docker-stack-deploy@{{ versions.gha_version_docker_stack }}
         with:
           registry: "ghcr.io"
           username: {{ "${{ github.actor }}" }}

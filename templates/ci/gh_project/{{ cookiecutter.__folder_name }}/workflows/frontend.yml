@@ -30,28 +30,28 @@ on:
 jobs:
   code-analysis:
     name: "Frontend: Codeanalysis"
-    uses: plone/meta/.github/workflows/frontend-code.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/frontend-code.yml@{{ versions.gha_version_plone_meta }}
     with:
       node-version: {{ "${{ inputs.node-version }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
 
   i18n:
     name: "Frontend: i18n"
-    uses: plone/meta/.github/workflows/frontend-i18n.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/frontend-i18n.yml@{{ versions.gha_version_plone_meta }}
     with:
       node-version: {{ "${{ inputs.node-version }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
 
   unit:
     name: "Frontend: Unit tests"
-    uses: plone/meta/.github/workflows/frontend-unit.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/frontend-unit.yml@{{ versions.gha_version_plone_meta }}
     with:
       node-version: {{ "${{ inputs.node-version }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
 
   storybook:
     name: "Storybook"
-    uses: plone/meta/.github/workflows/frontend-storybook.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/frontend-storybook.yml@{{ versions.gha_version_plone_meta }}
     needs:
       - code-analysis
       - unit
@@ -63,7 +63,7 @@ jobs:
 
   release:
     name: "Frontend: Build and publish container image"
-    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ versions.gha_version_plone_meta }}
     needs:
       - code-analysis
       - i18n

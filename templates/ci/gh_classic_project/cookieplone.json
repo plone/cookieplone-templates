@@ -1,0 +1,86 @@
+{
+    "id": "ci_gh_classic_project",
+    "schema": {
+        "title": "CI: GitHub Actions for a Classic Project",
+        "description": "GitHub Actions configuration for CI of a Plone Classic Project",
+        "version": "2.0",
+        "properties": {
+            "hostname": {
+                "type": "string",
+                "title": "Hostname",
+                "default": "example.com",
+                "validator": "",
+                "format": "computed"
+            },
+            "container_image_prefix": {
+                "type": "string",
+                "title": "Container Image Prefix",
+                "default": "ghcr.io/collective/volto-addon",
+                "validator": "",
+                "format": "computed"
+            },
+            "python_version": {
+                "type": "string",
+                "title": "Python Version",
+                "default": "3.13",
+                "validator": "",
+                "format": "computed"
+            },
+            "has_cache": {
+                "type": "string",
+                "title": "Include cache CI workflows?",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "has_docs": {
+                "type": "string",
+                "title": "Include documentation CI workflows?",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "has_deploy": {
+                "type": "string",
+                "title": "Include deploy CI workflows?",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": ".github",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_image_prefix": {
+                "type": "string",
+                "title": "__container_image_prefix",
+                "default": "{{ cookiecutter.container_image_prefix }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.unscoped_package_name"
+        ],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "agents/instructions",
+                "title": "Add instructions",
+                "enabled": "1"
+            }
+        ]
+    }
+}

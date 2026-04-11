@@ -6,7 +6,7 @@ on:
       node-version:
         required: false
         type: string
-        default: "{{ cookiecutter.__gha_version_node }}"
+        default: "{{ cookiecutter.node_version }}"
     outputs:
       base-tag:
         description: "Base tag to be used when creating container images"
@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Compute several vars needed for the CI
         id: vars

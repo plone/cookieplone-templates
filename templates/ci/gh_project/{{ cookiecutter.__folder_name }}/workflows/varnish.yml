@@ -21,7 +21,7 @@ jobs:
 
   release:
     name: "Varnish: Build and publish container image"
-    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ versions.gha_version_plone_meta }}
     permissions:
       contents: read
       packages: write
