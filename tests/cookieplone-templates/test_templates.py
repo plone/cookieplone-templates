@@ -12,28 +12,32 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
 @pytest.mark.parametrize(
     "template_id,title,hidden",
     [
-        ("project", "Volto Project", False),
-        ("classic_project", "Classic UI Project", False),
-        ("backend_addon", "Backend Add-on for Plone", False),
-        ("frontend_addon", "Frontend Add-on for Plone", False),
-        ("monorepo_addon", "Add-on for Plone (Backend + Volto)", False),
-        ("seven_addon", "Seven Frontend Add-on for Plone", False),
+        ("project", "Plone 6 Project", False),
+        ("classic_project", "Plone 6 using Classic UI Project", False),
+        ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
+        ("frontend_addon", "Plone 6 Frontend Add-on", False),
+        ("monorepo_addon", "Plone 6 Add-on (Frontend and Backend)", False),
+        ("seven_addon", "Plone 7 Alpha Frontend Add-on", False),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
-        ("sub/cache", "Cache settings for a monorepo Plone project", True),
-        ("sub/frontend_project", "A frontend project (used in Container images)", True),
+        ("sub/cache", "Cache settings for a Plone 6 project", True),
+        (
+            "sub/frontend_project",
+            "A Plone 6 frontend project (used in Container images)",
+            True,
+        ),
         (
             "sub/project_settings",
-            "Project settings to be applied on top of a mono repo project",
+            "Project settings to be applied on top of a Plone 6 project",
             True,
         ),
         (
             "sub/addon_settings",
-            "Add-on settings to be applied on top of a mono repo project",
+            "Add-on settings to be applied on top of a Plone 6 add-on.",
             True,
         ),
         (
             "sub/classic_project_settings",
-            "Project settings to be applied on top of a Classic UI project",
+            "Project settings to be applied on top of a Plone 6 using Classic UI project",
             True,
         ),
         (
@@ -63,7 +67,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ),
         (
             "ci_gh_classic_project",
-            "CI: GitHub Actions for a Classic Project",
+            "CI: GitHub Actions for a Plone 6 using Classic UI Project",
             True,
         ),
         (
