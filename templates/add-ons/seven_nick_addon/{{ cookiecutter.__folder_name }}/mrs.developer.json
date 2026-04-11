@@ -1,0 +1,18 @@
+{
+  "core": {
+    "output": "./",
+    "package": "@plone/volto",
+    "url": "git@github.com:plone/volto.git",
+    "https": "https://github.com/plone/volto.git",
+    "branch": "seven",
+    "filterBlobs": true
+  },
+  "nick": {
+    "output": "./",
+    "package": "@robgietema/nick",
+    "url": "git@github.com:robgietema/nick.git",
+    "https": "https://github.com/robgietema/nick.git",
+    "branch": "main",
+    "filterBlobs": true
+  }
+}

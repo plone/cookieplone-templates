@@ -17,7 +17,8 @@
         "monorepo_addon",
         "backend_addon",
         "frontend_addon",
-        "seven_addon"
+        "seven_addon",
+        "seven_nick_addon"
       ],
       "hidden": false
     },
@@ -99,6 +100,12 @@
       "path": "./templates/add-ons/seven_addon",
       "title": "Plone 7 Alpha Frontend Add-on",
       "description": "Create a new Node.js Plone 7 Alpha frontend package",
+      "hidden": false
+    },
+    "seven_nick_addon": {
+      "path": "./templates/add-ons/seven_nick_addon",
+      "title": "Plone 7 Alpha Frontend Add-on using NickCMS as BFF",
+      "description": "Create a new Node.js Plone 7 Alpha frontend package using NickCMS as Backend For Frontend (no backend process required)",
       "hidden": false
     },
     "sub/cache": {
