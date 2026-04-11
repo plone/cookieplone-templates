@@ -3,7 +3,7 @@ name: {{ cookiecutter.__devops_compose_name }}
 
 services:
   traefik:
-    image: traefik:{{ cookiecutter.__devops_traefik_version }}
+    image: traefik:{{ versions.devops_traefik_version }}
 
     ports:
       - 80:80
@@ -110,7 +110,7 @@ services:
 {%- if cookiecutter.devops_storage == 'relstorage' %}
 
   db:
-    image: postgres:{{ cookiecutter.__devops_db_version }}
+    image: postgres:{{ versions.devops_db_version }}
     environment:
       POSTGRES_USER: plone
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
@@ -120,7 +120,7 @@ services:
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:
-    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    image: plone/plone-zeo:{{ versions.devops_zeo_version }}
     volumes:
       - vol-site-data:/data
 {%- endif %}
