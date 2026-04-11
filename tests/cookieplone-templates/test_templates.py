@@ -32,7 +32,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ),
         (
             "sub/addon_settings",
-            "Add-on settings to be applied on top of a Plone 6 add-on.",
+            "Add-on settings to be applied on top of a Plone 6 project.",
             True,
         ),
         (

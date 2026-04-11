@@ -121,8 +121,8 @@
     },
     "sub/addon_settings": {
       "path": "./templates/sub/addon_settings",
-      "title": "Add-on settings to be applied on top of a Plone 6 project",
-      "description": "Subtemplate with configuration and settings for a Plone 6 add-on.",
+      "title": "Add-on settings to be applied on top of a Plone 6 project.",
+      "description": "Subtemplate with configuration and settings for a Plone 6 project.",
       "hidden": true
     },
     "sub/classic_project_settings": {
