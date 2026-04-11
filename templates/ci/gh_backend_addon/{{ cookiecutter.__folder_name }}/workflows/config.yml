@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Compute several vars needed for the CI
         id: vars
@@ -47,7 +47,7 @@ jobs:
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "plone-version={{ "${{ inputs.plone-version }}" }}" >> $GITHUB_OUTPUT
 
-      - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+      - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
         with:
           filters: |

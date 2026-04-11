@@ -17,9 +17,9 @@ jobs:
       repository: {{ "${{ steps.filter.outputs.repository }}" }}
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
-      - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+      - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
         with:
           filters: |
@@ -39,13 +39,16 @@ jobs:
     needs:
       - config
     steps:
-      - uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+      - uses: actions/checkout@{{ versions.gha_version_checkout }}
         with:
           # Fetch all history
           fetch-depth: '0'
 
-      - name: Install pipx
-        run: pip install towncrier
+      - name: Setup uv
+        uses: plone/meta/.github/actions/setup_uv@{{ versions.gha_version_plone_meta }}
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          working-directory: '.'
 
       - name: Check for presence of a Change Log fragment (only pull requests)
         if: github.event_name == 'pull_request'
@@ -54,7 +57,7 @@ jobs:
           # compare the current branch with the base branch.
           # Source: https://github.com/actions/checkout/#fetch-all-branches.
           git fetch --no-tags origin ${BASE_BRANCH}
-          towncrier check  --compare-with origin/{{ "${{ env.BASE_BRANCH }}" }} --config backend/pyproject.toml --dir backend/
+          uvx towncrier check  --compare-with origin/{{ "${{ env.BASE_BRANCH }}" }} --config backend/pyproject.toml --dir backend/
 
   repository:
     if: {{ "${{ needs.config.outputs.repository == 'true' }}" }}
@@ -62,13 +65,16 @@ jobs:
     needs:
       - config
     steps:
-      - uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+      - uses: actions/checkout@{{ versions.gha_version_checkout }}
         with:
           # Fetch all history
           fetch-depth: '0'
 
-      - name: Install pipx
-        run: pip install towncrier
+      - name: Setup uv
+        uses: plone/meta/.github/actions/setup_uv@{{ versions.gha_version_plone_meta }}
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          working-directory: '.'
 
       - name: Check for presence of a Change Log fragment (only pull requests)
         if: github.event_name == 'pull_request'
@@ -77,4 +83,4 @@ jobs:
           # compare the current branch with the base branch.
           # Source: https://github.com/actions/checkout/#fetch-all-branches.
           git fetch --no-tags origin ${BASE_BRANCH}
-          towncrier check  --compare-with origin/{{ "${{ env.BASE_BRANCH }}" }} --config towncrier.toml --dir .
+          uvx towncrier check  --compare-with origin/{{ "${{ env.BASE_BRANCH }}" }} --config towncrier.toml --dir .
