@@ -5,10 +5,10 @@
   "main": "index.ts",
   "license": "MIT",
   "keywords": [
-    "volto-addon",
-    "volto",
     "plone",
-    "react"
+    "react",
+    "frontend",
+    "addon"
   ],
   "author": "{{ cookiecutter.author }}",
   "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}#readme",
