@@ -1,0 +1,154 @@
+{
+  "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
+  "type": "Site",
+  "title": "Welcome to Nick!",
+  "description": "Congratulations! You have successfully installed Nick.",
+  "owner": "admin",
+  "workflow_state": "published",
+  "created": "2022-04-02T20:00:00.000Z",
+  "modified": "2022-04-02T20:00:00.000Z",
+  "effective": "2022-04-02T20:00:00.000Z",
+  "language": "en",
+  "blocks": {
+    "79ba8858-1dd3-4719-b731-5951e32fbf79": {
+      "@type": "title"
+    },
+    "0f06cd6f-5282-4966-9d4d-3abeba13953c": {
+      "@type": "slate",
+      "value": [
+        {
+          "type": "p",
+          "children": [
+            {
+              "text": "This is the demo site of "
+            },
+            {
+              "type": "link",
+              "data": {
+                "url": "https://nickcms.org"
+              },
+              "children": [
+                {
+                  "text": "Nick"
+                }
+              ]
+            },
+            {
+              "text": " and is build with the "
+            },
+            {
+              "type": "link",
+              "data": {
+                "url": "https://voltocms.com"
+              },
+              "children": [
+                {
+                  "text": "Volto"
+                }
+              ]
+            },
+            {
+              "text": " frontend."
+            }
+          ]
+        }
+      ],
+      "plaintext": "This is the demo site of Nick and is build with the Volto frontend."
+    },
+    "e47fdd86-5d1b-4e6c-86a4-f3edf9d74e31": {
+      "@type": "slate",
+      "value": [
+        {
+          "type": "h2",
+          "children": [
+            {
+              "text": "Demo"
+            }
+          ]
+        }
+      ],
+      "plaintext": "Demo"
+    },
+    "a6ba1f90-3bd0-4daa-869f-532c38d4c522": {
+      "@type": "slate",
+      "value": [
+        {
+          "type": "p",
+          "children": [
+            {
+              "text": "You can use this site to test the latest version of Nick. You can login with "
+            },
+            {
+              "type": "em",
+              "children": [
+                {
+                  "text": "username"
+                }
+              ]
+            },
+            {
+              "text": " "
+            },
+            {
+              "type": "strong",
+              "children": [
+                {
+                  "text": "admin"
+                }
+              ]
+            },
+            {
+              "text": " and "
+            },
+            {
+              "type": "em",
+              "children": [
+                {
+                  "text": "password"
+                }
+              ]
+            },
+            {
+              "text": " "
+            },
+            {
+              "type": "strong",
+              "children": [
+                {
+                  "text": "admin"
+                }
+              ]
+            },
+            {
+              "text": "."
+            }
+          ]
+        }
+      ],
+      "plaintext": "You can use this site to test the latest version of Nick. You can login with username  admin and password  admin ."
+    },
+    "59ddb72e-2691-4571-b07c-eedbd843b613": {
+      "@type": "slate",
+      "value": [
+        {
+          "type": "p",
+          "children": [
+            {
+              "text": "This instance is reset every night so feel free to make any changes!"
+            }
+          ]
+        }
+      ],
+      "plaintext": "This instance is reset every night so feel free to make any changes!"
+    }
+  },
+  "blocks_layout": {
+    "items": [
+      "79ba8858-1dd3-4719-b731-5951e32fbf79",
+      "0f06cd6f-5282-4966-9d4d-3abeba13953c",
+      "e47fdd86-5d1b-4e6c-86a4-f3edf9d74e31",
+      "a6ba1f90-3bd0-4daa-869f-532c38d4c522",
+      "59ddb72e-2691-4571-b07c-eedbd843b613"
+    ]
+  }
+}

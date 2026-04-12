@@ -1,5 +1,5 @@
 {
-  "title": "Seven Add-on",
+  "title": "Project Title",
   "frontend_addon_name": "{{ cookiecutter.title | slugify }}",
   "project_slug": "{{ cookiecutter.title | slugify }}",
   "description": "A new add-on for Seven",
