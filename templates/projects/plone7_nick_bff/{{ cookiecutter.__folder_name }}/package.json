@@ -31,7 +31,12 @@
     "release-major-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-major-alpha",
     "release-alpha": "pnpm --filter {{ cookiecutter.__npm_package_name }} release-alpha",
     "storybook": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
-    "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
+    "storybook-build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook",
+    "nick:seed": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @robgietema/nick seed",
+    "nick:seed:status": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @robgietema/nick seed:status",
+    "nick:seed:upgrade": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @robgietema/nick seed:upgrade",
+    "nick:migrate": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @robgietema/nick migrate",
+    "nick:reset": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @robgietema/nick reset"
   },
   "dependencies": {
     "@plone/registry": "workspace:*",
