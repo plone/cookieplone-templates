@@ -17,12 +17,8 @@
         "monorepo_addon",
         "backend_addon",
         "frontend_addon",
-<<<<<<< HEAD
         "seven_addon",
         "seven_nick_addon"
-=======
-        "seven_addon"
->>>>>>> next
       ],
       "hidden": false
     },
