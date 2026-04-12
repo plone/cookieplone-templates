@@ -1,0 +1,79 @@
+{
+    "id": "ci_gh_monorepo_addon",
+    "schema": {
+        "title": "CI: GitHub Actions for Monorepo Add-on",
+        "description": "GitHub Actions configuration for CI of a Plone Monorepo Add-on",
+        "version": "2.0",
+        "properties": {
+            "npm_package_name": {
+                "type": "string",
+                "title": "NPM Package Name",
+                "default": "@plone-collective/volto-addon",
+                "validator": "",
+                "format": "computed"
+            },
+            "python_version": {
+                "type": "string",
+                "title": "Python Version",
+                "default": "3.13",
+                "validator": "",
+                "format": "computed"
+            },
+            "node_version": {
+                "type": "string",
+                "title": "Node Version",
+                "default": "24",
+                "validator": "",
+                "format": "computed"
+            },
+            "has_docs": {
+                "type": "string",
+                "title": "Include documentation CI workflows?",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": ".github",
+                "validator": "",
+                "format": "computed"
+            },
+            "__gha_python_versions": {
+                "type": "array",
+                "title": "__gha_python_versions",
+                "default": ["3.11", "3.12", "3.13"],
+                "validator": "",
+                "format": "computed"
+            },
+            "__gha_plone_versions": {
+                "type": "array",
+                "title": "__gha_plone_versions",
+                "default": ["6.2-latest", "6.1-latest", "6.0-latest"],
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.unscoped_package_name"
+        ],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "agents/instructions",
+                "title": "Add instructions",
+                "enabled": "1"
+            }
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 {
   {%- if cookiecutter.frontend_path != '' %}
-  "eslint.workingDirectories": ["./frontend"],
+  "eslint.workingDirectories": ["{{ cookiecutter.__frontend_eslint_working_directories }}"],
   "stylelint.enable": true,
   "css.validate": false,
   "less.validate": false,
@@ -18,14 +18,14 @@
   "ruff.organizeImports": true,
   "python.terminal.activateEnvironment": true,
   "python.testing.pytestArgs": [
-    "{{ cookiecutter.backend_path }}tests"
+    "{{ cookiecutter.__backend_tests_path }}"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   {%- endif %}
   {%- if cookiecutter.ansible_path != '' %}
-  "ansible.python.interpreterPath": "${workspaceFolder}{{ cookiecutter.ansible_path }}/.venv/bin/python",
-  "ansible.validation.lint.path": "{{ cookiecutter.ansible_path }}.venv/bin/ansible-lint",
+  "ansible.python.interpreterPath": "${workspaceFolder}/{{ cookiecutter.__ansible_interpreter_base }}/python",
+  "ansible.validation.lint.path": "{{ cookiecutter.__ansible_interpreter_base }}/ansible-lint",
   "ansible.validation.lint.arguments": "-c .ansible-lint",
   {%- endif %}
   "[markdown]": {

@@ -62,10 +62,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Setup uv
-        uses: plone/meta/.github/actions/setup_uv@{{ cookiecutter.__gha_version_plone_meta }}
+        uses: plone/meta/.github/actions/setup_uv@{{ versions.gha_version_plone_meta }}
         with:
           python-version: {{ "${{ inputs.python-version }}" }}
           working-directory: '.'
@@ -80,7 +80,7 @@ jobs:
           echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
-      - uses: dorny/paths-filter@{{ cookiecutter.__gha_version_paths_filter }}
+      - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
         with:
           filters: |

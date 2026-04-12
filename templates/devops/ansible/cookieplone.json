@@ -1,0 +1,265 @@
+{
+    "id": "devops/ansible",
+    "schema": {
+        "title": "DevOps: Ansible",
+        "description": "Ansible playbooks and inventory to manage a Docker Swarm cluster hosting Plone projects.",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Title",
+                "description": "Human-readable title for the deployment.",
+                "default": "Ansible",
+                "validator": ""
+            },
+            "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "A short description for this repository.",
+                "default": "Ansible setup to manage a Docker Swarm cluster for Plone hosting",
+                "validator": ""
+            },
+            "folder_name": {
+                "type": "string",
+                "title": "Folder Name",
+                "description": "Name of the folder to be created.",
+                "default": "{{ cookiecutter.title|replace(' ', '')|replace('-', '_')|replace('.', '')|lower }}",
+                "validator": ""
+            },
+            "hostname": {
+                "type": "string",
+                "title": "Hostname",
+                "description": "Public URL of the server.",
+                "default": "{{ cookiecutter.folder_name }}.example.com",
+                "validator": ""
+            },
+            "hostname_or_ip": {
+                "type": "string",
+                "title": "Server Address",
+                "description": "Address of the server (IP or hostname).",
+                "default": "{{ cookiecutter.hostname }}",
+                "validator": ""
+            },
+            "stack_name": {
+                "type": "string",
+                "title": "Docker Swarm Stack Name",
+                "description": "Name used by Docker Swarm to identify the stack.",
+                "default": "{{ cookiecutter.hostname|replace('.', '-') }}",
+                "validator": ""
+            },
+            "stack_prefix": {
+                "type": "string",
+                "title": "Stack Prefix",
+                "description": "A 5 to 10 character prefix used inside the stack.",
+                "default": "{{ cookiecutter.hostname | extract_host | replace('.', '-') }}",
+                "validator": ""
+            },
+            "stack_location": {
+                "type": "string",
+                "title": "Stack Location",
+                "description": "Path (relative to the ansible folder) where the stack file will be written.",
+                "default": "etc/stacks/{{ cookiecutter.hostname }}.yml",
+                "validator": ""
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "description": "Author or maintainer of the deployment.",
+                "default": "Plone Community",
+                "validator": ""
+            },
+            "email": {
+                "type": "string",
+                "title": "Author E-mail",
+                "description": "Contact e-mail for the author.",
+                "default": "collective@plone.org",
+                "validator": ""
+            },
+            "repository_type": {
+                "type": "string",
+                "title": "Repository Type",
+                "description": "Where the deployment repository will live.",
+                "default": "github",
+                "validator": "",
+                "oneOf": [
+                    {"const": "github", "title": "GitHub"},
+                    {"const": "gitlab_com", "title": "GitLab.com"},
+                    {"const": "gitlab", "title": "GitLab Self-Hosted"}
+                ]
+            },
+            "organization": {
+                "type": "string",
+                "title": "Organization",
+                "description": "GitHub / GitLab username or organization slug.",
+                "default": "collective",
+                "validator": ""
+            },
+            "repository_url": {
+                "type": "string",
+                "title": "Repository URL",
+                "description": "Web URL of the deployment repository.",
+                "default": "https://github.com/{{ cookiecutter.organization }}/{{ cookiecutter.folder_name }}",
+                "validator": ""
+            },
+            "container_registry": {
+                "type": "string",
+                "title": "Container Registry",
+                "description": "Registry where the deployment images are pulled from.",
+                "default": "github",
+                "validator": "",
+                "oneOf": [
+                    {"const": "github", "title": "GitHub Container Registry"},
+                    {"const": "docker_hub", "title": "Docker Hub"},
+                    {"const": "gitlab", "title": "GitLab"}
+                ]
+            },
+            "initialize_git": {
+                "type": "string",
+                "title": "Initialize Git Repository",
+                "description": "Whether to initialize a git repository in the generated folder.",
+                "default": "1",
+                "validator": "",
+                "oneOf": [
+                    {"const": "1", "title": "Yes"},
+                    {"const": "0", "title": "No"}
+                ]
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "{{ cookiecutter.folder_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__project_slug": {
+                "type": "string",
+                "title": "__project_slug",
+                "default": "{{ cookiecutter.folder_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_host": {
+                "type": "string",
+                "title": "__devops_host",
+                "default": "{{ cookiecutter.hostname | extract_host }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_stack_name": {
+                "type": "string",
+                "title": "__devops_stack_name",
+                "default": "{{ cookiecutter.stack_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_stack_prefix": {
+                "type": "string",
+                "title": "__devops_stack_prefix",
+                "default": "{{ cookiecutter.stack_prefix }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_swarm_public_network": {
+                "type": "string",
+                "title": "__devops_swarm_public_network",
+                "default": "nw-public",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_swarm_stack_network": {
+                "type": "string",
+                "title": "__devops_swarm_stack_network",
+                "default": "nw-internal",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_traefik_stack_include_ui": {
+                "type": "string",
+                "title": "__devops_traefik_stack_include_ui",
+                "default": "no",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_project_user": {
+                "type": "string",
+                "title": "__devops_project_user",
+                "default": "500",
+                "validator": "",
+                "format": "computed"
+            },
+            "__repository_url": {
+                "type": "string",
+                "title": "__repository_url",
+                "default": "{{ cookiecutter.repository_url }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_registry_prefix": {
+                "type": "string",
+                "title": "__container_registry_prefix",
+                "default": "{{ cookiecutter.container_registry | image_prefix }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_image_prefix": {
+                "type": "string",
+                "title": "__container_image_prefix",
+                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.organization }}/{{ cookiecutter.__project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__year": {
+                "type": "string",
+                "title": "__year",
+                "default": "{% now 'local', '%Y' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_date_long": {
+                "type": "string",
+                "title": "__generator_date_long",
+                "default": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_signature": {
+                "type": "string",
+                "title": "__generator_signature",
+                "default": "This was generated by the [cookieplone-templates devops/ansible template](https://github.com/plone/cookieplone-templates/tree/main/templates/devops/ansible) on {{ cookiecutter.__generator_date_long }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__documentation_starter_format": {
+                "type": "string",
+                "title": "__documentation_starter_format",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.pascal_case",
+            "cookieplone.filters.extract_host",
+            "cookieplone.filters.image_prefix"
+        ],
+        "no_render": [
+            "etc/.ssh",
+            "etc/base",
+            "etc/docker",
+            "etc/keys",
+            "etc/ssh",
+            "playbooks",
+            "requirements",
+            "tasks"
+        ]
+    }
+}

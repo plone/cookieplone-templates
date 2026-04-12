@@ -1,0 +1,65 @@
+{
+    "id": "sub/frontend_project",
+    "schema": {
+        "title": "Subtemplate: Frontend Project",
+        "description": "Standalone Volto frontend project used by other templates and for OCI image generation.",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Project name",
+                "default": "Frontend Project",
+                "validator": "",
+                "format": "computed"
+            },
+            "volto_version": {
+                "type": "string",
+                "title": "Volto Version",
+                "default": "{{ 'Yes' | latest_volto }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "default": "Plone Community",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "app",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_plone_volto": {
+                "type": "string",
+                "title": "__version_plone_volto",
+                "default": "{{ cookiecutter.volto_version }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_pnpm": {
+                "type": "string",
+                "title": "__version_pnpm",
+                "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.latest_volto"
+        ],
+        "no_render": []
+    }
+}

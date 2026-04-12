@@ -1,0 +1,77 @@
+{
+    "id": "ide_vscode",
+    "schema": {
+        "title": "IDE: Visual Studio Code",
+        "description": "Workspace configuration for Visual Studio Code (settings, launch, extensions) tailored to the target Plone codebase.",
+        "version": "2.0",
+        "properties": {
+            "backend_path": {
+                "type": "string",
+                "title": "Backend Path",
+                "description": "Root path of the Python codebase (`/` for the repo root, empty for no Python codebase).",
+                "default": "./",
+                "validator": ""
+            },
+            "frontend_path": {
+                "type": "string",
+                "title": "Frontend Path",
+                "description": "Root path of the Volto codebase (`/` for the repo root, empty for no Volto codebase).",
+                "default": "./",
+                "validator": ""
+            },
+            "ansible_path": {
+                "type": "string",
+                "title": "Ansible Path",
+                "description": "Root path of the Ansible codebase (empty when the project does not ship Ansible playbooks).",
+                "default": "",
+                "validator": ""
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": ".vscode",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_launch_path": {
+                "type": "string",
+                "title": "__backend_launch_path",
+                "default": "${workspaceFolder}{{ cookiecutter.backend_path }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_tests_path": {
+                "type": "string",
+                "title": "__backend_tests_path",
+                "default": "{{ cookiecutter.backend_path }}/tests",
+                "validator": "",
+                "format": "computed"
+            },
+            "__frontend_eslint_working_directories": {
+                "type": "string",
+                "title": "__frontend_eslint_working_directories",
+                "default": ".{{ cookiecutter.frontend_path }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__ansible_interpreter_base": {
+                "type": "string",
+                "title": "__ansible_interpreter_base",
+                "default": "{{ cookiecutter.ansible_path }}/.venv/bin",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [],
+        "no_render": []
+    }
+}

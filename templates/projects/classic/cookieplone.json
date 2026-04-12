@@ -1,0 +1,423 @@
+{
+    "id": "classic",
+    "schema": {
+        "title": "Plone Classic Project",
+        "description": "A project template for Plone 6 Classic UI sites (no Volto frontend).",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Project Title",
+                "description": "Human-readable name for the project, used in README and documentation.",
+                "default": "Project Title",
+                "validator": ""
+            },
+            "description": {
+                "type": "string",
+                "title": "Project Description",
+                "description": "Short summary of the project, used in package metadata and README.",
+                "default": "A new project using Plone 6.",
+                "validator": ""
+            },
+            "project_slug": {
+                "type": "string",
+                "title": "Project Slug (Used for repository id)",
+                "description": "URL-friendly identifier used as the repository name and output folder.",
+                "default": "{{ cookiecutter.title | slugify }}",
+                "validator": ""
+            },
+            "hostname": {
+                "type": "string",
+                "title": "Project URL (without protocol)",
+                "description": "The hostname where the project will be deployed (e.g. mysite.example.com).",
+                "default": "{{ cookiecutter.project_slug }}.example.com",
+                "format": "hostname",
+                "validator": "cookieplone.validators.hostname"
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "description": "Name of the project author or organization.",
+                "default": "Plone Foundation",
+                "validator": ""
+            },
+            "email": {
+                "type": "string",
+                "title": "Author E-mail",
+                "description": "Contact email for the project author.",
+                "default": "collective@plone.org",
+                "format": "email",
+                "validator": ""
+            },
+            "use_prerelease_versions": {
+                "type": "string",
+                "title": "Should we use prerelease versions?",
+                "description": "Whether to include alpha, beta, and release candidate versions when resolving the Plone version.",
+                "default": "{{ 'No' | use_prerelease_versions }}",
+                "validator": "",
+                "oneOf": [
+                    {"const": "Yes", "title": "Yes"},
+                    {"const": "No", "title": "No"}
+                ]
+            },
+            "plone_version": {
+                "type": "string",
+                "title": "Plone Version",
+                "description": "Plone backend version to use. Automatically resolved to the latest available release.",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
+                "validator": "cookieplone.validators.plone_version"
+            },
+            "python_package_name": {
+                "type": "string",
+                "title": "Python Package Name",
+                "description": "Dotted Python package name for the backend add-on (e.g. collective.myproject).",
+                "default": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
+                "validator": "cookieplone.validators.python_package_name"
+            },
+            "language_code": {
+                "type": "string",
+                "title": "Language",
+                "description": "Default language for the Plone site.",
+                "default": "en",
+                "validator": "cookieplone.validators.language_code",
+                "oneOf": [
+                    {"const": "en", "title": "English"},
+                    {"const": "de", "title": "Deutsch"},
+                    {"const": "es", "title": "Español"},
+                    {"const": "pt-br", "title": "Português (Brasil)"},
+                    {"const": "nl", "title": "Nederlands"},
+                    {"const": "fi", "title": "Suomi"},
+                    {"const": "it", "title": "Italiano"},
+                    {"const": "sv", "title": "Svenska"}
+                ]
+            },
+            "github_organization": {
+                "type": "string",
+                "title": "GitHub or GitLab username or organization slug from URL",
+                "description": "Organization or username used to build the repository URL and container image paths.",
+                "default": "collective",
+                "validator": ""
+            },
+            "container_registry": {
+                "type": "string",
+                "title": "Container Registry",
+                "description": "Container registry where Docker images will be published.",
+                "default": "github",
+                "validator": "",
+                "oneOf": [
+                    {"const": "github", "title": "GitHub Container Registry"},
+                    {"const": "docker_hub", "title": "Docker Hub"},
+                    {"const": "gitlab", "title": "GitLab"}
+                ]
+            },
+            "devops_storage": {
+                "type": "string",
+                "title": "Which persistent storage to use in the deployment stack?",
+                "description": "Backend storage strategy for the ZODB database in the deployment stack.",
+                "default": "relstorage",
+                "validator": "",
+                "oneOf": [
+                    {"const": "relstorage", "title": "RelStorage with PostgreSQL (recommended)"},
+                    {"const": "zeo", "title": "ZEO with FileStorage"},
+                    {"const": "filestorage", "title": "Local FileStorage, implies a single backend"}
+                ]
+            },
+            "devops_cache": {
+                "type": "boolean",
+                "title": "Should we setup a caching server?",
+                "description": "Include a Varnish caching layer in front of the backend.",
+                "default": true,
+                "validator": ""
+            },
+            "devops_ansible": {
+                "type": "boolean",
+                "title": "Add Ansible playbooks?",
+                "description": "Include Ansible playbooks for server provisioning and deployment.",
+                "default": true,
+                "validator": ""
+            },
+            "devops_gha_deploy": {
+                "type": "boolean",
+                "title": "Add GitHub Action to Deploy this project?",
+                "description": "Include a GitHub Actions workflow for automated deployment to a Docker Swarm cluster.",
+                "default": true,
+                "validator": ""
+            },
+            "initialize_documentation": {
+                "type": "boolean",
+                "title": "Would you like to add a documentation scaffold to your project?",
+                "description": "Generate a Sphinx-based documentation structure using the Plone documentation starter.",
+                "default": true,
+                "validator": ""
+            },
+            "__project_slug": {
+                "type": "string",
+                "title": "__project_slug",
+                "default": "{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__repository_url": {
+                "type": "string",
+                "title": "__repository_url",
+                "default": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__repository_git": {
+                "type": "string",
+                "title": "__repository_git",
+                "default": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_package": {
+                "type": "string",
+                "title": "__version_package",
+                "default": "1.0.0a0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__feature_headless": {
+                "type": "string",
+                "title": "__feature_headless",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__feature_distribution": {
+                "type": "string",
+                "title": "__feature_distribution",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_managed_by_uv": {
+                "type": "string",
+                "title": "__backend_managed_by_uv",
+                "default": "false",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__python_package_name_upper": {
+                "type": "string",
+                "title": "__python_package_name_upper",
+                "default": "{{ cookiecutter.python_package_name | pascal_case }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_registry_prefix": {
+                "type": "string",
+                "title": "__container_registry_prefix",
+                "default": "{{ cookiecutter.container_registry | image_prefix }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__container_image_prefix": {
+                "type": "string",
+                "title": "__container_image_prefix",
+                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__profile_version": {
+                "type": "string",
+                "title": "__profile_version",
+                "default": "{% now 'utc', '%Y%m%d001' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__profile_language": {
+                "type": "string",
+                "title": "__profile_language",
+                "default": "{{ cookiecutter.language_code|gs_language_code }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__locales_language": {
+                "type": "string",
+                "title": "__locales_language",
+                "default": "{{ cookiecutter.language_code|locales_language_code }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_host": {
+                "type": "string",
+                "title": "__devops_host",
+                "default": "{{ cookiecutter.hostname | extract_host }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_compose_name": {
+                "type": "string",
+                "title": "__devops_compose_name",
+                "default": "{{ cookiecutter.project_slug | replace('.','-') | replace('_','-') }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_stack_name": {
+                "type": "string",
+                "title": "__devops_stack_name",
+                "default": "{{ cookiecutter.hostname | replace('.','-') | replace('_','-') }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_swarm_public_network": {
+                "type": "string",
+                "title": "__devops_swarm_public_network",
+                "default": "nw-public",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_swarm_stack_network": {
+                "type": "string",
+                "title": "__devops_swarm_stack_network",
+                "default": "nw-internal",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_traefik_local_include_ui": {
+                "type": "string",
+                "title": "__devops_traefik_local_include_ui",
+                "default": "yes",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_traefik_stack_include_ui": {
+                "type": "string",
+                "title": "__devops_traefik_stack_include_ui",
+                "default": "no",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_traefik_docker_network": {
+                "type": "string",
+                "title": "__devops_traefik_docker_network",
+                "default": "{{ cookiecutter.__devops_stack_name }}_{{ cookiecutter.__devops_swarm_stack_network }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__devops_db_password": {
+                "type": "string",
+                "title": "__devops_db_password",
+                "default": "{{ random_ascii_string(12) }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_addon_git_initialize": {
+                "type": "string",
+                "title": "__backend_addon_git_initialize",
+                "default": "0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__backend_addon_format": {
+                "type": "string",
+                "title": "__backend_addon_format",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__project_git_initialize": {
+                "type": "string",
+                "title": "__project_git_initialize",
+                "default": "1",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_sha": {
+                "type": "string",
+                "title": "__generator_sha",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_template_url": {
+                "type": "string",
+                "title": "__generator_template_url",
+                "default": "https://github.com/plone/cookieplone-templates/tree/main/{{ cookiecutter.__cookieplone_template }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_date_long": {
+                "type": "string",
+                "title": "__generator_date_long",
+                "default": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_signature": {
+                "type": "string",
+                "title": "__generator_signature",
+                "default": "This was generated by [the cookieplone-templates {{ cookiecutter.__cookieplone_template }} template]({{ cookiecutter.__generator_template_url }}) on {{ cookiecutter.__generator_date_long }}",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.use_prerelease_versions",
+            "cookieplone.filters.extract_host",
+            "cookieplone.filters.image_prefix",
+            "cookieplone.filters.pascal_case",
+            "cookieplone.filters.locales_language_code",
+            "cookieplone.filters.gs_language_code",
+            "cookieplone.filters.latest_plone"
+        ],
+        "no_render": [
+            "devops/etc",
+            "devops/playbooks",
+            "devops/requirements",
+            "devops/tasks",
+            "devops/inventory/group_vars/all/users.yml",
+            "news/.changelog_template.jinja"
+        ],
+        "subtemplates": [
+            {
+                "id": "add-ons/backend",
+                "title": "Setup Backend",
+                "enabled": "1"
+            },
+            {
+                "id": "docs/starter",
+                "title": "Generate documentation scaffold",
+                "enabled": "{{ '1' if cookiecutter.initialize_documentation else '0' }}"
+            },
+            {
+                "id": "sub/cache",
+                "title": "Setup Cache",
+                "enabled": "{{ '1' if cookiecutter.devops_cache else '0' }}"
+            },
+            {
+                "id": "sub/classic_project_settings",
+                "title": "Classic Setup Project Settings",
+                "enabled": "1"
+            },
+            {
+                "id": "ide/vscode",
+                "title": "Setup VSCode configuration",
+                "enabled": "1"
+            },
+            {
+                "id": "ci/gh_classic_project",
+                "title": "Setup GitHub CI",
+                "enabled": "1"
+            }
+        ]
+    }
+}

@@ -225,7 +225,6 @@ def generate_ci_gh_project(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
     ci_context = OrderedDict({
         "npm_package_name": context["__npm_package_name"],
-        "container_image_prefix": context["__container_image_prefix"],
         "python_version": versions["backend_python"],
         "node_version": context["__node_version"],
         "has_cache": "1" if context["devops_cache"] else "0",
@@ -245,8 +244,8 @@ def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
     """Generate VS Code configuration."""
     ansible_path = "devops/ansible" if context.get("devops_ansible") else ""
     vscode_context = OrderedDict({
-        "backend_path": "backend/",
-        "frontend_path": "frontend/",
+        "backend_path": "backend",
+        "frontend_path": "frontend",
         "ansible_path": ansible_path,
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
