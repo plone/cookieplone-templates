@@ -7,7 +7,6 @@
   "email": "collective@plone.org",
   "github_organization": "collective",
   "npm_package_name": "{{ cookiecutter.frontend_addon_name }}",
-  "volto_version": "{{ 'Yes' | latest_volto }}",
   "__folder_name": "{{ cookiecutter.frontend_addon_name }}",
   "__npm_package_name": "{{ cookiecutter.npm_package_name }}",
   "__version_package": "1.0.0",
