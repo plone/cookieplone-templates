@@ -16,7 +16,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("classic_project", "Plone 6 using Classic UI Project", False),
         (
             "plone7_nick_bff",
-            "Plone 7 alpha using NickCMS as BFF",
+            "Plone 7 alpha using Nick as BFF",
             False,
         ),
         ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
