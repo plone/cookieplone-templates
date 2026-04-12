@@ -36,6 +36,7 @@
   "dependencies": {
     "@plone/registry": "workspace:*",
     "seven": "workspace:*",
+    "@robgietema/nick": "workspace:*",
     "{{ cookiecutter.__npm_package_name }}": "workspace:*"
   },
   "devDependencies": {

@@ -7,6 +7,7 @@ packages:
   - 'packages/**/packages/*'
   - '!core/packages/volto*'
   - '!core/packages/coresandbox'
+  - 'nick'
 
 # The default pnpm catalog is loaded from `core/catalog.json` using `.pnpmfile.cjs`.
 # If you want to customize the versions of the catalog, do it in there.
