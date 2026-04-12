@@ -10,7 +10,7 @@ on:
       - ".github/workflows/acceptance.yml"
 
 env:
-  NODE_VERSION: {{ cookiecutter.__gha_version_node }}
+  NODE_VERSION: {{ versions.gha_version_node }}
   CYPRESS_RETRIES: 2
 
 jobs:
@@ -18,10 +18,10 @@ jobs:
   acceptance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+      - uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Use Node.js {{ "${{ env.NODE_VERSION }}" }}
-        uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
 
@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+      - uses: actions/cache@{{ versions.gha_version_cache }}
         name: Setup pnpm cache
         with:
           path: {{ "${{ env.STORE_PATH }}" }}
@@ -43,7 +43,7 @@ jobs:
 
       - name: Cache Cypress Binary
         id: cache-cypress-binary
-        uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+        uses: actions/cache@{{ versions.gha_version_cache }}
         with:
           path: ~/.cache/Cypress
           key: binary-{{ "${{ env.NODE_VERSION }}" }}-{{ "${{ hashFiles('pnpm-lock.yaml') }}" }}
@@ -56,7 +56,7 @@ jobs:
         working-directory: core/packages/volto
         run: make cypress-install
 
-      - uses: JarvusInnovations/background-action@{{ cookiecutter.__gha_version_background_action }}
+      - uses: JarvusInnovations/background-action@{{ versions.gha_version_background_action }}
         name: Start Servers
         with:
           run: |
@@ -88,14 +88,14 @@ jobs:
       - run: make ci-acceptance-test
 
       # Upload Cypress screenshots
-      - uses: actions/upload-artifact@{{ cookiecutter.__gha_version_upload_artifact }}
+      - uses: actions/upload-artifact@{{ versions.gha_version_upload_artifact }}
         if: failure()
         with:
           name: cypress-screenshots-acceptance
           path: acceptance/cypress/screenshots
 
       # Upload Cypress videos
-      - uses: actions/upload-artifact@{{ cookiecutter.__gha_version_upload_artifact }}
+      - uses: actions/upload-artifact@{{ versions.gha_version_upload_artifact }}
         if: failure()
         with:
           name: cypress-videos-acceptance

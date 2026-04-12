@@ -1,5 +1,11 @@
-ALLOWED_MISSING = []
-ALLOWED_NOT_USED = []
+ALLOWED_MISSING = [
+    "ansible_path",
+    "backend_path",
+    "frontend_path",
+]
+ALLOWED_NOT_USED = [
+    "volto_version",
+]
 
 
 def test_no_missing_variables(variables_missing):

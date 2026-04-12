@@ -9,7 +9,7 @@ on:
       - ".github/workflows/storybook.yml"
 
 env:
-  NODE_VERSION: {{ cookiecutter.__gha_version_node }}
+  NODE_VERSION: {{ versions.gha_version_node }}
 
 permissions:
   contents: write
@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Use Node.js
-        uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
 
@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+      - uses: actions/cache@{{ versions.gha_version_cache }}
         name: Setup pnpm cache
         with:
           path: {{ "${{ env.STORE_PATH }}" }}
@@ -50,7 +50,7 @@ jobs:
           make storybook-build
 
       - name: Deploy to GitHub pages
-        uses: JamesIves/github-pages-deploy-action@{{ cookiecutter.__gha_version_pages_deploy }}
+        uses: JamesIves/github-pages-deploy-action@{{ versions.gha_version_pages_deploy }}
         if: {{ "${{ github.ref == 'refs/heads/main' }}" }}
         with:
           branch: gh-pages

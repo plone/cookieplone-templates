@@ -104,9 +104,9 @@ def handle_backend_cleanup(context: OrderedDict, output_dir: Path):
 def generate_addons_backend(context: OrderedDict, output_dir: Path) -> Path:
     """Run Plone Addon generator."""
     folder_name = "backend"
-    context["feature_headless"] = "0"
-    context["initialize_ci"] = "0"
-    context["initialize_documentation"] = "0"
+    context["feature_headless"] = False
+    context["initialize_ci"] = False
+    context["initialize_documentation"] = False
     path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/backend",
         output_dir,
