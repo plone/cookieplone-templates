@@ -1,6 +1,7 @@
-"""Test cookiecutter generation with all features enabled."""
+"""Test cookieplone generation for Seven Add-on."""
 
 import pytest
+
 
 GITHUB_ACTIONS = [
     ".github/workflows/acceptance.yml",
@@ -11,38 +12,49 @@ GITHUB_ACTIONS = [
     ".github/workflows/unit.yml",
 ]
 
+VSCODE_SETTINGS = [
+    ".vscode/extensions.json",
+    ".vscode/launch.json",
+    ".vscode/settings.json",
+]
 
-ROOT_FILES = GITHUB_ACTIONS + [
+
+ROOT_FILES = [
+    *GITHUB_ACTIONS,
+    *VSCODE_SETTINGS,
     ".storybook/main.js",
     ".storybook/preview.jsx",
     "cypress/support/commands.js",
     "cypress/support/e2e.js",
+    "cypress/support/index.ts",
     "cypress/tests/.gitkeep",
     "cypress/tests/example.cy.js",
     "cypress/.gitkeep",
-    ".eslintrc.js",
+    "cypress/tsconfig.json",
+    "cypress.config.js",
+    "Dockerfile",
+    "eslint.config.mjs",
     ".gitignore",
     ".npmignore",
     ".npmrc",
+    ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
     ".stylelintrc",
-    "cypress.config.js",
-    "jest-addon.config.js",
     "Makefile",
     "mrs.developer.json",
     "package.json",
     "pnpm-workspace.yaml",
     "README.md",
-    "volto.config.js",
+    "registry.config.ts",
 ]
 
 
 PKG_SRC_FILES = [
     ".gitignore",
     ".release-it.json",
-    "babel.config.js",
     "CHANGELOG.md",
+    "index.ts",
     "locales/de/LC_MESSAGES/volto.po",
     "locales/en/LC_MESSAGES/volto.po",
     "locales/es/LC_MESSAGES/volto.po",
@@ -50,16 +62,16 @@ PKG_SRC_FILES = [
     "locales/volto.pot",
     "news/.gitkeep",
     "package.json",
-    "src/components/.gitkeep",
-    "src/index.js",
+    "public/.gitkeep",
     "towncrier.toml",
     "tsconfig.json",
+    "types.d.ts",
 ]
 
 
-def test_creation(cookies, context: dict):
+def test_creation(cookies, template_path, context: dict):
     """Generated project should match provided value."""
-    result = cookies.bake(extra_context=context)
+    result = cookies.bake(extra_context=context, template=template_path)
     assert result.exception is None
     assert result.exit_code == 0
     assert result.project_path.name == context["frontend_addon_name"]
@@ -70,10 +82,11 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
     """Check if no file was unprocessed."""
     paths = build_files_list(cutter_result.project_path)
     for path in paths:
-        for line in open(path):
-            match = variable_pattern.search(line)
-            msg = f"cookiecutter variable not replaced in {path}"
-            assert match is None, msg
+        with open(path) as fh:
+            for line in fh:
+                match = {pattern.search(line) for pattern in variable_pattern}
+                msg = f"cookiecutter variable not replaced in {path}"
+                assert match == {None}, msg
 
 
 @pytest.mark.parametrize(
@@ -107,8 +120,8 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
         [".github/workflows/storybook.yml", "github-workflow"],
         [".github/workflows/unit.yml", "github-workflow"],
         ["package.json", "package"],
-        ["packages/volto-addon/package.json", "package"],
-        ["packages/volto-addon/tsconfig.json", "tsconfig"],
+        ["packages/seven-addon/package.json", "package"],
+        ["packages/seven-addon/tsconfig.json", "tsconfig"],
     ],
 )
 def test_json_schema(

@@ -7,6 +7,7 @@ from cookieplone import generator
 from cookieplone.utils import console, files
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 LOCAL_FILES_FOLDER_NAME = "_project_files"
@@ -20,8 +21,8 @@ def generate_addon(context, output_dir):
     folder_name = output_dir.name
     output_dir = output_dir.parent
     context["frontend_addon_name"] = "volto-addon"
-    context["initialize_documentation"] = "0"
-    context["initialize_ci"] = "0"
+    context["initialize_documentation"] = False
+    context["initialize_ci"] = False
     generator.generate_subtemplate(
         "../../add-ons/frontend", output_dir, folder_name, context, TO_REMOVE
     )

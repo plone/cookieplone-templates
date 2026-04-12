@@ -83,7 +83,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "python_package_name": "collective.addon",
             "author": "Plone Collective",
             "email": "collective@plone.org",
-            "feature_headless": "1",
+            "feature_headless": True,
             "__backend_addon_git_initialize": "1",
         },
         cookieplone_root,
@@ -96,7 +96,7 @@ def context_no_headless(context) -> dict:
     """Cookiecutter context without headless feature enabled."""
     new_context = deepcopy(context)
     new_context["python_package_name"] = "collective.addonredux"
-    new_context["feature_headless"] = "0"
+    new_context["feature_headless"] = False
     return new_context
 
 
