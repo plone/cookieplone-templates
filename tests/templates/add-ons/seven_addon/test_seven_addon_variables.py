@@ -3,6 +3,7 @@ ALLOWED_MISSING = [
     "backend_path",
     "frontend_path",
 ]
+
 ALLOWED_NOT_USED = []
 
 
