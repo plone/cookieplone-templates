@@ -6,6 +6,7 @@ from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
 
+from binaryornot.check import is_binary
 from cookieplone import generator
 from cookieplone.utils import console, files, git, npm, plone
 from cookieplone.utils.subtemplates import run_subtemplates
@@ -61,13 +62,14 @@ def _fix_frontend_addon_name(context: OrderedDict) -> OrderedDict:
 
 
 def _find_replace_in_folder(folder: Path, replacements: dict[str, str]):
-    """Find and replace in all files in a folder."""
+    """Find and replace in all text files in a folder."""
     for file_path in folder.rglob("*"):
-        if file_path.is_file():
-            content = file_path.read_text()
-            for find, replace in replacements.items():
-                content = content.replace(find, replace)
-            file_path.write_text(content)
+        if not file_path.is_file() or is_binary(str(file_path)):
+            continue
+        content = file_path.read_text()
+        for find, replace in replacements.items():
+            content = content.replace(find, replace)
+        file_path.write_text(content)
 
 
 def handle_devops_ansible(context: OrderedDict, output_dir: Path):
@@ -130,9 +132,9 @@ def generate_addons_backend(context: OrderedDict, output_dir: Path) -> Path:
     """Run Plone Addon generator."""
     folder_name = "backend"
     # Headless
-    context["feature_headless"] = "1"
-    context["initialize_ci"] = "0"
-    context["initialize_documentation"] = "0"
+    context["feature_headless"] = True
+    context["initialize_ci"] = False
+    context["initialize_documentation"] = False
     path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/backend",
         output_dir,
@@ -150,8 +152,8 @@ def generate_addons_frontend(context: OrderedDict, output_dir: Path) -> Path:
     # Handle packages inside an organization
     context = _fix_frontend_addon_name(context)
     frontend_addon_name = context["frontend_addon_name"]
-    context["initialize_documentation"] = "0"
-    context["initialize_ci"] = "0"
+    context["initialize_documentation"] = False
+    context["initialize_ci"] = False
     path = generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,

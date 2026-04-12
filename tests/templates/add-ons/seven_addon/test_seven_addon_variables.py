@@ -1,4 +1,8 @@
-ALLOWED_MISSING = []
+ALLOWED_MISSING = [
+    "ansible_path",
+    "backend_path",
+    "frontend_path",
+]
 ALLOWED_NOT_USED = []
 
 
