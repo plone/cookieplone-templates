@@ -103,8 +103,8 @@
     },
     "plone7_nick_bff": {
       "path": "./templates/projects/plone7_nick_bff",
-      "title": "Plone 7 alpha using Nick as BFF",
-      "description": "Create a new Node.js Plone 7 alpha project using Nick as Backend For Frontend (no backend process required)",
+      "title": "Plone 7 alpha using Nick as an embedded library",
+      "description": "Create a new Node.js Plone 7 alpha project using Nick as an embedded library",
       "hidden": false
     },
     "sub/cache": {
