@@ -2,7 +2,6 @@
 
 import pytest
 
-
 GITHUB_ACTIONS = [
     ".github/workflows/acceptance.yml",
     ".github/workflows/changelog.yml",

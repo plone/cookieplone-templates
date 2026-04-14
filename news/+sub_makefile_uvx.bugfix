@@ -1,0 +1,1 @@
+Fixed per-template `Makefile`s to invoke Ruff via `uvx ruff` instead of `uv run ruff`, so that recursive `make format_templates` calls no longer fail on a freshly synced environment when Ruff is not declared as a project dependency. @ericof

@@ -76,7 +76,6 @@ def cookieplone_root() -> dict:
     return folder.parent.resolve()
 
 
-
 @pytest.fixture
 def volto_versions():
     versions = ["18.10.0", "18.0.0-alpha.27", "17.15.5", "16.31.4"]
