@@ -187,6 +187,7 @@
     }
   },
   "config": {
+    "renderer": "rich",
     "versions": {
       "backend_python": "3.13",
       "devops_cronjob_version": "1.14",
