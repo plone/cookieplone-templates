@@ -52,8 +52,8 @@ sync: ## Sync dependencies
 .PHONY: format
 format: $(VENV_FOLDER) ## Format code
 	@echo "$(GREEN)==> Formatting codebase $(RESET)"
-	@uv run ruff format hooks .scripts tests
-	@uv run ruff check --select I --fix hooks .scripts tests
+	@uvx ruff format hooks .scripts tests
+	@uvx ruff check --select I --fix hooks .scripts tests
 	$(MAKE) format_templates
 
 .PHONY: format_templates
@@ -66,7 +66,7 @@ format_templates: $(VENV_FOLDER) ## Format code
 .PHONY: lint
 lint: $(VENV_FOLDER) ## Lint code
 	@echo "$(GREEN)==> Lint codebase $(RESET)"
-	@uv run ruff check hooks .scripts tests
+	@uvx ruff check hooks .scripts tests
 
 .PHONY: test
 test: $(VENV_FOLDER) ## Test all templates
