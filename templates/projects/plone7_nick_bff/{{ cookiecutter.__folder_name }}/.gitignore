@@ -7,6 +7,7 @@ acceptance/node_modules
 .storybook-build
 build
 core
+/nick
 node_modules
 results
 yarn.lock
