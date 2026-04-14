@@ -12,7 +12,7 @@ except ModuleNotFoundError:
 from packaging.version import Version
 
 SUPPORTED_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13"]
-MIN_COOKIEPLONE = "1.9.9"
+MIN_COOKIEPLONE = "2.0.0a2"
 COOKIEPLONE_INSTALLATION = (
     "https://github.com/plone/cookieplone/blob/main/README.md#installation-"
 )
