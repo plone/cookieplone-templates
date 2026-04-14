@@ -1,36 +1,20 @@
 """Post generation hook."""
 
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
-from cookieplone.utils import console, files
+from cookieplone.utils import post_gen
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 POST_GEN_TO_REMOVE = {
-    "docs-0": [
+    "docs": [
         "workflows/docs.yml",
         "workflows/rtd-pr-preview.yml",
     ],
 }
-
-
-def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
-    """Clean up GitHub Actions deploy."""
-    answer = context.get("has_docs")
-    key = f"docs-{answer}"
-    to_remove = POST_GEN_TO_REMOVE.get(key, [])
-    files.remove_files(output_dir, to_remove)
-
-
-def run_actions(actions: list, output_dir: Path):
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
 
 
 def generate_agents_instructions(context: OrderedDict, output_dir: Path):
@@ -47,41 +31,42 @@ def generate_agents_instructions(context: OrderedDict, output_dir: Path):
         "__cookieplone_repository_path": repository_path,
     })
     generator.generate_subtemplate(
-        "templates/agents/instructions", output_dir, folder_name, new_ctx
+        "templates/agents/instructions",
+        output_dir,
+        folder_name,
+        new_ctx,
+        global_versions=versions,
     )
 
 
-def _generate_subtemplates(context: OrderedDict, output_dir: Path):
-    """Generate subtemplates"""
-    # Get selected subtemplates
-    subtemplates = context.get(
-        "__cookieplone_subtemplates", []
-    )  # {{ cookiecutter.__cookieplone_subtemplates }}
-    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
-    for template_id, title, enabled in subtemplates:
-        template_slug = template_id.replace("/", "_").replace("-", "")
-        func_name = f"generate_{template_slug}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        func(context, output_dir)
+SUBTEMPLATE_HANDLERS = {
+    "agents/instructions": generate_agents_instructions,
+}
+
+
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "docs"),
+            "title": "Remove unneeded documentation files",
+            "enabled": not int(context.get("has_docs", "0")),
+        },
+    ]
+    return actions
 
 
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
 
-    # Subtemplates
-    _generate_subtemplates(context, output_dir)
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
-    # Cleanup
-    actions = [
-        [handle_docs_cleanup, "Remove unneeded documentation files", "1"],
-    ]
-    run_actions(actions, output_dir)
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
 
 if __name__ == "__main__":

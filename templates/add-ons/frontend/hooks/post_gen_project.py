@@ -1,14 +1,14 @@
 """Post generation hook."""
 
-import os
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.utils import console, files
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 DOCUMENTATION_STARTER_REMOVE = [
     ".github",
@@ -40,11 +40,11 @@ def generate_docs_starter(context, output_dir):
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/docs/starter",
         output_dir,
-        "docs",
+        folder_name,
         context,
         DOCUMENTATION_STARTER_REMOVE,
+        global_versions=versions,
     )
-    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def generate_ci_gh_frontend_addon(context, output_dir):
@@ -60,6 +60,7 @@ def generate_ci_gh_frontend_addon(context, output_dir):
         output_dir,
         ".github",
         ci_context,
+        global_versions=versions,
     )
 
 
@@ -73,30 +74,29 @@ def generate_ide_vscode(context, output_dir):
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
     generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+        f"{TEMPLATES_FOLDER}/ide/vscode",
+        output_dir,
+        ".vscode",
+        vscode_context,
+        global_versions=versions,
     )
+
+
+SUBTEMPLATE_HANDLERS = {
+    "docs/starter": generate_docs_starter,
+    "ci/gh_frontend_addon": generate_ci_gh_frontend_addon,
+    "ide/vscode": generate_ide_vscode,
+}
 
 
 def main():
     """Final fixes."""
-
     output_dir = Path().cwd()
-    subtemplates = context.get(
-        "__cookieplone_subtemplates", []
-    )  # {{ cookiecutter.__cookieplone_subtemplates }}
-    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
-    for template_id, title, enabled in subtemplates:
-        os.getenv("COOKIEPLONE_SUBTEMPLATE")
-        func_name = f"generate_{template_id.replace('/', '_')}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
     remove_conditional_files(context, output_dir)
 
