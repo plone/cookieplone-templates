@@ -19,19 +19,19 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+export REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
-ADDON_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.name')
-IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+ADDON_NAME := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).frontend.name")
+IMAGE_NAME_PREFIX := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).container_images_prefix")
 IMAGE_TAG=latest
 IMAGE_NAME=$(IMAGE_NAME_PREFIX)-frontend:$(IMAGE_TAG)
 
 # Environment variables to be exported
-export VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
-export PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+export VOLTO_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).frontend.volto_version")
+export PLONE_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.base_package_version")
 
 
 .PHONY: help
