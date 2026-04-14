@@ -2,23 +2,24 @@
 
 import os
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.settings import QUIET_MODE_VAR
-from cookieplone.utils import console, files, git, plone
+from cookieplone.utils import console, files, plone, post_gen
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 # PATH OF CONTENT TO BE REMOVED
-FEATURES_TO_REMOVE = {
+POST_GEN_TO_REMOVE = {
     "feature_headless": [
-        "browser",
+        "src/packagename/browser",
     ],
     "feature_classic": [
-        "serializers",
+        "src/packagename/serializers",
     ],
 }
 
@@ -28,16 +29,6 @@ DOCUMENTATION_STARTER_REMOVE = [
 ]
 
 TEMPLATES_FOLDER = "templates"
-
-
-def handle_feature_headless(context: OrderedDict, output_dir: Path):
-    output_dir = output_dir / "src" / "packagename"
-    files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_headless"])
-
-
-def handle_feature_classic(context: OrderedDict, output_dir: Path):
-    output_dir = output_dir / "src" / "packagename"
-    files.remove_files(output_dir, FEATURES_TO_REMOVE["feature_classic"])
 
 
 def handle_create_namespace_packages(context: OrderedDict, output_dir: Path):
@@ -61,6 +52,7 @@ def generate_ci_gh_backend_addon(context, output_dir):
         output_dir,
         ".github",
         ci_context,
+        global_versions=versions,
     )
 
 
@@ -71,11 +63,11 @@ def generate_docs_starter(context, output_dir):
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/docs/starter",
         output_dir,
-        "docs",
+        folder_name,
         context,
         DOCUMENTATION_STARTER_REMOVE,
+        global_versions=versions,
     )
-    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def generate_ide_vscode(context, output_dir):
@@ -88,7 +80,11 @@ def generate_ide_vscode(context, output_dir):
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
     generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+        f"{TEMPLATES_FOLDER}/ide/vscode",
+        output_dir,
+        ".vscode",
+        vscode_context,
+        global_versions=versions,
     )
 
 
@@ -96,14 +92,15 @@ def handle_format(context: OrderedDict, output_dir: Path):
     plone.format_python_codebase(output_dir)
 
 
-def handle_git_initialization(context: OrderedDict, output_dir: Path):
-    """Initialize a GIT repository for the project codebase."""
-    git.initialize_repository(output_dir)
+SUBTEMPLATE_HANDLERS = {
+    "ci/gh_backend_addon": generate_ci_gh_backend_addon,
+    "docs/starter": generate_docs_starter,
+    "ide/vscode": generate_ide_vscode,
+}
 
 
-def main():
-    """Final fixes."""
-    output_dir = Path().cwd()
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
     is_subtemplate = os.environ.get(QUIET_MODE_VAR) == "1"
     feature_headless = int(
         context.get("feature_headless")
@@ -115,56 +112,51 @@ def main():
     backend_format = bool(
         int(context.get("__backend_addon_format"))
     )  # {{ cookiecutter.__backend_addon_format }}
-    # Cleanup / Git
-    actions = [
-        [
-            handle_feature_headless,
-            "Remove files used in classic UI setup",
-            feature_headless,
-        ],
-        [
-            handle_feature_classic,
-            "Remove files used in classic UI setup",
-            not feature_headless,
-        ],
-        [
-            handle_create_namespace_packages,
-            "Create namespace packages",
-            create_namespace_packages,
-        ],
-        [
-            handle_format,
-            "Format code",
-            backend_format,
-        ],
-        [
-            handle_git_initialization,
-            "Initialize Git repository",
-            initialize_git,
-        ],
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "feature_headless"
+            ),
+            "title": "Remove files used in headless setup",
+            "enabled": feature_headless,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "feature_classic"
+            ),
+            "title": "Remove files used in classic UI setup",
+            "enabled": not feature_headless,
+        },
+        {
+            "handler": handle_create_namespace_packages,
+            "title": "Create namespace packages",
+            "enabled": create_namespace_packages,
+        },
+        {
+            "handler": handle_format,
+            "title": "Format code",
+            "enabled": backend_format,
+        },
+        {
+            "handler": post_gen.initialize_git_repository,
+            "title": "Initialize Git repository",
+            "enabled": initialize_git,
+        },
     ]
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+    return actions
 
-    subtemplates = context.get(
-        "__cookieplone_subtemplates", []
-    )  # {{ cookiecutter.__cookieplone_subtemplates }}
-    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
-    for template_id, title, enabled in subtemplates:
-        func_name = f"generate_{template_id.replace('/', '_')}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+def main():
+    """Final fixes."""
+    output_dir = Path().cwd()
+
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
+
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

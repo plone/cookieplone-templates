@@ -24,7 +24,12 @@ def generate_addon(context, output_dir):
     context["initialize_documentation"] = False
     context["initialize_ci"] = False
     generator.generate_subtemplate(
-        "../../add-ons/frontend", output_dir, folder_name, context, TO_REMOVE
+        "../../add-ons/frontend",
+        output_dir,
+        folder_name,
+        context,
+        TO_REMOVE,
+        global_versions=versions,
     )
 
 

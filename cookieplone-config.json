@@ -193,6 +193,8 @@
     }
   },
   "config": {
+    "renderer": "rich",
+    "min_version": "2.0.0a2",
     "versions": {
       "backend_python": "3.13",
       "devops_cronjob_version": "1.14",

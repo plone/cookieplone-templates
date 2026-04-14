@@ -1,10 +1,10 @@
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
-from cookieplone.utils import console
+from cookieplone.utils import post_gen
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 REPLACEMENTS = (
     ("}./", "}/"),
@@ -27,23 +27,24 @@ def handle_path_cleanup(context: OrderedDict, output_dir: Path):
         file.write_text(content)
 
 
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": handle_path_cleanup,
+            "title": "Fix paths in the generated files",
+            "enabled": True,
+        },
+    ]
+    return actions
+
+
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    # Cleanup / Git
-    actions = [
-        [
-            handle_path_cleanup,
-            "Fix paths in the generated files",
-            True,
-        ],
-    ]
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
 
 if __name__ == "__main__":

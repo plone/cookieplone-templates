@@ -1,12 +1,10 @@
 """Post generation hook."""
 
-import subprocess
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files, git, plone
+from cookieplone.utils import console, plone, post_gen
 from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
@@ -41,64 +39,22 @@ POST_GEN_TO_REMOVE: dict[str, list[str]] = {
         "devops/.env_gha",
         "devops/README-GHA.md",
     ],
-    "docs-0": [
+    "docs-gha": [
         ".github/workflows/docs.yml",
         ".github/workflows/rtd-pr-preview.yml",
     ],
-    "docs-1": ["docs/LICENSE.md"],
+    "docs-license": ["docs/LICENSE.md"],
 }
 
 TEMPLATES_FOLDER: str = "templates"
 
 
-def handle_devops_ansible(context: OrderedDict, output_dir: Path):
-    """Clean up ansible."""
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-ansible"])
-
-
-def handle_devops_gha_deploy(context: OrderedDict, output_dir: Path):
-    """Clean up gha deploy."""
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE["devops-gha"])
-
-
-def handle_docs_cleanup(context: OrderedDict, output_dir: Path):
-    """Clean up docs files based on initialize_documentation."""
-    answer = "1" if context.get("initialize_documentation") else "0"
-    key = f"docs-{answer}"
-    files.remove_files(output_dir, POST_GEN_TO_REMOVE[key])
-
-
-def handle_docs_setup(context: OrderedDict, output_dir: Path):
-    """Move files from /docs to the root."""
-    files_to_move = [
-        ["docs/.readthedocs.yaml", ".readthedocs.yml"],
-    ]
-    for src_path, dst_path in files_to_move:
-        src = output_dir / src_path
-        src.rename(output_dir / dst_path)
-
-
-def handle_git_initialization(context: OrderedDict, output_dir: Path):
-    """Initialize a GIT repository for the project codebase."""
-    git.initialize_repository(output_dir)
-
-
 def handle_backend_cleanup(context: OrderedDict, output_dir: Path):
-    """Final pass on the backend codebase."""
+    """Create namespace packages for the backend."""
     python_package_name: str = context["python_package_name"]
     plone.create_namespace_packages(
         output_dir / "backend/src/packagename", python_package_name, style="native"
     )
-
-    backend_format = bool(
-        int(context.get("__backend_addon_format", 1))
-    )  # {{ cookiecutter.__backend_addon_format }}
-    if backend_format:
-        backend_folder = output_dir / "backend"
-        cmd = f"make -C {backend_folder} format"
-        subprocess.call(  # noQA: S602
-            cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
 
 
 def generate_addons_backend(context: OrderedDict, output_dir: Path) -> Path:
@@ -113,8 +69,8 @@ def generate_addons_backend(context: OrderedDict, output_dir: Path) -> Path:
         folder_name,
         context,
         BACKEND_ADDON_REMOVE,
+        global_versions=versions,
     )
-    files.remove_files(output_dir / folder_name, BACKEND_ADDON_REMOVE)
     return path
 
 
@@ -127,8 +83,8 @@ def generate_docs_starter(context: OrderedDict, output_dir: Path) -> Path:
         folder_name,
         context,
         DOCUMENTATION_STARTER_REMOVE,
+        global_versions=versions,
     )
-    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
     return path
 
 
@@ -137,7 +93,11 @@ def generate_sub_cache(context: OrderedDict, output_dir: Path) -> Path:
     folder_name = output_dir.name
     parent_dir = output_dir.parent
     return generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/sub/cache", parent_dir, folder_name, context
+        f"{TEMPLATES_FOLDER}/sub/cache",
+        parent_dir,
+        folder_name,
+        context,
+        global_versions=versions,
     )
 
 
@@ -152,12 +112,11 @@ def generate_sub_classic_project_settings(
         parent_dir,
         folder_name,
         context,
+        global_versions=versions,
     )
 
 
-def generate_ci_gh_classic_project(
-    context: OrderedDict, output_dir: Path
-) -> Path:
+def generate_ci_gh_classic_project(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
     ci_context = OrderedDict({
         "container_image_prefix": context["__container_image_prefix"],
@@ -172,6 +131,7 @@ def generate_ci_gh_classic_project(
         output_dir,
         ".github",
         ci_context,
+        global_versions=versions,
     )
 
 
@@ -185,7 +145,11 @@ def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
     return generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+        f"{TEMPLATES_FOLDER}/ide/vscode",
+        output_dir,
+        ".vscode",
+        vscode_context,
+        global_versions=versions,
     )
 
 
@@ -199,19 +163,8 @@ SUBTEMPLATE_HANDLERS = {
 }
 
 
-def run_actions(actions: list, output_dir: Path):
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
-
-
-def main():
-    """Final fixes."""
-    output_dir = Path().cwd()
-
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
     initialize_git = bool(
         int(context.get("__project_git_initialize", 1))
     )  # {{ cookiecutter.__project_git_initialize }}
@@ -224,30 +177,71 @@ def main():
     feature_documentation = bool(
         context.get("initialize_documentation", False)
     )  # {{ cookiecutter.initialize_documentation }}
+    backend_format = bool(
+        int(context.get("__backend_addon_format", 1))
+    )  # {{ cookiecutter.__backend_addon_format }}
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": handle_backend_cleanup,
+            "title": "Backend final cleanup",
+            "enabled": True,
+        },
+        {
+            "handler": post_gen.run_make_format("format", "backend"),
+            "title": "Format backend code",
+            "enabled": backend_format,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "devops-ansible"
+            ),
+            "title": "Remove Ansible files",
+            "enabled": not feature_devops_ansible,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "devops-gha"),
+            "title": "Remove GitHub Actions deployment files",
+            "enabled": not feature_gha_deploy,
+        },
+        {
+            "handler": post_gen.move_files([
+                ("docs/.readthedocs.yaml", ".readthedocs.yml")
+            ]),
+            "title": "Organize documentation files",
+            "enabled": feature_documentation,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "docs-gha"),
+            "title": "Remove unneeded documentation GitHub Actions files",
+            "enabled": not feature_documentation,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "docs-license"
+            ),
+            "title": "Remove unneeded documentation files",
+            "enabled": feature_documentation,
+        },
+        {
+            "handler": post_gen.initialize_git_repository,
+            "title": "Initialize Git repository",
+            "enabled": initialize_git,
+        },
+    ]
+    return actions
+
+
+def main():
+    """Final fixes."""
+    output_dir = Path().cwd()
 
     # {{ cookiecutter.__cookieplone_subtemplates }}
-    run_subtemplates(context, output_dir, handlers=SUBTEMPLATE_HANDLERS)
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
-    # Cleanup / Git
-    actions = [
-        [handle_backend_cleanup, "Backend final cleanup", True],
-        [handle_devops_ansible, "Remove Ansible files", not feature_devops_ansible],
-        [
-            handle_devops_gha_deploy,
-            "Remove GitHub Actions deployment files",
-            not feature_gha_deploy,
-        ],
-        [handle_docs_setup, "Organize documentation files", feature_documentation],
-        [handle_docs_cleanup, "Remove unneeded documentation files", "1"],
-        [handle_git_initialization, "Initialize Git repository", initialize_git],
-    ]
-    run_actions(actions, output_dir)
-
-    # Do a second run add newly created files
-    if initialize_git:
-        repo = git.repo_from_path(output_dir)
-        if repo is not None:
-            repo.git.add(output_dir)
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

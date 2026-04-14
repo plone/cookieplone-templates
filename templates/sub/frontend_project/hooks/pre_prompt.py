@@ -4,7 +4,7 @@ import sys
 
 try:
     from cookieplone import __version__
-    from cookieplone.utils import console, versions
+    from cookieplone.utils import versions
 
 except ModuleNotFoundError:
     __version__ = ""
@@ -35,11 +35,9 @@ def _check_version(version: str) -> str:
 
 def main():
     """Check if we have cookieplone installed."""
-    if _check_version(__version__):
-        print()
+    if msg := _check_version(__version__):
+        print(msg)
         sys.exit(1)
-    else:
-        console.print_plone_banner()
 
 
 if __name__ == "__main__":

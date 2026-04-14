@@ -1,12 +1,12 @@
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 from random import choice
 from string import ascii_letters, digits
 
-from cookieplone.utils import console, git
+from cookieplone.utils import console, post_gen
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 def generate_vaultpass(context: OrderedDict, output_dir: Path):
@@ -20,34 +20,30 @@ def generate_vaultpass(context: OrderedDict, output_dir: Path):
         console.print(f"Vault password file already exists at {vault_pass_path}")
 
 
-def handle_git_initialization(context: OrderedDict, output_dir: Path):
-    """Initialize a Git repository for the documentation codebase."""
-    git.initialize_repository(output_dir)
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
+    initialize_git = bool(int(context.get("initialize_git")))
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": generate_vaultpass,
+            "title": "Generate Ansible vault password",
+            "enabled": True,
+        },
+        {
+            "handler": post_gen.initialize_git_repository,
+            "title": "Initialize Git repository",
+            "enabled": initialize_git,
+        },
+    ]
+    return actions
 
 
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    initialize_git = bool(int(context.get("initialize_git")))
-    # Cleanup / Git
-    actions = [
-        [
-            generate_vaultpass,
-            "Generate Ansible vault password",
-            True,
-        ],
-        [
-            handle_git_initialization,
-            "Initialize Git repository",
-            initialize_git,
-        ],
-    ]
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
     msg = """
         [bold blue]{{ cookiecutter.title }}[/bold blue]

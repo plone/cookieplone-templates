@@ -7,6 +7,7 @@ from typing import Callable
 from cookieplone.utils import console, plone
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 def update_file(filepath: Path, func: Callable, content: str) -> Path:
