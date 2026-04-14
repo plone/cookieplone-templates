@@ -1,0 +1,290 @@
+{
+  "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
+  "type": "Site",
+  "title": "Welcome to Plone 7!",
+  "description": "Congratulations! You have successfully installed Plone 7.",
+  "owner": "admin",
+  "workflow_state": "published",
+  "created": "2026-04-12T20:00:00.000Z",
+  "modified": "2026-04-12T20:00:00.000Z",
+  "effective": "2026-04-12T20:00:00.000Z",
+  "language": "en",
+  "blocks": {
+    "__somersault__": {
+      "@type": "__somersault__",
+      "value": [
+        {
+          "blockWidth": "default",
+          "children": [{ "text": "Welcome to Plone 7!" }],
+          "id": "7PjMKp20jt",
+          "type": "title"
+        },
+        {
+          "children": [
+            { "text": "You are looking at an early " },
+            {
+              "children": [{ "text": "Plone 7" }],
+              "id": "hieeXZUyLv",
+              "type": "a",
+              "url": "https://github.com/plone/volto/tree/seven"
+            },
+            { "text": "  site built with " },
+            {
+              "children": [{ "text": "Nick" }],
+              "id": "sVStEFdYEb",
+              "type": "a",
+              "url": "https://nickcms.org/"
+            },
+            { "bold": true, "text": " embedded in the application" },
+            { "text": "." }
+          ],
+          "id": "U6HhX-a7bD",
+          "type": "p"
+        },
+        { "children": [{ "text": "" }], "id": "mIU2BOw_c1", "type": "p" },
+        {
+          "children": [
+            {
+              "text": "Plone 7 is currently in an experimental stage. It is under active development and is not ready for production use yet. This site should be used for evaluation, demos, and development only."
+            }
+          ],
+          "id": "TX6bUeaJud",
+          "type": "p"
+        },
+        {
+          "children": [{ "bold": true, "text": "Get started" }],
+          "id": "Fe6v3x8BeI",
+          "type": "h2"
+        },
+        {
+          "children": [
+            {
+              "text": "Before you begin exploring your new site, we recommend that you:"
+            }
+          ],
+          "id": "ar67BoQ-lb",
+          "type": "p"
+        },
+        {
+          "children": [
+            { "text": "Log in with an administrator or manager account." }
+          ],
+          "id": "kd7StigMWT",
+          "indent": 1,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "children": [{ "text": "Review the available site settings." }],
+          "id": "5lI6Nr_r_O",
+          "indent": 1,
+          "listStart": 2,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "children": [
+            {
+              "text": "Configure your development environment and backend services."
+            }
+          ],
+          "id": "GWEw5W39Mr",
+          "indent": 1,
+          "listStart": 3,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "children": [
+            {
+              "text": "Use this site to test features, layouts, and integration patterns for the next generation of Plone."
+            }
+          ],
+          "id": "a80WisAd6W",
+          "indent": 1,
+          "listStart": 4,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "children": [{ "bold": true, "text": "Learn more" }],
+          "id": "JM0rVw2XtV",
+          "type": "h2"
+        },
+        {
+          "children": [
+            {
+              "text": "To get comfortable with the Plone ecosystem, you may want to:"
+            }
+          ],
+          "id": "LDPpZRjc-M",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [
+            { "text": "Read the " },
+            {
+              "blockWidth": "default",
+              "children": [{ "text": "documentation" }],
+              "id": "P5JHt9blLU",
+              "type": "a",
+              "url": "https://volto.readthedocs.io/seven/"
+            },
+            { "text": "." }
+          ],
+          "id": "3PHNwjZa0N",
+          "indent": 1,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [
+            { "text": "Follow a " },
+            {
+              "blockWidth": "default",
+              "children": [{ "text": "training" }],
+              "id": "Hdm8i3qsb0",
+              "type": "a",
+              "url": "https://training.plone.org"
+            },
+            { "text": "." }
+          ],
+          "id": "NBeeQMS072",
+          "indent": 1,
+          "listStart": 2,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [
+            { "text": "Get the latest " },
+            {
+              "blockWidth": "default",
+              "children": [{ "text": "news" }],
+              "id": "xgMiY00uSB",
+              "type": "a",
+              "url": "https://plone.org/news-and-events"
+            },
+            { "text": " about Plone." }
+          ],
+          "id": "srLYfwJ922",
+          "indent": 1,
+          "listStart": 3,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [
+            { "text": "Read or subscribe to the " },
+            {
+              "blockWidth": "default",
+              "children": [{ "text": "support channels" }],
+              "id": "74Y-7j7Kkm",
+              "type": "a",
+              "url": "https://plone.org/support"
+            },
+            { "text": "." }
+          ],
+          "id": "1i1tzaY7rZ",
+          "indent": 1,
+          "listStart": 4,
+          "listStyleType": "disc",
+          "type": "p"
+        },
+        {
+          "children": [{ "bold": true, "text": "About Plone 7 and Nick" }],
+          "id": "9ySLXRC2P2",
+          "type": "h2"
+        },
+        {
+          "children": [
+            { "bold": true, "text": "Plone" },
+            {
+              "text": " is an open source content management system known for its flexibility, strong security model, and powerful content architecture."
+            }
+          ],
+          "id": "ZRq6e-TP49",
+          "type": "p"
+        },
+        { "children": [{ "text": "" }], "id": "9C5Hsl3kNl", "type": "p" },
+        {
+          "children": [
+            { "bold": true, "text": "Plone 7" },
+            {
+              "text": " is the next generation of the Plone user experience, built on modern frontend technologies and the new @plone/* libraries."
+            }
+          ],
+          "id": "oYCA6GQf8W",
+          "type": "p"
+        },
+        { "children": [{ "text": "" }], "id": "S6PxDtaMCL", "type": "p" },
+        {
+          "children": [
+            { "bold": true, "text": "Nick" },
+            {
+              "text": " is the frontend application layer used in this site. In this setup, Nick is embedded directly in the application rather than running as a separate standalone service."
+            }
+          ],
+          "id": "qRk-6nTbgQ",
+          "type": "p"
+        },
+        {
+          "children": [
+            { "bold": true, "text": "Support the Plone Foundation" }
+          ],
+          "id": "qWLYhm6cAv",
+          "type": "h2"
+        },
+        { "children": [{ "text": "" }], "id": "rLyZ97ev8J", "type": "p" },
+        {
+          "children": [
+            {
+              "text": "Plone exists thanks to a worldwide community of contributors and organizations. The Plone Foundation protects and promotes Plone, supports its long-term sustainability, and receives donations to help fund its mission."
+            }
+          ],
+          "id": "qUJVWiX4a2",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [{ "text": "" }],
+          "id": "5Un4P3lfbZ",
+          "type": "p"
+        },
+        {
+          "blockWidth": "narrow",
+          "children": [
+            { "text": "" },
+            {
+              "blockWidth": "default",
+              "children": [
+                {
+                  "text": "Support the Foundation and help make Plone better!"
+                }
+              ],
+              "id": "RAxpJn04ml",
+              "type": "a",
+              "url": "https://plone.org/foundation/sponsorship"
+            },
+            { "text": "" }
+          ],
+          "id": "GeDX1dX951",
+          "type": "p"
+        },
+        { "children": [{ "text": "" }], "id": "xwnbhcOBvT", "type": "p" },
+        {
+          "children": [{ "text": "Thanks for trying Plone 7." }],
+          "id": "AbMlo0IyMp",
+          "type": "p"
+        }
+      ]
+    }
+  },
+  "blocks_layout": {
+    "items": []
+  }
+}

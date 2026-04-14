@@ -62,13 +62,6 @@
                 "default": "{{ cookiecutter.frontend_addon_name }}",
                 "validator": "cookieplone.validators.npm_package_name"
             },
-            "volto_version": {
-                "type": "string",
-                "title": "Volto Version",
-                "description": "Volto frontend version to target. Automatically resolved to the latest available release.",
-                "default": "{{ 'Yes' | latest_volto }}",
-                "validator": "cookieplone.validators.volto_version"
-            },
             "__folder_name": {
                 "type": "string",
                 "title": "__folder_name",

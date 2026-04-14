@@ -7,7 +7,7 @@
     "projects": {
       "title": "Projects",
       "description": "Generators that create a new Plone project",
-      "templates": ["project", "classic_project"],
+      "templates": ["project", "classic_project", "plone7_nick_bff"],
       "hidden": false
     },
     "add-ons": {
@@ -97,8 +97,14 @@
     },
     "seven_addon": {
       "path": "./templates/add-ons/seven_addon",
-      "title": "Plone 7 Alpha Frontend Add-on",
-      "description": "Create a new Node.js Plone 7 Alpha frontend package",
+      "title": "Plone 7 alpha Frontend Add-on",
+      "description": "Create a new Node.js Plone 7 alpha frontend package",
+      "hidden": false
+    },
+    "plone7_nick_bff": {
+      "path": "./templates/projects/plone7_nick_bff",
+      "title": "Plone 7 alpha using Nick as an embedded library",
+      "description": "Create a new Node.js Plone 7 alpha project using Nick as an embedded library",
       "hidden": false
     },
     "sub/cache": {

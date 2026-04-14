@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 20
+    assert len(all_templates) == 21
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -14,10 +14,15 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
     [
         ("project", "Plone 6 Project", False),
         ("classic_project", "Plone 6 using Classic UI Project", False),
+        (
+            "plone7_nick_bff",
+            "Plone 7 alpha using Nick as an embedded library",
+            False,
+        ),
         ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
         ("frontend_addon", "Plone 6 Frontend Add-on", False),
         ("monorepo_addon", "Plone 6 Add-on (Frontend and Backend)", False),
-        ("seven_addon", "Plone 7 Alpha Frontend Add-on", False),
+        ("seven_addon", "Plone 7 alpha Frontend Add-on", False),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
         ("sub/cache", "Cache settings for a Plone 6 project", True),
         (

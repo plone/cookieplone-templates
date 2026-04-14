@@ -1,0 +1,14 @@
+.*project
+.settings/
+.vscode
+*~
+acceptance/cypress/videos/
+acceptance/node_modules
+.storybook-build
+build
+core
+/nick
+node_modules
+results
+yarn.lock
+/public
