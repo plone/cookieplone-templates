@@ -9,8 +9,8 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-TOP_LEVEL_TEMPLATES = add-ons/backend add-ons/frontend projects/monorepo projects/classic
-SUB_TEMPLATES = sub/cache sub/frontend_project sub/project_settings
+# Templates are derived from cookieplone-config.json via .scripts/list_templates.py
+TEMPLATES = $(shell uv run python .scripts/list_templates.py --with-hooks)
 
 # Python checks
 UV?=uv
@@ -59,9 +59,7 @@ format: $(VENV_FOLDER) ## Format code
 .PHONY: format_templates
 format_templates: $(VENV_FOLDER) ## Format code
 	@echo "$(GREEN)==> Formatting templates $(RESET)"
-	$(foreach project,$(TOP_LEVEL_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/$(project)/" format ;)
-	@echo "$(GREEN)==> Formatting sub-templates $(RESET)"
-	$(foreach project,$(SUB_TEMPLATES),$(MAKE) -C "$(TEMPLATES_FOLDER)/$(project)/" format ;)
+	$(foreach project,$(TEMPLATES),$(MAKE) -C "$(CURRENT_DIR)/$(project)/" format ;)
 
 .PHONY: lint
 lint: $(VENV_FOLDER) ## Lint code
