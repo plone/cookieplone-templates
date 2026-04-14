@@ -379,8 +379,8 @@ wheels = [
 
 [[package]]
 name = "cookieplone"
-version = "2.0.0a1.dev0"
-source = { git = "https://github.com/plone/cookieplone.git?rev=main#c076f362491443c1da315c28a4b9c0fdacdbff3b" }
+version = "2.0.0a2"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cookiecutter" },
     { name = "gitpython" },
@@ -389,6 +389,10 @@ dependencies = [
     { name = "tui-forms" },
     { name = "typer" },
     { name = "xmltodict" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f9/26/f57a1ebae3882258911276a49ec929e146df0483c37724d873ac87f82151/cookieplone-2.0.0a2.tar.gz", hash = "sha256:b99b637c8fa727fa7a6672c6b6b47222c386be605747650f716c6ef8b6cb5ee6", size = 119808, upload-time = "2026-04-14T12:49:44.393Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/ca/5e439d655316bb05ce1bd19c70ecaf77784e9245ea2ffdd6fec0fe70f72a/cookieplone-2.0.0a2-py3-none-any.whl", hash = "sha256:9112c35916f37ccafe68f062c6c345bace2f3145057139361f88a16414f229b3", size = 74513, upload-time = "2026-04-14T12:49:45.682Z" },
 ]
 
 [[package]]
@@ -408,7 +412,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cookieplone", git = "https://github.com/plone/cookieplone.git?rev=main" },
+    { name = "cookieplone", specifier = ">=2.0.0a2" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-jsonschema", specifier = ">=1.0.0" },
