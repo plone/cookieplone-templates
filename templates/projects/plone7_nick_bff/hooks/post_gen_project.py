@@ -57,6 +57,20 @@ def main():
         cd {{ cookiecutter.frontend_addon_name }}
         make install
 
+        Then, you need to populate the PostGreSQL database:
+        - Configure the parameters of your connection to the database in the `registry.config.ts` file.
+            ```
+                connection: {
+                    port: 5432,
+                    host: 'your-database-host',
+                    database: 'your-database-name',
+                    user: 'your-username',
+                    password: 'your-password',
+                },
+            ```
+            Note: If you want to use the default configuration (eg. while developing), you can skip this step.
+        - Run the command `pnpm nick:seed` to populate the database with the initial data and profile.
+
         start coding, and push to your organization.
 
         Sorry for the convenience,
