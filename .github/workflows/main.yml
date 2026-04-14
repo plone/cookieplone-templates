@@ -44,7 +44,7 @@ jobs:
     outputs:
       matrix: ${{ steps.collect.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: collect
         name: "Collect templates from cookieplone-config.json"
         run: |
@@ -85,7 +85,7 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: Restore uv cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5.0.5
         with:
           path: ${{ env.UV_CACHE_DIR }}
           key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'templates/add-ons/backend/collective.addon/pyproject.toml') }}
