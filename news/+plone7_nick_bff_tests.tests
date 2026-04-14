@@ -1,0 +1,1 @@
+Added minimal test suite for the `plone7_nick_bff` project template, covering generation, variable substitution, generated file layout, and JSON-schema validation. @ericof

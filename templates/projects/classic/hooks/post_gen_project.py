@@ -216,9 +216,7 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "enabled": not feature_documentation,
         },
         {
-            "handler": post_gen.remove_files_by_key(
-                POST_GEN_TO_REMOVE, "docs-license"
-            ),
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "docs-license"),
             "title": "Remove unneeded documentation files",
             "enabled": feature_documentation,
         },

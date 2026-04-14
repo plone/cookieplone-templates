@@ -37,8 +37,8 @@ $(VENV_FOLDER): ## cookieplone installation
 .PHONY: format
 format: $(VENV_FOLDER)## Format code
 	@echo "$(GREEN)==> Formatting $(TEMPLATE) codebase $(RESET)"
-	@uv run ruff format --config $(BASE_FOLDER)/pyproject.toml hooks
-	@uv run ruff check --select I --fix --config $(BASE_FOLDER)/pyproject.toml hooks
+	@uvx ruff format --config $(BASE_FOLDER)/pyproject.toml hooks
+	@uvx ruff check --select I --fix --config $(BASE_FOLDER)/pyproject.toml hooks
 
 .PHONY: generate
 generate:  $(VENV_FOLDER) ## Create a sample package

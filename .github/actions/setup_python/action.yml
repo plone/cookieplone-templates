@@ -5,23 +5,16 @@ inputs:
     description: 'Python Version'
     required: true
     default: '3.12'
+
 runs:
   using: "composite"
   steps:
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v8.0.0
       with:
         python-version: ${{ inputs.python-version }}
-        enable-cache: false
-
-    - name: Restore uv cache
-      uses: actions/cache@v4
-      with:
-        path: ${{ env.UV_CACHE_DIR }}
-        key: uv-${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('uv.lock') }}
-        restore-keys: |
-          uv-${{ runner.os }}-${{ inputs.python-version }}-${{ hashFiles('uv.lock') }}
-          uv-${{ runner.os }}-${{ inputs.python-version }}
+        cache-suffix: uv-${{ runner.os }}-${{ inputs.python-version }}
+        enable-cache: true
 
     - name: Install Dependencies
       working-directory: ${{ inputs.working-directory }}
