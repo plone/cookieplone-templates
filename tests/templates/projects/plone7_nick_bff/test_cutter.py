@@ -1,4 +1,4 @@
-"""Test cookiecutter generation for plone7_nick_bff."""
+"""Test cookiecutter generation for plone7_nick_embedded."""
 
 import pytest
 
