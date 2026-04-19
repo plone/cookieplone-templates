@@ -18,14 +18,14 @@ def cookieplone_root() -> dict:
 def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
-        "frontend_addon_name": "volto-addon",
-        "title": "Volto Add-on",
-        "description": "Add new features to your Volto Project.",
+        "frontend_addon_name": "plone7-nick-embedded",
+        "title": "Plone 7 alpha using Nick as an embedded library",
+        "project_slug": "plone7-nick-embedded",
+        "description": "Add new features to your Plone 7 Project.",
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "github_organization": "collective",
-        "npm_package_name": "@plone-collective/volto-addon",
-        "volto_version": "18.0.0-alpha.31",
+        "npm_package_name": "@plone-collective/plone7-nick-embedded",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
@@ -34,7 +34,7 @@ def context(cookieplone_root) -> dict:
 def context_no_npm_organization(context) -> dict:
     """Cookiecutter context without a NPM organization."""
     new_context = deepcopy(context)
-    new_context["npm_package_name"] = "volto-addon"
+    new_context["npm_package_name"] = "plone7-nick-embedded"
     return new_context
 
 
@@ -42,11 +42,12 @@ def context_no_npm_organization(context) -> dict:
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
-        "frontend_addon_name": "volto addon",
-        "title": "Volto Add-on",
-        "description": "Add new features to your Volto Project.",
+        "frontend_addon_name": "plone7 nick embedded",
+        "title": "Plone 7 alpha using Nick as an embedded library",
+        "project_slug": "plone7-nick-embedded",
+        "description": "Add new features to your Plone 7 Project.",
         "github_organization": "collective",
-        "npm_package_name": "plone-collective/volto-addon",
+        "npm_package_name": "plone-collective/plone7-nick-embedded",
         "author": "Plone Collective",
         "email": "collective@plone.org",
     }

@@ -117,9 +117,9 @@ def test_pkg_nick_files_generated(cutter_result, file_path: str):
         [".github/workflows/storybook.yml", "github-workflow"],
         [".github/workflows/unit.yml", "github-workflow"],
         ["package.json", "package"],
-        ["packages/volto-addon/package.json", "package"],
-        ["packages/volto-addon/tsconfig.json", "tsconfig"],
-        ["packages/volto-addon-nick/package.json", "package"],
+        ["packages/plone7-nick-embedded/package.json", "package"],
+        ["packages/plone7-nick-embedded/tsconfig.json", "tsconfig"],
+        ["packages/plone7-nick-embedded-nick/package.json", "package"],
     ],
 )
 def test_json_schema(
