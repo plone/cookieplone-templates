@@ -117,13 +117,14 @@ def test_pkg_nick_files_generated(cutter_result, file_path: str):
         [".github/workflows/storybook.yml", "github-workflow"],
         [".github/workflows/unit.yml", "github-workflow"],
         ["package.json", "package"],
-        ["packages/volto-addon/package.json", "package"],
-        ["packages/volto-addon/tsconfig.json", "tsconfig"],
-        ["packages/volto-addon-nick/package.json", "package"],
+        ["packages/{package_name}/package.json", "package"],
+        ["packages/{package_name}/tsconfig.json", "tsconfig"],
+        ["packages/{package_name}-nick/package.json", "package"],
     ],
 )
 def test_json_schema(
     cutter_result, schema_validate_file, file_path: str, schema_name: str
 ):
-    path = cutter_result.project_path / file_path
+    package_name = cutter_result.context["frontend_addon_name"]
+    path = cutter_result.project_path / file_path.format(package_name=package_name)
     assert schema_validate_file(path, schema_name)

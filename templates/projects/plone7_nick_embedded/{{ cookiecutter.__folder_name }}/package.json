@@ -45,9 +45,9 @@
     "{{ cookiecutter.__npm_package_name }}": "workspace:*"
   },
   "devDependencies": {
-    "mrs-developer": "{{ cookiecutter.__version_mrs_developer }}"
+    "mrs-developer": "{{ versions.frontend_mrs_developer }}"
   },
-  "packageManager": "pnpm@{{ cookiecutter.__version_pnpm }}",
+  "packageManager": "pnpm@{{ versions.frontend_pnpm }}",
   "pnpm": {
     "overrides": {
       "react": "^19.2.0",

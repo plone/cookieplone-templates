@@ -40,7 +40,7 @@
     "@plone/types": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "release-it": "{{ cookiecutter.__version_release_it }}",
+    "release-it": "{{ versions.frontend_release_it }}",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

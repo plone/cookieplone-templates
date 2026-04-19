@@ -1,14 +1,14 @@
 """Post generation hook."""
 
-import os
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.utils import console
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 TEMPLATES_FOLDER = "templates"
@@ -24,30 +24,28 @@ def generate_ide_vscode(context, output_dir):
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
     generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+        f"{TEMPLATES_FOLDER}/ide/vscode",
+        output_dir,
+        ".vscode",
+        vscode_context,
+        global_versions=versions,
     )
+
+
+SUBTEMPLATE_HANDLERS = {
+    "ide/vscode": generate_ide_vscode,
+}
 
 
 def main():
     """Final fixes."""
 
     output_dir = Path().cwd()
-    subtemplates = context.get(
-        "__cookieplone_subtemplates", []
-    )  # {{ cookiecutter.__cookieplone_subtemplates }}
-    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
-    for template_id, title, enabled in subtemplates:
-        os.getenv("COOKIEPLONE_SUBTEMPLATE")
-        func_name = f"generate_{template_id.replace('/', '_')}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
     msg = """
         [bold blue]{{ cookiecutter.frontend_addon_name }}[/bold blue]

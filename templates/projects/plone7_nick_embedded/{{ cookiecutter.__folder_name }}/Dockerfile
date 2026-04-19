@@ -34,6 +34,6 @@ COPY --from=builder /app/ /app/
 RUN <<EOT
     set -e
     corepack enable pnpm
-    corepack use pnpm@{{ cookiecutter.__version_pnpm }}
-    corepack prepare pnpm@{{ cookiecutter.__version_pnpm }} --activate
+    corepack use pnpm@{{ versions.frontend_pnpm }}
+    corepack prepare pnpm@{{ versions.frontend_pnpm }} --activate
 EOT
