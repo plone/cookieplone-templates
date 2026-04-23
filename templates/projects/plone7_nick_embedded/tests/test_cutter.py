@@ -1,8 +1,8 @@
-"""Test cookiecutter generation with all features enabled."""
+"""Test cookiecutter generation for plone7_nick_embedded."""
 
 import pytest
 
-GITHUB_ACTIONS = [
+GITHUB_WORKFLOWS = [
     ".github/workflows/acceptance.yml",
     ".github/workflows/changelog.yml",
     ".github/workflows/code.yml",
@@ -12,37 +12,34 @@ GITHUB_ACTIONS = [
 ]
 
 
-ROOT_FILES = GITHUB_ACTIONS + [
+ROOT_FILES = [
+    *GITHUB_WORKFLOWS,
     ".storybook/main.js",
     ".storybook/preview.jsx",
-    "cypress/support/commands.js",
-    "cypress/support/e2e.js",
-    "cypress/tests/.gitkeep",
-    "cypress/tests/example.cy.js",
-    "cypress/.gitkeep",
-    ".eslintrc.js",
     ".gitignore",
     ".npmignore",
     ".npmrc",
+    ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
     ".stylelintrc",
-    "cypress.config.js",
-    "jest-addon.config.js",
+    "Dockerfile",
+    "eslint.config.mjs",
     "Makefile",
     "mrs.developer.json",
     "package.json",
     "pnpm-workspace.yaml",
     "README.md",
-    "volto.config.js",
+    "registry.config.ts",
 ]
 
 
 PKG_SRC_FILES = [
     ".gitignore",
     ".release-it.json",
-    "babel.config.js",
     "CHANGELOG.md",
+    "config/server.ts",
+    "index.ts",
     "locales/de/LC_MESSAGES/volto.po",
     "locales/en/LC_MESSAGES/volto.po",
     "locales/es/LC_MESSAGES/volto.po",
@@ -50,10 +47,18 @@ PKG_SRC_FILES = [
     "locales/volto.pot",
     "news/.gitkeep",
     "package.json",
-    "src/components/.gitkeep",
-    "src/index.js",
     "towncrier.toml",
     "tsconfig.json",
+    "types.d.ts",
+    "vite.extend.ts",
+]
+
+
+PKG_NICK_FILES = [
+    "package.json",
+    "profiles/default/metadata.json",
+    "profiles/default/users.json",
+    "profiles/default/groups.json",
 ]
 
 
@@ -70,10 +75,11 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
     """Check if no file was unprocessed."""
     paths = build_files_list(cutter_result.project_path)
     for path in paths:
-        for line in open(path):
-            match = variable_pattern.search(line)
-            msg = f"cookiecutter variable not replaced in {path}"
-            assert match is None, msg
+        with open(path) as fh:
+            for line in fh:
+                match = variable_pattern.search(line)
+                msg = f"cookiecutter variable not replaced in {path}"
+                assert match is None, msg
 
 
 @pytest.mark.parametrize(
@@ -97,6 +103,15 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
     assert path.is_file()
 
 
+@pytest.mark.parametrize("file_path", PKG_NICK_FILES)
+def test_pkg_nick_files_generated(cutter_result, file_path: str):
+    """Check if companion Nick package files were generated."""
+    package_name = f"{cutter_result.context['frontend_addon_name']}-nick"
+    path = cutter_result.project_path / "packages" / package_name / file_path
+    assert path.exists()
+    assert path.is_file()
+
+
 @pytest.mark.parametrize(
     "file_path,schema_name",
     [
@@ -109,6 +124,7 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
         ["package.json", "package"],
         ["packages/{package_name}/package.json", "package"],
         ["packages/{package_name}/tsconfig.json", "tsconfig"],
+        ["packages/{package_name}-nick/package.json", "package"],
     ],
 )
 def test_json_schema(
