@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture(scope="module")
 def template_folder() -> str:
-    return "add-ons/seven_addon"
+    return "add-ons/plone7_frontend"
 
 
 @pytest.fixture(scope="session")
@@ -23,7 +23,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "volto_version": "18.10.0",
         },
         cookieplone_root,
-        "seven_addon",
+        "plone7_frontend",
     )
 
 

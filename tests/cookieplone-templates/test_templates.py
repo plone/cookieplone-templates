@@ -16,13 +16,14 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("classic_project", "Plone 6 using Classic UI Project", False),
         (
             "plone7_nick_embedded",
-            "Plone 7 alpha using Nick as an embedded library",
+            "Plone 7 alpha using Nick as an embedded library (experimental)",
             False,
         ),
         ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
         ("frontend_addon", "Plone 6 Frontend Add-on", False),
         ("monorepo_addon", "Plone 6 Add-on (Frontend and Backend)", False),
-        ("seven_addon", "Plone 7 alpha Frontend Add-on", False),
+        ("plone7_frontend", "Plone 7 alpha Frontend Add-on", False),
+        ("seven_addon", "Plone 7 alpha Frontend Add-on", True),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
         ("sub/cache", "Cache settings for a Plone 6 project", True),
         (

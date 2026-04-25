@@ -19,7 +19,7 @@ def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
         "frontend_addon_name": "plone7-nick-embedded",
-        "title": "Plone 7 alpha using Nick as an embedded library",
+        "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
         "project_slug": "plone7-nick-embedded",
         "description": "Add new features to your Plone 7 Project.",
         "author": "Plone Collective",
@@ -43,7 +43,7 @@ def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
         "frontend_addon_name": "plone7 nick embedded",
-        "title": "Plone 7 alpha using Nick as an embedded library",
+        "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
         "project_slug": "plone7-nick-embedded",
         "description": "Add new features to your Plone 7 Project.",
         "github_organization": "collective",
