@@ -4,12 +4,13 @@ import sys
 from textwrap import dedent
 
 try:
+    from cookieplone import __version__ as cookieplone_version
     from cookieplone import data
     from cookieplone.utils import commands, console, sanity
-
-    HAS_COOKIEPLONE = True
 except ModuleNotFoundError:
-    HAS_COOKIEPLONE = False
+    print("This template should be run with cookieplone")
+    sys.exit(1)
+from packaging.version import Version
 
 
 SUPPORTED_NODE_VERSIONS = [
@@ -20,11 +21,29 @@ SUPPORTED_NODE_VERSIONS = [
     "22",
     "24",
 ]
+MIN_COOKIEPLONE = "2.0.0a2"
+COOKIEPLONE_INSTALLATION = (
+    "https://github.com/plone/cookieplone/blob/main/README.md#installation-"
+)
 
 
 def sanity_check() -> data.SanityCheckResults:
     """Run sanity checks on the system."""
     checks = [
+        data.SanityCheck(
+            "Cookieplone",
+            lambda: (
+                ""
+                if Version(cookieplone_version) >= Version(MIN_COOKIEPLONE)
+                else (
+                    f"This template requires Cookieplone {MIN_COOKIEPLONE} "
+                    "or higher. Upgrade information available "
+                    f"at {COOKIEPLONE_INSTALLATION}."
+                )
+            ),
+            [],
+            "error",
+        ),
         data.SanityCheck(
             "Node",
             commands.check_node_version,
@@ -39,10 +58,6 @@ def sanity_check() -> data.SanityCheckResults:
 
 def main():
     """Validate context."""
-    if not HAS_COOKIEPLONE:
-        print("This template should be run with cookieplone")
-        sys.exit(1)
-
     check_results = sanity_check()
     msg = dedent(
         """

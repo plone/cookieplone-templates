@@ -2,11 +2,8 @@ ALLOWED_MISSING: list[str] = [
     "ansible_path",
     "backend_path",
     "frontend_path",
-    "volto_version",
 ]
-ALLOWED_NOT_USED: list[str] = [
-    "__version_pre_commit",
-]
+ALLOWED_NOT_USED: list[str] = ["__generator_sha", "volto_version"]
 
 
 def test_no_missing_variables(variables_missing):

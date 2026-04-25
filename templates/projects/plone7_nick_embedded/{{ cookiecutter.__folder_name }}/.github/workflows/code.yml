@@ -9,7 +9,7 @@ on:
       - ".github/workflows/code.yml"
 
 env:
-  NODE_VERSION: {{ cookiecutter.__gha_version_node }}
+  NODE_VERSION: {{ versions.gha_version_node }}
 
 jobs:
   codeanalysis:
@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - name: Main checkout
-        uses: actions/checkout@{{ cookiecutter.__gha_version_checkout }}
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
 
       - name: Use Node.js
-        uses: actions/setup-node@{{ cookiecutter.__gha_version_setup_node }}
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
         with:
           node-version: {{ "${{ env.NODE_VERSION }}" }}
 
@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@{{ cookiecutter.__gha_version_cache }}
+      - uses: actions/cache@{{ versions.gha_version_cache }}
         name: Setup pnpm cache
         with:
           path: {{ "${{ env.STORE_PATH }}" }}

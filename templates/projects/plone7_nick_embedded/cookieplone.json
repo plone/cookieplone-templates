@@ -1,0 +1,143 @@
+{
+    "id": "plone7_nick_embedded",
+    "schema": {
+        "title": "Plone 7 Nick Embedded Project",
+        "description": "A project template for Plone 7 alpha using Nick as an embedded library.",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Project Title",
+                "description": "Human-readable name for the project.",
+                "default": "Project Title",
+                "validator": ""
+            },
+            "frontend_addon_name": {
+                "type": "string",
+                "title": "Frontend Add-on Name",
+                "description": "Short slug used as the package name and output folder (e.g. plone7-nick-embedded).",
+                "default": "{{ cookiecutter.title | slugify }}",
+                "validator": "cookieplone.validators.npm_package_name"
+            },
+            "project_slug": {
+                "type": "string",
+                "title": "Project Slug",
+                "description": "URL-friendly identifier used as the repository name.",
+                "default": "{{ cookiecutter.title | slugify }}",
+                "validator": ""
+            },
+            "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "A short description of your project.",
+                "default": "A new add-on for Seven",
+                "validator": ""
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "description": "Name of the project author or organization.",
+                "default": "Plone Community",
+                "validator": ""
+            },
+            "email": {
+                "type": "string",
+                "title": "Author E-mail",
+                "description": "Contact email for the project author.",
+                "default": "collective@plone.org",
+                "format": "email",
+                "validator": ""
+            },
+            "github_organization": {
+                "type": "string",
+                "title": "GitHub Username or Organization",
+                "description": "Organization or username used to build the repository URL.",
+                "default": "collective",
+                "validator": ""
+            },
+            "npm_package_name": {
+                "type": "string",
+                "title": "NPM Package Name",
+                "description": "Name of the package as published on NPM.",
+                "default": "{{ cookiecutter.frontend_addon_name }}",
+                "validator": "cookieplone.validators.npm_package_name"
+            },
+            "volto_version": {
+                "type": "string",
+                "title": "Volto Version",
+                "description": "Volto frontend version to target. Automatically resolved to the latest available release.",
+                "default": "{{ 'Yes' | latest_volto }}",
+                "validator": "cookieplone.validators.volto_version"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "{{ cookiecutter.frontend_addon_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__npm_package_name": {
+                "type": "string",
+                "title": "__npm_package_name",
+                "default": "{{ cookiecutter.npm_package_name }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__version_package": {
+                "type": "string",
+                "title": "__version_package",
+                "default": "1.0.0",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_sha": {
+                "type": "string",
+                "title": "__generator_sha",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_template_url": {
+                "type": "string",
+                "title": "__generator_template_url",
+                "default": "https://github.com/plone/cookieplone-templates/tree/main/{{ cookiecutter.__cookieplone_template }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_date_long": {
+                "type": "string",
+                "title": "__generator_date_long",
+                "default": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__generator_signature": {
+                "type": "string",
+                "title": "__generator_signature",
+                "default": "This was generated by [the cookieplone-templates {{ cookiecutter.__cookieplone_template }} template]({{ cookiecutter.__generator_template_url }}) on {{ cookiecutter.__generator_date_long }}",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.latest_volto"
+        ],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "ide/vscode",
+                "title": "Setup VSCode configuration",
+                "enabled": "1"
+            }
+        ]
+    }
+}
