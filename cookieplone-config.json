@@ -17,6 +17,7 @@
         "monorepo_addon",
         "backend_addon",
         "frontend_addon",
+        "plone7_frontend",
         "seven_addon"
       ],
       "hidden": false
@@ -95,15 +96,21 @@
       "description": "Create a new codebase for a Plone 6 add-on that includes both frontend and backend",
       "hidden": false
     },
-    "seven_addon": {
-      "path": "./templates/add-ons/seven_addon",
+    "plone7_frontend": {
+      "path": "./templates/add-ons/plone7_frontend",
       "title": "Plone 7 alpha Frontend Add-on",
       "description": "Create a new Node.js Plone 7 alpha frontend package",
       "hidden": false
     },
+    "seven_addon": {
+      "path": "./templates/add-ons/plone7_frontend",
+      "title": "Plone 7 alpha Frontend Add-on",
+      "description": "Create a new Node.js Plone 7 alpha frontend package",
+      "hidden": true
+    },
     "plone7_nick_embedded": {
       "path": "./templates/projects/plone7_nick_embedded",
-      "title": "Plone 7 alpha using Nick as an embedded library",
+      "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
       "description": "Create a new Node.js Plone 7 alpha project using Nick as an embedded library",
       "hidden": false
     },

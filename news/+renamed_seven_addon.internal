@@ -1,0 +1,1 @@
+Renamed the seven_addon template to `plone7_frontend`. Kept the original `seven_addon` for backwards compatibility. @sner
