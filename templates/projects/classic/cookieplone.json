@@ -50,15 +50,11 @@
                 "validator": ""
             },
             "use_prerelease_versions": {
-                "type": "string",
+                "type": "boolean",
                 "title": "Should we use prerelease versions?",
                 "description": "Whether to include alpha, beta, and release candidate versions when resolving the Plone version.",
-                "default": "{{ 'No' | use_prerelease_versions }}",
-                "validator": "",
-                "oneOf": [
-                    {"const": "Yes", "title": "Yes"},
-                    {"const": "No", "title": "No"}
-                ]
+                "default": false,
+                "validator": ""
             },
             "plone_version": {
                 "type": "string",

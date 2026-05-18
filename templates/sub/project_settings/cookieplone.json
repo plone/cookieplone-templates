@@ -5,6 +5,13 @@
         "description": "Settings applied on top of a Plone project (backend + Volto frontend).",
         "version": "2.0",
         "properties": {
+            "is_classic": {
+                "type": "boolean",
+                "title": "Is Classic",
+                "default": false,
+                "validator": "",
+                "format": "computed"
+            },
             "title": {
                 "type": "string",
                 "title": "Project Title",
@@ -85,7 +92,7 @@
             "volto_version": {
                 "type": "string",
                 "title": "Volto Version",
-                "default": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_volto if not cookiecutter.is_classic else '18.10.0' }}",
                 "validator": "",
                 "format": "computed"
             },
@@ -107,13 +114,6 @@
                     {"const": "docker_hub", "title": "Docker Hub"},
                     {"const": "gitlab", "title": "GitLab"}
                 ]
-            },
-            "is_classic": {
-                "type": "boolean",
-                "title": "Is Classic",
-                "default": false,
-                "validator": "",
-                "format": "computed"
             },
             "__feature_distribution": {
                 "type": "string",
