@@ -101,14 +101,12 @@ def generate_sub_cache(context: OrderedDict, output_dir: Path) -> Path:
     )
 
 
-def generate_sub_classic_project_settings(
-    context: OrderedDict, output_dir: Path
-) -> Path:
+def generate_sub_project_settings(context: OrderedDict, output_dir: Path) -> Path:
     """Configure language and other settings."""
     folder_name = output_dir.name
     parent_dir = output_dir.parent
     return generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/sub/classic_project_settings",
+        f"{TEMPLATES_FOLDER}/sub/project_settings",
         parent_dir,
         folder_name,
         context,
@@ -157,7 +155,7 @@ SUBTEMPLATE_HANDLERS = {
     "add-ons/backend": generate_addons_backend,
     "docs/starter": generate_docs_starter,
     "sub/cache": generate_sub_cache,
-    "sub/classic_project_settings": generate_sub_classic_project_settings,
+    "sub/project_settings": generate_sub_project_settings,
     "ci/gh_classic_project": generate_ci_gh_classic_project,
     "ide/vscode": generate_ide_vscode,
 }
