@@ -150,6 +150,13 @@
                 "default": true,
                 "validator": ""
             },
+            "is_classic": {
+                "type": "boolean",
+                "title": "Is this a Classic UI project?",
+                "default": true,
+                "validator": "",
+                "format": "computed"
+            },
             "__project_slug": {
                 "type": "string",
                 "title": "__project_slug",
