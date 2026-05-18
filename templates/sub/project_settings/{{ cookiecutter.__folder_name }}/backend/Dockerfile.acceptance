@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG PYTHON_VERSION=undefined
-ARG PLONE_VERSION={{ cookiecutter.plone_version }}
+ARG PYTHON_VERSION={{ cookiecutter.__python_version }}
 FROM plone/server-builder:uv-${PYTHON_VERSION} AS builder
 
 # Install project dependencies based on uv.lock and pyproject.toml
@@ -11,6 +10,7 @@ RUN --mount=type=cache,target=/root/.cache \
     uv sync \
         --locked \
         --no-dev \
+        --no-group test \
         --group container \
         --no-install-project
 
@@ -22,6 +22,7 @@ RUN --mount=type=cache,target=/root/.cache \
     uv sync \
         --locked \
         --no-dev \
+        --no-group test \
         --group container \
         --no-editable
 
@@ -29,6 +30,7 @@ RUN --mount=type=cache,target=/root/.cache \
 RUN <<EOT
     mv /app_skeleton/* /app
     rm -Rf /app_skeleton
+    chmod +x /app/docker-entrypoint.sh
     mv scripts/create_site.py /app/scripts/create_site.py
 EOT
 
@@ -37,14 +39,14 @@ RUN <<EOT
     /app/bin/python /compile_mo.py
 EOT
 
-FROM plone/server-acceptance:${PLONE_VERSION}
+FROM plone/server-acceptance:uv-${PYTHON_VERSION}
 
 LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
       org.label-schema.name="{{ cookiecutter.project_slug }}-acceptance" \
       org.label-schema.description="{{ cookiecutter.title }} backend acceptance image." \
       org.label-schema.vendor="{{ cookiecutter.author }}"
 
-ENV CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,{{ cookiecutter.python_package_name }}"
+ENV CONFIGURE_PACKAGES="plone.restapi,{% if not cookiecutter.is_classic %}plone.volto,plone.volto.cors,{% endif %}{{ cookiecutter.python_package_name }}"
 ENV APPLY_PROFILES="{{ cookiecutter.python_package_name }}:default"
 
 # Copy /app from builder

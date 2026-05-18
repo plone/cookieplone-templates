@@ -14,16 +14,25 @@ POST_GEN_TO_REMOVE = {
         "backend/src/packagename/profiles/uninstall",
         "backend/tests/setup/test_setup_uninstall.py",
     ],
+    "classic": [
+        "frontend",
+    ],
 }
 
 
 def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
     """Return action handlers."""
+    is_classic = bool(context.get("is_classic", False))
     actions: list[post_gen.PostGenAction] = [
         {
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "unnecessary"),
             "title": "Remove unnecessary files",
             "enabled": True,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "classic"),
+            "title": "Remove frontend files for Classic UI",
+            "enabled": is_classic,
         },
     ]
     return actions

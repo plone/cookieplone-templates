@@ -36,14 +36,26 @@ dependencies = [
     "Products.CMFPlone=={{ cookiecutter.plone_version }}",
     "plone.api",
     "plone.restapi",
+    {%- if cookiecutter.is_classic %}
+    {% if cookiecutter.plone_version >= "6.1" -%}
+    "plone.classicui",
+    {%- endif %}
+    "plone.app.caching",
+    "z3c.jbot",
+    {%- else %}
     "plone.volto",
+    {%- endif %}
 ]
 
 [dependency-groups]
 test = [
     "horse-with-no-namespace",
     "plone.app.testing",
+    {%- if cookiecutter.is_classic %}
+    "plone.app.robotframework",
+    {%- else %}
     "plone.restapi[test]",
+    {%- endif %}
     "pytest",
     "pytest-cov",
     "pytest-plone>=1.0.0a3",
