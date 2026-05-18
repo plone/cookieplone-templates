@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG PYTHON_VERSION=undefined
+ARG PYTHON_VERSION={{ cookiecutter.__python_version }}
 FROM plone/server-builder:uv-${PYTHON_VERSION} AS builder
 
 # Install project dependencies based on uv.lock and pyproject.toml
