@@ -59,8 +59,7 @@
         "sub/cache",
         "sub/frontend_project",
         "sub/project_settings",
-        "sub/addon_settings",
-        "sub/classic_project_settings"
+        "sub/addon_settings"
       ],
       "hidden": true
     }
@@ -136,12 +135,6 @@
       "path": "./templates/sub/addon_settings",
       "title": "Add-on settings to be applied on top of a Plone 6 project.",
       "description": "Subtemplate with configuration and settings for a Plone 6 project.",
-      "hidden": true
-    },
-    "sub/classic_project_settings": {
-      "path": "./templates/sub/classic_project_settings",
-      "title": "Project settings to be applied on top of a Plone 6 using Classic UI project",
-      "description": "Subtemplate with configuration and settings for a Plone 6 using Classic UI project.",
       "hidden": true
     },
     "documentation_starter": {
