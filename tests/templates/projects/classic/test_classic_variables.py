@@ -3,16 +3,20 @@ ALLOWED_MISSING = [
     "backend_path",
     "container_image_prefix",
     "feature_headless",
+    "frontend_addon_name",
     "frontend_path",
     "has_cache",
     "has_deploy",
     "has_docs",
     "initialize_ci",
     "initialize_git",
+    "npm_package_name",
     "python_version",
+    "volto_version",
 ]
 ALLOWED_NOT_USED = [
     "__devops_host",
+    "__version_plone_volto",
 ]
 
 
