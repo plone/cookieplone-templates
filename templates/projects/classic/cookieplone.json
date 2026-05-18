@@ -418,8 +418,8 @@
                 "enabled": "{{ '1' if cookiecutter.devops_cache else '0' }}"
             },
             {
-                "id": "sub/classic_project_settings",
-                "title": "Classic Setup Project Settings",
+                "id": "sub/project_settings",
+                "title": "Setup Project Settings",
                 "enabled": "1"
             },
             {
