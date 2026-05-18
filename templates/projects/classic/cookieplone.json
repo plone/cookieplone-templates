@@ -382,11 +382,14 @@
     "config": {
         "extensions": [
             "cookieplone.filters.use_prerelease_versions",
+            "cookieplone.filters.node_version_for_volto",
             "cookieplone.filters.extract_host",
             "cookieplone.filters.image_prefix",
             "cookieplone.filters.pascal_case",
             "cookieplone.filters.locales_language_code",
             "cookieplone.filters.gs_language_code",
+            "cookieplone.filters.package_path",
+            "cookieplone.filters.latest_volto",
             "cookieplone.filters.latest_plone"
         ],
         "no_render": [
