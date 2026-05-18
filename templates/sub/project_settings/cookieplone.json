@@ -108,6 +108,13 @@
                     {"const": "gitlab", "title": "GitLab"}
                 ]
             },
+            "is_classic": {
+                "type": "boolean",
+                "title": "Is Classic",
+                "default": false,
+                "validator": "",
+                "format": "computed"
+            },
             "__feature_distribution": {
                 "type": "string",
                 "title": "__feature_distribution",
