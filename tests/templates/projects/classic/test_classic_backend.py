@@ -11,9 +11,7 @@ BACKEND_FILES = [
     "Dockerfile",
     "instance.yaml",
     "Makefile",
-    "mx.ini",
     "pyproject.toml",
-    "version.txt",
 ]
 
 

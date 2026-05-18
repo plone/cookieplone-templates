@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 21
+    assert len(all_templates) == 20
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -39,12 +39,6 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "sub/addon_settings",
             "Add-on settings to be applied on top of a Plone 6 project.",
-            True,
-        ),
-        (
-            "sub/classic_project_settings",
-            "Project settings to be applied on top of a Plone 6 using "
-            "Classic UI project",
             True,
         ),
         (
