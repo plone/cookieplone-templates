@@ -36,8 +36,12 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 def test_json_schema(
     cutter_result, schema_validate_file, file_path: str, schema_name: str
 ):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = cutter_result.project_path / file_path
-    assert schema_validate_file(path, schema_name)
+    if not feature_headless and file_path == "workflows/frontend.yml":
+        assert not path.exists()
+    else:
+        assert schema_validate_file(path, schema_name)
 
 
 @pytest.mark.parametrize(
@@ -54,6 +58,13 @@ def test_json_schema(
     ],
 )
 def test_created_files(cutter_result, file_path: str):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = (cutter_result.project_path / file_path).resolve()
-    assert path.exists()
-    assert path.is_file()
+    if not feature_headless and (
+        file_path == "workflows/frontend.yml"
+        or file_path == "instructions/volto.instructions.md"
+    ):
+        assert not path.exists()
+    else:
+        assert path.exists()
+        assert path.is_file()

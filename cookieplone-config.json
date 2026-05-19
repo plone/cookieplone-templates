@@ -7,7 +7,7 @@
     "projects": {
       "title": "Projects",
       "description": "Generators that create a new Plone project",
-      "templates": ["project", "classic_project", "plone7_nick_embedded"],
+      "templates": ["project", "plone7_nick_embedded"],
       "hidden": false
     },
     "add-ons": {
@@ -41,8 +41,7 @@
         "ci_gh_backend_addon",
         "ci_gh_frontend_addon",
         "ci_gh_monorepo_addon",
-        "ci_gh_project",
-        "ci_gh_classic_project"
+        "ci_gh_project"
       ],
       "hidden": true
     },
@@ -68,13 +67,7 @@
     "project": {
       "path": "./templates/projects/monorepo",
       "title": "Plone 6 Project",
-      "description": "Create a new Plone 6 project",
-      "hidden": false
-    },
-    "classic_project": {
-      "path": "./templates/projects/classic",
-      "title": "Plone 6 using Classic UI Project",
-      "description": "Create a new Plone 6 project that uses Classic UI (Python backend legacy frontend)",
+      "description": "Create a new Plone 6 project (Volto or Classic UI)",
       "hidden": false
     },
     "backend_addon": {
@@ -170,13 +163,7 @@
     "ci_gh_project": {
       "path": "./templates/ci/gh_project",
       "title": "CI: GitHub Actions for Project",
-      "description": "GitHub Actions configuration for CI of a Plone Project",
-      "hidden": true
-    },
-    "ci_gh_classic_project": {
-      "path": "./templates/ci/gh_classic_project",
-      "title": "CI: GitHub Actions for a Plone 6 using Classic UI Project",
-      "description": "GitHub Actions configuration for CI of a Plone 6 using Classic UI Project",
+      "description": "GitHub Actions configuration for CI of a Plone Project (Volto or Classic UI)",
       "hidden": true
     },
     "agents_instructions": {

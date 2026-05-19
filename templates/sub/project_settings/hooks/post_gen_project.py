@@ -22,7 +22,7 @@ POST_GEN_TO_REMOVE = {
 
 def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
     """Return action handlers."""
-    is_classic = bool(context.get("is_classic", False))
+    feature_headless = bool(context.get("feature_headless", True))
     actions: list[post_gen.PostGenAction] = [
         {
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "unnecessary"),
@@ -32,7 +32,7 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
         {
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "classic"),
             "title": "Remove frontend files for Classic UI",
-            "enabled": is_classic,
+            "enabled": not feature_headless,
         },
     ]
     return actions

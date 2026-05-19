@@ -5,10 +5,17 @@
         "description": "Settings applied on top of a Plone project (backend + Volto frontend).",
         "version": "2.0",
         "properties": {
-            "is_classic": {
+            "feature_headless": {
                 "type": "boolean",
-                "title": "Is Classic",
-                "default": false,
+                "title": "Headless",
+                "default": true,
+                "validator": "",
+                "format": "computed"
+            },
+            "__feature_headless": {
+                "type": "string",
+                "title": "Headless",
+                "default": "{{ '1' if cookiecutter.feature_headless else '0' }}",
                 "validator": "",
                 "format": "computed"
             },
@@ -92,7 +99,7 @@
             "volto_version": {
                 "type": "string",
                 "title": "Volto Version",
-                "default": "{{ cookiecutter.use_prerelease_versions | latest_volto if not cookiecutter.is_classic else '18.10.0' }}",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_volto if cookiecutter.feature_headless else '18.10.0' }}",
                 "validator": "",
                 "format": "computed"
             },

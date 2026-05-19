@@ -63,6 +63,7 @@ jobs:
       packages: write
   {%- endif %}
 
+  {%- if cookiecutter.feature_headless %}
   frontend:
     uses: ./.github/workflows/frontend.yml
     needs:
@@ -77,6 +78,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+  {%- endif %}
 
   report:
     name: "Final report"
@@ -85,7 +87,9 @@ jobs:
     needs:
       - config
       - backend
+      {%- if cookiecutter.feature_headless %}
       - frontend
+      {%- endif %}
       {%- if cookiecutter.has_docs == '1' %}
       - docs
       {%- endif %}
@@ -100,7 +104,9 @@ jobs:
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
           echo '| config | {{ "${{ needs.config.result }}" }} |' >> $GITHUB_STEP_SUMMARY
           echo '| backend | {{ "${{ needs.backend.result }}" }} |' >> $GITHUB_STEP_SUMMARY
+          {%- if cookiecutter.feature_headless %}
           echo '| frontend | {{ "${{ needs.frontend.result }}" }} |' >> $GITHUB_STEP_SUMMARY
+          {%- endif %}
           {%- if cookiecutter.has_docs == '1' %}
           echo '| docs | {{ "${{ needs.docs.result }}" }} |' >> $GITHUB_STEP_SUMMARY
           {%- endif %}

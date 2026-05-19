@@ -86,7 +86,8 @@ def generate_addons_backend(context: OrderedDict, output_dir: Path) -> Path:
     """Run Plone Addon generator."""
     folder_name = "backend"
     # Headless
-    context["feature_headless"] = True
+    feature_headless = bool(context.get("feature_headless", True))
+    context["feature_headless"] = feature_headless
     context["initialize_ci"] = False
     context["initialize_documentation"] = False
     path = generator.generate_subtemplate(
@@ -188,7 +189,9 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path) -> Pat
 
 def generate_ci_gh_project(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
+    feature_headless = bool(context.get("feature_headless", True))
     ci_context = OrderedDict({
+        "feature_headless": feature_headless,
         "npm_package_name": context["__npm_package_name"],
         "python_version": versions["backend_python"],
         "node_version": context["__node_version"],
@@ -208,10 +211,11 @@ def generate_ci_gh_project(context: OrderedDict, output_dir: Path) -> Path:
 
 def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
     """Generate VS Code configuration."""
+    feature_headless = bool(context.get("feature_headless", True))
     ansible_path = "devops/ansible" if context.get("devops_ansible") else ""
     vscode_context = OrderedDict({
         "backend_path": "backend",
-        "frontend_path": "frontend",
+        "frontend_path": "frontend" if feature_headless else "",
         "ansible_path": ansible_path,
         "__cookieplone_repository_path": context["__cookieplone_repository_path"],
     })
@@ -249,6 +253,9 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
     feature_documentation = bool(
         context.get("initialize_documentation", False)
     )  # {{ cookiecutter.initialize_documentation }}
+    feature_headless = bool(
+        context.get("feature_headless", True)
+    )  # {{ cookiecutter.feature_headless }}
     backend_format = bool(
         int(context.get("__backend_addon_format", 1))
     )  # {{ cookiecutter.__backend_addon_format }}
@@ -262,6 +269,11 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "handler": post_gen.run_make_format("format", "backend"),
             "title": "Format backend code",
             "enabled": backend_format,
+        },
+        {
+            "handler": post_gen.run_make_format("format", "frontend"),
+            "title": "Format frontend code",
+            "enabled": backend_format and feature_headless,
         },
         {
             "handler": post_gen.remove_files_by_key(
@@ -285,7 +297,7 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
         {
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "docs"),
             "title": "Remove unneeded documentation files",
-            "enabled": feature_documentation,
+            "enabled": not feature_documentation,
         },
         {
             "handler": post_gen.initialize_git_repository,

@@ -170,7 +170,7 @@ build-image:  ## Build Container Images
 ############################################
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="{% if not cookiecutter.is_classic %}plone.restapi,plone.volto,plone.volto.cors,{% endif %}$(PACKAGE_NAME)" uv run robot-server plone.app.robotframework.testing.{{ "PLONE" if cookiecutter.is_classic else "VOLTO" }}_ROBOT_TESTING
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="{% if cookiecutter.feature_headless %}plone.restapi,plone.volto,plone.volto.cors,{% endif %}$(PACKAGE_NAME)" uv run robot-server plone.app.robotframework.testing.{{ "VOLTO" if cookiecutter.feature_headless else "PLONE" }}_ROBOT_TESTING
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images

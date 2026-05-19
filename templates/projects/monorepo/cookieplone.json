@@ -195,6 +195,13 @@
                 "default": true,
                 "validator": ""
             },
+            "feature_headless": {
+                "type": "boolean",
+                "title": "Support headless Plone?",
+                "description": "Include REST API serializers and other files required for a headless Plone setup (Volto). If No, a Classic UI project will be generated.",
+                "default": true,
+                "validator": ""
+            },
             "initialize_documentation": {
                 "type": "boolean",
                 "title": "Would you like to add a documentation scaffold to your project?",
@@ -202,13 +209,14 @@
                 "default": true,
                 "validator": ""
             },
-            "is_classic": {
-                "type": "boolean",
-                "title": "Is this a Classic UI project?",
-                "default": false,
+            "__feature_headless": {
+                "type": "string",
+                "title": "__feature_headless",
+                "default": "{{ '1' if cookiecutter.feature_headless else '0' }}",
                 "validator": "",
                 "format": "computed"
             },
+
             "__project_slug": {
                 "type": "string",
                 "title": "__project_slug",
@@ -508,7 +516,7 @@
             {
                 "id": "add-ons/frontend",
                 "title": "Setup Frontend",
-                "enabled": "1"
+                "enabled": "{{ '1' if cookiecutter.feature_headless else '0' }}"
             },
             {
                 "id": "docs/starter",
