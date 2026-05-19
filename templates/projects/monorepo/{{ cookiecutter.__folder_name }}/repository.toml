@@ -19,6 +19,7 @@ towncrier_settings = "backend/pyproject.toml"
 base_package = "Products.CMFPlone"
 publish = false
 
+{% if cookiecutter.feature_headless -%}
 [frontend.package]
 name = "{{ cookiecutter.frontend_addon_name }}"
 path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
@@ -27,6 +28,7 @@ changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGE
 towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
 base_package = "@plone/volto"
 publish = false
+{%- endif %}
 
 [cookieplone]
 template = "{{ cookiecutter.__cookieplone_template }}"

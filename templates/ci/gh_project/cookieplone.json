@@ -5,6 +5,13 @@
         "description": "GitHub Actions configuration for CI of a Plone Project",
         "version": "2.0",
         "properties": {
+            "feature_headless": {
+                "type": "boolean",
+                "title": "Headless",
+                "default": true,
+                "validator": "",
+                "format": "computed"
+            },
             "hostname": {
                 "type": "string",
                 "title": "Hostname",

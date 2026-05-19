@@ -36,7 +36,7 @@ dependencies = [
     "Products.CMFPlone=={{ cookiecutter.plone_version }}",
     "plone.api",
     "plone.restapi",
-    {%- if cookiecutter.is_classic %}
+    {%- if not cookiecutter.feature_headless %}
     {% if cookiecutter.plone_version >= "6.1" -%}
     "plone.classicui",
     {%- endif %}
@@ -51,7 +51,7 @@ dependencies = [
 test = [
     "horse-with-no-namespace",
     "plone.app.testing",
-    {%- if cookiecutter.is_classic %}
+    {%- if not cookiecutter.feature_headless %}
     "plone.app.robotframework",
     {%- else %}
     "plone.restapi[test]",

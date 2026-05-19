@@ -8,8 +8,14 @@ def template_folder() -> str:
     return "sub/project_settings"
 
 
+@pytest.fixture(scope="session", params=[True, False], ids=["headless", "classic"])
+def feature_headless(request) -> bool:
+    """Feature headless?"""
+    return request.param
+
+
 @pytest.fixture(scope="session")
-def context(annotate_context, cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root, feature_headless) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
@@ -23,6 +29,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "language_code": "en",
             "github_organization": "collective",
             "use_prerelease_versions": "No",
+            "feature_headless": feature_headless,
             "__node_version": "20",
         },
         cookieplone_root,

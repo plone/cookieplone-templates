@@ -46,7 +46,7 @@ LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
       org.label-schema.description="{{ cookiecutter.title }} backend acceptance image." \
       org.label-schema.vendor="{{ cookiecutter.author }}"
 
-ENV CONFIGURE_PACKAGES="plone.restapi,{% if not cookiecutter.is_classic %}plone.volto,plone.volto.cors,{% endif %}{{ cookiecutter.python_package_name }}"
+ENV CONFIGURE_PACKAGES="plone.restapi,{% if cookiecutter.feature_headless %}plone.volto,plone.volto.cors,{% endif %}{{ cookiecutter.python_package_name }}"
 ENV APPLY_PROFILES="{{ cookiecutter.python_package_name }}:default"
 
 # Copy /app from builder
