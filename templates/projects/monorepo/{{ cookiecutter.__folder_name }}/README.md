@@ -13,7 +13,9 @@
 -   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
 -   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
 -   [nvm](https://6.docs.plone.org/install/create-project-cookieplone.html#nvm)
+{% if cookiecutter.feature_headless -%}
 -   [Node.js and pnpm](https://6.docs.plone.org/install/create-project.html#node-js) {{ cookiecutter.__node_version }}
+{%- endif %}
 -   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
 -   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
 -   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
@@ -49,11 +51,13 @@
     make backend-start
     ```
 
+{% if cookiecutter.feature_headless -%}
 3.  In a new shell session, start the frontend at http://localhost:3000/.
 
     ```shell
     make frontend-start
     ```
+{%- endif %}
 
 Voila! Your Plone site should be live and kicking! 🎉
 
@@ -79,7 +83,9 @@ And... you're all set! Your Plone site is up and running locally! 🚀
 This monorepo consists of the following distinct sections:
 
 - **backend**: Houses the API and Plone installation, utilizing pip instead of buildout, and includes a policy package named {{ cookiecutter.python_package_name }}.
+{% if cookiecutter.feature_headless -%}
 - **frontend**: Contains the React (Volto) package.
+{%- endif %}
 - **devops**: Encompasses Docker stack, Ansible playbooks, and cache settings.
 - **docs**: Scaffold for writing documentation for your project.
 
@@ -110,11 +116,13 @@ make format
 | --- | --- | --- | --- |
 | backend | Ruff | Python code formatting, imports sorting  | [`backend/pyproject.toml`](./backend/pyproject.toml) |
 | backend | `zpretty` | XML and ZCML formatting  | -- |
+{% if cookiecutter.feature_headless -%}
 | frontend | ESLint | Fixes most common frontend issues | [`frontend/.eslintrc.js`](.frontend/.eslintrc.js) |
 | frontend | prettier | Format JS and Typescript code  | [`frontend/.prettierrc`](.frontend/.prettierrc) |
 | frontend | Stylelint | Format Styles (css, less, sass)  | [`frontend/.stylelintrc`](.frontend/.stylelintrc) |
+{%- endif %}
 
-Formatters can also be run within the `backend` or `frontend` folders.
+Formatters can also be run within the `backend`{% if cookiecutter.feature_headless %} or `frontend`{% endif %} folders.
 
 ### Linting the codebase
 or `lint`:
@@ -129,11 +137,14 @@ make lint
 | backend | Pyroma | Checks Python package metadata  | -- |
 | backend | check-python-versions | Checks Python version information  | -- |
 | backend | `zpretty` | Checks XML and ZCML formatting  | -- |
+{% if cookiecutter.feature_headless -%}
 | frontend | ESLint | Checks JS / Typescript lint | [`frontend/.eslintrc.js`](.frontend/.eslintrc.js) |
 | frontend | prettier | Check JS / Typescript formatting  | [`frontend/.prettierrc`](.frontend/.prettierrc) |
-| frontend | Stylelint | Check Styles (css, less, sass) formatting  | [`frontend/.stylelintrc`](.frontend/.stylelintrc) |
+| frontend | Stylelint | Check Styles (css, less, sass) formatting  | [`frontend/.stylelintrc`](.stylelintrc) |
+{%- endif %}
 
-Linters can be run individually within the `backend` or `frontend` folders.
+Linters can be run individually within the `backend`{% if cookiecutter.feature_headless %} or `frontend`{% endif %} folders.
+
 
 ## Internationalization 🌐
 
