@@ -12,7 +12,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
 @pytest.mark.parametrize(
     "template_id,title,hidden",
     [
-        ("monorepo", "Plone 6 Project", False),
+        ("project", "Plone 6 Project", False),
         (
             "plone7_nick_embedded",
             "Plone 7 alpha using Nick as an embedded library (experimental)",
