@@ -7,7 +7,7 @@
     "projects": {
       "title": "Projects",
       "description": "Generators that create a new Plone project",
-      "templates": ["monorepo", "plone7_nick_embedded"],
+      "templates": ["project", "plone7_nick_embedded"],
       "hidden": false
     },
     "add-ons": {
@@ -64,7 +64,7 @@
     }
   },
   "templates": {
-    "monorepo": {
+    "project": {
       "path": "./templates/projects/monorepo",
       "title": "Plone 6 Project",
       "description": "Create a new Plone 6 project (Volto or Classic UI)",
