@@ -65,7 +65,7 @@ Voila! Your Plone site should be live and kicking! 🎉
 
 Deploy a local Docker Compose environment that includes the following.
 
-- Docker images for Backend and Frontend 🖼️
+- Docker images for Backend {% if cookiecutter.feature_headless %}and Frontend{% endif %} 🖼️
 - A stack with a Traefik router and a PostgreSQL database 🗃️
 - Accessible at [http://{{ cookiecutter.__project_slug }}.localhost](http://{{ cookiecutter.__project_slug }}.localhost) 🌐
 

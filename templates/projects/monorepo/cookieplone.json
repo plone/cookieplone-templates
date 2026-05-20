@@ -73,9 +73,9 @@
             "volto_version": {
                 "type": "string",
                 "title": "Volto Version",
-                "default": "{{ cookiecutter.get('ask_volto_version', cookiecutter.use_prerelease_versions | latest_volto) }}",
-                "validator": "cookieplone.validators.volto_version",
-                "format": "computed"
+                "default": "18.10.0",
+                "validator": "cookieplone.validators.volto_version"
+
             },
             "python_package_name": {
                 "type": "string",
@@ -87,9 +87,9 @@
             "frontend_addon_name": {
                 "type": "string",
                 "title": "Volto Addon Name",
-                "default": "{{ cookiecutter.get('ask_frontend_addon_name', 'volto-' ~ (cookiecutter.python_package_name|replace('_', '-')|replace('.', '-'))) }}",
-                "validator": "cookieplone.validators.npm_package_name",
-                "format": "computed"
+                "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+                "validator": "cookieplone.validators.npm_package_name"
+
             },
             "language_code": {
                 "type": "string",
@@ -268,14 +268,14 @@
             "__frontend_package_name": {
                 "type": "string",
                 "title": "__frontend_package_name",
-                "default": "{{ cookiecutter.get('frontend_addon_name', '') | unscoped_package_name }}",
+                "default": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
                 "validator": "",
                 "format": "computed"
             },
             "__npm_package_name": {
                 "type": "string",
                 "title": "__npm_package_name",
-                "default": "{{ cookiecutter.get('frontend_addon_name', '') }}",
+                "default": "{{ cookiecutter.frontend_addon_name }}",
                 "validator": "",
                 "format": "computed"
             },
@@ -296,21 +296,21 @@
             "__node_version": {
                 "type": "string",
                 "title": "__node_version",
-                "default": "{{ cookiecutter.get('volto_version', '') | node_version_for_volto }}",
+                "default": "{{ cookiecutter.volto_version | node_version_for_volto }}",
                 "validator": "",
                 "format": "computed"
             },
             "__version_plone_volto": {
                 "type": "string",
                 "title": "__version_plone_volto",
-                "default": "{{ cookiecutter.get('volto_version', '') }}",
+                "default": "{{ cookiecutter.volto_version }}",
                 "validator": "",
                 "format": "computed"
             },
             "__version_pnpm": {
                 "type": "string",
                 "title": "__version_pnpm",
-                "default": "{{ ('10.20.0' if cookiecutter.get('volto_version', '') >= '19' else '9.15.9') if cookiecutter.get('volto_version') else '10.20.0' }}",
+                "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
                 "validator": "",
                 "format": "computed"
             },
@@ -487,14 +487,14 @@
                 },
                 "then": {
                     "properties": {
-                        "ask_volto_version": {
+                        "volto_version": {
                             "type": "string",
                             "title": "Volto Version",
                             "description": "Volto frontend version to use. Automatically resolved to the latest available release.",
                             "default": "{{ cookiecutter.use_prerelease_versions | latest_volto }}",
                             "validator": "cookieplone.validators.volto_version"
                         },
-                        "ask_frontend_addon_name": {
+                        "frontend_addon_name": {
                             "type": "string",
                             "title": "Volto Addon Name",
                             "description": "Name of the Volto frontend add-on package (e.g. volto-myproject).",
