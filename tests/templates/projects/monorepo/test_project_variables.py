@@ -2,7 +2,6 @@ ALLOWED_MISSING = [
     "ansible_path",
     "backend_path",
     "frontend_path",
-    "get",
     "has_cache",
     "has_deploy",
     "has_docs",
