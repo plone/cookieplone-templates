@@ -220,10 +220,17 @@
                 "validator": "",
                 "format": "computed"
             },
+            "__container_registry_prefix_separator": {
+                "type": "string",
+                "title": "__container_registry_prefix_separator",
+                "default": "{{ '/' if cookiecutter.container_registry == 'gitlab' else '-' }}",
+                "validator": "",
+                "format": "computed"
+            },
             "__container_image_prefix": {
                 "type": "string",
                 "title": "__container_image_prefix",
-                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
+                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}{{ cookiecutter.__container_registry_prefix_separator }}",
                 "validator": "",
                 "format": "computed"
             },
