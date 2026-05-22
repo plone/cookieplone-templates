@@ -1,0 +1,6 @@
+{
+  "id": "{{ cookiecutter.project_slug }}:default",
+  "title": "{{ cookiecutter.title }}",
+  "description": "Default content of {{ cookiecutter.title }}",
+  "version": 1000
+}
