@@ -1,8 +1,8 @@
 {
     "id": "plone7_nick",
     "schema": {
-        "title": "Plone 7 Nick Project",
-        "description": "A standalone Node.js project template powered by Nick.",
+        "title": "Plone 7 alpha using Nick as standalone backend (experimental)",
+        "description": "A standalone Node.js project template powered by Nick as backend.",
         "version": "2.0",
         "properties": {
             "title": {
