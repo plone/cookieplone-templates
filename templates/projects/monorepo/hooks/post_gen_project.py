@@ -235,7 +235,7 @@ def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
 
 SUBTEMPLATE_HANDLERS = {
     "add-ons/backend": generate_addons_backend,
-    #    "add-ons/frontend": generate_addons_frontend,
+    "add-ons/frontend": generate_addons_frontend,
     "docs/starter": generate_docs_starter,
     "sub/cache": generate_sub_cache,
     "sub/project_settings": generate_sub_project_settings,
