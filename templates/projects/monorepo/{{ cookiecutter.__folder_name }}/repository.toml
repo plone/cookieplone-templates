@@ -19,7 +19,7 @@ towncrier_settings = "backend/pyproject.toml"
 base_package = "Products.CMFPlone"
 publish = false
 
-{% if cookiecutter.feature_headless -%}
+{%- if cookiecutter.feature_headless -%}
 [frontend.package]
 name = "{{ cookiecutter.frontend_addon_name }}"
 path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
