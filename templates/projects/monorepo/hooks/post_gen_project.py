@@ -194,9 +194,9 @@ def generate_ci_gh_project(context: OrderedDict, output_dir: Path) -> Path:
     ci_context = OrderedDict(
         {
             "feature_headless": feature_headless,
-            "npm_package_name": context["__npm_package_name"],
+            "npm_package_name": context.get("__npm_package_name", ""),
             "python_version": versions["backend_python"],
-            "node_version": context["__node_version"],
+            "node_version": context.get("__node_version", ""),
             "has_cache": "1" if context["devops_cache"] else "0",
             "has_docs": "1" if context["initialize_documentation"] else "0",
             "has_deploy": "1" if context["devops_gha_deploy"] else "0",
