@@ -70,6 +70,14 @@
                 "default": true,
                 "validator": ""
             },
+
+            "plone_version": {
+                "type": "string",
+                "title": "Plone Version",
+                "description": "Plone backend version to use. Automatically resolved to the latest available release.",
+                "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
+                "validator": "cookieplone.validators.plone_version"
+            },
             "volto_version": {
                 "type": "string",
                 "title": "Volto Version",
@@ -81,13 +89,6 @@
                 "title": "Volto Addon Name",
                 "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
                 "format": "computed"
-            },
-            "plone_version": {
-                "type": "string",
-                "title": "Plone Version",
-                "description": "Plone backend version to use. Automatically resolved to the latest available release.",
-                "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
-                "validator": "cookieplone.validators.plone_version"
             },
             "language_code": {
                 "type": "string",
@@ -263,20 +264,6 @@
                 "validator": "",
                 "format": "computed"
             },
-            "__frontend_package_name": {
-                "type": "string",
-                "title": "__frontend_package_name",
-                "default": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
-                "validator": "",
-                "format": "computed"
-            },
-            "__npm_package_name": {
-                "type": "string",
-                "title": "__npm_package_name",
-                "default": "{{ cookiecutter.frontend_addon_name }}",
-                "validator": "",
-                "format": "computed"
-            },
             "__folder_name": {
                 "type": "string",
                 "title": "__folder_name",
@@ -288,27 +275,6 @@
                 "type": "string",
                 "title": "__python_package_name_upper",
                 "default": "{{ cookiecutter.python_package_name | pascal_case }}",
-                "validator": "",
-                "format": "computed"
-            },
-            "__node_version": {
-                "type": "string",
-                "title": "__node_version",
-                "default": "{{ cookiecutter.volto_version | node_version_for_volto }}",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_plone_volto": {
-                "type": "string",
-                "title": "__version_plone_volto",
-                "default": "{{ cookiecutter.volto_version }}",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_pnpm": {
-                "type": "string",
-                "title": "__version_pnpm",
-                "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
                 "validator": "",
                 "format": "computed"
             },
@@ -479,6 +445,31 @@
                 "if": {
                     "properties": {
                         "feature_headless": {
+                            "const": false
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "volto_version": {
+                            "type": "string",
+                            "title": "Volto Version",
+                            "default": "18.10.0",
+                            "format": "computed"
+                        },
+                        "frontend_addon_name": {
+                            "type": "string",
+                            "title": "Volto Addon Name",
+                            "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+                            "format": "computed"
+                        }
+                    }
+                }
+            },
+            {
+                "if": {
+                    "properties": {
+                        "feature_headless": {
                             "const": true
                         }
                     }
@@ -500,7 +491,43 @@
                             "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
                             "validator": "cookieplone.validators.npm_package_name",
                             "format": ""
+                        },
+                        "__node_version": {
+                            "type": "string",
+                            "title": "__node_version",
+                            "default": "{{ cookiecutter.volto_version | node_version_for_volto }}",
+                            "validator": "",
+                            "format": "computed"
+                        },
+                        "__version_plone_volto": {
+                            "type": "string",
+                            "title": "__version_plone_volto",
+                            "default": "{{ cookiecutter.volto_version }}",
+                            "validator": "",
+                            "format": "computed"
+                        },
+                        "__version_pnpm": {
+                            "type": "string",
+                            "title": "__version_pnpm",
+                            "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
+                            "validator": "",
+                            "format": "computed"
+                        },
+                        "__frontend_package_name": {
+                            "type": "string",
+                            "title": "__frontend_package_name",
+                            "default": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
+                            "validator": "",
+                            "format": "computed"
+                        },
+                        "__npm_package_name": {
+                            "type": "string",
+                            "title": "__npm_package_name",
+                            "default": "{{ cookiecutter.frontend_addon_name }}",
+                            "validator": "",
+                            "format": "computed"
                         }
+
                     }
                 }
             }
