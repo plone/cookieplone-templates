@@ -70,26 +70,12 @@
                 "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
                 "validator": "cookieplone.validators.plone_version"
             },
-            "volto_version": {
-                "type": "string",
-                "title": "Volto Version",
-                "default": "18.10.0",
-                "validator": "cookieplone.validators.volto_version"
-
-            },
             "python_package_name": {
                 "type": "string",
                 "title": "Python Package Name",
                 "description": "Dotted Python package name for the backend add-on (e.g. collective.myproject).",
                 "default": "{{ cookiecutter.project_slug|replace(' ', '')|replace('-', '.') }}",
                 "validator": "cookieplone.validators.python_package_name"
-            },
-            "frontend_addon_name": {
-                "type": "string",
-                "title": "Volto Addon Name",
-                "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
-                "validator": "cookieplone.validators.npm_package_name"
-
             },
             "language_code": {
                 "type": "string",
@@ -477,6 +463,31 @@
             }
         },
         "allOf": [
+            {
+                "if": {
+                    "properties": {
+                        "feature_headless": {
+                            "const": false
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "volto_version": {
+                            "type": "string",
+                            "title": "Volto Version",
+                            "default": "18.10.0",
+                            "format": "computed"
+                        },
+                        "frontend_addon_name": {
+                            "type": "string",
+                            "title": "Volto Addon Name",
+                            "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
+                            "format": "computed"
+                        }
+                    }
+                }
+            },
             {
                 "if": {
                     "properties": {
