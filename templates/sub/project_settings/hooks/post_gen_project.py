@@ -10,7 +10,6 @@ versions: dict | OrderedDict = {{versions}}
 
 POST_GEN_TO_REMOVE = {
     "unnecessary": [
-        "backend/mx.ini",
         "backend/src/packagename/profiles/uninstall",
         "backend/tests/setup/test_setup_uninstall.py",
     ],
