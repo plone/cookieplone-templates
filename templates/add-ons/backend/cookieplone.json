@@ -167,7 +167,7 @@
             "__backend_managed_by_uv": {
                 "type": "string",
                 "title": "__backend_managed_by_uv",
-                "default": "false",
+                "default": "true",
                 "validator": "",
                 "format": "computed"
             },
