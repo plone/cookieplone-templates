@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=undefined
 FROM plone/server-builder:uv-${PYTHON_VERSION} AS builder
 
 # Install project dependencies based on uv.lock and pyproject.toml

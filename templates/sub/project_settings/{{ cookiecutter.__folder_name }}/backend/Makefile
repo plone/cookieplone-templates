@@ -15,9 +15,6 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
-IMAGE_TAG=latest
-
 # Python checks
 UV?=uv
 
@@ -33,6 +30,7 @@ IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+PYTHON_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.python_version')
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 EXAMPLE_CONTENT_FOLDER := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.code_path')/setuphandlers/examplecontent
 PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
@@ -56,6 +54,7 @@ help: ## This help message
 .PHONY: debug-settings
 debug-settings:  ## Debug settings
 	@echo "Virtual Environment: $(VENV_FOLDER)"
+	@echo "PYTHON_VERSION: $(PYTHON_VERSION)"
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
 	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
@@ -164,7 +163,7 @@ test-coverage: $(VENV_FOLDER) ## run tests with coverage
 .PHONY: build-image
 build-image:  ## Build Container Images
 	@echo "$(GREEN)==> Building image $(IMAGE_NAME) $(RESET)"
-	@docker build . -t $(IMAGE_NAME) --progress plain -f Dockerfile
+	@docker build . -t $(IMAGE_NAME) --build-arg PYTHON_VERSION=$(PYTHON_VERSION) --progress plain -f Dockerfile
 
 ############################################
 # Acceptance Tests
