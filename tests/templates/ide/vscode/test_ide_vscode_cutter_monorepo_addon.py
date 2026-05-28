@@ -1,7 +1,5 @@
 """Test cookieplone generation."""
 
-import json
-
 import pytest
 
 

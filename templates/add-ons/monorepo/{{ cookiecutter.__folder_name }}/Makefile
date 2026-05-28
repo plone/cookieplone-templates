@@ -207,12 +207,12 @@ acceptance-test:
 .PHONY: acceptance-frontend-image-build
 acceptance-frontend-image-build:
 	@echo "Build acceptance frontend image"
-	@docker build frontend -t $(IMAGE_NAME_PREFIX)-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+	@docker build frontend -t $(IMAGE_NAME_PREFIX)frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
 
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:
 	@echo "Build acceptance backend image"
-	@docker build backend -t $(IMAGE_NAME_PREFIX)-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build backend -t $(IMAGE_NAME_PREFIX)backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 .PHONY: acceptance-images-build
 acceptance-images-build: ## Build Acceptance frontend/backend images
@@ -222,12 +222,12 @@ acceptance-images-build: ## Build Acceptance frontend/backend images
 .PHONY: acceptance-frontend-container-start
 acceptance-frontend-container-start:
 	@echo "Start acceptance frontend"
-	@docker run --rm -p 3000:3000 --name $(IMAGE_NAME_PREFIX)-frontend-acceptance --link $(IMAGE_NAME_PREFIX)-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d $(IMAGE_NAME_PREFIX)-frontend:acceptance
+	@docker run --rm -p 3000:3000 --name $(IMAGE_NAME_PREFIX)frontend-acceptance --link $(IMAGE_NAME_PREFIX)backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d $(IMAGE_NAME_PREFIX)frontend:acceptance
 
 .PHONY: acceptance-backend-container-start
 acceptance-backend-container-start:
 	@echo "Start acceptance backend"
-	@docker run --rm -p 55001:55001 --name $(IMAGE_NAME_PREFIX)-backend-acceptance -d $(IMAGE_NAME_PREFIX)-backend:acceptance
+	@docker run --rm -p 55001:55001 --name $(IMAGE_NAME_PREFIX)backend-acceptance -d $(IMAGE_NAME_PREFIX)backend:acceptance
 
 .PHONY: acceptance-containers-start
 acceptance-containers-start: ## Start Acceptance containers
@@ -237,8 +237,8 @@ acceptance-containers-start: ## Start Acceptance containers
 .PHONY: acceptance-containers-stop
 acceptance-containers-stop: ## Stop Acceptance containers
 	@echo "Stop acceptance containers"
-	@docker stop $(IMAGE_NAME_PREFIX)-frontend-acceptance
-	@docker stop $(IMAGE_NAME_PREFIX)-backend-acceptance
+	@docker stop $(IMAGE_NAME_PREFIX)frontend-acceptance
+	@docker stop $(IMAGE_NAME_PREFIX)backend-acceptance
 
 .PHONY: ci-acceptance-test
 ci-acceptance-test:
