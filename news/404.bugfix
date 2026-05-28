@@ -1,0 +1,1 @@
+Use 'uvx towncrier' instead of 'pipx run towncrier' for release-it. @frapell
