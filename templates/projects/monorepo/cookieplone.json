@@ -2,7 +2,7 @@
     "id": "project",
     "schema": {
         "title": "Plone Project",
-        "description": "A monorepo project template for Plone 6 projects, including a Volto frontend and a Python backend.",
+        "description": "A project template for Plone 6 projects, with either a Python backend and (optionally) a Volto frontend.",
         "version": "2.0",
         "properties": {
             "title": {
@@ -63,20 +63,19 @@
                 "default": false,
                 "validator": ""
             },
-            "feature_headless": {
-                "type": "boolean",
-                "title": "Support headless Plone?",
-                "description": "Include REST API serializers and other files required for a headless Plone setup (Volto). If No, a Classic UI project will be generated.",
-                "default": true,
-                "validator": ""
-            },
-
             "plone_version": {
                 "type": "string",
                 "title": "Plone Version",
                 "description": "Plone backend version to use. Automatically resolved to the latest available release.",
                 "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
                 "validator": "cookieplone.validators.plone_version"
+            },
+            "feature_headless": {
+                "type": "boolean",
+                "title": "Use Volto as frontend?",
+                "description": "Should this project use the frontend Volto? If No, a Classic UI project will be generated.",
+                "default": true,
+                "validator": ""
             },
             "volto_version": {
                 "type": "string",
