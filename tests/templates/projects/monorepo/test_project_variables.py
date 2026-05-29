@@ -1,4 +1,5 @@
 ALLOWED_MISSING = [
+    "__frontend_package_name",
     "ansible_path",
     "backend_path",
     "frontend_path",
