@@ -88,7 +88,7 @@
                 "title": "Volto Addon Name",
                 "description": "Name of the Volto frontend add-on package (e.g. volto-myproject).",
                 "default": "volto-{{ cookiecutter.python_package_name|replace('_', '-')|replace('.', '-') }}",
-                "validator": "cookieplone.validators.npm_package_name"
+                "validator": "cookieplone.validators.npm_package_name",
                 "format": "computed"
             },
             "language_code": {
