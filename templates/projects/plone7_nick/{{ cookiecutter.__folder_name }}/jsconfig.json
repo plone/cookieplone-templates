@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@robgietema/nick": ["develop/nick/src"]
+    },
+    "baseUrl": "src"
+  }
+}
