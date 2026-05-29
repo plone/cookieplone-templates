@@ -50,6 +50,6 @@ def test_classic_context_variables(cutter_result_classic):
     for frontend variables."""
     context = cutter_result_classic.context
     assert "volto_version" in context
-    assert "__node_version" in context
+    assert "__node_version" not in context
     assert "frontend_addon_name" in context
-    assert "__npm_package_name" in context
+    assert "__npm_package_name" not in context
