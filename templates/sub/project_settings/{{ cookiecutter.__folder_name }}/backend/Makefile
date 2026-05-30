@@ -60,6 +60,10 @@ debug-settings:  ## Debug settings
 	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
 	@echo "IMAGE_NAME: $(IMAGE_NAME)"
 
+mxdev:
+	@echo "$(GREEN)==> Run mxdev to get deps from source$(RESET)"
+	@uvx mxdev[uv] -c mx.ini
+
 ############################################
 # Config
 ############################################
@@ -84,7 +88,7 @@ sync: update-constraints ## Sync project dependencies
 	@uv sync
 
 .PHONY: install
-install: sync config ## Install Plone and dependencies
+install: mxdev sync config ## Install Plone and dependencies
 
 .PHONY: clean
 clean: ## Clean installation and instance
@@ -170,7 +174,7 @@ build-image:  ## Build Container Images
 ############################################
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,$(PACKAGE_NAME)" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="{% if cookiecutter.feature_headless %}plone.restapi,plone.volto,plone.volto.cors,{% endif %}$(PACKAGE_NAME)" uv run robot-server plone.app.robotframework.testing.{{ "VOLTO" if cookiecutter.feature_headless else "PLONE" }}_ROBOT_TESTING
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images

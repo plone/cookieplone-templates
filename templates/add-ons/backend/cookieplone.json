@@ -68,8 +68,8 @@
             },
             "feature_headless": {
                 "type": "boolean",
-                "title": "Support headless Plone?",
-                "description": "Include REST API serializers and other files required for a headless Plone setup.",
+                "title": "Support the Volto frontend?",
+                "description": "Include REST API serializers and other files required for a Plone site that uses Volto.",
                 "default": true,
                 "validator": ""
             },
@@ -167,7 +167,7 @@
             "__backend_managed_by_uv": {
                 "type": "string",
                 "title": "__backend_managed_by_uv",
-                "default": "false",
+                "default": "true",
                 "validator": "",
                 "format": "computed"
             },

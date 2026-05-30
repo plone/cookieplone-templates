@@ -59,11 +59,23 @@ GENERATED_FILES = [
 ]
 
 
+FRONTEND_FILES = [
+    "frontend/.dockerignore",
+    "frontend/Dockerfile",
+    "frontend/Makefile",
+    "frontend/packages/volto-project-title/src/config/settings.ts",
+]
+
+
 @pytest.mark.parametrize("file_path", GENERATED_FILES)
 def test_created_files(cutter_result, file_path: str):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = (cutter_result.project_path / file_path).resolve()
-    assert path.exists()
-    assert path.is_file()
+    if not feature_headless and file_path in FRONTEND_FILES:
+        assert not path.exists()
+    else:
+        assert path.exists()
+        assert path.is_file()
 
 
 @pytest.mark.parametrize(

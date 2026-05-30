@@ -29,7 +29,10 @@ def test_image_prefix_registry(
 
     # Check Makefile in backend (from sub/project_settings)
     backend_makefile = result.project_path / "backend" / "Makefile"
-    assert f"IMAGE_NAME_PREFIX={expected_prefix}" in backend_makefile.read_text()
+    assert (
+        "IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')"
+        in backend_makefile.read_text()
+    )
     # Ensure no redundant dash
     assert "$(IMAGE_NAME_PREFIX)backend" in backend_makefile.read_text()
     assert "$(IMAGE_NAME_PREFIX)-backend" not in backend_makefile.read_text()
