@@ -1,0 +1,1 @@
+Avoid dependency on jq in Makefiles. @davisagli
