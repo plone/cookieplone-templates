@@ -7,6 +7,8 @@ FROM plone/server-builder:uv-${PYTHON_VERSION} AS builder
 RUN --mount=type=cache,target=/root/.cache \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=mx.ini,target=mx.ini \
+    uv tool run mxdev[uv] -c mx.ini && \
     uv sync \
         --locked \
         --no-dev \
@@ -19,6 +21,7 @@ WORKDIR /src
 
 # Install package
 RUN --mount=type=cache,target=/root/.cache \
+    uv tool run mxdev[uv] -c mx.ini && \
     uv sync \
         --locked \
         --no-dev \
