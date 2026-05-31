@@ -28,6 +28,7 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
     [
         ["workflows/changelog.yml", "github-workflow"],
         ["workflows/config.yml", "github-workflow"],
+        ["workflows/deployment-app.yml", "github-workflow"],
         ["workflows/main.yml", "github-workflow"],
     ],
 )
@@ -46,6 +47,7 @@ def test_json_schema(
         "instructions/volto.instructions.md",
         "workflows/changelog.yml",
         "workflows/config.yml",
+        "workflows/deployment-app.yml",
         "workflows/main.yml",
     ],
 )

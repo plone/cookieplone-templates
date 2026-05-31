@@ -1,0 +1,54 @@
+name: Deployment app
+on:
+  push:
+    paths:
+      - "Makefile"
+      - "package.json"
+      - "registry.config.ts"
+      - "scripts/**"
+      - "packages/**"
+      - "core/catalog.json"
+      - "core/apps/seven/**"
+      - ".github/workflows/deployment-app.yml"
+
+env:
+  NODE_VERSION: {{ cookiecutter.node_version }}.x
+  COOKIE_SECRET: ci-deployment-app-secret
+
+jobs:
+  deployment-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Main checkout
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
+        with:
+          node-version: {{ "${{ env.NODE_VERSION }}" }}
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@{{ versions.gha_version_cache }}
+        name: Setup pnpm cache
+        with:
+          path: {{ "${{ env.STORE_PATH }}" }}
+          key: {{ "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}" }}
+          restore-keys: |
+            {{ "${{ runner.os }}-pnpm-store-" }}
+
+      - name: Install deploy workspace
+        run: make install-deploy
+
+      - name: Build deploy workspace
+        run: make build-deploy
+
+      - name: Smoke test production server
+        run: timeout 20s make start-prod-deploy

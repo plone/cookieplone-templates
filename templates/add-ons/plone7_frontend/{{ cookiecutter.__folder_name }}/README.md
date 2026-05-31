@@ -97,8 +97,16 @@ Run `make help` to list the available commands.
 ```text
 help                             Show this help
 install                          Installs the add-on in a development environment
+install-dev                      Installs the add-on in a development environment
 start                            Starts Volto, allowing reloading of the add-on during development
+start-dev                        Starts Seven in development mode using the checked out core workspace
 build                            Build a production bundle for distribution of the project with the add-on
+build-dev                        Build the development workspace using the checked out core workspace
+install-deploy                   Generate a deploy-focused RR7 workspace and install it
+clean-deploy                     Remove the generated deploy workspace
+start-deploy                     Start the generated deploy workspace in development mode
+start-prod-deploy                Start the generated deploy workspace in production mode
+build-deploy                     Build the generated deploy workspace as a SaaS-style deployment target
 i18n                             Sync i18n
 ci-i18n                          Check if i18n is not synced
 format                           Format codebase
@@ -124,6 +132,13 @@ Install package requirements.
 
 ```shell
 make install
+```
+
+To validate the generated deployment-oriented app instead of the development workspace, use:
+
+```shell
+make install-deploy
+make build-deploy
 ```
 
 ### Start developing

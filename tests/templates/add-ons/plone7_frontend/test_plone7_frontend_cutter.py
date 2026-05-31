@@ -6,6 +6,7 @@ GITHUB_ACTIONS = [
     ".github/workflows/acceptance.yml",
     ".github/workflows/changelog.yml",
     ".github/workflows/code.yml",
+    ".github/workflows/deployment-app.yml",
     ".github/workflows/i18n.yml",
     ".github/workflows/storybook.yml",
     ".github/workflows/unit.yml",
@@ -38,6 +39,10 @@ ROOT_FILES = [
     "pnpm-workspace.yaml",
     "README.md",
     "registry.config.ts",
+    "scripts/build-deployment-app.mjs",
+    "scripts/deploy-utils.mjs",
+    "scripts/generate-deployment-app.mjs",
+    "scripts/install-deployment-app.mjs",
 ]
 
 
@@ -107,6 +112,7 @@ def test_pkg_src_files_generated(cutter_result, file_path: str):
         [".github/workflows/acceptance.yml", "github-workflow"],
         [".github/workflows/changelog.yml", "github-workflow"],
         [".github/workflows/code.yml", "github-workflow"],
+        [".github/workflows/deployment-app.yml", "github-workflow"],
         [".github/workflows/i18n.yml", "github-workflow"],
         [".github/workflows/storybook.yml", "github-workflow"],
         [".github/workflows/unit.yml", "github-workflow"],

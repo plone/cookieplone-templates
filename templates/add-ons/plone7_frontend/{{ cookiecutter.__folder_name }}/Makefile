@@ -34,19 +34,50 @@ help: ## Show this help
 # Dev Helpers
 
 .PHONY: install
-install: ## Installs the add-on in a development environment
+install: install-dev ## Installs the add-on in a development environment
+
+.PHONY: install-dev
+install-dev: ## Installs the add-on in a development environment
 	@echo "$(GREEN)Install$(RESET)"
 	pnpm dlx mrs-developer missdev --no-config --fetch-https
 	pnpm i
 	make build-deps
 
 .PHONY: start
-start: ## Starts Volto, allowing reloading of the add-on during development
+start: start-dev ## Starts Volto, allowing reloading of the add-on during development
+
+.PHONY: start-dev
+start-dev: ## Starts Seven in development mode using the checked out core workspace
 	pnpm start
 
 .PHONY: build
-build: ## Build a production bundle for distribution of the project with the add-on
+build: build-dev ## Build a production bundle for distribution of the project with the add-on
+
+.PHONY: build-dev
+build-dev: ## Build the development workspace using the checked out core workspace
 	pnpm build
+
+.PHONY: install-deploy
+install-deploy: ## Generate a deploy-focused RR7 workspace and install it
+	pnpm run install:deploy
+
+.PHONY: clean-deploy
+clean-deploy: ## Remove the generated deploy workspace
+	rm -rf .deploy
+
+.PHONY: start-deploy
+start-deploy: ## Start the generated deploy workspace in development mode
+	pnpm run install:deploy
+	pnpm --dir .deploy dev
+
+.PHONY: start-prod-deploy
+start-prod-deploy: ## Start the generated deploy workspace in production mode
+	pnpm run build:deploy
+	pnpm --dir .deploy start:prod
+
+.PHONY: build-deploy
+build-deploy: ## Build the generated deploy workspace as a SaaS-style deployment target
+	pnpm run build:deploy
 
 core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
 	pnpm --filter @plone/registry build
