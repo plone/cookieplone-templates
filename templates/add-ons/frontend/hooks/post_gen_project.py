@@ -1,9 +1,9 @@
 """Post generation hook."""
 
 import os
+from collections import OrderedDict
 from copy import deepcopy
 from pathlib import Path
-from typing import OrderedDict
 
 from cookieplone import generator
 from cookieplone.utils import console, files
@@ -16,20 +16,6 @@ DOCUMENTATION_STARTER_REMOVE = [
 ]
 
 TEMPLATES_FOLDER = "templates"
-
-
-def generate_docs_starter(context, output_dir):
-    """Generate documentation scaffold"""
-    output_dir = output_dir
-    folder_name = "docs"
-    generator.generate_subtemplate(
-        f"{TEMPLATES_FOLDER}/docs/starter",
-        output_dir,
-        "docs",
-        context,
-        DOCUMENTATION_STARTER_REMOVE,
-    )
-    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
 
 
 def remove_conditional_files(context, output_dir):
@@ -45,6 +31,50 @@ def remove_conditional_files(context, output_dir):
 
     if context["volto_version"] < "19":
         (output_dir / ".pnpmfile.cjs").unlink()
+
+
+def generate_docs_starter(context, output_dir):
+    """Generate documentation scaffold"""
+
+    folder_name = "docs"
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/docs/starter",
+        output_dir,
+        "docs",
+        context,
+        DOCUMENTATION_STARTER_REMOVE,
+    )
+    files.remove_files(output_dir / folder_name, DOCUMENTATION_STARTER_REMOVE)
+
+
+def generate_ci_gh_frontend_addon(context, output_dir):
+    """Generate GitHub CI."""
+
+    ci_context = OrderedDict({
+        "npm_package_name": context["__npm_package_name"],
+        "node_version": context["__node_version"],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_frontend_addon",
+        output_dir,
+        ".github",
+        ci_context,
+    )
+
+
+def generate_ide_vscode(context, output_dir):
+    """Generate VS Code configuration."""
+
+    vscode_context = OrderedDict({
+        "backend_path": "",
+        "frontend_path": "/",
+        "ansible_path": "",
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
+    )
 
 
 def main():

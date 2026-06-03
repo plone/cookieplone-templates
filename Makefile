@@ -88,3 +88,15 @@ report-keys-usage: $(VENV_FOLDER) ## Generate a report of usage of context keys
 	@echo "$(GREEN)==> Generate a report of usage of context keys$(RESET)"
 	@uv run .scripts/report_keys_usage.py
 
+#############################################
+# Release
+#############################################
+.PHONY: changelog
+changelog: ## Display the draft of the changelog
+	@echo "🚀 Display the draft for the changelog"
+	@uv run .scripts/release.py dry-run
+
+.PHONY: release
+release: ## Release a new version of cookieplone-templates
+	@echo "🚀 Release a new version of cookieplone-templates"
+	@uv run .scripts/release.py

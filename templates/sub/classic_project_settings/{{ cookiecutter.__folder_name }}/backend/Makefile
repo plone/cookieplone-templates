@@ -50,7 +50,7 @@ help: ## This help message
 requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
-	@uvx mxdev -c mx.ini
+	@uvx "mxdev[uv]" -c mx.ini
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
@@ -68,7 +68,7 @@ sync: $(VENV_FOLDER) ## Sync project dependencies
 
 instance/etc/zope.ini instance/etc/zope.conf: instance.yaml ## Create instance configuration
 	@echo "$(GREEN)==> Create instance configuration$(RESET)"
-	@uvx cookiecutter -f --no-input -c 2.1.1 --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+	@uvx cookiecutter -f --no-input -c 2.4.1 --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 
 .PHONY: config
 config: instance/etc/zope.ini

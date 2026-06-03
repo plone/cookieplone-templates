@@ -1,4 +1,23 @@
-# {{ cookiecutter.python_package_name }}
+<div align="center">
+    <h1 align="center">{{ cookiecutter.python_package_name }}</h1>
+</div>
+<div align="center">
+[![PyPI](https://img.shields.io/pypi/v/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+[![PyPI - License](https://img.shields.io/pypi/l/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+[![PyPI - Status](https://img.shields.io/pypi/status/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+
+
+[![PyPI - Plone Versions](https://img.shields.io/pypi/frameworkversions/plone/{{ cookiecutter.python_package_name }})](https://pypi.org/project/{{ cookiecutter.python_package_name }}/)
+
+[![CI](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/actions/workflows/main.yml/badge.svg)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}/actions/workflows/main.yml)
+![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000)
+
+[![GitHub contributors](https://img.shields.io/github/contributors/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }})](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }})
+[![GitHub Repo stars](https://img.shields.io/github/stars/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }}?style=social)](https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.python_package_name }})
+
+</div>
 
 {{ cookiecutter.description }}
 

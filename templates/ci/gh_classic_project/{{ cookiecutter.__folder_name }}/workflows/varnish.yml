@@ -1,0 +1,50 @@
+name: Varnish Image Creation
+
+on:
+  workflow_call:
+    inputs:
+      base-tag:
+        required: true
+        type: string
+      image-name-prefix:
+        required: true
+        type: string
+      image-name-suffix:
+        required: true
+        type: string
+      working-directory:
+        required: false
+        type: string
+        default: devops/varnish
+
+jobs:
+
+  release:
+    name: "Varnish: Build and publish container image"
+    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    permissions:
+      contents: read
+      packages: write
+    with:
+      base-tag: {{ "${{ inputs.base-tag }}" }}
+      image-name-prefix: {{ "${{ inputs.image-name-prefix }}" }}
+      image-name-suffix: {{ "${{ inputs.image-name-suffix }}" }}
+      working-directory: {{ "${{ inputs.working-directory }}" }}
+      push: {{ "${{ github.event_name != 'pull_request' }}" }}
+    secrets:
+      username: {{ "${{ github.actor }}" }}
+      password: {{ "${{ secrets.GITHUB_TOKEN }}" }}
+
+  report:
+    name: "Final report"
+    if: {{ "${{ always() }}" }}
+    runs-on: ubuntu-latest
+    needs:
+      - release
+    steps:
+      - name: Write report
+        run: |
+          echo '# Workflow Report' >> $GITHUB_STEP_SUMMARY
+          echo '| Job ID | Conclusion |' >> $GITHUB_STEP_SUMMARY
+          echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
+          echo '| release | {{ "${{ needs.release.result }}" }} |' >> $GITHUB_STEP_SUMMARY

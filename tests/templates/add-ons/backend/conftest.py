@@ -6,7 +6,12 @@ import pytest
 
 ROOT_FILES = [
     ".editorconfig",
-    ".github/workflows/ci.yml",
+    ".github/workflows/changelog.yml",
+    ".github/workflows/config.yml",
+    ".github/workflows/main.yml",
+    ".vscode/extensions.json",
+    ".vscode/launch.json",
+    ".vscode/settings.json",
     ".gitignore",
     "CHANGELOG.md",
     "CONTRIBUTORS.md",

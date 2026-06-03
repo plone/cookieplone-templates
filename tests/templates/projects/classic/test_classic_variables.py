@@ -1,5 +1,19 @@
-ALLOWED_MISSING = ["feature_headless", "initialize_git"]
-ALLOWED_NOT_USED = ["__devops_host"]
+ALLOWED_MISSING = [
+    "ansible_path",
+    "backend_path",
+    "container_image_prefix",
+    "feature_headless",
+    "frontend_path",
+    "has_cache",
+    "has_deploy",
+    "has_docs",
+    "initialize_ci",
+    "initialize_git",
+    "python_version",
+]
+ALLOWED_NOT_USED = [
+    "__devops_host",
+]
 
 
 def test_no_missing_variables(variables_missing):

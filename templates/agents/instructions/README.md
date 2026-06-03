@@ -1,0 +1,1 @@
+# Cookieplone LLM Agents template

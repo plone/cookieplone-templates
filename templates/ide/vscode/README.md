@@ -1,0 +1,1 @@
+# Cookieplone VSCode IDE settings

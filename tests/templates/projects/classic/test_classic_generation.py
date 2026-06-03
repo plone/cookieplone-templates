@@ -7,7 +7,9 @@ import pytest
 TOP_LEVEL_FILES = [
     ".editorconfig",
     ".gitignore",
+    ".github/instructions/docs.instructions.md",
     ".vscode/extensions.json",
+    ".vscode/launch.json",
     ".vscode/settings.json",
     "dependabot.yml",
     "CHANGELOG.md",
@@ -47,6 +49,7 @@ def test_valid_json_files(cutter_result, filepath: str):
     [
         [".github/workflows/backend.yml", "github-workflow"],
         [".github/workflows/docs.yml", "github-workflow"],
+        [".github/workflows/config.yml", "github-workflow"],
         [".github/workflows/main.yml", "github-workflow"],
         [".github/workflows/manual_deploy.yml", "github-workflow"],
         [".github/workflows/rtd-pr-preview.yml", "github-workflow"],

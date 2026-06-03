@@ -11,7 +11,6 @@ BACKEND_FILES = [
     "Dockerfile",
     "instance.yaml",
     "Makefile",
-    "mx.ini",
     "pyproject.toml",
     "version.txt",
 ]
@@ -36,7 +35,6 @@ BACKEND_PACKAGE_FILES_PYTEST = [
     "src/plonegov/ploneorgbr/testing.py",
     "tests/conftest.py",
     "tests/setup/test_setup_install.py",
-    "tests/setup/test_setup_uninstall.py",
 ]
 
 
@@ -90,6 +88,7 @@ def test_git_repo_is_the_project(cutter_result):
     repo = git.repo_from_path(path)
     assert Path(repo.working_dir) != backend_path
     assert Path(repo.working_dir) == path
+
 
 def test_native_namespace_generated(cutter_result):
     """Check if distribution uses native namespace."""

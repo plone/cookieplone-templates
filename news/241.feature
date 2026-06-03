@@ -1,1 +1,0 @@
-Improve grammar and wording. @pbauer

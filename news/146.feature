@@ -1,1 +1,0 @@
-Add a template for Classic UI projects. @pbauer

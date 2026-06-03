@@ -24,22 +24,8 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 
 
 @pytest.mark.parametrize(
-    "file_path,schema_name",
-    [
-        [".github/workflows/varnish.yml", "github-workflow"],
-    ],
-)
-def test_json_schema(
-    cutter_result, schema_validate_file, file_path: str, schema_name: str
-):
-    path = cutter_result.project_path / file_path
-    assert schema_validate_file(path, schema_name)
-
-
-@pytest.mark.parametrize(
     "file_path",
     [
-        ".github/workflows/varnish.yml",
         "backend/src/packagename/profiles/default/registry/plone.cachepurging.interfaces.ICachePurgingSettings.xml",
         "backend/src/packagename/profiles/default/registry/plone.caching.interfaces.ICacheSettings.xml",
         "devops/varnish/etc/varnish.vcl",

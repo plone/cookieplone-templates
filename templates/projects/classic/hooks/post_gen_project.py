@@ -12,7 +12,6 @@ context: OrderedDict = {{cookiecutter}}
 
 
 BACKEND_ADDON_REMOVE = [
-    ".github",
     ".git",
 ]
 
@@ -83,10 +82,11 @@ def handle_git_initialization(context: OrderedDict, output_dir: Path):
 
 def generate_addons_backend(context, output_dir):
     """Run Plone Addon generator."""
-    output_dir = output_dir
+
     folder_name = "backend"
     # Not Headless
     context["feature_headless"] = "0"
+    context["initialize_ci"] = "0"
     context["initialize_documentation"] = "0"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/add-ons/backend",
@@ -100,7 +100,7 @@ def generate_addons_backend(context, output_dir):
 
 def generate_docs_starter(context, output_dir):
     """Generate documentation scaffold"""
-    output_dir = output_dir
+
     folder_name = "docs"
     generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/docs/starter",
@@ -132,6 +132,41 @@ def generate_sub_classic_project_settings(context: OrderedDict, output_dir: Path
         output_dir,
         folder_name,
         context,
+    )
+
+
+def generate_ci_gh_classic_project(context, output_dir):
+    """Generate GitHub CI."""
+
+    ci_context = OrderedDict({
+        "container_image_prefix": context["__container_image_prefix"],
+        "python_version": context["__python_version"],
+        "has_cache": context["devops_cache"],
+        "has_docs": context["initialize_documentation"],
+        "has_deploy": context["devops_gha_deploy"],
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_classic_project",
+        output_dir,
+        ".github",
+        ci_context,
+    )
+
+
+def generate_ide_vscode(context, output_dir):
+    """Generate VS Code configuration."""
+
+    ansible_path = "devops/ansible" if context.get("devops_ansible") == "1" else ""
+    vscode_context = OrderedDict({
+        "backend_path": "/backend",
+        "frontend_path": "",
+        "ansible_path": ansible_path,
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
+    generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ide/vscode", output_dir, ".vscode", vscode_context
     )
 
 
@@ -177,7 +212,7 @@ def main():
     plone.create_namespace_packages(
         output_dir / "backend/src/packagename",
         context.get("python_package_name"),
-        style="native"
+        style="native",
     )
 
     # Run format

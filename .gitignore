@@ -11,3 +11,6 @@ collective.plonedistribution
 .reports/*.md
 __pycache__/
 .venv
+
+# Local Claude context (not for sharing)
+.claude/CLAUDE.local.md

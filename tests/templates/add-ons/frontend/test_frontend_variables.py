@@ -1,5 +1,9 @@
 ALLOWED_MISSING = [
+    "ansible_path",
+    "backend_path",
+    "frontend_path",
     "initialize_git",
+    "node_version",
 ]
 ALLOWED_NOT_USED = [
     "__generator_sha",
