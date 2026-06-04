@@ -1,6 +1,6 @@
 packages:
   # all packages in direct subdirs of packages/
-  - 'core/apps/seven'
+  - 'core/apps/aurora'
   - 'core/packages/*'
   - 'packages/*'
   # Support for external packages in another repos

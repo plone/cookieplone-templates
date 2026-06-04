@@ -13,10 +13,10 @@
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven dev",
-    "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven dev",
-    "start:prod": "pnpm --filter seven start:prod",
-    "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven build",
+    "dev": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start:prod": "pnpm --filter @plone/aurora start:prod",
+    "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
     "i18n": "pnpm --filter {{ cookiecutter.__npm_package_name }} i18n && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n",
     "test": "pnpm --filter {{ cookiecutter.__npm_package_name }} exec vitest --passWithNoTests",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@plone/registry": "workspace:*",
-    "seven": "workspace:*",
+    "@plone/aurora": "workspace:*",
     "{{ cookiecutter.__npm_package_name }}": "workspace:*"
   },
   "devDependencies": {
