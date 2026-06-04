@@ -17,7 +17,7 @@
         "monorepo_addon",
         "backend_addon",
         "frontend_addon",
-        "plone7_frontend",
+        "aurora_addon",
         "seven_addon"
       ],
       "hidden": false
@@ -96,16 +96,16 @@
       "description": "Create a new codebase for a Plone 6 add-on that includes both frontend and backend",
       "hidden": false
     },
-    "plone7_frontend": {
-      "path": "./templates/add-ons/plone7_frontend",
-      "title": "Plone 7 alpha Frontend Add-on",
-      "description": "Create a new Node.js Plone 7 alpha frontend package",
+    "aurora_addon": {
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
       "hidden": false
     },
     "seven_addon": {
-      "path": "./templates/add-ons/plone7_frontend",
-      "title": "Plone 7 alpha Frontend Add-on",
-      "description": "Create a new Node.js Plone 7 alpha frontend package",
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
       "hidden": true
     },
     "plone7_nick_embedded": {
