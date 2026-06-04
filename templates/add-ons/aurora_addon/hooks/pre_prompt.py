@@ -46,7 +46,7 @@ def main():
     check_results = sanity_check()
     msg = dedent(
         """
-        Creating a new Seven Addon
+        Creating a new Plone Aurora Addon
 
         Sanity check results:
 
