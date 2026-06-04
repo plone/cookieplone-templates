@@ -1,0 +1,46 @@
+{
+  "name": "seven-add-on",
+  "version": "1.0.0",
+  "description": "A new add-on for Seven",
+  "main": "index.ts",
+  "license": "MIT",
+  "keywords": [
+    "volto-addon",
+    "volto",
+    "plone",
+    "react"
+  ],
+  "author": "Victor Fernandez de Alba",
+  "homepage": "https://github.com/collective/seven-add-on#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:collective/seven-add-on.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
+    "dry-release": "release-it --dry-run",
+    "release": "release-it",
+    "release-major-alpha": "release-it major --preRelease=alpha",
+    "release-alpha": "release-it --preRelease=alpha"
+  },
+  "dependencies": {
+    "@plone/components": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@plone/registry": "workspace:*",
+    "@plone/scripts": "workspace:*",
+    "@plone/types": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "release-it": "^19.0.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

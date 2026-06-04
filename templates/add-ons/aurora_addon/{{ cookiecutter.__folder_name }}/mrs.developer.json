@@ -1,0 +1,10 @@
+{
+  "core": {
+    "output": "./",
+    "package": "@plone/aurora",
+    "url": "git@github.com:plone/aurora.git",
+    "https": "https://github.com/plone/aurora.git",
+    "branch": "main",
+    "filterBlobs": true
+  }
+}

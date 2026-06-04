@@ -1,4 +1,4 @@
-"""Test cookieplone generation for the Plone 7 frontend add-on."""
+"""Test cookieplone generation for the Plone Aurora add-on."""
 
 import pytest
 

@@ -1,0 +1,14 @@
+packages:
+  # all packages in direct subdirs of packages/
+  - 'core/apps/seven'
+  - 'core/packages/*'
+  - 'packages/*'
+  # Support for external packages in another repos
+  - 'packages/**/packages/*'
+  - '!core/packages/volto*'
+  - '!core/packages/coresandbox'
+
+# The default pnpm catalog is loaded from `core/catalog.json` using `.pnpmfile.cjs`.
+# If you want to customize the versions of the catalog, do it in there.
+# You can also add your own custom pnpm catalog using the pnpm named catalogs
+# by defining them here. See https://pnpm.io/catalogs#named-catalogs
