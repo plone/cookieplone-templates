@@ -45,22 +45,6 @@ def main():
     # Action handlers
     post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
-
-        Now, enter the {{ cookiecutter.folder_name }} folder, start using your
-        playbooks.
-
-        Sorry for the convenience,
-        The Plone Community.
-    """
-    console.panel(
-        title="New Ansible setup created",
-        subtitle="",
-        msg=msg,
-        url="https://plone.org/",
-    )
-
 
 if __name__ == "__main__":
     main()

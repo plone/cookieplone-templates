@@ -4,7 +4,7 @@ from collections import OrderedDict
 from pathlib import Path
 
 from cookieplone import generator
-from cookieplone.utils import console, files
+from cookieplone.utils import files
 
 context: OrderedDict = {{cookiecutter}}
 versions: dict | OrderedDict = {{versions}}
@@ -54,20 +54,6 @@ def main():
     generate_addon(context, output_dir)
     # Cleanup
     cleanup(context, output_dir)
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
-
-        Now, code it, create a git repository, push to your organization.
-
-        Sorry for the convenience,
-        The Plone Community.
-    """
-    console.panel(
-        title="New project was generated",
-        subtitle="",
-        msg=msg,
-        url="https://plone.org/",
-    )
 
 
 if __name__ == "__main__":
