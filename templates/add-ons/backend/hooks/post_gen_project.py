@@ -6,7 +6,7 @@ from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.settings import QUIET_MODE_VAR
-from cookieplone.utils import console, files, plone, post_gen
+from cookieplone.utils import plone, post_gen
 from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
@@ -156,18 +156,6 @@ def main():
     # {{ cookiecutter.__cookieplone_subtemplates }}
     run_subtemplates(
         context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
-    )
-
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
-
-        Now, enter the repository, start coding, and push to your organization.
-
-        Sorry for the convenience,
-        The Plone Community.
-    """
-    console.panel(
-        title="New addon was generated", subtitle="", msg=msg, url="https://plone.org/"
     )
 
 

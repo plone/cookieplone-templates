@@ -6,7 +6,7 @@ from pathlib import Path
 
 from binaryornot.check import is_binary
 from cookieplone import generator
-from cookieplone.utils import console, plone, post_gen
+from cookieplone.utils import plone, post_gen
 from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
@@ -252,21 +252,6 @@ def main():
 
     # Action handlers
     post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
-
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
-
-        Now, code it, create a git repository, push to your organization.
-
-        Sorry for the convenience,
-        The Plone Community.
-    """
-    console.panel(
-        title="New add-on was generated",
-        subtitle="",
-        msg=msg,
-        url="https://plone.org/",
-    )
 
 
 if __name__ == "__main__":

@@ -201,7 +201,16 @@
   },
   "config": {
     "renderer": "rich",
-    "min_version": "2.0.0a2",
+    "min_version": "2.0.0b3",
+    "summary": {
+      "enabled": true,
+      "message": "Now, code it, create a git repository, push to your organization.",
+      "thanks": "Sorry for the convenience,",
+      "signature": {
+        "text": "The Plone Community",
+        "url": "https://plone.org"
+      }
+    },
     "versions": {
       "backend_python": "3.13",
       "devops_cronjob_version": "1.14",

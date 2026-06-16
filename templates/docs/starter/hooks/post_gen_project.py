@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from pathlib import Path
 
-from cookieplone.utils import console, post_gen
+from cookieplone.utils import post_gen
 
 context: OrderedDict = {{cookiecutter}}
 versions: dict | OrderedDict = {{versions}}
@@ -32,21 +32,6 @@ def main():
 
     # Action handlers
     post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
-
-    msg = """
-        [bold blue]{{ cookiecutter.title }}[/bold blue]
-
-        Now, enter the docs folder, start documenting the code, and push to your organization.
-
-        Sorry for the convenience,
-        The Plone Community.
-    """
-    console.panel(
-        title="New documentation scaffold was generated",
-        subtitle="",
-        msg=msg,
-        url="https://plone.org/",
-    )
 
 
 if __name__ == "__main__":

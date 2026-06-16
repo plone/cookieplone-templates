@@ -379,7 +379,7 @@ wheels = [
 
 [[package]]
 name = "cookieplone"
-version = "2.0.0b2"
+version = "2.0.0b3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cookiecutter" },
@@ -390,9 +390,9 @@ dependencies = [
     { name = "typer" },
     { name = "xmltodict" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/73/b0/8de1a9367d88ad0d617fa3490f9b8a7e03fe91d6305aeb1eab762ab8cef5/cookieplone-2.0.0b2.tar.gz", hash = "sha256:dab33d4a8538062cd6b0f7b020e24e99d141f6f5897915dc0bc56dd4e2c5af00", size = 153598, upload-time = "2026-06-05T14:33:25.366Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/06/dbc434002628fa51359d8f4bd9e96dccd2248765d217f4cd59992297aafa/cookieplone-2.0.0b3.tar.gz", hash = "sha256:0120306ac57261921d2e63f6b610385ee0488a104eb4fd27810f1f218dae0039", size = 158472, upload-time = "2026-06-07T18:36:49.366Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/5b/8c34e4c977bae8f1270debaca23a61976348dd75484750da5e95df149e0e/cookieplone-2.0.0b2-py3-none-any.whl", hash = "sha256:cafbf98cfdb5087edcd12e5f01e18189bed57499f6afd3f50d3d05556ba3703b", size = 92691, upload-time = "2026-06-05T14:33:24.003Z" },
+    { url = "https://files.pythonhosted.org/packages/2f/f7/b696c5f93421211449843d96b9426396594b707d2b12095a8b21138e23ca/cookieplone-2.0.0b3-py3-none-any.whl", hash = "sha256:4a8077244397c84f1d542a6679df838fe8864ccffd34e35f972a0124729eb2e6", size = 94624, upload-time = "2026-06-07T18:36:50.369Z" },
 ]
 
 [[package]]
@@ -412,7 +412,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cookieplone", specifier = ">=2.0.0b2" },
+    { name = "cookieplone", specifier = ">=2.0.0b3" },
     { name = "gitpython", specifier = ">=3.1.43" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-jsonschema", specifier = ">=1.0.0" },
@@ -1616,15 +1616,15 @@ wheels = [
 
 [[package]]
 name = "tui-forms"
-version = "1.0.0b1"
+version = "1.0.0b2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
     { name = "jsonschema" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2d/ad/cdda14f5f8fb14623581ea1b214ff02c0208488fa58c80d0187dde946372/tui_forms-1.0.0b1.tar.gz", hash = "sha256:7a9ec3ffaaef4009c5672b9bd7bcad7592c41540f0a17871f33d276f77a94ff6", size = 1165600, upload-time = "2026-05-29T15:17:49.061Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/f4/d322a781d50373ba3ac72a251a1c5bfd75bcac1b8cf532ca9754804df3ee/tui_forms-1.0.0b2.tar.gz", hash = "sha256:05603a5c528eba9d0b10843175fdc69e0316ff5955bd89d9c7d3b1e72ba17aee", size = 1165541, upload-time = "2026-06-05T19:52:29.713Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/45/64e7bc5a93094553e5bdf534ff2d832d2e6d216121d9ca53c651702c674c/tui_forms-1.0.0b1-py3-none-any.whl", hash = "sha256:a6e9b0ce30ebb794bd85da66eb92ff088afcfd5389bbfcec59e7edb13ef89d5d", size = 1629920, upload-time = "2026-05-29T15:17:46.973Z" },
+    { url = "https://files.pythonhosted.org/packages/9d/6d/f84e2ab64417ec817da909c708d2ad88115b01fac59006f0cafe6f86d9ab/tui_forms-1.0.0b2-py3-none-any.whl", hash = "sha256:0ce11ede01bc4c6fc541fe7ab4eb10cdc7e3d722bb6c10af742ed3169854b4de", size = 1629936, upload-time = "2026-06-05T19:52:31.304Z" },
 ]
 
 [[package]]
