@@ -1,0 +1,1 @@
+Fixed post-generation backend formatting commands so generated projects inside directories with spaces in their path can run the make format step without the shell splitting the path.

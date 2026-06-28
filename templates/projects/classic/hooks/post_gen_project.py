@@ -219,8 +219,9 @@ def main():
     if backend_format:
         backend_folder = output_dir / "backend"
         # Run make format in the backend folder
-        cmd = f"make -C {backend_folder} format"
-        subprocess.call(cmd, shell=True)  # noQA: S602
+        subprocess.call(  # noqa: S603, S607
+            ["make", "-C", str(backend_folder), "format"]
+        )
 
     # Cleanup / Git
     actions = [
