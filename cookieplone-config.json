@@ -212,7 +212,7 @@
       }
     },
     "versions": {
-      "backend_python": "3.13",
+      "backend_python": "3.14",
       "devops_cronjob_version": "1.14",
       "devops_db_version": "18",
       "devops_traefik_version": "v2.11",
