@@ -116,7 +116,7 @@ services:
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
       POSTGRES_DB: plone
     volumes:
-      - vol-site-data:/var/lib/postgresql/data
+      - vol-site-data:/var/lib/postgresql
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:

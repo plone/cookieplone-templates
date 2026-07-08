@@ -257,7 +257,7 @@ services:
         delay: 1s
         order: stop-first
     volumes:
-      - vol-site-data:/var/lib/postgresql/data
+      - vol-site-data:/var/lib/postgresql
     networks:
       - {{ cookiecutter.__devops_swarm_stack_network }}
 {%- elif cookiecutter.devops_storage == 'zeo' %}
