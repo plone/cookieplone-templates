@@ -29,7 +29,6 @@ DOCS_FOLDER_FILES = [
 
 GHA_ACTIONS_CI = [
     ".github/workflows/docs.yml",
-    ".github/workflows/rtd-pr-preview.yml",
 ]
 
 

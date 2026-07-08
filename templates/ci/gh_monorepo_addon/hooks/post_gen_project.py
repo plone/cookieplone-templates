@@ -11,7 +11,6 @@ context: OrderedDict = {{cookiecutter}}
 POST_GEN_TO_REMOVE = {
     "docs-0": [
         "workflows/docs.yml",
-        "workflows/rtd-pr-preview.yml",
     ],
 }
 
