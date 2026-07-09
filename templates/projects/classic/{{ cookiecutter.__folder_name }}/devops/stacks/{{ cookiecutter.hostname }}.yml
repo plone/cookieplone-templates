@@ -183,7 +183,7 @@ services:
 {%- endif %}
 {%- if cookiecutter.devops_cache == '1' %}
         ## Router: from Varnish to backend (internal)
-        - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.hostname }}`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.hostname }}`) && Header(`X-Varnish-Routed`, `1`)
         - traefik.http.routers.rt-backend-internal.entrypoints=http
         - traefik.http.routers.rt-backend-internal.service=svc-backend
         - traefik.http.routers.rt-backend-internal.middlewares=mw-backend-vhm-classic

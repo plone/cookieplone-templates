@@ -101,7 +101,7 @@ services:
       - traefik.http.routers.rt-backend-public.middlewares=gzip
 
       ## Router: from Varnish to backend (internal)
-      - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Headers(`X-Varnish-Routed`, `1`)
+      - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Header(`X-Varnish-Routed`, `1`)
       - traefik.http.routers.rt-backend-internal.entrypoints=http
       - traefik.http.routers.rt-backend-internal.service=svc-backend
       - traefik.http.routers.rt-backend-internal.middlewares=mw-backend-vhm-classic

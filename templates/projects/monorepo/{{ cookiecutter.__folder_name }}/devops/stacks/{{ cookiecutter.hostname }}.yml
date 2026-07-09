@@ -62,11 +62,11 @@ services:
       - vol-traefik-certs:/certificates
 
     command:
-      - --providers.docker
-      - --providers.docker.constraints=Label(`traefik.constraint-label`, `public`)
-      - --providers.docker.exposedbydefault=false
-      - --providers.docker.swarmmode
-      - --providers.docker.network={{ cookiecutter.__devops_traefik_docker_network }}
+      - --providers.swarm
+      - --providers.swarm.watch
+      - --providers.swarm.constraints=Label(`traefik.constraint-label`, `public`)
+      - --providers.swarm.exposedbydefault=false
+      - --providers.swarm.network={{ cookiecutter.__devops_traefik_docker_network }}
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --certificatesresolvers.le.acme.email={{ cookiecutter.email }}
@@ -166,7 +166,7 @@ services:
         - traefik.http.routers.rt-frontend.middlewares=gzip
 {%- else %}
         ## / (Internal)
-        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`) && Header(`X-Varnish-Routed`, `1`)
         - traefik.http.routers.rt-frontend.entrypoints=http
         - traefik.http.routers.rt-frontend.service=svc-frontend
 {%- endif %}
@@ -230,7 +230,7 @@ services:
         - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-api
 {%- else %}
         ## /++api++ (Internal)
-        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`) && Header(`X-Varnish-Routed`, `1`)
         - traefik.http.routers.rt-backend-api.entrypoints=http
         - traefik.http.routers.rt-backend-api.service=svc-backend
         - traefik.http.routers.rt-backend-api.middlewares=mw-backend-vhm-api
