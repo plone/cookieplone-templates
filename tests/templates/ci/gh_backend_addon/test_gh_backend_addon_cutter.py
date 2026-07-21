@@ -52,3 +52,22 @@ def test_created_files(cutter_result, file_path: str):
     path = (cutter_result.project_path / file_path).resolve()
     assert path.exists()
     assert path.is_file()
+
+
+@pytest.mark.parametrize(
+    "file_path,text,expected",
+    [
+        ("workflows/changelog.yml", "uvx towncrier check --dir .", True),
+        ("workflows/changelog.yml", "pipx", False),
+        (
+            "workflows/config.yml",
+            "echo 'plone-version: ${{ steps.vars.outputs.plone-version }}",
+            True,
+        ),
+        ("workflows/main.yml", "uses: ./.github/workflows/config.yml", True),
+    ],
+)
+def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    path = (cutter_result.project_path / file_path).resolve()
+    contents = path.read_text()
+    assert (text in contents) is expected

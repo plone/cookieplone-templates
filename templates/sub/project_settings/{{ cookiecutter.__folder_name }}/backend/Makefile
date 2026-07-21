@@ -25,8 +25,11 @@ endif
 
 REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_NAME_SEPARATOR := {{ cookiecutter.__container_registry_prefix_separator }}
+IMAGE_NAME_PREFIX_WITH_SEPARATOR := $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)
+
 IMAGE_TAG=latest
-IMAGE_NAME=$(IMAGE_NAME_PREFIX)backend:$(IMAGE_TAG)
+IMAGE_NAME=$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -174,7 +177,7 @@ acceptance-backend-start: ## Start backend acceptance server
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION) --build-arg PYTHON_VERSION=$(PYTHON_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION) --build-arg PYTHON_VERSION=$(PYTHON_VERSION)
 
 ############################################
 # Plone CLI

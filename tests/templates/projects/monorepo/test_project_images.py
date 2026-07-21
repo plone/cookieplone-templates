@@ -4,9 +4,9 @@ import pytest
 @pytest.mark.parametrize(
     "registry,expected_prefix,expected_separator",
     [
-        ("github", "ghcr.io/plonegovbr/plone.org.br-", "-"),
-        ("gitlab", "registry.gitlab.com/plonegovbr/plone.org.br/", "/"),
-        ("docker_hub", "plonegovbr/plone.org.br-", "-"),
+        ("github", "ghcr.io/plonegovbr/plone.org.br", "-"),
+        ("gitlab", "registry.gitlab.com/plonegovbr/plone.org.br", "/"),
+        ("docker_hub", "plonegovbr/plone.org.br", "-"),
     ],
 )
 def test_image_prefix_registry(
@@ -34,5 +34,6 @@ def test_image_prefix_registry(
         "jq -r '.container_images_prefix')"
     ) in backend_makefile.read_text()
     # Ensure no redundant dash
-    assert "$(IMAGE_NAME_PREFIX)backend" in backend_makefile.read_text()
+    assert "$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend" in backend_makefile.read_text()
+    assert "$(IMAGE_NAME_PREFIX)backend" not in backend_makefile.read_text()
     assert "$(IMAGE_NAME_PREFIX)-backend" not in backend_makefile.read_text()

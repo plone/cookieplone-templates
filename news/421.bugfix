@@ -1,0 +1,1 @@
+Removed the trailing registry separator from `__container_image_prefix`, fixing the duplicated dash it produced in container image names consumed by the plone/meta GitHub Actions. The separator is now applied only where needed (Makefiles, stack files, and docs). @ericof
