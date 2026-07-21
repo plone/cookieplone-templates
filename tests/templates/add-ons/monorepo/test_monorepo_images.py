@@ -4,9 +4,9 @@ import pytest
 @pytest.mark.parametrize(
     "registry,expected_prefix,expected_separator",
     [
-        ("github", "ghcr.io/collective/collective-addon-", "-"),
-        ("gitlab", "registry.gitlab.com/collective/collective-addon/", "/"),
-        ("docker_hub", "collective/collective-addon-", "-"),
+        ("github", "ghcr.io/collective/collective-addon", "-"),
+        ("gitlab", "registry.gitlab.com/collective/collective-addon", "/"),
+        ("docker_hub", "collective/collective-addon", "-"),
     ],
 )
 def test_monorepo_addon_image_prefix_registry(
@@ -30,5 +30,9 @@ def test_monorepo_addon_image_prefix_registry(
     # Check root Makefile
     root_makefile = result.project_path / "Makefile"
     # In monorepo addon, acceptance images use IMAGE_NAME_PREFIX
-    assert "$(IMAGE_NAME_PREFIX)frontend:acceptance" in root_makefile.read_text()
+    assert (
+        "$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)frontend:acceptance"
+        in root_makefile.read_text()
+    )
+    assert "$(IMAGE_NAME_PREFIX)frontend:acceptance" not in root_makefile.read_text()
     assert "$(IMAGE_NAME_PREFIX)-frontend:acceptance" not in root_makefile.read_text()

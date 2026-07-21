@@ -139,7 +139,7 @@
             "__container_image_prefix": {
                 "type": "string",
                 "title": "__container_image_prefix",
-                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}{{ cookiecutter.__container_registry_prefix_separator }}",
+                "default": "{{ cookiecutter.__container_registry_prefix }}{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
                 "validator": "",
                 "format": "computed"
             },

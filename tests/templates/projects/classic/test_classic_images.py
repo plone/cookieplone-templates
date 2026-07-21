@@ -4,9 +4,9 @@ import pytest
 @pytest.mark.parametrize(
     "registry,expected_prefix,expected_separator",
     [
-        ("github", "ghcr.io/plonegovbr/plone.org.br-", "-"),
-        ("gitlab", "registry.gitlab.com/plonegovbr/plone.org.br/", "/"),
-        ("docker_hub", "plonegovbr/plone.org.br-", "-"),
+        ("github", "ghcr.io/plonegovbr/plone.org.br", "-"),
+        ("gitlab", "registry.gitlab.com/plonegovbr/plone.org.br", "/"),
+        ("docker_hub", "plonegovbr/plone.org.br", "-"),
     ],
 )
 def test_classic_image_prefix_registry(
@@ -24,7 +24,8 @@ def test_classic_image_prefix_registry(
     # Check backend Makefile (from sub/classic_project_settings)
     backend_makefile = result.project_path / "backend" / "Makefile"
     # Note: In classic template, the IMAGE_NAME_PREFIX is also set in backend/Makefile
-    assert f"IMAGE_NAME_PREFIX={expected_prefix}" in backend_makefile.read_text()
+    assert f"IMAGE_NAME_PREFIX := {expected_prefix}" in backend_makefile.read_text()
     # Ensure no redundant dash
-    assert "$(IMAGE_NAME_PREFIX)backend" in backend_makefile.read_text()
+    assert "$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend" in backend_makefile.read_text()
+    assert "$(IMAGE_NAME_PREFIX)backend" not in backend_makefile.read_text()
     assert "$(IMAGE_NAME_PREFIX)-backend" not in backend_makefile.read_text()

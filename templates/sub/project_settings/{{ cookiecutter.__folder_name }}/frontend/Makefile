@@ -29,7 +29,10 @@ DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
 ADDON_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.name')
 IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
-IMAGE_NAME=$(IMAGE_NAME_PREFIX)frontend
+IMAGE_NAME_SEPARATOR := {{ cookiecutter.__container_registry_prefix_separator }}
+IMAGE_NAME_PREFIX_WITH_SEPARATOR := $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)
+
+IMAGE_NAME=$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)frontend
 IMAGE_TAG=latest
 
 
