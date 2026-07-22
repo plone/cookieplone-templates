@@ -11,20 +11,20 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 
 ### Prerequisites
 
-- **pipx**: A handy tool for installing and running Python applications.
+- **uv**: An extremely fast Python package and project manager.
 
 ### Installation Guide 🛠️
 
-1. **pipx**
+1. **uv**
 
 ```shell
-pip install pipx
+pip install uv
 ```
 
 ### Generate Your Plone Add-on 🎉
 
 ```shell
-pipx run cookieplone aurora_addon
+uvx cookieplone aurora_addon
 ```
 
 ## Project Generation Options
