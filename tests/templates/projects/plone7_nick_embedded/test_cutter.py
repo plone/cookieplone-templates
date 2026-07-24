@@ -128,3 +128,20 @@ def test_json_schema(
     package_name = cutter_result.context["frontend_addon_name"]
     path = cutter_result.project_path / file_path.format(package_name=package_name)
     assert schema_validate_file(path, schema_name)
+
+
+@pytest.mark.parametrize(
+    "file_path,text,expected",
+    [
+        (
+            ".github/workflows/changelog.yml",
+            "uvx towncrier check --dir packages/",
+            True,
+        ),
+        (".github/workflows/changelog.yml", "pipx", False),
+    ],
+)
+def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    path = (cutter_result.project_path / file_path).resolve()
+    contents = path.read_text()
+    assert (text in contents) is expected

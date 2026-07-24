@@ -57,7 +57,7 @@ clean: ## remove all build, test, coverage and Python artifacts
 bin/pip:
 	@echo "$(GREEN)==> Python: Setup Virtual Env$(RESET)"
 	python3 -m venv .
-	bin/pip install -U pip pipx
+	bin/pip install -U pip
 
 bin/ansible:
 
