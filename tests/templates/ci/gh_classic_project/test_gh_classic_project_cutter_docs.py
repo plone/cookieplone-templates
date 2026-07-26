@@ -37,7 +37,6 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
         ["workflows/docs.yml", "github-workflow"],
         ["workflows/backend.yml", "github-workflow"],
         ["workflows/main.yml", "github-workflow"],
-        ["workflows/rtd-pr-preview.yml", "github-workflow"],
     ],
 )
 def test_json_schema(
@@ -56,7 +55,6 @@ def test_json_schema(
         "workflows/config.yml",
         "workflows/docs.yml",
         "workflows/main.yml",
-        "workflows/rtd-pr-preview.yml",
     ],
 )
 def test_created_files(cutter_result, file_path: str):

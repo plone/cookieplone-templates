@@ -55,7 +55,6 @@ def test_valid_json_files(cutter_result, filepath: str):
         [".github/workflows/config.yml", "github-workflow"],
         [".github/workflows/main.yml", "github-workflow"],
         [".github/workflows/manual_deploy.yml", "github-workflow"],
-        [".github/workflows/rtd-pr-preview.yml", "github-workflow"],
         [".github/workflows/varnish.yml", "github-workflow"],
         ["docker-compose.yml", "docker-compose"],
         ["frontend/package.json", "package"],

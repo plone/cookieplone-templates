@@ -40,7 +40,6 @@ POST_GEN_TO_REMOVE = {
     ],
     "docs-0": [
         ".github/workflows/docs.yml",
-        ".github/workflows/rtd-pr-preview.yml",
     ],
     "docs-1": ["docs/LICENSE.md"],
 }
