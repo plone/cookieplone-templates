@@ -66,6 +66,7 @@ debug-settings:  ## Debug settings
 mxdev:
 	@echo "$(GREEN)==> Run mxdev to get deps from source$(RESET)"
 	@uvx mxdev[uv] -c mx.ini
+	@rm requirements-mxdev.txt
 
 ############################################
 # Config
