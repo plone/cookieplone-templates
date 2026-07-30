@@ -6,7 +6,7 @@
   "groups": {
     "projects": {
       "title": "Projects",
-      "description": "Generators that create a new Plone project",
+      "description": "Generate new Plone project",
       "templates": [
         "project",
         "volto_nick",
@@ -17,7 +17,7 @@
     },
     "add-ons": {
       "title": "Add-ons",
-      "description": "Extend Plone with add-ons",
+      "description": "Generate add-on extending Plone",
       "templates": [
         "monorepo_addon",
         "backend_addon",
@@ -29,7 +29,7 @@
     },
     "documentation": {
       "title": "Documentation",
-      "description": "Documentation templates for Plone projects",
+      "description": "Generate documentation for Plone projects or add-ons",
       "templates": ["documentation_starter"],
       "hidden": false
     },
