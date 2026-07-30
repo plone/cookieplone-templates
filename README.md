@@ -17,52 +17,6 @@
 
 This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
-
-## Choose a template 🛠️
-
-Select a template with the following command:
-
-```shell
-uvx cookieplone
-```
-
-```text
-╭───────────────────────────────────────────────────────────── cookieplone ──────────────────────────────────────────────────────────────╮
-│                                                                                                                                        │
-│                                  *******                                                                                               │
-│                              ***************                                                                                           │
-│                            ***             ***        *********     ***                                    ***                         │
-│                          ***    ***          ***      ***********   ***                                   * R *                        │
-│                         ***    *****          ***     ***      ***  ***                                    ***                         │
-│                        ***      ***            ***    ***       *** ***       ****     ***  ***       ****                             │
-│                        ***               ***   ***    ***      ***  ***     ********   *********    ********                           │
-│                        ***              *****  ***    ***********   ***    ***    ***  ****   ***  ***    ***                          │
-│                        ***      ***      ***   ***    *********     ***    ***    ***  ***    ***  **********                          │
-│                         ***    *****          ***     ***           ***    ***    ***  ***    ***  *********                           │
-│                          ***    ***          ***      ***           ****   ***    ***  ***    ***  ***    ...                          │
-│                            ***             ***        ***            *****  ********   ***    ***   ********                           │
-│                              ***************          ***              ***    ****     ***    ***     ****                             │
-│                                  *******                                                                                               │
-│                                                                                                                                        │
-│ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │
-│ │                                                             Templates                                                              │ │
-│ │ ┏━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ │ │
-│ │ ┃ # ┃ Title                                     ┃ Description                                                                    ┃ │ │
-│ │ ┡━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩ │ │
-│ │ │ 1 │ Volto Project                             │ Create a new Plone project that uses the Volto frontend                        │ │ │
-│ │ │ 2 │ Classic UI Project                        │ Create a new Plone project that uses Classic UI                                │ │ │
-│ │ │ 3 │ Backend Add-on for Plone                  │ Create a new Python package to be used with Plone                              │ │ │
-│ │ │ 4 │ Frontend Add-on for Plone                 │ Create a new Node package to be used with Volto                                │ │ │
-│ │ │ 5 │ Add-on for Plone (Backend + Volto)        │ Create a new codebase for a Plone add-on that includes both backend and Volto  │ │ │
-│ │ │   │                                           │ frontend                                                                       │ │ │
-│ │ │ 6 │ Aurora Frontend Add-on for Plone          │ Create a new Node package to be used with Plone Aurora                         │ │ │
-│ │ │ 7 │ Documentation scaffold for Plone projects │ Create a new documentation scaffold for Plone projects                         │ │ │
-│ │ └───┴───────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────┘ │ │
-│ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-Select a template [1/2/3/4/5/6/7] (1):
-```
-
 ### Publish to Git service provider
 
 To publish your project to your Git service provider, first create an empty remote repository with your Git service provider.
