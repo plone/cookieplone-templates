@@ -18,11 +18,6 @@
 This project is a collection of templates for Plone integrators to use through [Cookieplone](https://github.com/plone/cookieplone "Link to the GitHub repository of Cookieplone").
 
 
-## Installation 💾
-
-Set up your system with Plone's [Prerequisites for installation](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation).
-
-
 ## Choose a template 🛠️
 
 Select a template with the following command:
