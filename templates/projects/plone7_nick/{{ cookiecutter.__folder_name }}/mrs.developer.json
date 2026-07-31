@@ -1,8 +1,8 @@
 {
   "nick": {
-    "package": "@robgietema/nick",
-    "url": "git@github.com:robgietema/nick.git",
-    "https": "https://github.com/robgietema/nick.git",
+    "package": "@plone/nick",
+    "url": "git@github.com:plone/nick.git",
+    "https": "https://github.com/plone/nick.git",
     "path": "src",
     "branch": "main"
   }

@@ -4,6 +4,7 @@
  * @example import events from './events';
  */
 
-import events from '@robgietema/nick/src/events';
+// External imports
+import events from '@plone/nick/src/events';
 
 export default events;

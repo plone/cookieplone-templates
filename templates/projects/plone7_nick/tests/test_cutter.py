@@ -7,8 +7,7 @@ ROOT_FILES = [
     "README.md",
     "babel.config.json",
     "config.ts",
-    "eslint.config.mjs",
-    "jsconfig.json",
+    "eslint.config.ts",
     "knexfile.ts",
     "mrs.developer.json",
     "package.json",
@@ -60,3 +59,23 @@ def test_project_files_generated(cutter_result):
         path = cutter_result.project_path / file_path
         assert path.exists()
         assert path.is_file()
+
+
+def test_upstream_nick_configuration(cutter_result):
+    """Generated configuration should use the current Plone Nick package."""
+    project_path = cutter_result.project_path
+
+    package_json = (project_path / "package.json").read_text()
+    assert '"@plone/nick": "workspace:^"' in package_json
+    assert "@robgietema/nick" not in package_json
+
+    config = (project_path / "config.ts").read_text()
+    assert "database: 'plone'" in config
+    assert "'@plone/nick:core'" in config
+    assert "'plone:default'" in config
+
+    tsconfig = (project_path / "tsconfig.json").read_text()
+    assert '"@plone/nick": ["develop/nick/src"]' in tsconfig
+
+    assert not (project_path / "jsconfig.json").exists()
+    assert not (project_path / "eslint.config.mjs").exists()
