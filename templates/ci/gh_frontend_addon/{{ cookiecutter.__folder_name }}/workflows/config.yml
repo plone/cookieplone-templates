@@ -14,13 +14,17 @@ on:
       node-version:
         description: "Node version to be used"
         value: {{ "${{ inputs.node-version }}" }}
+      storybook-deploy:
+        description: "Whether to deploy storybook or not"
+        value: {{ "${{ jobs.config.outputs.storybook-deploy }}" }}
 
 jobs:
   config:
     runs-on: ubuntu-latest
     outputs:
-      base-tag: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}
-      plone-version: {{ "${{ inputs.node-version }}" }}
+      base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
+      node-version: {{ "${{ inputs.node-version }}" }}
+      storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}
 
     steps:
       - name: Checkout
@@ -29,10 +33,12 @@ jobs:
       - name: Compute several vars needed for the CI
         id: vars
         run: |
-          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "storybook-deploy={{ "${{ github.event.repository.private == false }}" }}" >> $GITHUB_OUTPUT
 
       - name: Test vars
         run: |
-          echo "base-tag: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}"
+          echo "base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}"
           echo 'node-version: {{ "${{ inputs.node-version }}" }}'
           echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}'
