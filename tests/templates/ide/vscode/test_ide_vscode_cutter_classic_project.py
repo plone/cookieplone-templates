@@ -45,6 +45,23 @@ def test_created_files(cutter_result, load_json, file_path: str, exists: bool):
         assert isinstance(content, dict)
 
 
+EXTENSIONS = [
+    ["extensions.json", f"recommendations/{idx}", extension]
+    for idx, extension in enumerate([
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "ms-python.vscode-python-envs",
+        "redhat.ansible",
+        "ExecutableBookProject.myst-highlight",
+        "ms-vscode-remote.remote-containers",
+        "redhat.vscode-yaml",
+        "editorconfig.editorconfig",
+        "github.vscode-github-actions",
+        "plone.plone-vs-utilities",
+    ])
+]
+
+
 @pytest.mark.parametrize(
     "file_path,path,expected",
     [
@@ -53,16 +70,10 @@ def test_created_files(cutter_result, load_json, file_path: str, exists: bool):
             "configurations/0/program",
             "${workspaceFolder}/backend/.venv/bin/runwsgi",
         ],
-        [
-            "launch.json",
-            "configurations/0/cwd",
-            "${workspaceFolder}/backend",
-        ],
-        [
-            "settings.json",
-            "python.testing.pytestArgs/0",
-            "backend/tests",
-        ],
+        ["launch.json", "configurations/0/cwd", "${workspaceFolder}/backend"],
+        ["settings.json", "python.testing.pytestArgs/0", "backend/tests"],
+        ["settings.json", "python-envs.workspaceSearchPaths/0", "backend/.venv"],
+        *EXTENSIONS,
     ],
 )
 def test_settings(
