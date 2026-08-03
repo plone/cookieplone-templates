@@ -89,6 +89,16 @@ def test_created_files(cutter_result, file_path: str):
             "storybook-deploy: ${{ needs.config.outputs.storybook-deploy }}",
             True,
         ),
+        (
+            "workflows/frontend.yml",
+            "node-version: ${{ inputs.node-version }}",
+            True,
+        ),
+        (
+            "workflows/frontend.yml",
+            "needs.config.outputs.node-version",
+            False,
+        ),
     ],
 )
 def test_content(cutter_result, file_path: str, text: str, expected: bool):
