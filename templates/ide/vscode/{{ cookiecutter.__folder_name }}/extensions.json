@@ -8,6 +8,7 @@
     {%- if cookiecutter.backend_path != '' %}
     "charliermarsh.ruff",
     "ms-python.python",
+    "ms-python.vscode-python-envs",
     {%- endif %}
     {%- if cookiecutter.ansible_path != '' %}
     "redhat.ansible",

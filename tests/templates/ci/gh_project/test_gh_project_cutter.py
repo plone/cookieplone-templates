@@ -79,6 +79,26 @@ def test_created_files(cutter_result, file_path: str):
             True,
         ),
         ("workflows/main.yml", "uses: ./.github/workflows/config.yml", True),
+        (
+            "workflows/config.yml",
+            "storybook-deploy=${{ github.event.repository.private == false }}",
+            True,
+        ),
+        (
+            "workflows/main.yml",
+            "storybook-deploy: ${{ needs.config.outputs.storybook-deploy }}",
+            True,
+        ),
+        (
+            "workflows/frontend.yml",
+            "node-version: ${{ inputs.node-version }}",
+            True,
+        ),
+        (
+            "workflows/frontend.yml",
+            "needs.config.outputs.node-version",
+            False,
+        ),
     ],
 )
 def test_content(cutter_result, file_path: str, text: str, expected: bool):

@@ -48,6 +48,9 @@ on:
       volto-version:
         description: "Volto version to be used"
         value: {{ "${{ jobs.config.outputs.volto-version }}" }}
+      storybook-deploy:
+        description: "Whether to deploy storybook or not"
+        value: {{ "${{ jobs.config.outputs.storybook-deploy }}" }}
 
 jobs:
   config:
@@ -63,6 +66,7 @@ jobs:
       image-name-prefix: {{ "${{ steps.vars.outputs.image-name-prefix }}" }}
       plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
       volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}
+      storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}
 
     steps:
       - name: Checkout
@@ -84,6 +88,7 @@ jobs:
           echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "storybook-deploy={{ "${{ github.event.repository.private == false }}" }}" >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
@@ -116,6 +121,7 @@ jobs:
           echo 'plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}'
           echo 'volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}'
           echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}'
           echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
           echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
           echo 'Paths - cache: {{ "${{ steps.filter.outputs.cache }}" }}'

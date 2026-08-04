@@ -51,7 +51,7 @@ jobs:
         - i18n
     with:
         node-version: {{ "${{ needs.config.outputs.node-version }}" }}
-        deploy: true
+        deploy:  {{ "${{ needs.config.outputs.storybook-deploy }}" }}
 
   report:
     name: "Final report"
