@@ -86,7 +86,7 @@ def test_created_files(cutter_result, file_path: str):
         ),
         (
             "workflows/main.yml",
-            "storybook-deploy: ${{ needs.config.outputs.storybook-deploy }}",
+            "storybook-deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
             True,
         ),
         (

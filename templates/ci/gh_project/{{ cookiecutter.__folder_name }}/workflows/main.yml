@@ -73,7 +73,7 @@ jobs:
         image-name-suffix: frontend
         node-version: {{ "${{ needs.config.outputs.node-version }}" }}
         volto-version: {{ "${{ needs.config.outputs.volto-version }}" }}
-        storybook-deploy: {{ "${{ needs.config.outputs.storybook-deploy }}" }}
+        storybook-deploy: {{ "${{ needs.config.outputs.storybook-deploy == 'true' }}" }}
     if: {{ "${{ needs.config.outputs.frontend == 'true' }}" }}
     permissions:
       contents: read
