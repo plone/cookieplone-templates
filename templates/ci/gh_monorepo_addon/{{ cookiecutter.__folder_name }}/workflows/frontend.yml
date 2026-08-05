@@ -60,6 +60,8 @@ jobs:
       node-version: {{ "${{ inputs.node-version }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
       deploy: {{ "${{ inputs.storybook-deploy }}" }}
+    permissions:
+      contents: write
 
   release:
     name: "Frontend: Build and publish container image"
