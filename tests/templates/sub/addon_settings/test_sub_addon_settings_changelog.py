@@ -1,6 +1,5 @@
 """Test Generator: changelog / towncrier setup."""
 
-
 import pytest
 
 from tests.templates import CHANGELOG_TEMPLATE_NAME, TOWNCRIER_TYPES, expected_settings

@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 import tomli
+import yaml
 
 
 @pytest.fixture(scope="module")
@@ -39,6 +40,44 @@ def generated_paths(cutter_result, build_files_list):
 def generated_path(request, generated_paths):
     # The fixture receives a single path as an indirect parameter
     return generated_paths
+
+
+@pytest.fixture(scope="session")
+def github_workflow():
+    """Return a helper to parse a GitHub Actions workflow file.
+
+    YAML parses the unquoted ``on`` key as the boolean ``True``, so it is
+    normalized back to the ``on`` string.
+
+    :returns: Callable receiving the path to a workflow file and returning its
+        parsed content.
+    """
+
+    def func(path: Path) -> dict:
+        data = yaml.safe_load(Path(path).read_text())
+        if True in data:
+            data["on"] = data.pop(True)
+        return data
+
+    return func
+
+
+@pytest.fixture(scope="session")
+def workflow_step():
+    """Return a helper to find a step of a job, by its ``id``.
+
+    :returns: Callable receiving a parsed workflow, a job name and a step id,
+        and returning the step, or an empty dict when not found.
+    """
+
+    def func(workflow: dict, job: str, step_id: str) -> dict:
+        steps = workflow.get("jobs", {}).get(job, {}).get("steps", [])
+        for step in steps:
+            if step.get("id") == step_id:
+                return step
+        return {}
+
+    return func
 
 
 @pytest.fixture(scope="session")

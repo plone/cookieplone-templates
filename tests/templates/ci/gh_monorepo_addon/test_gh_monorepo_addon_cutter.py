@@ -62,11 +62,9 @@ def test_created_files(cutter_result, file_path: str):
 @pytest.mark.parametrize(
     "file_path,text,expected",
     [
-        (
-            "workflows/changelog.yml",
-            "uvx towncrier check  --compare-with origin/${{ env.BASE_BRANCH }}",
-            True,
-        ),
+        # The towncrier invocations are covered in detail by
+        # test_gh_monorepo_addon_changelog.py
+        ("workflows/changelog.yml", "uvx towncrier check", True),
         ("workflows/changelog.yml", "pipx", False),
         (
             "workflows/config.yml",

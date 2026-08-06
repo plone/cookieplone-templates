@@ -154,7 +154,6 @@ def generate_sub_addon_settings(context: OrderedDict, output_dir: Path) -> Path:
 def generate_ci_gh_monorepo_addon(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
     ci_context = OrderedDict({
-        "npm_package_name": context["__npm_package_name"],
         "container_image_prefix": context["__container_image_prefix"],
         "python_version": versions["backend_python"],
         "node_version": context["__node_version"],
