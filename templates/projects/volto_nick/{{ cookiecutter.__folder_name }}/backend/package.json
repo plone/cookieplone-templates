@@ -19,7 +19,6 @@
   },
   "scripts": {
     "develop": "missdev --config=tsconfig.json --fetch-https",
-    "develop:npx": "npx -p mrs-developer missdev --config=tsconfig.json --fetch-https",
     "bootstrap": "pnpm preinstall && pnpm install && pnpm migrate && pnpm seed",
     "convert": "tsx scripts/convert.ts",
     "i18n": "tsx src/develop/nick/scripts/i18n.ts",
@@ -34,8 +33,7 @@
     "start": "nodemon --exec 'tsx src/develop/nick/src/server.ts'",
     "rollback": "pnpm knex migrate:rollback --all",
     "reset": "pnpm rollback && pnpm migrate && pnpm seed",
-    "test": "AUTH_RATE_LIMIT=1000 jest --passWithNoTests",
-    "preinstall": "if [ -f $(pwd)/node_modules/.bin/missdev ]; then pnpm develop; else pnpm develop:npx; fi"
+    "test": "AUTH_RATE_LIMIT=1000 jest --passWithNoTests"
   },
   "engines": {
     "node": "^22 || ^24 || ^25 || ^26"

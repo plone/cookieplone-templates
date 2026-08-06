@@ -6,6 +6,7 @@ help: ## Show this help
 
 .PHONY: install
 install: ## Install dependencies
+	pnpm dlx mrs-developer missdev --config=tsconfig.json --fetch-https
 	pnpm install
 
 .PHONY: start
