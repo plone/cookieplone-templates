@@ -1,0 +1,1 @@
+Ship the towncrier changelog template inside each generated codebase, removing the need to install the frontend package before checking for news fragments, and unify the towncrier settings and news fragment types across backend, frontend and project codebases. @ericof
