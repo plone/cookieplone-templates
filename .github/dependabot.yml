@@ -1,0 +1,12 @@
+version: 2
+updates:
+
+  - package-ecosystem: "github-actions"
+    directories:
+      # Workflows under .github/workflows
+      - "/"
+      # Composite actions, which are not covered by the entry above
+      - "/.github/actions/*"
+    schedule:
+      # Check for updates to GitHub Actions every week
+      interval: "weekly"
