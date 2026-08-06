@@ -43,6 +43,7 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
+        "dependabot.yml",
         "instructions/general/docs.md",
         "instructions/docs.instructions.md",
         "instructions/volto.instructions.md",
@@ -64,7 +65,7 @@ def test_created_files(cutter_result, file_path: str):
     [
         (
             "workflows/changelog.yml",
-            "uvx towncrier check  --compare-with origin/${{ env.BASE_BRANCH }}",
+            "uvx towncrier check --compare-with origin/${{ env.base-branch }}",
             True,
         ),
         ("workflows/changelog.yml", "pipx", False),

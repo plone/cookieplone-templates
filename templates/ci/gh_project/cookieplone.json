@@ -12,13 +12,6 @@
                 "validator": "",
                 "format": "computed"
             },
-            "npm_package_name": {
-                "type": "string",
-                "title": "NPM Package Name",
-                "default": "@plone-collective/volto-addon",
-                "validator": "",
-                "format": "computed"
-            },
             "python_version": {
                 "type": "string",
                 "title": "Python Version",

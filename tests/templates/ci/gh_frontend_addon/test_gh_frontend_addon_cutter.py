@@ -41,6 +41,7 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
+        "dependabot.yml",
         "instructions/general/docs.md",
         "instructions/docs.instructions.md",
         "instructions/volto.instructions.md",
@@ -58,7 +59,9 @@ def test_created_files(cutter_result, file_path: str):
 @pytest.mark.parametrize(
     "file_path,text,expected",
     [
-        ("workflows/changelog.yml", "uvx towncrier check --dir packages/", True),
+        # The towncrier invocations are covered in detail by the
+        # test_*_changelog.py module of this suite.
+        ("workflows/changelog.yml", "uvx towncrier check", True),
         ("workflows/changelog.yml", "pipx", False),
         (
             "workflows/config.yml",

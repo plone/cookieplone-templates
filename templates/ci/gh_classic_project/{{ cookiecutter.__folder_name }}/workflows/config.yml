@@ -39,6 +39,18 @@ on:
       plone-version:
         description: "Plone version to be used"
         value: {{ "${{ jobs.config.outputs.plone-version }}" }}
+      path-backend:
+        description: "Path to the backend package"
+        value: {{ "${{ jobs.config.outputs.path-backend }}" }}
+      path-root:
+        description: "Path to the root of the repository"
+        value: {{ "${{ jobs.config.outputs.path-root }}" }}
+      changelog-backend:
+        description: "Flag reporting if we should run changelog jobs for the backend"
+        value: {{ "${{ jobs.config.outputs.changelog-backend }}" }}
+      changelog-repository:
+        description: "Flag reporting if we should run changelog jobs for the repository"
+        value: {{ "${{ jobs.config.outputs.changelog-repository }}" }}
 
 jobs:
   config:
@@ -51,6 +63,10 @@ jobs:
       docs: {{ "${{ steps.filter.outputs.docs }}" }}
       base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
       plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
+      path-backend: {{ "${{ steps.vars.outputs.path-backend }}" }}
+      path-root: {{ "${{ steps.vars.outputs.path-root }}" }}
+      changelog-backend: {{ "${{ steps.filter.outputs.changelog-backend }}" }}
+      changelog-repository: {{ "${{ steps.filter.outputs.changelog-repository }}" }}
 
     steps:
       - name: Checkout
@@ -62,6 +78,8 @@ jobs:
         run: |
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "plone-version=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
+          echo "path-backend=backend" >> $GITHUB_OUTPUT
+          echo "path-root=." >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
@@ -82,6 +100,15 @@ jobs:
               - '.readthedocs.yaml'
               - 'docs/**'
               - '.github/workflows/docs.yaml'
+            changelog-backend:
+              - 'backend/**'
+            changelog-repository:
+              - '.github/**'
+              - '.vscode/**'
+              - 'devops/**'
+              - 'docs/**'
+              - 'docker-compose.yml'
+              - 'README.md'
 
       - name: Test vars
         run: |
