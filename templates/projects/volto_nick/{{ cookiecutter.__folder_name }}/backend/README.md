@@ -1,4 +1,4 @@
-# {{ cookiecutter.title }}
+# {{ cookiecutter.title }} backend
 
 {{ cookiecutter.description }}
 

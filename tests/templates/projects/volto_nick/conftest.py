@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture(scope="module")
 def template_folder() -> str:
-    return "projects/plone7_nick"
+    return "projects/volto_nick"
 
 
 @pytest.fixture(scope="session")
@@ -15,14 +15,17 @@ def context(annotate_context, cookieplone_root) -> dict:
         {
             "title": "Plone",
             "project_slug": "plone",
-            "description": "A standalone Nick-based Plone project.",
+            "description": "Plone Volto using Nick as backend.",
             "author": "Plone Collective",
             "email": "collective@plone.org",
             "github_organization": "collective",
             "npm_package_name": "plone",
+            "frontend_addon_name": "volto-plone",
+            "use_prerelease_versions": False,
+            "volto_version": "19.0.0",
         },
         cookieplone_root,
-        "plone7_nick",
+        "volto_nick",
     )
 
 
@@ -32,9 +35,12 @@ def bad_context() -> dict:
     return {
         "title": "Plone",
         "project_slug": "plone",
-        "description": "A standalone Nick-based Plone project.",
+        "description": "Plone Volto using Nick as backend.",
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "github_organization": "collective",
         "npm_package_name": "plone collective",
+        "frontend_addon_name": "volto-plone",
+        "use_prerelease_versions": False,
+        "volto_version": "19.0.0",
     }

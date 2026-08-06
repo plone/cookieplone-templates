@@ -15,8 +15,8 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("project", "Plone 6 Project", False),
         ("classic_project", "Plone 6 using Classic UI Project", False),
         (
-            "plone7_nick",
-            "Plone 7 alpha using Nick as standalone backend (experimental)",
+            "volto_nick",
+            "Plone Volto using Nick as backend",
             False,
         ),
         (

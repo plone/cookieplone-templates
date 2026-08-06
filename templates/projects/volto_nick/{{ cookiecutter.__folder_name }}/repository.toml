@@ -1,0 +1,34 @@
+[repository]
+name = "{{ cookiecutter.__project_slug }}"
+changelog = "CHANGELOG.md"
+version = "version.txt"
+version_format = "calver"
+compose = []
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
+
+[backend.package]
+name = "{{ cookiecutter.npm_package_name }}"
+path = "backend"
+code_path = "src"
+changelog = "CHANGELOG.md"
+towncrier_settings = "towncrier.toml"
+base_package = "@plone/nick"
+publish = false
+
+[frontend.package]
+name = "{{ cookiecutter.frontend_addon_name }}"
+path = "frontend/packages/{{ cookiecutter.__frontend_package_name }}"
+code_path = "src"
+changelog = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/CHANGELOG.md"
+towncrier_settings = "frontend/packages/{{ cookiecutter.__frontend_package_name }}/towncrier.toml"
+base_package = "@plone/volto"
+publish = false
+
+[cookieplone]
+template = "{{ cookiecutter.__cookieplone_template }}"
+template_version = "{{ cookiecutter.__generator_sha }}"
+generated_date = "{{ cookiecutter.__generator_date_long }}"
+

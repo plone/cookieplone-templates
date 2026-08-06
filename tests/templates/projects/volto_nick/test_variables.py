@@ -1,9 +1,11 @@
-ALLOWED_MISSING = [
+ALLOWED_MISSING: list[str] = [
     "ansible_path",
     "backend_path",
     "frontend_path",
+    "initialize_ci",
+    "initialize_documentation",
 ]
-ALLOWED_NOT_USED = ["__generator_sha"]
+ALLOWED_NOT_USED: list[str] = []
 
 
 def test_no_missing_variables(variables_missing):

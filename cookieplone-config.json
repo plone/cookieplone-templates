@@ -10,7 +10,7 @@
       "templates": [
         "project",
         "classic_project",
-        "plone7_nick",
+        "volto_nick",
         "plone7_nick_embedded"
       ],
       "hidden": false
@@ -113,10 +113,10 @@
       "description": "Create a new Node.js Plone 7 alpha frontend package",
       "hidden": true
     },
-    "plone7_nick": {
-      "path": "./templates/projects/plone7_nick",
-      "title": "Plone 7 alpha using Nick as standalone backend (experimental)",
-      "description": "Create a new Node.js Plone 7 alpha project using Nick as standalone backend",
+    "volto_nick": {
+      "path": "./templates/projects/volto_nick",
+      "title": "Plone Volto using Nick as backend",
+      "description": "Create a Plone Volto project using Nick as backend",
       "hidden": false
     },
     "plone7_nick_embedded": {
