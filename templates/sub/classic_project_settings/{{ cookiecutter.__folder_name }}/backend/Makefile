@@ -15,7 +15,11 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
+IMAGE_NAME_PREFIX := {{ cookiecutter.__container_image_prefix }}
+IMAGE_NAME_SEPARATOR := {{ cookiecutter.__container_registry_prefix_separator }}
+IMAGE_NAME_PREFIX_WITH_SEPARATOR := $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)
+
+
 IMAGE_TAG=latest
 
 # Python checks
@@ -50,7 +54,7 @@ help: ## This help message
 requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
-	@uvx mxdev -c mx.ini
+	@uvx 'mxdev[uv]' -c mx.ini
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
@@ -139,7 +143,7 @@ test-coverage: $(VENV_FOLDER) ## run tests with coverage
 # Build Docker images
 .PHONY: build-image
 build-image:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend:$(IMAGE_TAG) -f Dockerfile --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 # Acceptance tests
 .PHONY: acceptance-backend-start
@@ -148,7 +152,7 @@ acceptance-backend-start: ## Start backend acceptance server
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)

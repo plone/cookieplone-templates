@@ -101,7 +101,7 @@ services:
       - traefik.http.routers.rt-backend-public.middlewares=gzip
 
       ## Router: from Varnish to backend (internal)
-      - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Headers(`X-Varnish-Routed`, `1`)
+      - traefik.http.routers.rt-backend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Header(`X-Varnish-Routed`, `1`)
       - traefik.http.routers.rt-backend-internal.entrypoints=http
       - traefik.http.routers.rt-backend-internal.service=svc-backend
       - traefik.http.routers.rt-backend-internal.middlewares=mw-backend-vhm-classic
@@ -116,7 +116,7 @@ services:
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
       POSTGRES_DB: plone
     volumes:
-      - vol-site-data:/var/lib/postgresql/data
+      - vol-site-data:/var/lib/postgresql
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:

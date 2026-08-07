@@ -22,7 +22,7 @@
         "monorepo_addon",
         "backend_addon",
         "frontend_addon",
-        "plone7_frontend",
+        "aurora_addon",
         "seven_addon"
       ],
       "hidden": false
@@ -101,16 +101,16 @@
       "description": "Create a new codebase for a Plone 6 add-on that includes both frontend and backend",
       "hidden": false
     },
-    "plone7_frontend": {
-      "path": "./templates/add-ons/plone7_frontend",
-      "title": "Plone 7 alpha Frontend Add-on",
-      "description": "Create a new Node.js Plone 7 alpha frontend package",
+    "aurora_addon": {
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
       "hidden": false
     },
     "seven_addon": {
-      "path": "./templates/add-ons/plone7_frontend",
-      "title": "Plone 7 alpha Frontend Add-on",
-      "description": "Create a new Node.js Plone 7 alpha frontend package",
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
       "hidden": true
     },
     "volto_nick": {
@@ -212,13 +212,22 @@
   },
   "config": {
     "renderer": "rich",
-    "min_version": "2.0.0a2",
+    "min_version": "2.0.0b3",
+    "summary": {
+      "enabled": true,
+      "message": "Now, code it, create a git repository, push to your organization.",
+      "thanks": "Sorry for the convenience,",
+      "signature": {
+        "text": "The Plone Community",
+        "url": "https://plone.org"
+      }
+    },
     "versions": {
-      "backend_python": "3.13",
+      "backend_python": "3.14",
       "devops_cronjob_version": "1.14",
-      "devops_db_version": "14.15",
-      "devops_traefik_version": "v2.11",
-      "devops_varnish_version": "7.6",
+      "devops_db_version": "18",
+      "devops_traefik_version": "v3.7",
+      "devops_varnish_version": "8.0",
       "devops_zeo_version": "6.0.0",
       "frontend_mrs_developer": "^2.2.0",
       "frontend_pnpm": "10.20.0",
@@ -227,15 +236,15 @@
       "frontend_typescript": "^5.7.3",
       "frontend_vitest": "^3.1.2",
       "gha_version_background_action": "v1",
-      "gha_version_cache": "v4",
-      "gha_version_checkout": "v6",
+      "gha_version_cache": "v6",
+      "gha_version_checkout": "v7",
       "gha_version_docker_stack": "v1.4.0",
-      "gha_version_node": "22.x",
-      "gha_version_pages_deploy": "v5",
+      "gha_version_node": "24.x",
+      "gha_version_pages_deploy": "v4.8.0",
       "gha_version_paths_filter": "v4.0.1",
       "gha_version_plone_meta": "2.x",
-      "gha_version_setup_node": "v4",
-      "gha_version_upload_artifact": "v4",
+      "gha_version_setup_node": "v6.4.0",
+      "gha_version_upload_artifact": "v7.0.1",
       "tools_pre_commit": "3.7.1"
     }
   }

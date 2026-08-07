@@ -85,3 +85,21 @@ def bad_context() -> dict:
         "npm_package_name": "",
         "node_version": "24.x",
     }
+
+
+@pytest.fixture
+def codebases() -> list[tuple[str, str]]:
+    """Codebases checked by this template, and the config output holding each path."""
+    return [("backend", "path-backend"), ("repository", "path-root")]
+
+
+@pytest.fixture
+def guarded() -> bool:
+    """Whether each check is guarded by a paths filter flag."""
+    return True
+
+
+@pytest.fixture
+def expects_python_version() -> bool:
+    """Whether the changelog workflow pins a Python version."""
+    return True

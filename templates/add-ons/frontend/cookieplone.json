@@ -235,7 +235,9 @@
             "cookieplone.filters.node_version_for_volto",
             "cookieplone.filters.latest_volto"
         ],
-        "no_render": [],
+        "no_render": [
+            "packages/{{ cookiecutter.frontend_addon_name }}/news/.changelog_template.jinja"
+        ],
         "subtemplates": [
             {
                 "id": "docs/starter",

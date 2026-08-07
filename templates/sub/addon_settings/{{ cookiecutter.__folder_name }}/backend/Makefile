@@ -25,8 +25,11 @@ endif
 
 REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_NAME_SEPARATOR := {{ cookiecutter.__container_registry_prefix_separator }}
+IMAGE_NAME_PREFIX_WITH_SEPARATOR := $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)
+
 IMAGE_TAG=latest
-IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
+IMAGE_NAME=$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -64,13 +67,14 @@ debug-settings:  ## Debug settings
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
 	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
+	@echo "IMAGE_NAME_PREFIX_WITH_SEPARATOR: $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)"
 	@echo "IMAGE_NAME: $(IMAGE_NAME)"
 
 
 requirements-mxdev.txt: pyproject.toml mx.ini ## Generate constraints file
 	@echo "$(GREEN)==> Generate constraints file$(RESET)"
 	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
-	@uvx mxdev -c mx.ini
+	@uvx 'mxdev[uv]' -c mx.ini
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
@@ -164,7 +168,7 @@ acceptance-backend-start: ## Start backend acceptance server
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
 
 ## Add bobtemplates features (check bobtemplates.plone's documentation to get the list of available features)
 add: $(VENV_FOLDER)

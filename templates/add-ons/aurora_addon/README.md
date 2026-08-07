@@ -1,0 +1,67 @@
+[![Cookieplone Aurora Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml)
+[![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
+![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
+# Cookieplone Aurora Add-on
+
+Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Aurora Add-on](https://github.com/plone/cookieplone-templates/tree/main/templates/add-ons/aurora_addon) is intended to be used by Plone developers to create new add-on packages for Plone Aurora.
+
+## Getting Started 🏁
+
+### Prerequisites
+
+- **uv**: An extremely fast Python package and project manager.
+
+### Installation Guide 🛠️
+
+1. **uv**
+
+```shell
+pip install uv
+```
+
+### Generate Your Plone Add-on 🎉
+
+```shell
+uvx cookieplone aurora_addon
+```
+
+## Project Generation Options
+
+These are all the template options that will be prompted by the [Cookiecutter CLI](https://github.com/cookiecutter/cookiecutter) before generating your project.
+
+| Option                | Description                                                                                                                                          | Example                       |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `frontend_addon_name`  | Your addon's short name.                                                                                     | **volto-weather-block**                |
+| `title`  | Your addon's human-readable name, capitals and spaces allowed.                                                                                     | **Weather Block for Volto**                |
+| `project_slug`         | URL-friendly identifier used as the repository name.                                                                          | **volto-weather-block** |
+| `description`         | Describes your add-on and gets used in places like ``README.md`` and such.                                                                          | **Add a weather block to your site.** |
+| `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | **Our Company**               |
+| `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
+| `github_organization` | Used for GitHub repositories.                                                                                                             | **collective**                |
+| `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
+
+## Code Quality Assurance 🧐
+
+Your package comes equipped with linters to ensure code quality. Run the following to automatically format your code:
+
+```shell
+make format
+```
+
+## Internationalization 🌐
+
+Generate translation files with ease:
+
+```shell
+make i18n
+```
+
+## License 📜
+
+This project is licensed under the [MIT License](/LICENSE).
+
+## Let's Get Building! 🚀
+
+Happy coding!

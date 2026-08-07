@@ -11,6 +11,7 @@ REPLACEMENTS = (
     (".//", "./"),
     ("../", "./"),
     ("//", "/"),
+    ("backend.venv", "backend/.venv"),
     ("{workspaceFolder}backend", "{workspaceFolder}/backend"),
     ("{workspaceFolder}frontend", "{workspaceFolder}/frontend"),
     (".frontend", "./frontend"),

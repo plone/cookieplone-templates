@@ -27,6 +27,9 @@ on:
       plone-version:
         description: "Plone version to be used"
         value: {{ "${{ inputs.plone-version }}" }}
+      path-root:
+        description: "Path to the root of the repository"
+        value: {{ "${{ jobs.config.outputs.path-root }}" }}
 
 jobs:
   config:
@@ -36,6 +39,7 @@ jobs:
       docs: {{ "${{ steps.filter.outputs.docs }}" }}
       base-tag: {{ "${{ steps.vars.outputs.BASE_TAG }}" }}
       plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
+      path-root: {{ "${{ steps.vars.outputs.path-root }}" }}
 
     steps:
       - name: Checkout
@@ -46,6 +50,7 @@ jobs:
         run: |
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "plone-version={{ "${{ inputs.plone-version }}" }}" >> $GITHUB_OUTPUT
+          echo "path-root=." >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter

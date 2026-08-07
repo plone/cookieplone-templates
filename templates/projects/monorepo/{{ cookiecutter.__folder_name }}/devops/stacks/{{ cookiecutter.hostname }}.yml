@@ -62,11 +62,11 @@ services:
       - vol-traefik-certs:/certificates
 
     command:
-      - --providers.docker
-      - --providers.docker.constraints=Label(`traefik.constraint-label`, `public`)
-      - --providers.docker.exposedbydefault=false
-      - --providers.docker.swarmmode
-      - --providers.docker.network={{ cookiecutter.__devops_traefik_docker_network }}
+      - --providers.swarm
+      - --providers.swarm.watch
+      - --providers.swarm.constraints=Label(`traefik.constraint-label`, `public`)
+      - --providers.swarm.exposedbydefault=false
+      - --providers.swarm.network={{ cookiecutter.__devops_traefik_docker_network }}
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --certificatesresolvers.le.acme.email={{ cookiecutter.email }}
@@ -99,7 +99,7 @@ services:
         order: start-first
 
   varnish:
-    image: {{ cookiecutter.__container_image_prefix }}-varnish:${STACK_PARAM:-latest}
+    image: {{ cookiecutter.__container_image_prefix }}{{ cookiecutter.__container_registry_prefix_separator }}varnish:${STACK_PARAM:-latest}
     command:
       - '-p'
       - 'nuke_limit=2000'
@@ -135,7 +135,7 @@ services:
 {%- endif %}
 
   frontend:
-    image: {{ cookiecutter.__container_image_prefix }}-frontend:${STACK_PARAM:-latest}
+    image: {{ cookiecutter.__container_image_prefix }}{{ cookiecutter.__container_registry_prefix_separator }}frontend:${STACK_PARAM:-latest}
     environment:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
       RAZZLE_API_PATH: https://{{ cookiecutter.hostname }}
@@ -166,13 +166,13 @@ services:
         - traefik.http.routers.rt-frontend.middlewares=gzip
 {%- else %}
         ## / (Internal)
-        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-frontend.rule=Host(`{{ cookiecutter.hostname }}`) && Header(`X-Varnish-Routed`, `1`)
         - traefik.http.routers.rt-frontend.entrypoints=http
         - traefik.http.routers.rt-frontend.service=svc-frontend
 {%- endif %}
 
   backend:
-    image: {{ cookiecutter.__container_image_prefix }}-backend:${STACK_PARAM:-latest}
+    image: {{ cookiecutter.__container_image_prefix }}{{ cookiecutter.__container_registry_prefix_separator }}backend:${STACK_PARAM:-latest}
 {%- if cookiecutter.devops_storage == 'relstorage' %}
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-{{ cookiecutter.__devops_db_password }}}' port='${DB_PORT:-5432}'"
@@ -230,7 +230,7 @@ services:
         - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-api
 {%- else %}
         ## /++api++ (Internal)
-        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`) && Headers(`X-Varnish-Routed`, `1`)
+        - traefik.http.routers.rt-backend-api.rule=Host(`{{ cookiecutter.hostname }}`) && PathPrefix(`/++api++`) && Header(`X-Varnish-Routed`, `1`)
         - traefik.http.routers.rt-backend-api.entrypoints=http
         - traefik.http.routers.rt-backend-api.service=svc-backend
         - traefik.http.routers.rt-backend-api.middlewares=mw-backend-vhm-api
@@ -257,7 +257,7 @@ services:
         delay: 1s
         order: stop-first
     volumes:
-      - vol-site-data:/var/lib/postgresql/data
+      - vol-site-data:/var/lib/postgresql
     networks:
       - {{ cookiecutter.__devops_swarm_stack_network }}
 {%- elif cookiecutter.devops_storage == 'zeo' %}

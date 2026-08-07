@@ -26,7 +26,6 @@ classifiers = [
     {%- if cookiecutter.__feature_distribution == '1' %}
     "Framework :: Plone :: Distribution",
     {%- endif %}
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     {%- for version in cookiecutter.__supported_versions_python %}
@@ -47,7 +46,7 @@ test = [
     "plone.restapi[test]",
     "pytest",
     "pytest-cov",
-    "pytest-plone>=1.0.0a2",
+    "pytest-plone>=1.0.0a3",
 ]
 
 container = [
@@ -104,27 +103,27 @@ underlines = ["", "", ""]
 
 [[tool.towncrier.type]]
 directory = "breaking"
-name = "Breaking changes:"
+name = "Breaking"
 showcontent = true
 
 [[tool.towncrier.type]]
 directory = "feature"
-name = "New features:"
+name = "Feature"
 showcontent = true
 
 [[tool.towncrier.type]]
 directory = "bugfix"
-name = "Bug fixes:"
+name = "Bugfix"
 showcontent = true
 
 [[tool.towncrier.type]]
 directory = "internal"
-name = "Internal:"
+name = "Internal"
 showcontent = true
 
 [[tool.towncrier.type]]
 directory = "documentation"
-name = "Documentation:"
+name = "Documentation"
 showcontent = true
 
 [[tool.towncrier.type]]
@@ -189,7 +188,6 @@ ignore = [
     ".editorconfig",
     ".flake8",
     "dependabot.yml",
-    "mx.ini",
 ]
 
 [tool.pytest.ini_options]

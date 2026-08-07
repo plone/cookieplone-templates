@@ -60,7 +60,7 @@ uvx cookieplone
 │ │ │ 4 │ Frontend Add-on for Plone                 │ Create a new Node package to be used with Volto                                │ │ │
 │ │ │ 5 │ Add-on for Plone (Backend + Volto)        │ Create a new codebase for a Plone add-on that includes both backend and Volto  │ │ │
 │ │ │   │                                           │ frontend                                                                       │ │ │
-│ │ │ 6 │ Seven Frontend Add-on for Plone           │ Create a new Node package to be used with Seven                                │ │ │
+│ │ │ 6 │ Aurora Frontend Add-on for Plone          │ Create a new Node package to be used with Plone Aurora                         │ │ │
 │ │ │ 7 │ Documentation scaffold for Plone projects │ Create a new documentation scaffold for Plone projects                         │ │ │
 │ │ └───┴───────────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────────┘ │ │
 │ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯ │

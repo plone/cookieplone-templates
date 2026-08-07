@@ -84,7 +84,7 @@ services:
       - traefik.http.routers.rt-frontend-public.service=svc-varnish
       - traefik.http.routers.rt-frontend-public.middlewares=gzip
       ### Router: Internal
-      - traefik.http.routers.rt-frontend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Headers(`X-Varnish-Routed`, `1`)
+      - traefik.http.routers.rt-frontend-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && Header(`X-Varnish-Routed`, `1`)
       - traefik.http.routers.rt-frontend-internal.entrypoints=http
       - traefik.http.routers.rt-frontend-internal.service=svc-frontend
       {%- endif %}
@@ -146,7 +146,7 @@ services:
       - traefik.http.routers.rt-backend-api-public.middlewares=gzip
 
       ### Router: Internal
-      - traefik.http.routers.rt-backend-api-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && PathPrefix(`/++api++`) && Headers(`X-Varnish-Routed`, `1`)
+      - traefik.http.routers.rt-backend-api-internal.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && PathPrefix(`/++api++`) && Header(`X-Varnish-Routed`, `1`)
       - traefik.http.routers.rt-backend-api-internal.entrypoints=http
       - traefik.http.routers.rt-backend-api-internal.service=svc-backend
       - traefik.http.routers.rt-backend-api-internal.middlewares=gzip,mw-backend-vhm-api
@@ -166,7 +166,7 @@ services:
       POSTGRES_PASSWORD: {{ cookiecutter.__devops_db_password }}
       POSTGRES_DB: plone
     volumes:
-      - vol-site-data:/var/lib/postgresql/data
+      - vol-site-data:/var/lib/postgresql
 {%- elif cookiecutter.devops_storage == 'zeo' %}
 
   zeo:

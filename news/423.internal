@@ -1,0 +1,1 @@
+Replaced the remaining `pipx` usages with `uvx` across templates (release-it hooks, changelog workflows, and docs), so generated projects rely consistently on `uv`. @ericof
