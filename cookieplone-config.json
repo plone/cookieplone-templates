@@ -11,6 +11,7 @@
         "project",
         "classic_project",
         "volto_nick",
+        "aurora_nick",
         "plone7_nick_embedded"
       ],
       "hidden": false
@@ -47,6 +48,7 @@
         "ci_gh_frontend_addon",
         "ci_gh_monorepo_addon",
         "ci_gh_volto_nick",
+        "ci_gh_aurora_nick",
         "ci_gh_project",
         "ci_gh_classic_project"
       ],
@@ -120,6 +122,12 @@
       "description": "Create a Plone Volto project using Nick as backend",
       "hidden": false
     },
+    "aurora_nick": {
+      "path": "./templates/projects/aurora_nick",
+      "title": "Plone Aurora using Nick as backend",
+      "description": "Create a Plone Aurora project using Nick as backend",
+      "hidden": false
+    },
     "plone7_nick_embedded": {
       "path": "./templates/projects/plone7_nick_embedded",
       "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
@@ -190,6 +198,12 @@
       "path": "./templates/ci/gh_volto_nick",
       "title": "CI: GitHub Actions for Volto with Nick",
       "description": "GitHub Actions configuration for a Volto project using Nick as backend",
+      "hidden": true
+    },
+    "ci_gh_aurora_nick": {
+      "path": "./templates/ci/gh_aurora_nick",
+      "title": "CI: GitHub Actions for Aurora with Nick",
+      "description": "GitHub Actions configuration for an Aurora project using Nick as backend",
       "hidden": true
     },
     "ci_gh_project": {

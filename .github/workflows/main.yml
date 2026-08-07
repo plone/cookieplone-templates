@@ -439,6 +439,101 @@ jobs:
         run: |
           pnpm exec playwright test volto-nick.test.js --reporter=line
 
+  aurora-nick-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "aurora_nick"
+      name: "project-title"
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: project-title
+          POSTGRES_USER: project-title
+          POSTGRES_PASSWORD: project-title
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U project-title -d project-title"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - uses: actions/cache@v5.0.5
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-aurora-nick-pnpm-${{ hashFiles('project-title/backend/package.json', 'project-title/backend/mrs.developer.json', 'project-title/frontend/package.json', 'project-title/frontend/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-aurora-nick-pnpm-
+
+      - name: Install generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Initialize Nick database
+        working-directory: ${{ env.name }}
+        run: |
+          make backend-migrate
+          make backend-seed
+
+      - name: Install Playwright
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm add --save-dev --workspace-root @playwright/test
+          pnpm exec playwright install --with-deps chromium
+          cp "$GITHUB_WORKSPACE/.github/tests/aurora-nick.test.js" .
+
+      - name: Start Nick and Aurora
+        uses: JarvusInnovations/background-action@v2
+        env:
+          PLONE_API_PATH: http://localhost:8080
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make backend-start &
+            make frontend-start &
+          wait-on: |
+            http-get://localhost:8080
+            http://localhost:3000
+          tail: true
+          wait-for: 10m
+          log-output: stderr,stdout
+          log-output-if: failure
+
+      - name: Verify Aurora and Nick integration
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright test aurora-nick.test.js --reporter=line
+
   report:
     runs-on: ubuntu-latest
     needs:
@@ -448,6 +543,7 @@ jobs:
       - backend-functional
       - frontend-functional
       - volto-nick-functional
+      - aurora-nick-functional
     steps:
       - name: Report
         shell: bash
@@ -461,3 +557,4 @@ jobs:
           echo '| Functional: Backend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Frontend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Volto with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Aurora with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY

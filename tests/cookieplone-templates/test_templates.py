@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 23
+    assert len(all_templates) == 25
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -17,6 +17,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "volto_nick",
             "Plone Volto using Nick as backend",
+            False,
+        ),
+        (
+            "aurora_nick",
+            "Plone Aurora using Nick as backend",
             False,
         ),
         (
@@ -75,6 +80,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "ci_gh_volto_nick",
             "CI: GitHub Actions for Volto with Nick",
+            True,
+        ),
+        (
+            "ci_gh_aurora_nick",
+            "CI: GitHub Actions for Aurora with Nick",
             True,
         ),
         (
