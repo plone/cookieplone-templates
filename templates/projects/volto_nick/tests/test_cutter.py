@@ -36,6 +36,15 @@ BACKEND_PROJECT_FILES = [
     "src/profiles/default/users.json",
 ]
 
+CI_FILES = [
+    "dependabot.yml",
+    "workflows/backend.yml",
+    "workflows/changelog.yml",
+    "workflows/config.yml",
+    "workflows/frontend.yml",
+    "workflows/main.yml",
+]
+
 
 def test_creation(cookies, context: dict):
     """Generated project should match provided value."""
@@ -83,6 +92,12 @@ def test_frontend_files_generated(cutter_result):
         "packages/volto-plone/package.json",
     ]:
         assert (cutter_result.project_path / "frontend" / file_path).is_file()
+
+
+def test_ci_files_generated(cutter_result):
+    """Check that GitHub Actions were generated."""
+    for file_path in CI_FILES:
+        assert (cutter_result.project_path / ".github" / file_path).is_file()
 
 
 def test_upstream_nick_configuration(cutter_result):

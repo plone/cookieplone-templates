@@ -207,6 +207,11 @@
         "enabled": "1"
       },
       {
+        "id": "ci/gh_volto_nick",
+        "title": "Setup GitHub Actions",
+        "enabled": "1"
+      },
+      {
         "id": "ide/vscode",
         "title": "Setup VSCode configuration",
         "enabled": "1"

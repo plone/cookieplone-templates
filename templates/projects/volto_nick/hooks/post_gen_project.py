@@ -86,8 +86,34 @@ def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
     )
 
 
+def generate_ci_gh_volto_nick(context: OrderedDict, output_dir: Path) -> Path:
+    """Generate GitHub Actions for the Nick and Volto workspaces."""
+    ci_context = OrderedDict(
+        {
+            "python_version": versions["backend_python"],
+            "node_version": context["__node_version"],
+            "volto_version": context["volto_version"],
+            "image_name_prefix": (
+                f"ghcr.io/{context['github_organization']}/{context['project_slug']}"
+            ),
+            "frontend_package_name": context["__frontend_package_name"],
+            "__cookieplone_repository_path": context[
+                "__cookieplone_repository_path"
+            ],
+        }
+    )
+    return generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/ci/gh_volto_nick",
+        output_dir,
+        ".github",
+        ci_context,
+        global_versions=versions,
+    )
+
+
 SUBTEMPLATE_HANDLERS = {
     "add-ons/frontend": generate_addons_frontend,
+    "ci/gh_volto_nick": generate_ci_gh_volto_nick,
     "ide/vscode": generate_ide_vscode,
 }
 

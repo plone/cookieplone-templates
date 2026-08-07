@@ -41,6 +41,15 @@ BACKEND_PROJECT_FILES = [
     "src/profiles/default/users.json",
 ]
 
+CI_FILES = [
+    "dependabot.yml",
+    "workflows/backend.yml",
+    "workflows/changelog.yml",
+    "workflows/config.yml",
+    "workflows/frontend.yml",
+    "workflows/main.yml",
+]
+
 
 def test_creation(cookies, template_path, context: dict):
     """Generated project should match provided value."""
@@ -94,6 +103,12 @@ def test_frontend_files_generated(cutter_result, file_path: str):
     assert path.is_file()
 
 
+@pytest.mark.parametrize("file_path", CI_FILES)
+def test_ci_files_generated(cutter_result, file_path: str):
+    """Check that GitHub Actions were generated."""
+    assert (cutter_result.project_path / ".github" / file_path).is_file()
+
+
 def test_frontend_release_settings(cutter_result):
     """Keep releases attached to the generated monorepo."""
     path = cutter_result.project_path / "frontend/packages/volto-plone/.release-it.json"
@@ -120,6 +135,11 @@ def test_repoplone_settings(cutter_result):
         ["backend/tsconfig.json", "tsconfig"],
         ["frontend/package.json", "package"],
         ["frontend/packages/volto-plone/package.json", "package"],
+        [".github/workflows/backend.yml", "github-workflow"],
+        [".github/workflows/changelog.yml", "github-workflow"],
+        [".github/workflows/config.yml", "github-workflow"],
+        [".github/workflows/frontend.yml", "github-workflow"],
+        [".github/workflows/main.yml", "github-workflow"],
     ],
 )
 def test_json_schema(

@@ -1,9 +1,13 @@
 ALLOWED_MISSING: list[str] = [
     "ansible_path",
     "backend_path",
+    "frontend_package_name",
     "frontend_path",
+    "image_name_prefix",
     "initialize_ci",
     "initialize_documentation",
+    "node_version",
+    "python_version",
 ]
 ALLOWED_NOT_USED: list[str] = []
 
