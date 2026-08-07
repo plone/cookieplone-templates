@@ -24,9 +24,24 @@ def test_volto_nick_functional_job():
     background_step = next(
         step
         for step in job["steps"]
-        if step.get("uses") == "JarvusInnovations/background-action@v1.0.7"
+        if step.get("uses") == "JarvusInnovations/background-action@v2"
     )
     assert "make backend-start &" in background_step["with"]["run"]
     assert "make frontend-start &" in background_step["with"]["run"]
     assert "http://localhost:3000" in background_step["with"]["wait-on"]
-    assert (root / ".github/tests/volto-nick.spec.js").is_file()
+    assert (root / ".github/tests/volto-nick.test.js").is_file()
+
+
+def test_background_actions_use_v2():
+    """Use the Node.js 24-compatible background action release."""
+    root = Path(__file__).parents[2]
+    workflow = yaml.safe_load((root / ".github/workflows/main.yml").read_text())
+    actions = [
+        step["uses"]
+        for job in workflow["jobs"].values()
+        for step in job.get("steps", [])
+        if step.get("uses", "").startswith("JarvusInnovations/background-action@")
+    ]
+
+    assert actions
+    assert set(actions) == {"JarvusInnovations/background-action@v2"}

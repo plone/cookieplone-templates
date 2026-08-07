@@ -188,7 +188,7 @@ jobs:
           make storybook-build
 
       - name: Start Servers
-        uses: JarvusInnovations/background-action@v1.0.7
+        uses: JarvusInnovations/background-action@v2
         with:
           working-directory: ${{ env.name }}
           run: |
@@ -308,7 +308,7 @@ jobs:
           make storybook-build
 
       - name: Start Servers
-        uses: JarvusInnovations/background-action@v1.0.7
+        uses: JarvusInnovations/background-action@v2
         with:
           working-directory: ${{ env.name }}
           run: |
@@ -413,10 +413,10 @@ jobs:
         run: |
           pnpm add --save-dev --workspace-root @playwright/test
           pnpm exec playwright install --with-deps chromium
-          cp "$GITHUB_WORKSPACE/.github/tests/volto-nick.spec.js" .
+          cp "$GITHUB_WORKSPACE/.github/tests/volto-nick.test.js" .
 
       - name: Start Nick and Volto
-        uses: JarvusInnovations/background-action@v1.0.7
+        uses: JarvusInnovations/background-action@v2
         env:
           BROWSER: none
           RAZZLE_API_PATH: http://localhost:8080
@@ -437,7 +437,7 @@ jobs:
       - name: Verify Volto and Nick integration
         working-directory: ${{ env.name }}/frontend
         run: |
-          pnpm exec playwright test volto-nick.spec.js --reporter=line
+          pnpm exec playwright test volto-nick.test.js --reporter=line
 
   report:
     runs-on: ubuntu-latest
