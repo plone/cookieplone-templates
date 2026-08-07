@@ -7,7 +7,12 @@
     "projects": {
       "title": "Projects",
       "description": "Generators that create a new Plone project",
-      "templates": ["project", "classic_project", "plone7_nick_embedded"],
+      "templates": [
+        "project",
+        "classic_project",
+        "volto_nick",
+        "plone7_nick_embedded"
+      ],
       "hidden": false
     },
     "add-ons": {
@@ -41,6 +46,7 @@
         "ci_gh_backend_addon",
         "ci_gh_frontend_addon",
         "ci_gh_monorepo_addon",
+        "ci_gh_volto_nick",
         "ci_gh_project",
         "ci_gh_classic_project"
       ],
@@ -108,6 +114,12 @@
       "description": "Create a new Node.js Plone Aurora frontend package",
       "hidden": true
     },
+    "volto_nick": {
+      "path": "./templates/projects/volto_nick",
+      "title": "Plone Volto using Nick as backend",
+      "description": "Create a Plone Volto project using Nick as backend",
+      "hidden": false
+    },
     "plone7_nick_embedded": {
       "path": "./templates/projects/plone7_nick_embedded",
       "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
@@ -174,6 +186,12 @@
       "description": "GitHub Actions configuration for CI of a Plone Monorepo Add-on",
       "hidden": true
     },
+    "ci_gh_volto_nick": {
+      "path": "./templates/ci/gh_volto_nick",
+      "title": "CI: GitHub Actions for Volto with Nick",
+      "description": "GitHub Actions configuration for a Volto project using Nick as backend",
+      "hidden": true
+    },
     "ci_gh_project": {
       "path": "./templates/ci/gh_project",
       "title": "CI: GitHub Actions for Project",
@@ -224,7 +242,7 @@
       "frontend_testing_library_react": "^16.2.0",
       "frontend_typescript": "^5.7.3",
       "frontend_vitest": "^3.1.2",
-      "gha_version_background_action": "v1",
+      "gha_version_background_action": "v2",
       "gha_version_cache": "v6",
       "gha_version_checkout": "v7",
       "gha_version_docker_stack": "v1.4.0",
