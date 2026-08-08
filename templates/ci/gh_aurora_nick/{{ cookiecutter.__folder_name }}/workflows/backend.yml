@@ -1,0 +1,40 @@
+name: Backend CI
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      working-directory:
+        required: false
+        type: string
+        default: backend
+
+jobs:
+  checks:
+    name: "Backend: Lint and test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
+        with:
+          node-version: {{ "${{ inputs.node-version }}" }}
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install backend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make install
+
+      - name: Lint backend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make lint
+
+      - name: Test backend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make test

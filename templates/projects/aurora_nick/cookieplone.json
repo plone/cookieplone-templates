@@ -1,0 +1,181 @@
+{
+  "id": "aurora_nick",
+  "schema": {
+    "title": "Plone Aurora (alpha) using Nick as backend",
+    "description": "Plone Aurora (alpha) using Nick as backend",
+    "version": "2.0",
+    "properties": {
+      "title": {
+        "type": "string",
+        "title": "Project Title",
+        "description": "Human-readable name for the project, used in README and documentation.",
+        "default": "Project Title",
+        "validator": ""
+      },
+      "project_slug": {
+        "type": "string",
+        "title": "Project Slug",
+        "description": "URL-friendly identifier used as the output folder and database name.",
+        "default": "{{ cookiecutter.title | slugify }}",
+        "validator": ""
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "description": "A short description of your project.",
+        "default": "Plone Aurora (alpha) using Nick as backend",
+        "validator": ""
+      },
+      "author": {
+        "type": "string",
+        "title": "Author",
+        "description": "Name of the project author or organization.",
+        "default": "Plone Community",
+        "validator": ""
+      },
+      "email": {
+        "type": "string",
+        "title": "Author E-mail",
+        "description": "Contact email for the project author.",
+        "default": "collective@plone.org",
+        "format": "email",
+        "validator": ""
+      },
+      "github_organization": {
+        "type": "string",
+        "title": "GitHub Username or Organization",
+        "description": "Organization or username used to build repository URLs.",
+        "default": "collective",
+        "validator": ""
+      },
+      "npm_package_name": {
+        "type": "string",
+        "title": "NPM Package Name",
+        "description": "Name of the generated package.",
+        "default": "{{ cookiecutter.project_slug }}",
+        "validator": "cookieplone.validators.npm_package_name"
+      },
+      "frontend_addon_name": {
+        "type": "string",
+        "title": "Aurora Add-on Name",
+        "description": "Name of the Aurora frontend add-on package.",
+        "default": "aurora-{{ cookiecutter.project_slug }}",
+        "validator": "cookieplone.validators.npm_package_name"
+      },
+      "__project_slug": {
+        "type": "string",
+        "title": "__project_slug",
+        "default": "{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__repository_url": {
+        "type": "string",
+        "title": "__repository_url",
+        "default": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__repository_git": {
+        "type": "string",
+        "title": "__repository_git",
+        "default": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__version_package": {
+        "type": "string",
+        "title": "__version_package",
+        "default": "1.0.0a0",
+        "validator": "",
+        "format": "computed"
+      },
+      "__frontend_package_name": {
+        "type": "string",
+        "title": "__frontend_package_name",
+        "default": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__npm_package_name": {
+        "type": "string",
+        "title": "__npm_package_name",
+        "default": "{{ cookiecutter.frontend_addon_name }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__node_version": {
+        "type": "string",
+        "title": "__node_version",
+        "default": "24",
+        "validator": "",
+        "format": "computed"
+      },
+      "__folder_name": {
+        "type": "string",
+        "title": "__folder_name",
+        "default": "{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__cookieplone_repository_path": {
+        "type": "string",
+        "title": "__cookieplone_repository_path",
+        "default": "",
+        "validator": "",
+        "format": "computed"
+      },
+      "__generator_sha": {
+        "type": "string",
+        "title": "__generator_sha",
+        "default": "",
+        "validator": "",
+        "format": "computed"
+      },
+      "__generator_template_url": {
+        "type": "string",
+        "title": "__generator_template_url",
+        "default": "https://github.com/plone/cookieplone-templates/tree/main/{{ cookiecutter.__cookieplone_template }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__generator_date_long": {
+        "type": "string",
+        "title": "__generator_date_long",
+        "default": "{% now 'utc', '%Y-%m-%d %H:%M:%S' %}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__generator_signature": {
+        "type": "string",
+        "title": "__generator_signature",
+        "default": "This was generated by [the cookieplone-templates {{ cookiecutter.__cookieplone_template }} template]({{ cookiecutter.__generator_template_url }}) on {{ cookiecutter.__generator_date_long }}",
+        "validator": "",
+        "format": "computed"
+      }
+    }
+  },
+  "config": {
+    "extensions": ["cookieplone.filters.unscoped_package_name"],
+    "no_render": [
+      "news/.changelog_template.jinja"
+    ],
+    "subtemplates": [
+      {
+        "id": "add-ons/aurora_addon",
+        "title": "Setup Aurora frontend",
+        "enabled": "1"
+      },
+      {
+        "id": "ci/gh_aurora_nick",
+        "title": "Setup GitHub Actions",
+        "enabled": "1"
+      },
+      {
+        "id": "ide/vscode",
+        "title": "Setup VSCode configuration",
+        "enabled": "1"
+      }
+    ]
+  }
+}

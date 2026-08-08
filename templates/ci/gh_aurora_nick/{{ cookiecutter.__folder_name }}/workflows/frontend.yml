@@ -1,0 +1,44 @@
+name: Frontend CI
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      working-directory:
+        required: false
+        type: string
+        default: frontend
+
+jobs:
+  checks:
+    name: "Frontend: Lint, test, and build"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@{{ versions.gha_version_setup_node }}
+        with:
+          node-version: {{ "${{ inputs.node-version }}" }}
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install frontend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make install
+
+      - name: Lint frontend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make lint
+
+      - name: Test frontend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make test
+
+      - name: Build frontend
+        working-directory: {{ "${{ inputs.working-directory }}" }}
+        run: make build
