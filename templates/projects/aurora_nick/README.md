@@ -3,9 +3,9 @@
 ![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-# Plone Aurora using Nick as backend
+# Plone Aurora (alpha) using Nick as backend
 
-Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template generates a Plone Aurora project using Nick as backend.
+Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), this template generates a Plone Aurora (alpha) project using Nick as backend.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ uvx cookieplone project aurora_nick
 | ------ | ----------- | ------- |
 | `title` | Human-readable project title. | `Plone` |
 | `project_slug` | Output folder and technical project identifier. | `plone` |
-| `description` | Short project description. | `Plone Aurora using Nick as backend.` |
+| `description` | Short project description. | `Plone Aurora (alpha) using Nick as backend` |
 | `author` | Author or organization. | `Plone Community` |
 | `email` | Contact email for the project. | `collective@plone.org` |
 | `github_organization` | GitHub organization or username. | `collective` |

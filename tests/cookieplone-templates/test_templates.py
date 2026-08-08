@@ -21,7 +21,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ),
         (
             "aurora_nick",
-            "Plone Aurora using Nick as backend",
+            "Plone Aurora (alpha) using Nick as backend",
             False,
         ),
         (

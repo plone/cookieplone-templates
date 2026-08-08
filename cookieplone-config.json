@@ -124,8 +124,8 @@
     },
     "aurora_nick": {
       "path": "./templates/projects/aurora_nick",
-      "title": "Plone Aurora using Nick as backend",
-      "description": "Create a Plone Aurora project using Nick as backend",
+      "title": "Plone Aurora (alpha) using Nick as backend",
+      "description": "Plone Aurora (alpha) using Nick as backend",
       "hidden": false
     },
     "plone7_nick_embedded": {

@@ -1,8 +1,8 @@
 {
   "id": "aurora_nick",
   "schema": {
-    "title": "Plone Aurora using Nick as backend",
-    "description": "Create a Plone Aurora project using Nick as backend.",
+    "title": "Plone Aurora (alpha) using Nick as backend",
+    "description": "Plone Aurora (alpha) using Nick as backend",
     "version": "2.0",
     "properties": {
       "title": {
@@ -23,7 +23,7 @@
         "type": "string",
         "title": "Description",
         "description": "A short description of your project.",
-        "default": "Plone Aurora using Nick as backend.",
+        "default": "Plone Aurora (alpha) using Nick as backend",
         "validator": ""
       },
       "author": {

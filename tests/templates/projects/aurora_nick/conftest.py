@@ -15,7 +15,7 @@ def context(annotate_context, cookieplone_root) -> dict:
         {
             "title": "Plone",
             "project_slug": "plone",
-            "description": "Plone Aurora using Nick as backend.",
+            "description": "Plone Aurora (alpha) using Nick as backend",
             "author": "Plone Collective",
             "email": "collective@plone.org",
             "github_organization": "collective",
@@ -33,7 +33,7 @@ def bad_context() -> dict:
     return {
         "title": "Plone",
         "project_slug": "plone",
-        "description": "Plone Aurora using Nick as backend.",
+        "description": "Plone Aurora (alpha) using Nick as backend",
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "github_organization": "collective",
