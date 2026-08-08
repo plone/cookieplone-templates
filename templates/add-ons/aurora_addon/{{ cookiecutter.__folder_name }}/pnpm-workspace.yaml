@@ -12,7 +12,6 @@ publicHoistPattern:
   - '*eslint*'
   - '*prettier*'
   - '*stylelint*'
-  - '*cypress*'
   - '*playwright*'
 
 overrides:
@@ -23,7 +22,6 @@ overrides:
 allowBuilds:
   '@swc/core': true
   '@tailwindcss/oxide': true
-  cypress: true
   esbuild: true
   lightningcss-cli: true
   msgpackr-extract: true
