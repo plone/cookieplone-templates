@@ -24,8 +24,10 @@ jobs:
         with:
           node-version: {{ "${{ inputs.node-version }}" }}
 
-      - name: Enable pnpm
-        run: corepack enable
+      - name: Install and enable Corepack
+        run: |
+          npm install --global corepack@latest
+          corepack enable
 
       - name: Install frontend
         working-directory: {{ "${{ inputs.working-directory }}" }}

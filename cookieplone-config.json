@@ -250,6 +250,7 @@
       "devops_traefik_version": "v3.7",
       "devops_varnish_version": "8.0",
       "devops_zeo_version": "6.0.0",
+      "frontend_aurora_pnpm": "11.20.0",
       "frontend_mrs_developer": "^2.2.0",
       "frontend_pnpm": "10.20.0",
       "frontend_release_it": "^19.0.5",

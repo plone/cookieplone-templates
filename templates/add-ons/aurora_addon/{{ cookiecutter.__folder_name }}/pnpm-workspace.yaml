@@ -8,6 +8,27 @@ packages:
   - '!core/packages/volto*'
   - '!core/packages/coresandbox'
 
+publicHoistPattern:
+  - '*eslint*'
+  - '*prettier*'
+  - '*stylelint*'
+  - '*cypress*'
+  - '*playwright*'
+
+overrides:
+  react: ^19.2.0
+  react-dom: ^19.2.0
+  jotai: ^2.12.5
+
+allowBuilds:
+  '@swc/core': true
+  '@tailwindcss/oxide': true
+  cypress: true
+  esbuild: true
+  lightningcss-cli: true
+  msgpackr-extract: true
+  unrs-resolver: true
+
 # The default pnpm catalog is loaded from `core/catalog.json` using `.pnpmfile.cjs`.
 # If you want to customize the versions of the catalog, do it in there.
 # You can also add your own custom pnpm catalog using the pnpm named catalogs

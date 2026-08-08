@@ -41,19 +41,5 @@
   "devDependencies": {
     "mrs-developer": "{{ versions.frontend_mrs_developer }}"
   },
-  "packageManager": "pnpm@{{ versions.frontend_pnpm }}",
-  "pnpm": {
-    "overrides": {
-      "react": "^19.2.0",
-      "react-dom": "^19.2.0"
-    },
-    "onlyBuiltDependencies": [
-      "@swc/core",
-      "@tailwindcss/oxide",
-      "cypress",
-      "esbuild",
-      "lightningcss-cli",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@{{ versions.frontend_aurora_pnpm }}"
 }

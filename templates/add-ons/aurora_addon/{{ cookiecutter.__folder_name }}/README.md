@@ -89,6 +89,14 @@ For this reason, it only works with pnpm and Volto 18 (currently in alpha).
 -   [Make](https://6.docs.plone.org/install/create-project.html#make)
 -   [Docker](https://6.docs.plone.org/install/create-project.html#docker)
 
+Install and enable the latest Corepack. Corepack will resolve the pnpm version
+pinned by this repository's `packageManager` field.
+
+```shell
+npm install --global corepack@latest
+corepack enable
+```
+
 
 ### Make convenience commands
 
