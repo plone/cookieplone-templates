@@ -49,7 +49,8 @@ def test_aurora_nick_functional_job():
     )
     assert background_step["env"]["PLONE_API_PATH"] == "http://localhost:8080"
     assert "make backend-start &" in background_step["with"]["run"]
-    assert "make frontend-start &" in background_step["with"]["run"]
+    assert "pnpm build && pnpm start:prod" in background_step["with"]["run"]
+    assert "make frontend-start &" not in background_step["with"]["run"]
     assert "http://localhost:3000" in background_step["with"]["wait-on"]
     assert (root / ".github/tests/aurora-nick.test.js").is_file()
 

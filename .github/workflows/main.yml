@@ -520,7 +520,7 @@ jobs:
           working-directory: ${{ env.name }}
           run: |
             make backend-start &
-            make frontend-start &
+            (cd frontend && pnpm build && pnpm start:prod) &
           wait-on: |
             http-get://localhost:8080
             http://localhost:3000
