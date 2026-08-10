@@ -77,6 +77,10 @@ FRONTEND_ONLY_CONTENT = {
         "workflows/main.yml",
         "storybook-deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
     ),
+    (
+        "workflows/config.yml",
+        "storybook-deploy=${{ github.event.repository.private == false }}",
+    ),
 }
 
 
@@ -135,3 +139,13 @@ def test_content(cutter_result, file_path: str, text: str, expected: bool):
         assert text not in contents
         return
     assert (text in contents) is expected
+
+
+@pytest.mark.parametrize("file_path", ["workflows/config.yml", "workflows/main.yml"])
+@pytest.mark.parametrize("term", ["frontend", "storybook", "volto", "node-version"])
+def test_no_frontend_mentions_in_classic(cutter_result, file_path: str, term: str):
+    """Test a Classic UI project never mentions a frontend it does not have."""
+    if cutter_result.context.get("feature_headless", True):
+        pytest.skip("A headless project does have a frontend.")
+    contents = (cutter_result.project_path / file_path).read_text()
+    assert term not in contents.lower()

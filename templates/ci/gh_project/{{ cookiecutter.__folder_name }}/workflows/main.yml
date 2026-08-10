@@ -5,7 +5,9 @@ on:
     paths:
       - "backend/**"
       - "devops/**"
+      {%- if cookiecutter.feature_headless %}
       - "frontend/**"
+      {%- endif %}
       - ".github/workflows/*.yml"
       - "*.md"
       - "*.toml"
