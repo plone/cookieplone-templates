@@ -8,11 +8,18 @@ def template_folder() -> str:
     return "ci/gh_project"
 
 
+@pytest.fixture(scope="session", params=[True, False], ids=["headless", "classic"])
+def feature_headless(request) -> bool:
+    """Feature headless?"""
+    return request.param
+
+
 @pytest.fixture(scope="session")
-def context(annotate_context, cookieplone_root) -> dict:
+def context(annotate_context, cookieplone_root, feature_headless) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
+            "feature_headless": feature_headless,
             "hostname": "example.com",
             "python_version": "3.13",
             "python_package_name": "collective.addon",
@@ -94,13 +101,16 @@ def bad_context() -> dict:
 
 
 @pytest.fixture
-def codebases() -> list[tuple[str, str]]:
-    """Codebases checked by this template, and the config output holding each path."""
-    return [
-        ("backend", "path-backend"),
-        ("frontend", "path-frontend"),
-        ("repository", "path-root"),
-    ]
+def codebases(feature_headless) -> list[tuple[str, str]]:
+    """Codebases checked by this template, and the config output holding each path.
+
+    A Classic UI project has no frontend, so it is not checked for fragments.
+    """
+    codebases = [("backend", "path-backend")]
+    if feature_headless:
+        codebases.append(("frontend", "path-frontend"))
+    codebases.append(("repository", "path-root"))
+    return codebases
 
 
 @pytest.fixture

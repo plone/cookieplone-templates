@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 25
+    assert len(all_templates) == 22
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -13,7 +13,6 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
     "template_id,title,hidden",
     [
         ("project", "Plone 6 Project", False),
-        ("classic_project", "Plone 6 using Classic UI Project", False),
         (
             "volto_nick",
             "Plone Volto using Nick as backend",
@@ -52,12 +51,6 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             True,
         ),
         (
-            "sub/classic_project_settings",
-            "Project settings to be applied on top of a Plone 6 using "
-            "Classic UI project",
-            True,
-        ),
-        (
             "devops_ansible",
             "Ansible Playbooks for Plone",
             True,
@@ -90,11 +83,6 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "ci_gh_project",
             "CI: GitHub Actions for Project",
-            True,
-        ),
-        (
-            "ci_gh_classic_project",
-            "CI: GitHub Actions for a Plone 6 using Classic UI Project",
             True,
         ),
         (

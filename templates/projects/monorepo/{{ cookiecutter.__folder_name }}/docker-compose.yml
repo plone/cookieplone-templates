@@ -55,6 +55,7 @@ services:
       - backend
 
 {%- endif %}
+{%- if cookiecutter.feature_headless %}
   frontend:
     build:
       context: ./frontend
@@ -88,6 +89,7 @@ services:
       - traefik.http.routers.rt-frontend-internal.entrypoints=http
       - traefik.http.routers.rt-frontend-internal.service=svc-frontend
       {%- endif %}
+{%- endif %}
 
   backend:
     build:
@@ -123,6 +125,12 @@ services:
       - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.regex=^/ClassicUI($$|/.*)"
       - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.replacement=/VirtualHostBase/http/{{ cookiecutter.__project_slug }}.localhost/Plone/VirtualHostRoot/_vh_ClassicUI$$1"
 
+      {% if not cookiecutter.feature_headless -%}
+      ## VHM rewrite / (Classic UI)
+      - "traefik.http.middlewares.mw-backend-vhm.replacepathregex.regex=^/($$|/.*)"
+      - "traefik.http.middlewares.mw-backend-vhm.replacepathregex.replacement=/VirtualHostBase/http/{{ cookiecutter.__project_slug }}.localhost/Plone/VirtualHostRoot$$1"
+      {%- endif %}
+
       ## Basic Authentication
       ### Note: all dollar signs in the hash need to be doubled for escaping.
       ### To create user:password pair, it's possible to use this command:
@@ -150,6 +158,13 @@ services:
       - traefik.http.routers.rt-backend-api-internal.entrypoints=http
       - traefik.http.routers.rt-backend-api-internal.service=svc-backend
       - traefik.http.routers.rt-backend-api-internal.middlewares=gzip,mw-backend-vhm-api
+      {%- endif %}
+      {% if not cookiecutter.feature_headless -%}
+      ## /
+      - traefik.http.routers.rt-backend.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`)
+      - traefik.http.routers.rt-backend.entrypoints=http
+      - traefik.http.routers.rt-backend.service=svc-backend
+      - traefik.http.routers.rt-backend.middlewares=gzip,mw-backend-vhm
       {%- endif %}
       ## /ClassicUI
       - traefik.http.routers.rt-backend-classic.rule=Host(`{{ cookiecutter.__project_slug }}.localhost`) && PathPrefix(`/ClassicUI`)
