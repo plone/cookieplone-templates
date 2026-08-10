@@ -1,0 +1,64 @@
+{
+  "id": "ci_gh_volto_nick",
+  "schema": {
+    "title": "CI: GitHub Actions for Volto with Nick",
+    "description": "GitHub Actions configuration for a Volto project using Nick as backend.",
+    "version": "2.0",
+    "properties": {
+      "python_version": {
+        "type": "string",
+        "title": "Python Version",
+        "default": "3.14",
+        "validator": "",
+        "format": "computed"
+      },
+      "node_version": {
+        "type": "string",
+        "title": "Node Version",
+        "default": "24",
+        "validator": "",
+        "format": "computed"
+      },
+      "volto_version": {
+        "type": "string",
+        "title": "Volto Version",
+        "default": "19.0.0",
+        "validator": "",
+        "format": "computed"
+      },
+      "image_name_prefix": {
+        "type": "string",
+        "title": "Container image name prefix",
+        "default": "ghcr.io/collective/project-title",
+        "validator": "",
+        "format": "computed"
+      },
+      "frontend_package_name": {
+        "type": "string",
+        "title": "Frontend package folder",
+        "default": "volto-project-title",
+        "validator": "",
+        "format": "computed"
+      },
+      "__folder_name": {
+        "type": "string",
+        "title": "__folder_name",
+        "default": ".github",
+        "validator": "",
+        "format": "computed"
+      },
+      "__cookieplone_repository_path": {
+        "type": "string",
+        "title": "__cookieplone_repository_path",
+        "default": "",
+        "validator": "",
+        "format": "computed"
+      }
+    }
+  },
+  "config": {
+    "extensions": [],
+    "no_render": [],
+    "subtemplates": []
+  }
+}

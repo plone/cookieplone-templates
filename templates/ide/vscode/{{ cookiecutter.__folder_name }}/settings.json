@@ -16,6 +16,9 @@
   {%- endif %}
   {%- if cookiecutter.backend_path != '' %}
   "ruff.organizeImports": true,
+  "python-envs.workspaceSearchPaths": [
+    "{{ cookiecutter.backend_path }}.venv"
+  ],
   "python.terminal.activateEnvironment": true,
   "python.testing.pytestArgs": [
     "{{ cookiecutter.__backend_tests_path }}"

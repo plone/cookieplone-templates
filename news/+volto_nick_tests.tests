@@ -1,0 +1,1 @@
+Added a test suite for the `volto_nick` project template, covering generation, variable substitution, generated file layout, and JSON-schema validation. @ericof

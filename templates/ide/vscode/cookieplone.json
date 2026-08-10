@@ -8,14 +8,14 @@
             "backend_path": {
                 "type": "string",
                 "title": "Backend Path",
-                "description": "Root path of the Python codebase (`/` for the repo root, empty for no Python codebase).",
+                "description": "Root path of the Python codebase (`./` for the repo root, empty for no Python codebase).",
                 "default": "./",
                 "validator": ""
             },
             "frontend_path": {
                 "type": "string",
                 "title": "Frontend Path",
-                "description": "Root path of the Volto codebase (`/` for the repo root, empty for no Volto codebase).",
+                "description": "Root path of the Volto codebase (`./` for the repo root, empty for no Volto codebase).",
                 "default": "./",
                 "validator": ""
             },

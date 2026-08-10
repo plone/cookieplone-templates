@@ -153,16 +153,13 @@ def generate_sub_addon_settings(context: OrderedDict, output_dir: Path) -> Path:
 
 def generate_ci_gh_monorepo_addon(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
-    ci_context = OrderedDict(
-        {
-            "npm_package_name": context["__npm_package_name"],
-            "container_image_prefix": context["__container_image_prefix"],
-            "python_version": versions["backend_python"],
-            "node_version": context["__node_version"],
-            "has_docs": "1" if context["initialize_documentation"] else "0",
-            "__cookieplone_repository_path": context["__cookieplone_repository_path"],
-        }
-    )
+    ci_context = OrderedDict({
+        "container_image_prefix": context["__container_image_prefix"],
+        "python_version": versions["backend_python"],
+        "node_version": context["__node_version"],
+        "has_docs": "1" if context["initialize_documentation"] else "0",
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
     return generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/ci/gh_monorepo_addon",
         output_dir,
@@ -175,14 +172,12 @@ def generate_ci_gh_monorepo_addon(context: OrderedDict, output_dir: Path) -> Pat
 def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
     """Generate VS Code configuration."""
     ansible_path = ""
-    vscode_context = OrderedDict(
-        {
-            "backend_path": "backend",
-            "frontend_path": "frontend",
-            "ansible_path": ansible_path,
-            "__cookieplone_repository_path": context["__cookieplone_repository_path"],
-        }
-    )
+    vscode_context = OrderedDict({
+        "backend_path": "backend",
+        "frontend_path": "frontend",
+        "ansible_path": ansible_path,
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
     return generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/ide/vscode",
         output_dir,
@@ -225,9 +220,9 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "enabled": backend_format,
         },
         {
-            "handler": post_gen.move_files(
-                [("docs/.readthedocs.yaml", ".readthedocs.yml")]
-            ),
+            "handler": post_gen.move_files([
+                ("docs/.readthedocs.yaml", ".readthedocs.yml")
+            ]),
             "title": "Organize documentation files",
             "enabled": feature_documentation,
         },

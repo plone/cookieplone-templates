@@ -47,6 +47,7 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
+        "dependabot.yml",
         "instructions/general/docs.md",
         "instructions/docs.instructions.md",
         "instructions/volto.instructions.md",
@@ -70,12 +71,21 @@ def test_created_files(cutter_result, file_path: str):
         assert path.is_file()
 
 
+# Content generated only when the project has a frontend.
+FRONTEND_ONLY_CONTENT = {
+    (
+        "workflows/main.yml",
+        "storybook-deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
+    ),
+}
+
+
 @pytest.mark.parametrize(
     "file_path,text,expected",
     [
         (
             "workflows/changelog.yml",
-            "uvx towncrier check  --compare-with origin/${{ env.BASE_BRANCH }}",
+            "uvx towncrier check --compare-with origin/${{ env.base-branch }}",
             True,
         ),
         ("workflows/changelog.yml", "pipx", False),
@@ -90,9 +100,38 @@ def test_created_files(cutter_result, file_path: str):
             True,
         ),
         ("workflows/main.yml", "uses: ./.github/workflows/config.yml", True),
+        (
+            "workflows/config.yml",
+            "storybook-deploy=${{ github.event.repository.private == false }}",
+            True,
+        ),
+        (
+            "workflows/main.yml",
+            "storybook-deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
+            True,
+        ),
+        (
+            "workflows/frontend.yml",
+            "node-version: ${{ inputs.node-version }}",
+            True,
+        ),
+        (
+            "workflows/frontend.yml",
+            "needs.config.outputs.node-version",
+            False,
+        ),
     ],
 )
 def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = (cutter_result.project_path / file_path).resolve()
+    if not feature_headless and file_path == "workflows/frontend.yml":
+        # A Classic UI project has no frontend workflow at all.
+        assert not path.exists()
+        return
     contents = path.read_text()
+    if not feature_headless and (file_path, text) in FRONTEND_ONLY_CONTENT:
+        # The frontend caller job is only wired up for a headless project.
+        assert text not in contents
+        return
     assert (text in contents) is expected

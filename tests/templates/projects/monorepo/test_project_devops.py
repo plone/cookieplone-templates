@@ -94,6 +94,14 @@ def test_project_devops_no_gha_deploy(
     assert path.exists() is False
 
 
+def test_frontend_storybook_node_version(cutter_result):
+    """Storybook job reads node-version from inputs, not a missing config job."""
+    folder = cutter_result.project_path
+    contents = (folder / ".github/workflows/frontend.yml").read_text()
+    assert "node-version: ${{ inputs.node-version }}" in contents
+    assert "needs.config.outputs.node-version" not in contents
+
+
 def test_ansible_inventory_projects_replacement(cutter_result):
     """Test GHA deploy files are not present."""
     folder = cutter_result.project_path

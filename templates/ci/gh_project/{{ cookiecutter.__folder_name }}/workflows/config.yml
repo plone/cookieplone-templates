@@ -50,6 +50,27 @@ on:
         description: "Volto version to be used"
         value: {{ "${{ jobs.config.outputs.volto-version }}" }}
 {%- endif %}
+      path-backend:
+        description: "Path to the backend package"
+        value: {{ "${{ jobs.config.outputs.path-backend }}" }}
+      path-frontend:
+        description: "Path to the frontend package"
+        value: {{ "${{ jobs.config.outputs.path-frontend }}" }}
+      path-root:
+        description: "Path to the root of the repository"
+        value: {{ "${{ jobs.config.outputs.path-root }}" }}
+      changelog-backend:
+        description: "Flag reporting if we should run changelog jobs for the backend"
+        value: {{ "${{ jobs.config.outputs.changelog-backend }}" }}
+      changelog-frontend:
+        description: "Flag reporting if we should run changelog jobs for the frontend"
+        value: {{ "${{ jobs.config.outputs.changelog-frontend }}" }}
+      changelog-repository:
+        description: "Flag reporting if we should run changelog jobs for the repository"
+        value: {{ "${{ jobs.config.outputs.changelog-repository }}" }}
+      storybook-deploy:
+        description: "Whether to deploy storybook or not"
+        value: {{ "${{ jobs.config.outputs.storybook-deploy }}" }}
 
 jobs:
   config:
@@ -67,6 +88,13 @@ jobs:
 {%- if cookiecutter.feature_headless %}
       volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}
 {%- endif %}
+      storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}
+      path-backend: {{ "${{ steps.vars.outputs.path-backend }}" }}
+      path-frontend: {{ "${{ steps.vars.outputs.path-frontend }}" }}
+      path-root: {{ "${{ steps.vars.outputs.path-root }}" }}
+      changelog-backend: {{ "${{ steps.filter.outputs.changelog-backend }}" }}
+      changelog-frontend: {{ "${{ steps.filter.outputs.changelog-frontend }}" }}
+      changelog-repository: {{ "${{ steps.filter.outputs.changelog-repository }}" }}
 
     steps:
       - name: Checkout
@@ -84,12 +112,19 @@ jobs:
         shell: bash
         run: |
           REPOSITORY_SETTINGS="$(uvx repoplone settings dump)"
+          # `repoplone` reports absolute paths, but the checks need them
+          # relative to the repository root.
+          ROOT="$(jq -r '.root_path' <<< "$REPOSITORY_SETTINGS")"
           echo "image-name-prefix=$(jq -r '.container_images_prefix' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           {%- if cookiecutter.feature_headless %}
           echo "volto-version=$(jq -r '.frontend.volto_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           {%- endif %}
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "path-backend=$(jq -r '.backend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"
+          echo "path-frontend=$(jq -r '.frontend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"
+          echo "path-root=." >> "$GITHUB_OUTPUT"
+          echo "storybook-deploy={{ "${{ github.event.repository.private == false }}" }}" >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
         id: filter
@@ -114,6 +149,17 @@ jobs:
             frontend:
               - 'frontend/**'
               - '.github/workflows/frontend*'
+            changelog-backend:
+              - 'backend/**'
+            changelog-frontend:
+              - 'frontend/**'
+            changelog-repository:
+              - '.github/**'
+              - '.vscode/**'
+              - 'devops/**'
+              - 'docs/**'
+              - 'docker-compose.yml'
+              - 'README.md'
 
       - name: Test vars
         run: |
@@ -124,6 +170,7 @@ jobs:
           echo 'volto-version: {{ "${{ steps.vars.outputs.volto-version }}" }}'
 {%- endif %}
           echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'storybook-deploy: {{ "${{ steps.vars.outputs.storybook-deploy }}" }}'
           echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
           echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
           echo 'Paths - cache: {{ "${{ steps.filter.outputs.cache }}" }}'

@@ -191,18 +191,15 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path) -> Pat
 def generate_ci_gh_project(context: OrderedDict, output_dir: Path) -> Path:
     """Generate GitHub CI."""
     feature_headless = bool(context.get("feature_headless", True))
-    ci_context = OrderedDict(
-        {
-            "feature_headless": feature_headless,
-            "npm_package_name": context.get("__npm_package_name", ""),
-            "python_version": versions["backend_python"],
-            "node_version": context.get("__node_version", ""),
-            "has_cache": "1" if context["devops_cache"] else "0",
-            "has_docs": "1" if context["initialize_documentation"] else "0",
-            "has_deploy": "1" if context["devops_gha_deploy"] else "0",
-            "__cookieplone_repository_path": context["__cookieplone_repository_path"],
-        }
-    )
+    ci_context = OrderedDict({
+        "feature_headless": feature_headless,
+        "python_version": versions["backend_python"],
+        "node_version": context.get("__node_version", ""),
+        "has_cache": "1" if context["devops_cache"] else "0",
+        "has_docs": "1" if context["initialize_documentation"] else "0",
+        "has_deploy": "1" if context["devops_gha_deploy"] else "0",
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
     return generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/ci/gh_project",
         output_dir,
@@ -216,14 +213,12 @@ def generate_ide_vscode(context: OrderedDict, output_dir: Path) -> Path:
     """Generate VS Code configuration."""
     feature_headless = bool(context.get("feature_headless", True))
     ansible_path = "devops/ansible" if context.get("devops_ansible") else ""
-    vscode_context = OrderedDict(
-        {
-            "backend_path": "backend",
-            "frontend_path": "frontend" if feature_headless else "",
-            "ansible_path": ansible_path,
-            "__cookieplone_repository_path": context["__cookieplone_repository_path"],
-        }
-    )
+    vscode_context = OrderedDict({
+        "backend_path": "backend",
+        "frontend_path": "frontend" if feature_headless else "",
+        "ansible_path": ansible_path,
+        "__cookieplone_repository_path": context["__cookieplone_repository_path"],
+    })
     return generator.generate_subtemplate(
         f"{TEMPLATES_FOLDER}/ide/vscode",
         output_dir,
@@ -293,9 +288,9 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "enabled": not feature_gha_deploy,
         },
         {
-            "handler": post_gen.move_files(
-                [("docs/.readthedocs.yaml", ".readthedocs.yml")]
-            ),
+            "handler": post_gen.move_files([
+                ("docs/.readthedocs.yaml", ".readthedocs.yml")
+            ]),
             "title": "Organize documentation files",
             "enabled": feature_documentation,
         },

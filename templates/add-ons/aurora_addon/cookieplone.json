@@ -69,6 +69,13 @@
         "validator": "",
         "format": "computed"
       },
+      "__repository_url": {
+        "type": "string",
+        "title": "__repository_url",
+        "default": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}",
+        "validator": "",
+        "format": "computed"
+      },
       "__npm_package_name": {
         "type": "string",
         "title": "__npm_package_name",
@@ -108,7 +115,9 @@
   },
   "config": {
     "extensions": ["cookieplone.filters.latest_volto"],
-    "no_render": [],
+    "no_render": [
+      "packages/{{ cookiecutter.frontend_addon_name }}/news/.changelog_template.jinja"
+    ],
     "subtemplates": [
       {
         "id": "ide/vscode",

@@ -150,3 +150,19 @@ def test_json_schema(
 ):
     path = cutter_result.project_path / file_path
     assert schema_validate_file(path, schema_name)
+
+
+DEPENDABOT_ROOT = "dependabot.yml"
+DEPENDABOT_GITHUB = ".github/dependabot.yml"
+
+
+def test_dependabot_config_under_github(cutter_result):
+    """Test Dependabot is configured where GitHub reads it from."""
+    path = cutter_result.project_path / DEPENDABOT_GITHUB
+    assert path.is_file()
+
+
+def test_dependabot_config_not_at_root(cutter_result):
+    """Test Dependabot is not configured where GitHub ignores it."""
+    path = cutter_result.project_path / DEPENDABOT_ROOT
+    assert path.exists() is False

@@ -98,3 +98,28 @@ def bad_context() -> dict:
         "npm_package_name": "",
         "node_version": "24.x",
     }
+
+
+@pytest.fixture
+def codebases(feature_headless) -> list[tuple[str, str]]:
+    """Codebases checked by this template, and the config output holding each path.
+
+    A Classic UI project has no frontend, so it is not checked for fragments.
+    """
+    codebases = [("backend", "path-backend")]
+    if feature_headless:
+        codebases.append(("frontend", "path-frontend"))
+    codebases.append(("repository", "path-root"))
+    return codebases
+
+
+@pytest.fixture
+def guarded() -> bool:
+    """Whether each check is guarded by a paths filter flag."""
+    return True
+
+
+@pytest.fixture
+def expects_python_version() -> bool:
+    """Whether the changelog workflow pins a Python version."""
+    return True

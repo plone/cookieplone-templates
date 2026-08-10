@@ -45,14 +45,27 @@ def test_created_files(cutter_result, load_json, file_path: str, exists: bool):
         assert isinstance(content, dict)
 
 
+EXTENSIONS = [
+    ["extensions.json", f"recommendations/{idx}", extension]
+    for idx, extension in enumerate([
+        "dbaeumer.vscode-eslint",
+        "stylelint.vscode-stylelint",
+        "esbenp.prettier-vscode",
+        "ExecutableBookProject.myst-highlight",
+        "ms-vscode-remote.remote-containers",
+        "redhat.vscode-yaml",
+        "editorconfig.editorconfig",
+        "github.vscode-github-actions",
+        "plone.plone-vs-utilities",
+    ])
+]
+
+
 @pytest.mark.parametrize(
     "file_path,path,expected",
     [
-        [
-            "settings.json",
-            "eslint.workingDirectories/0",
-            "./",
-        ],
+        ["settings.json", "eslint.workingDirectories/0", "./"],
+        *EXTENSIONS,
     ],
 )
 def test_settings(
