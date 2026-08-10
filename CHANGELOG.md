@@ -10,6 +10,22 @@
 
 <!-- towncrier release notes start -->
 
+## 20260810.1 (2026-08-10)
+
+
+### Bug fixes:
+
+- Use 'uvx towncrier' instead of 'pipx run towncrier' for release-it. @frapell [#404](https://github.com/plone/cookieplone-templates/issues/404)
+- Adds extra [uv] to mxdev. @wesleybl [#407](https://github.com/plone/cookieplone-templates/issues/407)
+- Fix CI workflow argument source for node-version. @ksuess [#413](https://github.com/plone/cookieplone-templates/issues/413)
+- Purged deprecated and redundant use of rtd-pr-preview.yml workflow in templates. @stevepiercy [#419](https://github.com/plone/cookieplone-templates/issues/419)
+
+
+### Internal:
+
+- Remove `full-icu` of onlyBuiltDependencies @wesleybl [#406](https://github.com/plone/cookieplone-templates/issues/406)
+- Use Lychee for linkchecker. @stevepiercy 
+
 ## 20260320.1 (2026-03-20)
 
 
