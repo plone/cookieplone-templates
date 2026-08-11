@@ -1,0 +1,1 @@
+Declared catalog-managed i18next as a peer dependency in generated Aurora add-ons to keep react-i18next instances unified. @sneridagh

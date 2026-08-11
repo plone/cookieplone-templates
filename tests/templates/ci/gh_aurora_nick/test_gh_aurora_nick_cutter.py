@@ -65,6 +65,7 @@ def test_node_workspaces_do_not_use_python_backend_ci(cutter_result):
 def test_frontend_uses_aurora_ci(cutter_result):
     """Run the checks supported by the Aurora workspace."""
     frontend = (cutter_result.project_path / "workflows/frontend.yml").read_text()
+    assert "npm install --global corepack@latest" in frontend
     assert "make install" in frontend
     assert "make lint" in frontend
     assert "make test" in frontend

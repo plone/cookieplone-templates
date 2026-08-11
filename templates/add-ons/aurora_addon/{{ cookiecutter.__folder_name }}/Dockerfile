@@ -33,6 +33,6 @@ COPY --from=builder /app/ /app/
 RUN <<EOT
     set -e
     corepack enable pnpm
-    corepack use pnpm@{{ versions.frontend_pnpm }}
-    corepack prepare pnpm@{{ versions.frontend_pnpm }} --activate
+    corepack use pnpm@{{ versions.frontend_aurora_pnpm }}
+    corepack prepare pnpm@{{ versions.frontend_aurora_pnpm }} --activate
 EOT

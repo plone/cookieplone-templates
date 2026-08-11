@@ -1,6 +1,9 @@
 """Test cookieplone generation for the Plone Aurora add-on."""
 
+import json
+
 import pytest
+import yaml
 
 GITHUB_ACTIONS = [
     ".github/workflows/acceptance.yml",
@@ -27,7 +30,6 @@ ROOT_FILES = [
     "eslint.config.mjs",
     ".gitignore",
     ".npmignore",
-    ".npmrc",
     ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
@@ -139,3 +141,33 @@ def test_content(cutter_result, file_path: str, text: str, expected: bool):
     path = (cutter_result.project_path / file_path).resolve()
     contents = path.read_text()
     assert (text in contents) is expected
+
+
+def test_pnpm_11_configuration(cutter_result):
+    """Use Aurora's pnpm 11 package-manager and workspace configuration."""
+    project_path = cutter_result.project_path
+    package = json.loads((project_path / "package.json").read_text())
+    workspace = yaml.safe_load((project_path / "pnpm-workspace.yaml").read_text())
+
+    assert package["packageManager"] == "pnpm@11.20.0"
+    assert "pnpm" not in package
+    assert workspace["overrides"] == {
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "jotai": "^2.12.5",
+    }
+    assert workspace["allowBuilds"]["@swc/core"] is True
+    assert "cypress" not in workspace["allowBuilds"]
+    assert "*cypress*" not in workspace["publicHoistPattern"]
+    assert "*playwright*" in workspace["publicHoistPattern"]
+    assert not (project_path / ".npmrc").exists()
+
+    addon = json.loads(
+        (project_path / "packages/seven-addon/package.json").read_text()
+    )
+    assert addon["peerDependencies"]["i18next"] == "catalog:"
+
+    for workflow in GITHUB_ACTIONS:
+        contents = (project_path / workflow).read_text()
+        assert "npm install --global corepack@latest" in contents
+        assert "corepack enable" in contents
