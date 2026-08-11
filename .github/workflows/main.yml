@@ -508,7 +508,6 @@ jobs:
       - name: Install Playwright
         working-directory: ${{ env.name }}/frontend
         run: |
-          pnpm add --save-dev --workspace-root @playwright/test
           pnpm exec playwright install --with-deps chromium
           cp "$GITHUB_WORKSPACE/.github/tests/aurora-nick.test.js" .
 

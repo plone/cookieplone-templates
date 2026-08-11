@@ -52,6 +52,12 @@ def test_aurora_nick_functional_job():
     assert "pnpm build && pnpm start:prod" in background_step["with"]["run"]
     assert "make frontend-start &" not in background_step["with"]["run"]
     assert "http://localhost:3000" in background_step["with"]["wait-on"]
+
+    playwright_step = next(
+        step for step in job["steps"] if step.get("name") == "Install Playwright"
+    )
+    assert "pnpm add" not in playwright_step["run"]
+    assert "pnpm exec playwright install" in playwright_step["run"]
     assert (root / ".github/tests/aurora-nick.test.js").is_file()
 
 
