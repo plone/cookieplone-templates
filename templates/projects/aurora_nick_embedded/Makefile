@@ -21,7 +21,7 @@ help: ## This help message
 
 .PHONY: clean
 clean: ## Clean
-	rm -rf plone7-nick-embedded
+	rm -rf aurora-nick-embedded
 
 ../bin/cookieplone:  ## cookieplone installation
 	$(MAKE) -C ".." bin/cookieplone
@@ -35,7 +35,7 @@ format: ../bin/cookieplone ## Format code
 .PHONY: generate
 generate:  ../bin/cookieplone ## Create a sample package
 	@echo "$(GREEN)==> Creating new test package$(RESET)"
-	rm -rf plone7-nick-embedded
+	rm -rf aurora-nick-embedded
 	../bin/cookiecutter . --no-input
 
 .PHONY: test

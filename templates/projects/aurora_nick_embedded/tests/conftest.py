@@ -18,14 +18,14 @@ def cookieplone_root() -> dict:
 def context(cookieplone_root) -> dict:
     """Cookiecutter context."""
     return {
-        "frontend_addon_name": "plone7-nick-embedded",
+        "frontend_addon_name": "aurora-nick-embedded",
         "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
-        "project_slug": "plone7-nick-embedded",
-        "description": "Add new features to your Plone 7 Project.",
+        "project_slug": "aurora-nick-embedded",
+        "description": "Plone Aurora using Nick as an embedded library.",
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "github_organization": "collective",
-        "npm_package_name": "@plone-collective/plone7-nick-embedded",
+        "npm_package_name": "@plone-collective/aurora-nick-embedded",
         "__cookieplone_repository_path": f"{cookieplone_root}",
     }
 
@@ -34,7 +34,7 @@ def context(cookieplone_root) -> dict:
 def context_no_npm_organization(context) -> dict:
     """Cookiecutter context without a NPM organization."""
     new_context = deepcopy(context)
-    new_context["npm_package_name"] = "plone7-nick-embedded"
+    new_context["npm_package_name"] = "aurora-nick-embedded"
     return new_context
 
 
@@ -42,12 +42,12 @@ def context_no_npm_organization(context) -> dict:
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
-        "frontend_addon_name": "plone7 nick embedded",
+        "frontend_addon_name": "aurora nick embedded",
         "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
-        "project_slug": "plone7-nick-embedded",
-        "description": "Add new features to your Plone 7 Project.",
+        "project_slug": "aurora-nick-embedded",
+        "description": "Plone Aurora using Nick as an embedded library.",
         "github_organization": "collective",
-        "npm_package_name": "plone-collective/plone7-nick-embedded",
+        "npm_package_name": "plone-collective/aurora-nick-embedded",
         "author": "Plone Collective",
         "email": "collective@plone.org",
     }

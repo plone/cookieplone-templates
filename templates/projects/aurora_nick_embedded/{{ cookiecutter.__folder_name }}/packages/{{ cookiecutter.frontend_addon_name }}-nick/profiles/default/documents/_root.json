@@ -1,8 +1,8 @@
 {
   "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
   "type": "Site",
-  "title": "Welcome to Plone 7!",
-  "description": "Congratulations! You have successfully installed Plone 7.",
+  "title": "Welcome to Plone Aurora!",
+  "description": "Congratulations! You have successfully installed Plone Aurora.",
   "owner": "admin",
   "workflow_state": "published",
   "created": "2026-04-12T20:00:00.000Z",
@@ -15,7 +15,7 @@
       "value": [
         {
           "blockWidth": "default",
-          "children": [{ "text": "Welcome to Plone 7!" }],
+          "children": [{ "text": "Welcome to Plone Aurora!" }],
           "id": "7PjMKp20jt",
           "type": "title"
         },
@@ -23,10 +23,10 @@
           "children": [
             { "text": "You are looking at an early " },
             {
-              "children": [{ "text": "Plone 7" }],
+              "children": [{ "text": "Plone Aurora" }],
               "id": "hieeXZUyLv",
               "type": "a",
-              "url": "https://github.com/plone/volto/tree/seven"
+              "url": "https://github.com/plone/aurora"
             },
             { "text": "  site built with " },
             {
@@ -45,7 +45,7 @@
         {
           "children": [
             {
-              "text": "Plone 7 is currently in an experimental stage. It is under active development and is not ready for production use yet. This site should be used for evaluation, demos, and development only."
+              "text": "Plone Aurora is currently in an experimental stage. It is under active development and is not ready for production use yet. This site should be used for evaluation, demos, and development only."
             }
           ],
           "id": "TX6bUeaJud",
@@ -129,7 +129,7 @@
               "children": [{ "text": "documentation" }],
               "id": "P5JHt9blLU",
               "type": "a",
-              "url": "https://volto.readthedocs.io/seven/"
+              "url": "https://github.com/plone/aurora"
             },
             { "text": "." }
           ],
@@ -196,7 +196,7 @@
           "type": "p"
         },
         {
-          "children": [{ "bold": true, "text": "About Plone 7 and Nick" }],
+          "children": [{ "bold": true, "text": "About Plone Aurora and Nick" }],
           "id": "9ySLXRC2P2",
           "type": "h2"
         },
@@ -213,7 +213,7 @@
         { "children": [{ "text": "" }], "id": "9C5Hsl3kNl", "type": "p" },
         {
           "children": [
-            { "bold": true, "text": "Plone 7" },
+            { "bold": true, "text": "Plone Aurora" },
             {
               "text": " is the next generation of the Plone user experience, built on modern frontend technologies and the new @plone/* libraries."
             }
@@ -277,7 +277,7 @@
         },
         { "children": [{ "text": "" }], "id": "xwnbhcOBvT", "type": "p" },
         {
-          "children": [{ "text": "Thanks for trying Plone 7." }],
+          "children": [{ "text": "Thanks for trying Plone Aurora." }],
           "id": "AbMlo0IyMp",
           "type": "p"
         }

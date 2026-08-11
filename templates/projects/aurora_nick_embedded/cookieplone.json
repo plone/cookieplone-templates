@@ -15,7 +15,7 @@
             "frontend_addon_name": {
                 "type": "string",
                 "title": "Frontend Add-on Name",
-                "description": "Short slug used as the package name and output folder (e.g. plone7-nick-embedded).",
+                "description": "Short slug used as the package name and output folder (e.g. aurora-nick-embedded).",
                 "default": "{{ cookiecutter.title | slugify }}",
                 "validator": "cookieplone.validators.npm_package_name"
             },
@@ -30,7 +30,7 @@
                 "type": "string",
                 "title": "Description",
                 "description": "A short description of your project.",
-                "default": "A new add-on for Seven",
+                "default": "Plone Aurora using Nick as an embedded library.",
                 "validator": ""
             },
             "author": {
@@ -61,13 +61,6 @@
                 "description": "Name of the package as published on NPM.",
                 "default": "{{ cookiecutter.frontend_addon_name }}",
                 "validator": "cookieplone.validators.npm_package_name"
-            },
-            "volto_version": {
-                "type": "string",
-                "title": "Volto Version",
-                "description": "Volto frontend version to target. Automatically resolved to the latest available release.",
-                "default": "{{ 'Yes' | latest_volto }}",
-                "validator": "cookieplone.validators.volto_version"
             },
             "__folder_name": {
                 "type": "string",
@@ -142,6 +135,11 @@
             "packages/{{ cookiecutter.frontend_addon_name }}/news/.changelog_template.jinja"
         ],
         "subtemplates": [
+            {
+                "id": "add-ons/aurora_addon",
+                "title": "Setup Aurora frontend",
+                "enabled": "1"
+            },
             {
                 "id": "ide/vscode",
                 "title": "Setup VSCode configuration",

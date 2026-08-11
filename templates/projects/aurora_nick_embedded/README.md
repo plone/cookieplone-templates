@@ -1,11 +1,11 @@
-[![Cookieplone Seven Frontend Add-on CI](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml)
+[![Cookieplone Aurora Nick Embedded CI](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml/badge.svg)](https://github.com/plone/cookieplone-templates/actions/workflows/frontend_addon.yml)
 [![Built with Cookiecutter](https://img.shields.io/badge/built%20with-Cookiecutter-ff69b4.svg?logo=cookiecutter)](https://github.com/plone/cookieplone-templates/)
 ![GitHub](https://img.shields.io/github/license/plone/cookiecutter-plone)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# Cookieplone Seven Frontend Add-on
+# Cookieplone Aurora with embedded Nick
 
-Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter](https://github.com/cookiecutter/cookiecutter), [Cookieplone Frontend Add-on](https://github.com/plone/cookieplone-templates/frontend_addon) is intended to be used by Plone developers to create new add-on packages for Volto.
+Powered by [cookieplone](https://github.com/plone/cookieplone), this template creates an experimental Plone Aurora project with Nick embedded in the same Node.js workspace. The shared frontend scaffold is generated from the `aurora_addon` template.
 
 ## Getting Started 🏁
 
@@ -21,10 +21,10 @@ Powered by [cookieplone](https://github.com/plone/cookieplone) and [Cookiecutter
 pip install uv
 ```
 
-### Generate Your Plone Add-on 🎉
+### Generate your project 🎉
 
 ```shell
-uvx cookieplone frontend_addon
+uvx cookieplone aurora_nick_embedded
 ```
 
 ## Project Generation Options
@@ -33,14 +33,13 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 
 | Option                | Description                                                                                                                                          | Example                       |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `frontend_addon_name`  | Your addon's short name.                                                                                     | **volto-weather-block**                |
-| `title`  | Your addon's human-readable name, capitals and spaces allowed.                                                                                     | **Weather Block for Volto**                |
-| `description`         | Describes your add-on and gets used in places like ``README.md`` and such.                                                                          | **Add a weather block to your site.** |
+| `frontend_addon_name`  | Your Aurora add-on's short name.                                                                                     | **aurora-nick-embedded**                |
+| `title`  | Your project's human-readable name, capitals and spaces allowed.                                                                                     | **Aurora with embedded Nick**                |
+| `description`         | Describes your project and gets used in places like `README.md`.                                                                          | **Plone Aurora using Nick as an embedded library.** |
 | `author`              | This is you! The value goes into places like ``LICENSE``, ``package.json`` and such.                                                                     | **Our Company**               |
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `github_organization` | Used for GitHub repositories.                                                                                                             | **collective**                |
-| `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
-| `volto_version` | Volto version to be used. | **18.0.0-alpha.31**    |
+| `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/aurora-nick-embedded**    |
 
 ## Code Quality Assurance 🧐
 

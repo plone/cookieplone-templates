@@ -18,7 +18,6 @@ ROOT_FILES = [
     ".storybook/preview.jsx",
     ".gitignore",
     ".npmignore",
-    ".npmrc",
     ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
@@ -133,3 +132,23 @@ def test_json_schema(
     package_name = cutter_result.context["frontend_addon_name"]
     path = cutter_result.project_path / file_path.format(package_name=package_name)
     assert schema_validate_file(path, schema_name)
+
+
+@pytest.mark.parametrize(
+    "file_path,text,expected",
+    [
+        ("package.json", '"@plone/aurora": "workspace:*"', True),
+        ("package.json", '"@robgietema/nick": "workspace:*"', True),
+        ("package.json", '"seven": "workspace:*"', False),
+        ("mrs.developer.json", "git@github.com:plone/aurora.git", True),
+        ("mrs.developer.json", "git@github.com:robgietema/nick.git", True),
+        ("pnpm-workspace.yaml", "core/apps/aurora", True),
+        ("pnpm-workspace.yaml", "- 'nick'", True),
+        ("registry.config.ts", "@plone/aurora/registry.config", True),
+        ("registry.config.ts", "@robgietema/nick/src/types", True),
+    ],
+)
+def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    path = (cutter_result.project_path / file_path).resolve()
+    contents = path.read_text()
+    assert (text in contents) is expected

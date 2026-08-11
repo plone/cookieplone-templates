@@ -3,7 +3,7 @@ ALLOWED_MISSING: list[str] = [
     "backend_path",
     "frontend_path",
 ]
-ALLOWED_NOT_USED: list[str] = ["__generator_sha", "volto_version"]
+ALLOWED_NOT_USED: list[str] = ["__generator_sha"]
 
 
 def test_no_missing_variables(variables_missing):

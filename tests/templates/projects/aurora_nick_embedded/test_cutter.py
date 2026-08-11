@@ -18,7 +18,6 @@ ROOT_FILES = [
     ".storybook/preview.jsx",
     ".gitignore",
     ".npmignore",
-    ".npmrc",
     ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
@@ -139,6 +138,19 @@ def test_json_schema(
             True,
         ),
         (".github/workflows/changelog.yml", "pipx", False),
+        ("package.json", '"@plone/aurora": "workspace:*"', True),
+        ("package.json", '"@robgietema/nick": "workspace:*"', True),
+        ("package.json", '"seven": "workspace:*"', False),
+        ("mrs.developer.json", "git@github.com:plone/aurora.git", True),
+        ("mrs.developer.json", "git@github.com:robgietema/nick.git", True),
+        ("pnpm-workspace.yaml", "core/apps/aurora", True),
+        ("pnpm-workspace.yaml", "- 'nick'", True),
+        (
+            "registry.config.ts",
+            "@plone/aurora/registry.config",
+            True,
+        ),
+        ("registry.config.ts", "@robgietema/nick/src/types", True),
     ],
 )
 def test_content(cutter_result, file_path: str, text: str, expected: bool):

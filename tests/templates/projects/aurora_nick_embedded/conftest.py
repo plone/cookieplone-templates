@@ -14,13 +14,13 @@ def context(annotate_context, cookieplone_root) -> dict:
     return annotate_context(
         {
             "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
-            "frontend_addon_name": "plone7-nick-embedded",
-            "project_slug": "plone7-nick-embedded",
-            "description": "Add new features to your Plone 7 Project.",
+            "frontend_addon_name": "aurora-nick-embedded",
+            "project_slug": "aurora-nick-embedded",
+            "description": "Plone Aurora using Nick as an embedded library.",
             "author": "Plone Collective",
             "email": "collective@plone.org",
             "github_organization": "collective",
-            "npm_package_name": "@plone-collective/plone7-nick-embedded",
+            "npm_package_name": "@plone-collective/aurora-nick-embedded",
         },
         cookieplone_root,
         "aurora_nick_embedded",
@@ -32,11 +32,11 @@ def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
         "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
-        "frontend_addon_name": "plone7-nick-embedded",
-        "project_slug": "plone7-nick-embedded",
-        "description": "Add new features to your Plone 7 Project.",
+        "frontend_addon_name": "aurora-nick-embedded",
+        "project_slug": "aurora-nick-embedded",
+        "description": "Plone Aurora using Nick as an embedded library.",
         "author": "Plone Collective",
         "email": "collective@plone.org",
         "github_organization": "collective",
-        "npm_package_name": "plone-collective/plone7-nick-embedded",
+        "npm_package_name": "plone-collective/aurora-nick-embedded",
     }

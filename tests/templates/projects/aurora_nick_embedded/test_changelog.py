@@ -6,14 +6,14 @@ import pytest
 
 from tests.templates import CHANGELOG_TEMPLATE_NAME, TOWNCRIER_TYPES, expected_settings
 
-REPOSITORY_URL = "https://github.com/collective/plone7-nick-embedded"
+REPOSITORY_URL = "https://github.com/collective/aurora-nick-embedded"
 
 TOWNCRIER_CONFIGS = [
-    "packages/plone7-nick-embedded/towncrier.toml",
+    "packages/aurora-nick-embedded/towncrier.toml",
 ]
 
 NEWS_FOLDERS = [
-    "packages/plone7-nick-embedded/news",
+    "packages/aurora-nick-embedded/news",
 ]
 
 EXPECTED_SETTINGS = expected_settings(REPOSITORY_URL)

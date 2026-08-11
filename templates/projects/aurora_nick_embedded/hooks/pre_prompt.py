@@ -61,7 +61,7 @@ def main():
     check_results = sanity_check()
     msg = dedent(
         """
-        Creating a new Seven Addon
+        Creating Plone Aurora with Nick as an embedded library
 
         Sanity check results:
 
@@ -70,7 +70,7 @@ def main():
     for check in check_results.checks:
         label = "green" if check.status else "red"
         msg = f"{msg}\n  - {check.name}: [{label}]{check.message}[/{label}]"
-    console.panel(title="Volto Addon Generator", msg=f"{msg}\n")
+    console.panel(title="Aurora Nick Embedded Generator", msg=f"{msg}\n")
     if not check_results.status:
         sys.exit(1)
 
