@@ -23,15 +23,15 @@ ifeq (, $(shell which $(UV) ))
   $(error "UV=$(UV) not found in $(PATH)")
 endif
 
-REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
-IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+export REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+IMAGE_NAME_PREFIX := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).container_images_prefix")
 IMAGE_TAG=latest
 IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-EXAMPLE_CONTENT_FOLDER := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.code_path')/setuphandlers/examplecontent
-PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
+EXAMPLE_CONTENT_FOLDER := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.code_path")/setuphandlers/examplecontent
+PACKAGE_NAME := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.name")
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
 export VIRTUAL_ENV=$(VENV_FOLDER)
@@ -41,7 +41,7 @@ BIN_FOLDER=$(VENV_FOLDER)/bin
 export PYTHONWARNINGS := ignore
 export DOCKER_BUILDKIT := 1
 export PYTHON_VERSION := {{ cookiecutter.__supported_versions_python[0] }}
-export PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+export PLONE_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.base_package_version")
 
 ifdef CI
 UV_VENV_ARGS :=

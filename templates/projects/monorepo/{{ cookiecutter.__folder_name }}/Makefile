@@ -11,13 +11,13 @@ MAKEFLAGS+=--no-builtin-rules
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 GIT_FOLDER=$(CURRENT_DIR)/.git
 
-REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+export REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 
-PROJECT_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
+PROJECT_NAME := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).name")
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
-VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
-PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+VOLTO_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).frontend.volto_version")
+PLONE_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.base_package_version")
 
 
 # We like colors

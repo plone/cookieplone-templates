@@ -11,16 +11,16 @@ MAKEFLAGS+=--no-builtin-rules
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 GIT_FOLDER=$(CURRENT_DIR)/.git
 
-REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+export REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 
-PROJECT_NAME=$(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
+PROJECT_NAME=$(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).name")
 STACK_NAME=${PROJECT_NAME}
 
-IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_NAME_PREFIX := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).container_images_prefix")
 
 # Environment variables to be exported
-export VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
-export PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+export VOLTO_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).frontend.volto_version")
+export PLONE_VERSION := $(shell node -p "JSON.parse(process.env.REPOSITORY_SETTINGS).backend.base_package_version")
 
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
