@@ -1,4 +1,4 @@
-"""Test cookiecutter generation for plone7_nick_embedded."""
+"""Test cookiecutter generation for aurora_nick_embedded."""
 
 import pytest
 
@@ -42,11 +42,10 @@ PKG_SRC_FILES = [
     "index.ts",
     "locales/de/LC_MESSAGES/volto.po",
     "locales/en/LC_MESSAGES/volto.po",
-    "locales/es/LC_MESSAGES/volto.po",
-    "locales/pt_BR/LC_MESSAGES/volto.po",
     "locales/volto.pot",
     "news/.gitkeep",
     "package.json",
+    "public/.gitkeep",
     "towncrier.toml",
     "tsconfig.json",
     "types.d.ts",
@@ -62,9 +61,9 @@ PKG_NICK_FILES = [
 ]
 
 
-def test_creation(cookies, context: dict):
+def test_creation(cookies, template_path, context: dict):
     """Generated project should match provided value."""
-    result = cookies.bake(extra_context=context)
+    result = cookies.bake(extra_context=context, template=template_path)
     assert result.exception is None
     assert result.exit_code == 0
     assert result.project_path.name == context["frontend_addon_name"]
@@ -77,16 +76,13 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
     for path in paths:
         with open(path) as fh:
             for line in fh:
-                match = variable_pattern.search(line)
+                match = {pattern.search(line) for pattern in variable_pattern}
                 msg = f"cookiecutter variable not replaced in {path}"
-                assert match is None, msg
+                assert match == {None}, msg
 
 
-@pytest.mark.parametrize(
-    "file_path",
-    ROOT_FILES,
-)
-def test_root_files_generated(cutter_result, file_path):
+@pytest.mark.parametrize("file_path", ROOT_FILES)
+def test_root_files_generated(cutter_result, file_path: str):
     """Check if root files were generated."""
     path = cutter_result.project_path / file_path
     assert path.exists()
@@ -95,17 +91,16 @@ def test_root_files_generated(cutter_result, file_path):
 
 @pytest.mark.parametrize("file_path", PKG_SRC_FILES)
 def test_pkg_src_files_generated(cutter_result, file_path: str):
-    """Check if package files were generated."""
+    """Check if add-on package files were generated."""
     package_name = cutter_result.context["frontend_addon_name"]
-    src_path = cutter_result.project_path / "packages" / package_name
-    path = src_path / file_path
+    path = cutter_result.project_path / "packages" / package_name / file_path
     assert path.exists()
     assert path.is_file()
 
 
 @pytest.mark.parametrize("file_path", PKG_NICK_FILES)
 def test_pkg_nick_files_generated(cutter_result, file_path: str):
-    """Check if companion Nick package files were generated."""
+    """Check if -nick companion package files were generated."""
     package_name = f"{cutter_result.context['frontend_addon_name']}-nick"
     path = cutter_result.project_path / "packages" / package_name / file_path
     assert path.exists()
@@ -133,3 +128,20 @@ def test_json_schema(
     package_name = cutter_result.context["frontend_addon_name"]
     path = cutter_result.project_path / file_path.format(package_name=package_name)
     assert schema_validate_file(path, schema_name)
+
+
+@pytest.mark.parametrize(
+    "file_path,text,expected",
+    [
+        (
+            ".github/workflows/changelog.yml",
+            "uvx towncrier check --dir packages/",
+            True,
+        ),
+        (".github/workflows/changelog.yml", "pipx", False),
+    ],
+)
+def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    path = (cutter_result.project_path / file_path).resolve()
+    contents = path.read_text()
+    assert (text in contents) is expected

@@ -1,8 +1,8 @@
 {
-    "id": "plone7_nick_embedded",
+    "id": "aurora_nick_embedded",
     "schema": {
-        "title": "Plone 7 Nick Embedded Project",
-        "description": "A project template for Plone 7 alpha using Nick as an embedded library.",
+        "title": "Plone Aurora Nick Embedded Project",
+        "description": "A project template for Plone Aurora (alpha) using Nick as an embedded library.",
         "version": "2.0",
         "properties": {
             "title": {
