@@ -28,7 +28,11 @@ def read_config():
         if v2.exists():
             data = json.loads(v2.read_text())
             schema = data.get("schema", {})
-            properties = schema.get("properties", {})
+            properties = schema.get("properties", {}).copy()
+            # Scan allOf for more properties
+            for item in schema.get("allOf", []):
+                then = item.get("then", {})
+                properties.update(then.get("properties", {}))
             # Flatten v2 schema to a {key: default} dict so tests that check for
             # presence of property names keep working with both formats.
             return {key: prop.get("default", "") for key, prop in properties.items()}

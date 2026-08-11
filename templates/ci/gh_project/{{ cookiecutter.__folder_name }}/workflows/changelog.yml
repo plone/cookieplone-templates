@@ -43,12 +43,14 @@ jobs:
         if: {{ "${{ always() && needs.config.outputs.changelog-backend == 'true' }}" }}
         run: |
           uvx towncrier check --compare-with origin/{{ "${{ env.base-branch }}" }} --config {{ "${{ needs.config.outputs.path-backend }}/pyproject.toml --dir ${{ needs.config.outputs.path-backend }}" }}/
+{%- if cookiecutter.feature_headless %}
 
       - name: "Frontend: Check"
         id: frontend-changelog
         if: {{ "${{ always() && needs.config.outputs.changelog-frontend == 'true' }}" }}
         run: |
           uvx towncrier check --compare-with origin/{{ "${{ env.base-branch }}" }} --config {{ "${{ needs.config.outputs.path-frontend }}/towncrier.toml --dir ${{ needs.config.outputs.path-frontend }}" }}
+{%- endif %}
 
       - name: "Repository: Check"
         id: repository-changelog
@@ -63,5 +65,7 @@ jobs:
           echo '| Job ID | Conclusion |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
           echo '| backend |{{ "${{ steps.backend-changelog.conclusion }}" }} |' >> $GITHUB_STEP_SUMMARY
+{%- if cookiecutter.feature_headless %}
           echo '| frontend |{{ "${{ steps.frontend-changelog.conclusion }}" }} |' >> $GITHUB_STEP_SUMMARY
+{%- endif %}
           echo '| repository |{{ "${{ steps.repository-changelog.conclusion }}" }} |' >> $GITHUB_STEP_SUMMARY

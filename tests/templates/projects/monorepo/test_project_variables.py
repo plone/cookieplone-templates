@@ -1,7 +1,7 @@
 ALLOWED_MISSING = [
+    "__frontend_package_name",
     "ansible_path",
     "backend_path",
-    "feature_headless",
     "frontend_path",
     "has_cache",
     "has_deploy",
@@ -12,6 +12,7 @@ ALLOWED_MISSING = [
     "npm_package_name",
     "python_version",
 ]
+
 ALLOWED_NOT_USED = []
 
 

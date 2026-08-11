@@ -20,6 +20,9 @@ POST_GEN_TO_REMOVE = {
         "workflows/docs.yml",
         "workflows/rtd-pr-preview.yml",
     ],
+    "classic": [
+        "workflows/frontend.yml",
+    ],
 }
 
 
@@ -27,13 +30,16 @@ def generate_agents_instructions(context: OrderedDict, output_dir: Path):
     """Add instructions structure."""
     from cookieplone import generator
 
+    feature_headless = bool(context.get("feature_headless", True))
     folder_name = "instructions"
     repository_path = context.get("__cookieplone_repository_path") or context.get(
         "_template"
     )
     new_ctx = OrderedDict({
-        "has_volto": "1",
-        "docs_file": "project-docs.instructions.md",
+        "has_volto": "1" if feature_headless else "0",
+        "docs_file": "project-docs.instructions.md"
+        if feature_headless
+        else "classic-project-docs.instructions.md",
         "__cookieplone_repository_path": repository_path,
     })
     generator.generate_subtemplate(
@@ -52,6 +58,7 @@ SUBTEMPLATE_HANDLERS = {
 
 def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
     """Return action handlers."""
+    feature_headless = bool(context.get("feature_headless", True))
     actions: list[post_gen.PostGenAction] = [
         {
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "docs"),
@@ -67,6 +74,11 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "deploy"),
             "title": "Remove unneeded deploy files",
             "enabled": not int(context.get("has_deploy", "0")),
+        },
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "classic"),
+            "title": "Remove frontend files for Classic UI",
+            "enabled": not feature_headless,
         },
     ]
     return actions

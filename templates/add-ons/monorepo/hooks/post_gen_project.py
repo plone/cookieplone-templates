@@ -248,7 +248,6 @@ def main():
     run_subtemplates(
         context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
     )
-
     # Action handlers
     post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 

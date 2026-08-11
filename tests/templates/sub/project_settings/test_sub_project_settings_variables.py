@@ -1,6 +1,7 @@
 ALLOWED_MISSING = []
 ALLOWED_NOT_USED = [
     "__container_image_prefix",
+    "__feature_headless",
     "__generator_sha",
     "__version_plone_volto",
 ]

@@ -36,8 +36,12 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
 def test_json_schema(
     cutter_result, schema_validate_file, file_path: str, schema_name: str
 ):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = cutter_result.project_path / file_path
-    assert schema_validate_file(path, schema_name)
+    if not feature_headless and file_path == "workflows/frontend.yml":
+        assert not path.exists()
+    else:
+        assert schema_validate_file(path, schema_name)
 
 
 @pytest.mark.parametrize(
@@ -55,9 +59,29 @@ def test_json_schema(
     ],
 )
 def test_created_files(cutter_result, file_path: str):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = (cutter_result.project_path / file_path).resolve()
-    assert path.exists()
-    assert path.is_file()
+    if not feature_headless and (
+        file_path == "workflows/frontend.yml"
+        or file_path == "instructions/volto.instructions.md"
+    ):
+        assert not path.exists()
+    else:
+        assert path.exists()
+        assert path.is_file()
+
+
+# Content generated only when the project has a frontend.
+FRONTEND_ONLY_CONTENT = {
+    (
+        "workflows/main.yml",
+        "storybook-deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
+    ),
+    (
+        "workflows/config.yml",
+        "storybook-deploy=${{ github.event.repository.private == false }}",
+    ),
+}
 
 
 @pytest.mark.parametrize(
@@ -103,6 +127,25 @@ def test_created_files(cutter_result, file_path: str):
     ],
 )
 def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    feature_headless = cutter_result.context.get("feature_headless", True)
     path = (cutter_result.project_path / file_path).resolve()
+    if not feature_headless and file_path == "workflows/frontend.yml":
+        # A Classic UI project has no frontend workflow at all.
+        assert not path.exists()
+        return
     contents = path.read_text()
+    if not feature_headless and (file_path, text) in FRONTEND_ONLY_CONTENT:
+        # The frontend caller job is only wired up for a headless project.
+        assert text not in contents
+        return
     assert (text in contents) is expected
+
+
+@pytest.mark.parametrize("file_path", ["workflows/config.yml", "workflows/main.yml"])
+@pytest.mark.parametrize("term", ["frontend", "storybook", "volto", "node-version"])
+def test_no_frontend_mentions_in_classic(cutter_result, file_path: str, term: str):
+    """Test a Classic UI project never mentions a frontend it does not have."""
+    if cutter_result.context.get("feature_headless", True):
+        pytest.skip("A headless project does have a frontend.")
+    contents = (cutter_result.project_path / file_path).read_text()
+    assert term not in contents.lower()
