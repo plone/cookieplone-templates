@@ -194,8 +194,15 @@ def test_aurora_frontend_uses_pnpm_11(cutter_result):
     assert "pnpm" not in package
     assert workspace["overrides"]["jotai"] == "^2.12.5"
     assert workspace["allowBuilds"]["@tailwindcss/oxide"] is True
+    assert "cypress" not in workspace["allowBuilds"]
+    assert "*cypress*" not in workspace["publicHoistPattern"]
     assert "*playwright*" in workspace["publicHoistPattern"]
     assert not (frontend / ".npmrc").exists()
+
+    addon = json.loads(
+        (frontend / "packages/aurora-plone/package.json").read_text()
+    )
+    assert addon["peerDependencies"]["i18next"] == "catalog:"
 
 
 def test_no_devops_scaffold(cutter_result):

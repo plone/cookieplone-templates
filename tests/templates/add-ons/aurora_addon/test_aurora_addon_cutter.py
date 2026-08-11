@@ -157,9 +157,15 @@ def test_pnpm_11_configuration(cutter_result):
         "jotai": "^2.12.5",
     }
     assert workspace["allowBuilds"]["@swc/core"] is True
-    assert workspace["allowBuilds"]["cypress"] is True
+    assert "cypress" not in workspace["allowBuilds"]
+    assert "*cypress*" not in workspace["publicHoistPattern"]
     assert "*playwright*" in workspace["publicHoistPattern"]
     assert not (project_path / ".npmrc").exists()
+
+    addon = json.loads(
+        (project_path / "packages/seven-addon/package.json").read_text()
+    )
+    assert addon["peerDependencies"]["i18next"] == "catalog:"
 
     for workflow in GITHUB_ACTIONS:
         contents = (project_path / workflow).read_text()
