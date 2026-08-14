@@ -11,7 +11,7 @@
         "project",
         "volto_nick",
         "aurora_nick",
-        "plone7_nick_embedded"
+        "aurora_nick_embedded"
       ],
       "hidden": false
     },
@@ -119,10 +119,10 @@
       "description": "Plone Aurora (alpha) using Nick as backend",
       "hidden": false
     },
-    "plone7_nick_embedded": {
-      "path": "./templates/projects/plone7_nick_embedded",
-      "title": "Plone 7 alpha using Nick as an embedded library (experimental)",
-      "description": "Create a new Node.js Plone 7 alpha project using Nick as an embedded library",
+    "aurora_nick_embedded": {
+      "path": "./templates/projects/aurora_nick_embedded",
+      "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+      "description": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
       "hidden": false
     },
     "sub/cache": {

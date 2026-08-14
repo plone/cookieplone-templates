@@ -1,0 +1,68 @@
+"""Pytest configuration."""
+
+from copy import deepcopy
+from pathlib import Path
+from typing import List
+
+import pytest
+
+
+@pytest.fixture(scope="session")
+def cookieplone_root() -> dict:
+    """Cookieplone root dir."""
+    parent = Path().cwd().resolve().parent
+    return parent
+
+
+@pytest.fixture(scope="session")
+def context(cookieplone_root) -> dict:
+    """Cookiecutter context."""
+    return {
+        "frontend_addon_name": "aurora-nick-embedded",
+        "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+        "project_slug": "aurora-nick-embedded",
+        "description": "Plone Aurora using Nick as an embedded library.",
+        "author": "Plone Collective",
+        "email": "collective@plone.org",
+        "github_organization": "collective",
+        "npm_package_name": "@plone-collective/aurora-nick-embedded",
+        "__cookieplone_repository_path": f"{cookieplone_root}",
+    }
+
+
+@pytest.fixture(scope="session")
+def context_no_npm_organization(context) -> dict:
+    """Cookiecutter context without a NPM organization."""
+    new_context = deepcopy(context)
+    new_context["npm_package_name"] = "aurora-nick-embedded"
+    return new_context
+
+
+@pytest.fixture(scope="session")
+def bad_context() -> dict:
+    """Cookiecutter context with invalid data."""
+    return {
+        "frontend_addon_name": "aurora nick embedded",
+        "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+        "project_slug": "aurora-nick-embedded",
+        "description": "Plone Aurora using Nick as an embedded library.",
+        "github_organization": "collective",
+        "npm_package_name": "plone-collective/aurora-nick-embedded",
+        "author": "Plone Collective",
+        "email": "collective@plone.org",
+    }
+
+
+@pytest.fixture
+def build_files_list():
+    def func(root_dir: Path) -> List[Path]:
+        """Build a list containing absolute paths to the generated files."""
+        return [path for path in Path(root_dir).glob("*") if path.is_file()]
+
+    return func
+
+
+@pytest.fixture(scope="session")
+def cutter_result(cookies_session, context):
+    """Cookiecutter result."""
+    return cookies_session.bake(extra_context=context)

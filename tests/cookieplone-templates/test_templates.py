@@ -24,8 +24,8 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             False,
         ),
         (
-            "plone7_nick_embedded",
-            "Plone 7 alpha using Nick as an embedded library (experimental)",
+            "aurora_nick_embedded",
+            "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
             False,
         ),
         ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
