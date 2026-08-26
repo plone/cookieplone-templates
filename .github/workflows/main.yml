@@ -354,13 +354,13 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: project-title
-          POSTGRES_USER: project-title
-          POSTGRES_PASSWORD: project-title
+          POSTGRES_DB: nick
+          POSTGRES_USER: nick
+          POSTGRES_PASSWORD: nick
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U project-title -d project-title"
+          --health-cmd "pg_isready -U nick -d nick"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -451,13 +451,13 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: project-title
-          POSTGRES_USER: project-title
-          POSTGRES_PASSWORD: project-title
+          POSTGRES_DB: nick
+          POSTGRES_USER: nick
+          POSTGRES_PASSWORD: nick
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U project-title -d project-title"
+          --health-cmd "pg_isready -U nick -d nick"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5

@@ -163,7 +163,9 @@ def test_upstream_nick_configuration(cutter_result):
     assert "@robgietema/nick" not in package_json
 
     config = (project_path / "backend/config.ts").read_text()
-    assert "database: 'plone'" in config
+    assert "database: 'nick'" in config
+    assert "user: 'nick'" in config
+    assert "password: 'nick'" in config
     assert "'@plone/nick:core'" in config
     assert "'plone:default'" in config
 

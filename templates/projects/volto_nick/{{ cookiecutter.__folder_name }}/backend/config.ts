@@ -13,9 +13,9 @@ export const config = {
   connection: {
     port: 5432,
     host: 'localhost',
-    database: '{{ cookiecutter.project_slug }}',
-    user: '{{ cookiecutter.project_slug }}',
-    password: '{{ cookiecutter.project_slug }}',
+    database: 'nick',
+    user: 'nick',
+    password: 'nick',
   },
   blobs: 'file',
   blobsDir: `${__dirname}/var/blobstorage`,
