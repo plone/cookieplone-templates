@@ -541,6 +541,7 @@ jobs:
     env:
       template: "aurora_cmfplone"
       name: "project-title"
+      python-version: "3.13"
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v6

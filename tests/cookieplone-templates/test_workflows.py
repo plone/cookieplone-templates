@@ -69,6 +69,7 @@ def test_aurora_cmfplone_functional_job():
 
     assert "services" not in job
     assert job["env"]["template"] == "aurora_cmfplone"
+    assert job["env"]["python-version"] == "3.13"
     assert "aurora-cmfplone-functional" in workflow["jobs"]["report"]["needs"]
 
     install_step = next(
