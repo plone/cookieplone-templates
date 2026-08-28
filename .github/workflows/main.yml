@@ -533,6 +533,80 @@ jobs:
         run: |
           pnpm exec playwright test aurora-nick.test.js --reporter=line
 
+  aurora-cmfplone-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "aurora_cmfplone"
+      name: "project-title"
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - uses: actions/cache@v5.0.5
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-aurora-cmfplone-pnpm-${{ hashFiles('project-title/frontend/package.json', 'project-title/frontend/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-aurora-cmfplone-pnpm-
+
+      - name: Install generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Install Playwright
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          cp "$GITHUB_WORKSPACE/.github/tests/aurora-cmfplone.test.js" .
+
+      - name: Start Plone backend and Aurora
+        uses: JarvusInnovations/background-action@v2
+        env:
+          PLONE_API_PATH: http://localhost:8080/Plone
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make backend-start &
+            (cd frontend && pnpm build && pnpm start:prod) &
+          wait-on: |
+            http-get://localhost:8080/Plone
+            http://localhost:3000
+          tail: true
+          wait-for: 10m
+          log-output: stderr,stdout
+          log-output-if: failure
+
+      - name: Verify Aurora and Plone backend integration
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright test aurora-cmfplone.test.js --reporter=line
+
   report:
     runs-on: ubuntu-latest
     needs:
@@ -543,6 +617,7 @@ jobs:
       - frontend-functional
       - volto-nick-functional
       - aurora-nick-functional
+      - aurora-cmfplone-functional
     steps:
       - name: Report
         shell: bash
@@ -557,3 +632,4 @@ jobs:
           echo '| Functional: Frontend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Volto with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Aurora with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Aurora with Plone backend | ✅ |' >> $GITHUB_STEP_SUMMARY
