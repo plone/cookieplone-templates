@@ -1,0 +1,91 @@
+{
+  "id": "sub/nick_backend",
+  "schema": {
+    "title": "Subtemplate: Nick backend",
+    "description": "Shared Nick backend scaffold for Plone frontend projects.",
+    "version": "2.0",
+    "properties": {
+      "title": {
+        "type": "string",
+        "title": "Project Title",
+        "default": "Project Title",
+        "validator": "",
+        "format": "computed"
+      },
+      "project_slug": {
+        "type": "string",
+        "title": "Project Slug",
+        "default": "{{ cookiecutter.title | slugify }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "description": {
+        "type": "string",
+        "title": "Description",
+        "default": "Plone using Nick as backend.",
+        "validator": "",
+        "format": "computed"
+      },
+      "author": {
+        "type": "string",
+        "title": "Author",
+        "default": "Plone Community",
+        "validator": "",
+        "format": "computed"
+      },
+      "email": {
+        "type": "string",
+        "title": "Author E-mail",
+        "default": "collective@plone.org",
+        "validator": "",
+        "format": "computed"
+      },
+      "github_organization": {
+        "type": "string",
+        "title": "GitHub Username or Organization",
+        "default": "collective",
+        "validator": "",
+        "format": "computed"
+      },
+      "npm_package_name": {
+        "type": "string",
+        "title": "NPM Package Name",
+        "default": "{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__generator_signature": {
+        "type": "string",
+        "title": "__generator_signature",
+        "default": "Generated with cookieplone.",
+        "validator": "",
+        "format": "computed"
+      },
+      "nick_frontend": {
+        "type": "string",
+        "title": "Nick frontend",
+        "default": "volto",
+        "validator": "",
+        "format": "computed"
+      },
+      "__folder_name": {
+        "type": "string",
+        "title": "__folder_name",
+        "default": "{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__cookieplone_repository_path": {
+        "type": "string",
+        "title": "__cookieplone_repository_path",
+        "default": "",
+        "validator": "",
+        "format": "computed"
+      }
+    }
+  },
+  "config": {
+    "extensions": [],
+    "no_render": []
+  }
+}

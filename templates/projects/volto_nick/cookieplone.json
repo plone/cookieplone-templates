@@ -62,6 +62,13 @@
         "default": "volto-{{ cookiecutter.project_slug }}",
         "validator": "cookieplone.validators.npm_package_name"
       },
+      "nick_frontend": {
+        "type": "string",
+        "title": "Nick frontend",
+        "default": "volto",
+        "validator": "",
+        "format": "computed"
+      },
       "use_prerelease_versions": {
         "type": "boolean",
         "title": "Should we use prerelease versions?",
@@ -201,6 +208,11 @@
       "news/.changelog_template.jinja"
     ],
     "subtemplates": [
+      {
+        "id": "sub/nick_backend",
+        "title": "Setup Nick backend",
+        "enabled": "1"
+      },
       {
         "id": "add-ons/frontend",
         "title": "Setup Frontend",

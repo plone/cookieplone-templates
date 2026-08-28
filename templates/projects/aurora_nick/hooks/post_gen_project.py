@@ -15,6 +15,17 @@ versions: dict | OrderedDict = {{versions}}
 TEMPLATES_FOLDER = "templates"
 
 
+def generate_sub_nick_backend(context: OrderedDict, output_dir: Path) -> Path:
+    """Generate the shared Nick backend scaffold."""
+    return generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/sub/nick_backend",
+        output_dir,
+        "backend",
+        context,
+        global_versions=versions,
+    )
+
+
 def _find_replace_in_folder(folder: Path, replacements: dict[str, str]):
     """Find and replace strings in text files below a folder."""
     for file_path in folder.rglob("*"):
@@ -106,6 +117,7 @@ def generate_ci_gh_aurora_nick(context: OrderedDict, output_dir: Path) -> Path:
 
 
 SUBTEMPLATE_HANDLERS = {
+    "sub/nick_backend": generate_sub_nick_backend,
     "add-ons/aurora_addon": generate_addons_aurora,
     "ci/gh_aurora_nick": generate_ci_gh_aurora_nick,
     "ide/vscode": generate_ide_vscode,
