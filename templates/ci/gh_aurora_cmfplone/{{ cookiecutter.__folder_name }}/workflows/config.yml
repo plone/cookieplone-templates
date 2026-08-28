@@ -135,7 +135,7 @@ jobs:
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           echo "path-backend=$(jq -r '.backend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"
           {%- if cookiecutter.feature_headless %}
-          echo "path-frontend=$(jq -r '.frontend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"
+          echo "path-frontend=frontend/packages/{{ cookiecutter.frontend_addon_name }}" >> "$GITHUB_OUTPUT"
           {%- endif %}
           echo "path-root=." >> "$GITHUB_OUTPUT"
 

@@ -40,6 +40,13 @@
                 "validator": "",
                 "format": "computed"
             },
+            "frontend_addon_name": {
+                "type": "string",
+                "title": "Aurora frontend package name",
+                "default": "aurora-addon",
+                "validator": "",
+                "format": "computed"
+            },
             "has_cache": {
                 "type": "string",
                 "title": "Include cache CI workflows?",

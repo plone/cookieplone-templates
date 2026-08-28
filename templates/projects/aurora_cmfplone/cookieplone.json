@@ -309,13 +309,6 @@
                 "validator": "",
                 "format": "computed"
             },
-            "__frontend_package_name": {
-                "type": "string",
-                "title": "__frontend_package_name",
-                "default": "{{ cookiecutter.frontend_addon_name | unscoped_package_name }}",
-                "validator": "",
-                "format": "computed"
-            },
             "__npm_package_name": {
                 "type": "string",
                 "title": "__npm_package_name",

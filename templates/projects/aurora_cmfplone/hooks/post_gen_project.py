@@ -201,12 +201,14 @@ def generate_ci_gh_aurora_cmfplone(
     context: OrderedDict, output_dir: Path
 ) -> Path:
     """Generate GitHub CI for the CMFPlone and Aurora workspaces."""
+    frontend_context = _fix_frontend_addon_name(context.copy())
     feature_headless = bool(context.get("feature_headless", True))
     ci_context = OrderedDict({
         "feature_headless": feature_headless,
         "python_version": versions["backend_python"],
         "node_version": context.get("__node_version", ""),
         "frontend_base_version": context.get("frontend_base_version", ""),
+        "frontend_addon_name": frontend_context["frontend_addon_name"],
         "has_cache": "1" if context["devops_cache"] else "0",
         "has_docs": "1" if context["initialize_documentation"] else "0",
         "has_deploy": "1" if context["devops_gha_deploy"] else "0",

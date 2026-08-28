@@ -66,7 +66,12 @@ def test_created_files(cutter_result, file_path: str):
 
 
 # Content generated only when the project has a frontend.
-FRONTEND_ONLY_CONTENT = set()
+FRONTEND_ONLY_CONTENT = {
+    (
+        "workflows/config.yml",
+        "path-frontend=frontend/packages/aurora-addon",
+    ),
+}
 
 
 @pytest.mark.parametrize(
@@ -88,6 +93,12 @@ FRONTEND_ONLY_CONTENT = set()
             "image-name-prefix=$(jq -r '.container_images_prefix'",
             True,
         ),
+        (
+            "workflows/config.yml",
+            "path-frontend=frontend/packages/aurora-addon",
+            True,
+        ),
+        ("workflows/config.yml", ".frontend.path", False),
         ("workflows/main.yml", "uses: ./.github/workflows/config.yml", True),
         (
             "workflows/config.yml",

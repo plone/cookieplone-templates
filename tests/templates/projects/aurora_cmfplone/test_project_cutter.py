@@ -81,13 +81,14 @@ def test_aurora_frontend_files(cutter_result, file_path: str):
 
 
 def test_aurora_frontend_configuration(cutter_result):
-    """Keep Aurora configured as the frontend base package."""
+    """Keep Aurora configured without unsupported repoplone metadata."""
     project = cutter_result.project_path
     package = json.loads((project / "frontend/package.json").read_text())
     repository = (project / "repository.toml").read_text()
     assert package["dependencies"]["@plone/aurora"] == "workspace:*"
     assert package["packageManager"] == "pnpm@11.20.0"
-    assert 'base_package = "@plone/aurora"' in repository
+    assert "[frontend.package]" not in repository
+    assert "@plone/volto" not in repository
     assert 'base_package = "Products.CMFPlone"' in repository
     makefile = (project / "frontend/Makefile").read_text()
     assert "REPOSITORY_SETTINGS :=" not in makefile
