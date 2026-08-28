@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 22
+    assert len(all_templates) == 23
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -40,6 +40,7 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             "A Plone 6 frontend project (used in Container images)",
             True,
         ),
+        ("sub/nick_backend", "Shared Nick backend scaffold", True),
         (
             "sub/project_settings",
             "Project settings to be applied on top of a Plone 6 project",

@@ -64,6 +64,7 @@
       "templates": [
         "sub/cache",
         "sub/frontend_project",
+        "sub/nick_backend",
         "sub/project_settings",
         "sub/addon_settings"
       ],
@@ -135,6 +136,12 @@
       "path": "./templates/sub/frontend_project",
       "title": "A Plone 6 frontend project (used in Container images)",
       "description": "Subtemplate with configuration used in container images for a Plone 6 frontend project.",
+      "hidden": true
+    },
+    "sub/nick_backend": {
+      "path": "./templates/sub/nick_backend",
+      "title": "Shared Nick backend scaffold",
+      "description": "Subtemplate with the Nick backend shared by frontend project templates.",
       "hidden": true
     },
     "sub/project_settings": {

@@ -118,6 +118,12 @@ def test_upstream_nick_configuration(cutter_result):
     tsconfig = (project_path / "backend/tsconfig.json").read_text()
     assert '"@plone/nick": ["develop/nick/src"]' in tsconfig
 
+    root_profile = (
+        project_path / "backend/src/profiles/default/documents/_root.json"
+    ).read_text()
+    assert "Welcome to Nick!" in root_profile
+    assert "Welcome to Plone Aurora!" not in root_profile
+
     assert not (project_path / "backend/jsconfig.json").exists()
     assert not (project_path / "backend/eslint.config.mjs").exists()
 
