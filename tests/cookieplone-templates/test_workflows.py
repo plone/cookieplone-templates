@@ -61,6 +61,42 @@ def test_aurora_nick_functional_job():
     assert (root / ".github/tests/aurora-nick.test.js").is_file()
 
 
+def test_aurora_cmfplone_functional_job():
+    """Exercise the generated Aurora and Python Plone project together."""
+    root = Path(__file__).parents[2]
+    workflow = yaml.safe_load((root / ".github/workflows/main.yml").read_text())
+    job = workflow["jobs"]["aurora-cmfplone-functional"]
+
+    assert "services" not in job
+    assert job["env"]["template"] == "aurora_cmfplone"
+    assert job["env"]["python-version"] == "3.13"
+    assert "aurora-cmfplone-functional" in workflow["jobs"]["report"]["needs"]
+
+    install_step = next(
+        step for step in job["steps"] if step.get("name") == "Install generated project"
+    )
+    assert "make install" in install_step["run"]
+
+    background_step = next(
+        step
+        for step in job["steps"]
+        if step.get("uses") == "JarvusInnovations/background-action@v2"
+    )
+    assert background_step["env"]["PLONE_API_PATH"] == (
+        "http://localhost:8080/Plone"
+    )
+    assert "make backend-start &" in background_step["with"]["run"]
+    assert "pnpm build && pnpm start:prod" in background_step["with"]["run"]
+    assert "http-get://localhost:8080/Plone" in background_step["with"]["wait-on"]
+    assert "http://localhost:3000" in background_step["with"]["wait-on"]
+
+    playwright_step = next(
+        step for step in job["steps"] if step.get("name") == "Install Playwright"
+    )
+    assert "pnpm exec playwright install" in playwright_step["run"]
+    assert (root / ".github/tests/aurora-cmfplone.test.js").is_file()
+
+
 def test_background_actions_use_v2():
     """Use the Node.js 24-compatible background action release."""
     root = Path(__file__).parents[2]

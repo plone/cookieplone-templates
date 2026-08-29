@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 23
+    assert len(all_templates) == 25
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -13,6 +13,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
     "template_id,title,hidden",
     [
         ("project", "Plone 6 Project", False),
+        (
+            "aurora_cmfplone",
+            "Plone Aurora (alpha) with Plone backend",
+            False,
+        ),
         (
             "volto_nick",
             "Plone Volto using Nick as backend",
@@ -69,6 +74,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         (
             "ci_gh_monorepo_addon",
             "CI: GitHub Actions for Monorepo Add-on",
+            True,
+        ),
+        (
+            "ci_gh_aurora_cmfplone",
+            "CI: GitHub Actions for Aurora with Plone backend",
             True,
         ),
         (

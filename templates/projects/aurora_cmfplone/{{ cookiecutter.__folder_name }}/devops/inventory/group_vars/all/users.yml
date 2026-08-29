@@ -1,0 +1,6 @@
+---
+users:
+  default:
+    name: "{{ lookup('ansible.builtin.env', 'DEPLOY_USER', default='plone') }}"
+    group: sudo
+    additional_keys: []
