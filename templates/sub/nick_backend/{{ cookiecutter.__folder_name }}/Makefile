@@ -21,6 +21,10 @@ migrate: ## Run database migrations
 seed: ## Seed the database
 	pnpm seed
 
+.PHONY: reset
+reset: ## Reset the database
+	pnpm reset
+
 .PHONY: lint
 lint: ## Run lint checks
 	pnpm lint

@@ -56,6 +56,18 @@ def generate_addons_frontend(context: OrderedDict, output_dir: Path) -> Path:
         global_versions=versions,
     )
 
+    package_json_path = path / "package.json"
+    package_json = json.loads(package_json_path.read_text())
+    volto_start = "pnpm --filter @plone/volto start"
+    nick_start = (
+        "RAZZLE_INTERNAL_API_PATH=http://localhost:8080 "
+        f"{volto_start}"
+    )
+    package_json["scripts"]["start"] = package_json["scripts"]["start"].replace(
+        volto_start, nick_start, 1
+    )
+    package_json_path.write_text(json.dumps(package_json, indent=2) + "\n")
+
     release_it_path = path / "packages" / frontend_addon_name / ".release-it.json"
     if release_it_path.is_file():
         data = json.loads(release_it_path.read_text())
