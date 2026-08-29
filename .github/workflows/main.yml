@@ -98,6 +98,11 @@ jobs:
         run: |
           make install
 
+      - name: Lint generated package
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
@@ -165,7 +170,7 @@ jobs:
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -285,7 +290,7 @@ jobs:
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -509,6 +514,16 @@ jobs:
         run: |
           make install
 
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
       - name: Initialize Nick database
         working-directory: ${{ env.name }}
         run: |
@@ -589,6 +604,16 @@ jobs:
         working-directory: ${{ env.name }}
         run: |
           make install
+
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
 
       - name: Install Playwright
         working-directory: ${{ env.name }}/frontend
