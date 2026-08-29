@@ -16,7 +16,7 @@
       "value": [
         {
           "blockWidth": "default",
-          "children": [{ "text": "Welcome to Plone Aurora!" }],
+          "children": [{ "text": "Welcome to Plone Aurora with Plone Nick!" }],
           "id": "7PjMKp20jt",
           "type": "title"
         },
@@ -29,7 +29,7 @@
               "type": "a",
               "url": "https://github.com/plone/aurora"
             },
-            { "text": "  site built with " },
+            { "text": " site built with " },
             {
               "children": [{ "text": "Plone Nick" }],
               "id": "sVStEFdYEb",
@@ -197,7 +197,7 @@
           "type": "p"
         },
         {
-          "children": [{ "bold": true, "text": "About Plone Aurora and Nick" }],
+          "children": [{ "bold": true, "text": "About Plone Aurora and Plone Nick" }],
           "id": "9ySLXRC2P2",
           "type": "h2"
         },
@@ -225,9 +225,9 @@
         { "children": [{ "text": "" }], "id": "S6PxDtaMCL", "type": "p" },
         {
           "children": [
-            { "bold": true, "text": "Nick" },
+            { "bold": true, "text": "Plone Nick" },
             {
-              "text": " is the frontend application layer used in this site. In this setup, Nick is embedded directly in the application rather than running as a separate standalone service."
+              "text": " is the frontend application layer used in this site."
             }
           ],
           "id": "qRk-6nTbgQ",

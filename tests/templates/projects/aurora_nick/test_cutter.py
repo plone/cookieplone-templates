@@ -183,6 +183,10 @@ def test_aurora_frontend_configuration(cutter_result):
     assert '"@plone/aurora": "workspace:*"' in package_json
     assert "@plone/aurora dev" in package_json
     assert (project_path / "frontend/registry.config.ts").is_file()
+    server_config = (
+        project_path / "frontend/packages/aurora-plone/config/server.ts"
+    ).read_text()
+    assert "process.env.PLONE_API_PATH || 'http://localhost:8080'" in server_config
     assert not (project_path / ".github/workflows/acceptance.yml").exists()
 
 
