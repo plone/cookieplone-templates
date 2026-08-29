@@ -20,10 +20,13 @@ ROOT_FILES = [
 BACKEND_FILES = [
     ".gitignore",
     ".prettierignore",
+    ".prettierrc",
+    "Dockerfile",
     "Makefile",
     "README.md",
     "babel.config.json",
     "config.ts",
+    "docker-compose.yml",
     "eslint.config.ts",
     "knexfile.ts",
     "mrs.developer.json",
@@ -118,6 +121,17 @@ def test_frontend_release_settings(cutter_result):
     assert settings["plonePrePublish"]["publish"] is False
 
 
+def test_frontend_development_api_path(cutter_result):
+    """Point the Volto development server at the local Nick backend."""
+    path = cutter_result.project_path / "frontend/package.json"
+    settings = json.loads(path.read_text())
+
+    assert settings["scripts"]["start"].endswith(
+        "RAZZLE_INTERNAL_API_PATH=http://localhost:8080 "
+        "pnpm --filter @plone/volto start"
+    )
+
+
 def test_repoplone_settings(cutter_result):
     """Describe the Nick and Volto workspaces in repository.toml."""
     path = cutter_result.project_path / "repository.toml"
@@ -158,9 +172,9 @@ def test_upstream_nick_configuration(cutter_result):
     assert "@robgietema/nick" not in package_json
 
     config = (project_path / "backend/config.ts").read_text()
-    assert "database: 'nick'" in config
-    assert "user: 'nick'" in config
-    assert "password: 'nick'" in config
+    assert "database: DB_NAME || 'nick'" in config
+    assert "user: DB_USER || 'nick'" in config
+    assert "password: DB_PASSWORD || 'nick'" in config
     assert "'@plone/nick:core'" in config
     assert "'plone:default'" in config
 

@@ -21,10 +21,13 @@ ROOT_FILES = [
 BACKEND_FILES = [
     ".gitignore",
     ".prettierignore",
+    ".prettierrc",
+    "Dockerfile",
     "Makefile",
     "README.md",
     "babel.config.json",
     "config.ts",
+    "docker-compose.yml",
     "eslint.config.ts",
     "knexfile.ts",
     "mrs.developer.json",
@@ -163,9 +166,9 @@ def test_upstream_nick_configuration(cutter_result):
     assert "@robgietema/nick" not in package_json
 
     config = (project_path / "backend/config.ts").read_text()
-    assert "database: 'nick'" in config
-    assert "user: 'nick'" in config
-    assert "password: 'nick'" in config
+    assert "database: DB_NAME || 'nick'" in config
+    assert "user: DB_USER || 'nick'" in config
+    assert "password: DB_PASSWORD || 'nick'" in config
     assert "'@plone/nick:core'" in config
     assert "'plone:default'" in config
 
