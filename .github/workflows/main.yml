@@ -402,6 +402,16 @@ jobs:
         run: |
           make install
 
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
       - name: Initialize Nick database
         working-directory: ${{ env.name }}
         run: |

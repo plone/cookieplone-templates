@@ -21,6 +21,10 @@ def test_volto_nick_functional_job():
     assert job["env"]["template"] == "volto_nick"
     assert "volto-nick-functional" in workflow["jobs"]["report"]["needs"]
 
+    steps = {step.get("name"): step for step in job["steps"]}
+    assert steps["Lint generated project"]["run"].strip() == "make lint"
+    assert steps["Test generated project"]["run"].strip() == "make test"
+
     background_step = next(
         step
         for step in job["steps"]
