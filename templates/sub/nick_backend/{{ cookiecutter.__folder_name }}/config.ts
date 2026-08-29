@@ -9,29 +9,49 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const {
+  ALLOWED_ORIGINS,
+  API_RATE_LIMIT,
+  AUTH_RATE_LIMIT,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+  SECRET,
+  TRUST_PROXY,
+} = process.env;
+
 export const config = {
   connection: {
-    port: 5432,
-    host: 'localhost',
-    database: 'nick',
-    user: 'nick',
-    password: 'nick',
+    port: DB_PORT || 5432,
+    host: DB_HOST || 'localhost',
+    database: DB_NAME || 'nick',
+    user: DB_USER || 'nick',
+    password: DB_PASSWORD || 'nick',
   },
   blobs: 'file',
   blobsDir: `${__dirname}/var/blobstorage`,
+  s3: {
+    bucket: 'my-bucket-name',
+    region: 'my-region',
+    accessKeyId: 'my-access-key-id>',
+    secretAccessKey: 'my-secret-access-key',
+  },
   localesDir: `${__dirname}/src/develop/nick/locales`,
   port: 8080,
-  secret: 'secret',
+  secret: SECRET || 'secret',
   systemUsers: ['admin', 'anonymous'],
   systemGroups: ['Owner'],
   cors: {
-    allowOrigin: '*',
-    allowMethods: '*',
-    allowHeaders: '*',
+    allowOrigin: ALLOWED_ORIGINS || 'http://localhost:3000',
+    allowMethods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+    allowHeaders: 'Content-Type,Authorization,Accept',
     allowCredentials: true,
-    exposeHeaders: '*',
-    maxAge: 3660,
+    exposeHeaders: 'Content-Length,Content-Type',
+    maxAge: 3600,
   },
+  xss: { stripIgnoreTagBody: ['script'] },
   imageScales: {
     large: [768, 768],
     preview: [400, 400],
@@ -41,12 +61,17 @@ export const config = {
     icon: [32, 32],
     listing: [16, 16],
   },
+  health: {
+    long_running: 3,
+    stalled: 30,
+  },
   frontendUrl: 'http://localhost:3000',
   prefix: '',
-  userRegistration: true,
+  userRegistration: false,
   profiles: [
     '@plone/nick:core',
     /* '@plone/nick:ai', */
+    /* '@plone/nick:examplecontent', */
     '{{ cookiecutter.project_slug }}:default',
     /* '@plone/nick:multilingual', */
     /* '@plone/nick:multilingualcontent', */
@@ -63,9 +88,9 @@ export const config = {
     chunk: '1mb',
   },
   rateLimit: {
-    api: 100,
-    auth: 5,
-    trustProxy: 1,
+    api: API_RATE_LIMIT || 100,
+    auth: AUTH_RATE_LIMIT || 5,
+    trustProxy: TRUST_PROXY || 1,
   },
   recyclebin: false,
   routes: false,
@@ -77,7 +102,7 @@ export const config = {
     xkeys: false,
     purge: {
       enabled: false,
-      urls: [],
+      urls: ['http://localhost:9000'],
     },
     policies: {
       alter: {

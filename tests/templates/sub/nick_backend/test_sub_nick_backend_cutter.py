@@ -15,6 +15,9 @@ def test_creation(cookies, template_path, context: dict):
 @pytest.mark.parametrize(
     "file_path",
     [
+        ".prettierrc",
+        "Dockerfile",
+        "docker-compose.yml",
         "config.ts",
         "package.json",
         "src/events/index.ts",
@@ -33,9 +36,9 @@ def test_nick_configuration(cutter_result):
     project_path = cutter_result.project_path
 
     config = (project_path / "config.ts").read_text()
-    assert "database: 'nick'" in config
-    assert "user: 'nick'" in config
-    assert "password: 'nick'" in config
+    assert "database: DB_NAME || 'nick'" in config
+    assert "user: DB_USER || 'nick'" in config
+    assert "password: DB_PASSWORD || 'nick'" in config
 
     root_profile = (
         project_path / "src/profiles/default/documents/_root.json"
