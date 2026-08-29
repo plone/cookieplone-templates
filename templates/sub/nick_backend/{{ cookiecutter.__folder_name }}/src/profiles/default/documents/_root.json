@@ -197,7 +197,9 @@
           "type": "p"
         },
         {
-          "children": [{ "bold": true, "text": "About Plone Aurora and Plone Nick" }],
+          "children": [
+            { "bold": true, "text": "About Plone Aurora and Plone Nick" }
+          ],
           "id": "9ySLXRC2P2",
           "type": "h2"
         },
