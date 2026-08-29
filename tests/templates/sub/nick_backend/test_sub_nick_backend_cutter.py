@@ -40,6 +40,7 @@ def test_nick_configuration(cutter_result):
     root_profile = (
         project_path / "src/profiles/default/documents/_root.json"
     ).read_text()
-    assert "Welcome to Nick!" in root_profile
+    assert root_profile.startswith("{")
+    assert "Welcome to Plone Volto with Plone Nick!" in root_profile
     assert "Welcome to Plone Aurora!" not in root_profile
     assert "{%" not in root_profile

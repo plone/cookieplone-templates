@@ -45,4 +45,4 @@ def test_shared_nick_backend_selects_frontend_profile(templates_folder):
 
     assert 'cookiecutter.nick_frontend == "aurora"' in root_profile
     assert "Welcome to Plone Aurora!" in root_profile
-    assert "Welcome to Nick!" in root_profile
+    assert "Welcome to Plone Volto with Plone Nick!" in root_profile
