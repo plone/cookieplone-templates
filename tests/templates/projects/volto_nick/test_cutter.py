@@ -173,7 +173,11 @@ def test_upstream_nick_configuration(cutter_result):
     frontend_package = json.loads(
         (project_path / "frontend/package.json").read_text()
     )
-    assert "--passWithNoTests" in frontend_package["scripts"]["test"]
+    frontend_test = frontend_package["scripts"]["test"]
+    assert frontend_test.count("--passWithNoTests") == 1
+
+    frontend_makefile = (project_path / "frontend/Makefile").read_text()
+    assert "CI=1 pnpm run test --passWithNoTests" not in frontend_makefile
 
 
 def test_no_devops_scaffold(cutter_result):
