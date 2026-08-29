@@ -24,7 +24,7 @@
     "i18n": "tsx src/develop/nick/scripts/i18n.ts",
     "i18n:ci": "pnpm i18n && git diff -G'^[^\\\"POT]' --exit-code",
     "knex": "tsx ./node_modules/knex/bin/cli.js",
-    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx,json}'",
+    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 --no-error-on-unmatched-pattern 'src/**/*.{js,jsx,ts,tsx}'",
     "migrate": "pnpm knex migrate:latest",
     "prettier": "./node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,ts,tsx,json}'",
     "seed": "tsx src/develop/nick/scripts/seed.ts run",

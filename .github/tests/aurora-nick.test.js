@@ -6,7 +6,7 @@ test('Aurora renders content served by Nick', async ({ page }) => {
   expect(response).not.toBeNull();
   expect(response.ok()).toBeTruthy();
   await expect(
-    page.getByText('Welcome to Plone Aurora!').first(),
+    page.getByText('Welcome to Plone Aurora with Plone Nick!').first(),
   ).toBeVisible({
     timeout: 30_000,
   });

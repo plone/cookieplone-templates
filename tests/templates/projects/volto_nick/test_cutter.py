@@ -170,6 +170,11 @@ def test_upstream_nick_configuration(cutter_result):
     assert not (project_path / "backend/jsconfig.json").exists()
     assert not (project_path / "backend/eslint.config.mjs").exists()
 
+    frontend_package = json.loads(
+        (project_path / "frontend/package.json").read_text()
+    )
+    assert "--passWithNoTests" in frontend_package["scripts"]["test"]
+
 
 def test_no_devops_scaffold(cutter_result):
     """Keep deployment and other monorepo extras out of this template."""
