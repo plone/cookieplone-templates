@@ -6,6 +6,8 @@ test('Volto renders content served by Nick', async ({ page }) => {
   expect(response).not.toBeNull();
   expect(response.ok()).toBeTruthy();
   await expect(
-    page.getByRole('heading', { name: 'Welcome to Nick!' }),
+    page.getByRole('heading', {
+      name: 'Welcome to Plone Volto with Plone Nick!',
+    }),
   ).toBeVisible({ timeout: 30_000 });
 });

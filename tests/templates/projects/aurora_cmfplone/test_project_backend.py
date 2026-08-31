@@ -38,7 +38,7 @@ BACKEND_PACKAGE_FILES_PYTEST = [
 ]
 
 
-@pytest.mark.parametrize("filename", BACKEND_FILES)
+@pytest.mark.parametrize("filename", BACKEND_PACKAGE_FILES_PYTEST)
 def test_backend_package_files_pytest(cutter_result, filename: str):
     """Test backend files."""
     backend_folder = cutter_result.project_path / "backend"
@@ -50,6 +50,8 @@ FILES_TO_BE_REMOVED = [
     ".github",
     ".git",
     ".meta.toml",
+    "src/plonegov/ploneorgbr/profiles/uninstall",
+    "tests/setup/test_setup_uninstall.py",
 ]
 
 

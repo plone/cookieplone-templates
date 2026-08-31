@@ -24,7 +24,7 @@
     "i18n": "tsx src/develop/nick/scripts/i18n.ts",
     "i18n:ci": "pnpm i18n && git diff -G'^[^\\\"POT]' --exit-code",
     "knex": "tsx ./node_modules/knex/bin/cli.js",
-    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 'src/**/*.{js,jsx,json}'",
+    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 --no-error-on-unmatched-pattern 'src/**/*.{js,jsx,ts,tsx}'",
     "migrate": "pnpm knex migrate:latest",
     "prettier": "./node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,ts,tsx,json}'",
     "seed": "tsx src/develop/nick/scripts/seed.ts run",
@@ -33,7 +33,7 @@
     "start": "nodemon --exec 'tsx src/develop/nick/src/server.ts'",
     "rollback": "pnpm knex migrate:rollback --all",
     "reset": "pnpm rollback && pnpm migrate && pnpm seed",
-    "test": "AUTH_RATE_LIMIT=1000 jest --passWithNoTests"
+    "test": "AUTH_RATE_LIMIT=1000 vitest run --dir ./src --exclude 'develop/**' --passWithNoTests"
   },
   "engines": {
     "node": "^22 || ^24 || ^25 || ^26"
@@ -60,6 +60,7 @@
     "prettier": "3.8.1",
     "supertest": "7.2.2",
     "typescript": "5.9.3",
+    "typescript-eslint": "8.66.0",
     "vitest": "4.0.18"
   },
   "dependencies": {

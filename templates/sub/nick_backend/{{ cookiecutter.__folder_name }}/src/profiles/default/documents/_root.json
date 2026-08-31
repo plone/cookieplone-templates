@@ -1,4 +1,4 @@
-{% if cookiecutter.nick_frontend == "aurora" %}
+{% if cookiecutter.nick_frontend == "aurora" -%}
 {
   "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
   "type": "Site",
@@ -16,7 +16,7 @@
       "value": [
         {
           "blockWidth": "default",
-          "children": [{ "text": "Welcome to Plone Aurora!" }],
+          "children": [{ "text": "Welcome to Plone Aurora with Plone Nick!" }],
           "id": "7PjMKp20jt",
           "type": "title"
         },
@@ -29,7 +29,7 @@
               "type": "a",
               "url": "https://github.com/plone/aurora"
             },
-            { "text": "  site built with " },
+            { "text": " site built with " },
             {
               "children": [{ "text": "Plone Nick" }],
               "id": "sVStEFdYEb",
@@ -197,7 +197,9 @@
           "type": "p"
         },
         {
-          "children": [{ "bold": true, "text": "About Plone Aurora and Nick" }],
+          "children": [
+            { "bold": true, "text": "About Plone Aurora and Plone Nick" }
+          ],
           "id": "9ySLXRC2P2",
           "type": "h2"
         },
@@ -225,9 +227,9 @@
         { "children": [{ "text": "" }], "id": "S6PxDtaMCL", "type": "p" },
         {
           "children": [
-            { "bold": true, "text": "Nick" },
+            { "bold": true, "text": "Plone Nick" },
             {
-              "text": " is the frontend application layer used in this site. In this setup, Nick is embedded directly in the application rather than running as a separate standalone service."
+              "text": " is the frontend application layer used in this site."
             }
           ],
           "id": "qRk-6nTbgQ",
@@ -289,12 +291,12 @@
     "items": []
   }
 }
-{% else %}
+{% else -%}
 {
   "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
   "type": "Site",
-  "title": "Welcome to Nick!",
-  "description": "Congratulations! You have successfully installed Nick.",
+  "title": "Welcome to Plone Volto with Plone Nick!",
+  "description": "Congratulations! You have successfully installed Plone Volto with Plone Nick.",
   "owner": "admin",
   "workflow_state": "published",
   "created": "2022-04-02T20:00:00.000Z",
@@ -321,7 +323,7 @@
               },
               "children": [
                 {
-                  "text": "Nick"
+                  "text": "Plone Nick"
                 }
               ]
             },
@@ -335,7 +337,7 @@
               },
               "children": [
                 {
-                  "text": "Volto"
+                  "text": "Plone Volto"
                 }
               ]
             },
@@ -345,7 +347,7 @@
           ]
         }
       ],
-      "plaintext": "This is the demo site of Nick and is build with the Volto frontend."
+      "plaintext": "This is the demo site of Plone Nick and is build with the Plone Volto frontend."
     },
     "e47fdd86-5d1b-4e6c-86a4-f3edf9d74e31": {
       "@type": "slate",
@@ -368,7 +370,7 @@
           "type": "p",
           "children": [
             {
-              "text": "You can use this site to test the latest version of Nick. You can login with "
+              "text": "You can use this site to test the latest version of Plone Nick. You can login with "
             },
             {
               "type": "em",
@@ -417,7 +419,7 @@
           ]
         }
       ],
-      "plaintext": "You can use this site to test the latest version of Nick. You can login with username  admin and password  admin ."
+      "plaintext": "You can use this site to test the latest version of Plone Nick. You can login with username  admin and password  admin ."
     },
     "59ddb72e-2691-4571-b07c-eedbd843b613": {
       "@type": "slate",
@@ -444,4 +446,4 @@
     ]
   }
 }
-{% endif %}
+{% endif -%}

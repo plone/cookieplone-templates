@@ -31,6 +31,10 @@ FRONTEND_ADDON_REMOVE: list[str] = [
 
 
 POST_GEN_TO_REMOVE: dict[str, list[str]] = {
+    "backend-uninstall": [
+        "backend/src/packagename/profiles/uninstall",
+        "backend/tests/setup/test_setup_uninstall.py",
+    ],
     "devops-ansible": [
         "devops/.env_dist",
         "devops/.gitignore",
@@ -274,6 +278,13 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
         int(context.get("__backend_addon_format", 1))
     )  # {{ cookiecutter.__backend_addon_format }}
     actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "backend-uninstall"
+            ),
+            "title": "Remove project uninstall support",
+            "enabled": True,
+        },
         {
             "handler": handle_backend_cleanup,
             "title": "Backend final cleanup",

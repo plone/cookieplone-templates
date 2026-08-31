@@ -80,13 +80,13 @@ def cookieplone_root() -> dict:
     return folder.parent.resolve()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def volto_versions():
     versions = ["18.10.0", "18.0.0-alpha.27", "17.15.5", "16.31.4"]
     return versions
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def plone_versions():
     versions = [
         "6.0.0",
@@ -117,26 +117,32 @@ def plone_versions():
     return versions
 
 
-@pytest.fixture(autouse=True)
-def mock_npm_packages(monkeypatch, volto_versions):
+@pytest.fixture(scope="session", autouse=True)
+def mock_npm_packages(volto_versions):
     from cookieplone.utils import versions
 
     def get_npm_package_versions(*args, **kwargs):
         return volto_versions
 
-    monkeypatch.setattr(versions, "get_npm_package_versions", get_npm_package_versions)
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        monkeypatch.setattr(
+            versions, "get_npm_package_versions", get_npm_package_versions
+        )
+        yield
 
 
-@pytest.fixture(autouse=True)
-def mock_pypi_packages(monkeypatch, plone_versions):
+@pytest.fixture(scope="session", autouse=True)
+def mock_pypi_packages(plone_versions):
     from cookieplone.utils import versions
 
     def get_pypi_package_versions(*args, **kwargs):
         return plone_versions
 
-    monkeypatch.setattr(
-        versions, "get_pypi_package_versions", get_pypi_package_versions
-    )
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        monkeypatch.setattr(
+            versions, "get_pypi_package_versions", get_pypi_package_versions
+        )
+        yield
 
 
 @pytest.fixture(scope="session")

@@ -1,5 +1,7 @@
 """Test standalone generation of the shared Nick backend scaffold."""
 
+import json
+
 import pytest
 
 
@@ -43,6 +45,13 @@ def test_nick_configuration(cutter_result):
     root_profile = (
         project_path / "src/profiles/default/documents/_root.json"
     ).read_text()
-    assert "Welcome to Nick!" in root_profile
+    assert root_profile.startswith("{")
+    assert root_profile.endswith("}\n")
+    assert "Welcome to Plone Volto with Plone Nick!" in root_profile
     assert "Welcome to Plone Aurora!" not in root_profile
     assert "{%" not in root_profile
+
+    package = json.loads((project_path / "package.json").read_text())
+    lint = package["scripts"]["lint"]
+    assert "--no-error-on-unmatched-pattern" in lint
+    assert "src/**/*.{js,jsx,ts,tsx}" in lint

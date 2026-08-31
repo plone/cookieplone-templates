@@ -1,7 +1,7 @@
 {
   "uuid": "92a80817-f5b7-400d-8f58-b08126f0f09b",
   "type": "Site",
-  "title": "Welcome to Plone Aurora!",
+  "title": "Welcome to Plone Aurora with Plone Nick!",
   "description": "Congratulations! You have successfully installed Plone Aurora.",
   "owner": "admin",
   "workflow_state": "published",
@@ -15,7 +15,7 @@
       "value": [
         {
           "blockWidth": "default",
-          "children": [{ "text": "Welcome to Plone Aurora!" }],
+          "children": [{ "text": "Welcome to Plone Aurora with Plone Nick!" }],
           "id": "7PjMKp20jt",
           "type": "title"
         },
@@ -28,7 +28,7 @@
               "type": "a",
               "url": "https://github.com/plone/aurora"
             },
-            { "text": "  site built with " },
+            { "text": " site built with " },
             {
               "children": [{ "text": "Nick" }],
               "id": "sVStEFdYEb",
@@ -196,7 +196,9 @@
           "type": "p"
         },
         {
-          "children": [{ "bold": true, "text": "About Plone Aurora and Nick" }],
+          "children": [
+            { "bold": true, "text": "About Plone Aurora and Plone Nick" }
+          ],
           "id": "9ySLXRC2P2",
           "type": "h2"
         },
@@ -224,7 +226,7 @@
         { "children": [{ "text": "" }], "id": "S6PxDtaMCL", "type": "p" },
         {
           "children": [
-            { "bold": true, "text": "Nick" },
+            { "bold": true, "text": "Plone Nick" },
             {
               "text": " is the frontend application layer used in this site. In this setup, Nick is embedded directly in the application rather than running as a separate standalone service."
             }

@@ -21,7 +21,7 @@
 {%- if cookiecutter.__test_framework == 'jest' %}
     "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
 {%- else %}
-    "test": "pnpm --filter {{ cookiecutter.__npm_package_name }} exec vitest",
+    "test": "pnpm --filter {{ cookiecutter.__npm_package_name }} exec vitest --passWithNoTests",
 {%- endif %}
     "lint": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --max-warnings=0 'packages/**/src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "VOLTOCONFIG=$(pwd)/volto.config.js eslint --fix 'packages/**/src/**/*.{js,jsx,ts,tsx}'",

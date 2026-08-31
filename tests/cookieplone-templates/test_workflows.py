@@ -11,6 +11,27 @@ def test_main_workflow_schema(schema_validate_file):
     assert schema_validate_file(path, "github-workflow")
 
 
+def test_all_functional_jobs_run_generated_developer_commands():
+    """Exercise the generated project's day-one lint and test commands."""
+    root = Path(__file__).parents[2]
+    workflow = yaml.safe_load((root / ".github/workflows/main.yml").read_text())
+    functional_jobs = {
+        name: job
+        for name, job in workflow["jobs"].items()
+        if name.endswith("-functional") or name.endswith("-functional-prerelease")
+    }
+
+    assert functional_jobs
+    for name, job in functional_jobs.items():
+        commands = {
+            line.strip()
+            for step in job["steps"]
+            for line in step.get("run", "").splitlines()
+        }
+        assert "make lint" in commands, name
+        assert "make test" in commands, name
+
+
 def test_volto_nick_functional_job():
     """Exercise the generated Volto and Nick project together."""
     root = Path(__file__).parents[2]
@@ -20,6 +41,10 @@ def test_volto_nick_functional_job():
     assert job["services"]["postgres"]["image"] == "postgres:16"
     assert job["env"]["template"] == "volto_nick"
     assert "volto-nick-functional" in workflow["jobs"]["report"]["needs"]
+
+    steps = {step.get("name"): step for step in job["steps"]}
+    assert steps["Lint generated project"]["run"].strip() == "make lint"
+    assert steps["Test generated project"]["run"].strip() == "make test"
 
     background_step = next(
         step
