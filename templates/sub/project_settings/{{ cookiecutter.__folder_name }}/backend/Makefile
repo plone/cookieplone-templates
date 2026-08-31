@@ -153,6 +153,7 @@ i18n: $(VENV_FOLDER) ## Update locales
 .PHONY: test
 test: $(VENV_FOLDER) ## run tests
 	@uv run pytest
+  @if [ -d "src/{{ cookiecutter.python_package_name | package_path}}/tests" ]; then @uv run pytest src/{{ cookiecutter.python_package_name | package_path }}/tests; fi
 
 .PHONY: test-coverage
 test-coverage: $(VENV_FOLDER) ## run tests with coverage
