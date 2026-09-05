@@ -41,6 +41,7 @@ These are all the template options that will be prompted by the [Cookiecutter CL
 | `email`               | The email address you want to identify yourself in the project.                                                                                      | **email@example.com**         |
 | `github_organization` | Used for GitHub repositories.                                                                                                             | **collective**                |
 | `npm_package_name` | Name of the Node package, including the organization (if any). | **@plone-collective/volto-weather-block**    |
+| `aurora_version` | Aurora version to use. The latest version published on npm is presented as the default. | **1.0.0-alpha.5** |
 
 ## Code Quality Assurance 🧐
 

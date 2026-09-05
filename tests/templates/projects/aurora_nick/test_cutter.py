@@ -192,6 +192,11 @@ def test_aurora_frontend_configuration(cutter_result):
     assert "process.env.PLONE_API_PATH || 'http://localhost:8080'" in server_config
     assert not (project_path / ".github/workflows/acceptance.yml").exists()
 
+    mrs = json.loads((project_path / "frontend/mrs.developer.json").read_text())
+    assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
+    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
+    assert "branch" not in mrs["core"]
+
 
 def test_aurora_frontend_uses_pnpm_11(cutter_result):
     """Generate Aurora with its pnpm 11 workspace configuration."""

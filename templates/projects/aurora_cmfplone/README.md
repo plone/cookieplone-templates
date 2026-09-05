@@ -106,6 +106,7 @@ The table below describes the options you can customize using the [Cookiecutter 
 | `email`               | The email address to contact the project maintainer.                                                                                      | `email@example.com`         |
 | `use_prerelease_versions`  | Use pre-release versions of Plone, including alpha and beta releases.                                   | `Yes`                       |
 | `plone_version`       | Plone version to be used. This queries for the latest available Plone 6 version and presents it to you as the default value.                         | `6.0.0`                     |
+| `aurora_version`      | Aurora version to use. The latest version published on npm is presented as the default.                                                              | `1.0.0-alpha.5`             |
 | `frontend_base_version` | Plone frontend container base version used to build the Aurora image.        | `19.0.0`    |
 | `python_package_name` | Name of the Python package used to configure your project. It needs to be Python-importable, so no dashes, spaces or special characters are allowed. | `plone_site`                |
 | `frontend_addon_name`    | Name of the Aurora add-on package used to configure the frontend project. No spaces or special characters are allowed.                                | `aurora-plone-site`          |
