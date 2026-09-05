@@ -171,3 +171,13 @@ def test_pnpm_11_configuration(cutter_result):
         contents = (project_path / workflow).read_text()
         assert "npm install --global corepack@latest" in contents
         assert "corepack enable" in contents
+
+
+def test_aurora_version(cutter_result):
+    """Pin the generated Aurora checkout to the resolved npm version."""
+    project_path = cutter_result.project_path
+    mrs = json.loads((project_path / "mrs.developer.json").read_text())
+
+    assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
+    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
+    assert "branch" not in mrs["core"]

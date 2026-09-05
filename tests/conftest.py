@@ -87,6 +87,11 @@ def volto_versions():
 
 
 @pytest.fixture(scope="session")
+def aurora_versions():
+    return ["1.0.0-alpha.5", "1.0.0-alpha.6"]
+
+
+@pytest.fixture(scope="session")
 def plone_versions():
     versions = [
         "6.0.0",
@@ -118,16 +123,32 @@ def plone_versions():
 
 
 @pytest.fixture(scope="session", autouse=True)
-def mock_npm_packages(volto_versions):
+def mock_npm_packages(volto_versions, aurora_versions):
+    import requests
     from cookieplone.utils import versions
 
-    def get_npm_package_versions(*args, **kwargs):
+    class Response:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {
+                "dist-tags": {
+                    "latest": aurora_versions[0],
+                    "alpha": aurora_versions[1],
+                }
+            }
+
+    def get_npm_package_versions(package, *args, **kwargs):
+        if package == "@plone/aurora":
+            return aurora_versions
         return volto_versions
 
     with pytest.MonkeyPatch.context() as monkeypatch:
         monkeypatch.setattr(
             versions, "get_npm_package_versions", get_npm_package_versions
         )
+        monkeypatch.setattr(requests, "get", lambda *args, **kwargs: Response())
         yield
 
 

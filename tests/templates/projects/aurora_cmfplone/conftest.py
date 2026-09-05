@@ -25,7 +25,8 @@ def context(annotate_context, cookieplone_root) -> dict:
             "author": "PloneGov-BR",
             "email": "gov@plone.org.br",
             "feature_headless": True,
-            "use_prerelease_versions": "Yes",
+            # Aurora must still resolve while Plone prereleases are disabled.
+            "use_prerelease_versions": "No",
             "plone_version": PLONE_VERSION,
             "frontend_base_version": FRONTEND_BASE_VERSION,
             "python_package_name": "plonegov.ploneorgbr",

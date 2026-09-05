@@ -62,6 +62,13 @@
         "default": "aurora-{{ cookiecutter.project_slug }}",
         "validator": "cookieplone.validators.npm_package_name"
       },
+      "aurora_version": {
+        "type": "string",
+        "title": "Aurora Version",
+        "description": "Aurora frontend version to use. Automatically resolved to the latest version published on NPM.",
+        "default": "{{ '' | latest_aurora }}",
+        "validator": ""
+      },
       "nick_frontend": {
         "type": "string",
         "title": "Nick frontend",
@@ -163,7 +170,10 @@
     }
   },
   "config": {
-    "extensions": ["cookieplone.filters.unscoped_package_name"],
+    "extensions": [
+      "cookieplone.filters.unscoped_package_name",
+      "latest_aurora.latest_aurora"
+    ],
     "no_render": [
       "news/.changelog_template.jinja"
     ],
