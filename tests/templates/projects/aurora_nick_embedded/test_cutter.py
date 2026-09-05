@@ -1,5 +1,7 @@
 """Test cookiecutter generation for aurora_nick_embedded."""
 
+import json
+
 import pytest
 
 GITHUB_WORKFLOWS = [
@@ -157,3 +159,14 @@ def test_content(cutter_result, file_path: str, text: str, expected: bool):
     path = (cutter_result.project_path / file_path).resolve()
     contents = path.read_text()
     assert (text in contents) is expected
+
+
+def test_aurora_version(cutter_result):
+    """Pin the generated Aurora checkout to the resolved npm version."""
+    mrs = json.loads(
+        (cutter_result.project_path / "mrs.developer.json").read_text()
+    )
+
+    assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
+    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
+    assert "branch" not in mrs["core"]

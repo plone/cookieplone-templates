@@ -95,6 +95,11 @@ def test_aurora_frontend_configuration(cutter_result):
     assert "pnpm dlx mrs-developer" in makefile
     assert not (project / "frontend/volto.config.js").exists()
 
+    mrs = json.loads((project / "frontend/mrs.developer.json").read_text())
+    assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
+    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
+    assert "branch" not in mrs["core"]
+
 
 def test_python_backend_and_aurora_ci(cutter_result):
     """Combine the monorepo Python backend CI with Aurora frontend checks."""

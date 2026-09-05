@@ -70,6 +70,13 @@
                 "default": "{{ cookiecutter.use_prerelease_versions | latest_plone }}",
                 "validator": "cookieplone.validators.plone_version"
             },
+            "aurora_version": {
+                "type": "string",
+                "title": "Aurora Version",
+                "description": "Aurora frontend version to use. Automatically resolved to the latest version published on NPM.",
+                "default": "{{ '' | latest_aurora }}",
+                "validator": ""
+            },
             "feature_headless": {
                 "type": "boolean",
                 "title": "Use Aurora as frontend",
@@ -461,6 +468,7 @@
             "cookieplone.filters.gs_language_code",
             "cookieplone.filters.package_path",
             "cookieplone.filters.unscoped_package_name",
+            "latest_aurora.latest_aurora",
             "cookieplone.filters.latest_plone"
         ],
         "no_render": [

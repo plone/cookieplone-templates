@@ -27,6 +27,7 @@ uvx cookieplone project aurora_nick
 | `github_organization` | GitHub organization or username. | `collective` |
 | `npm_package_name` | Nick backend package name. | `plone` |
 | `frontend_addon_name` | Aurora frontend add-on package name. | `aurora-plone` |
+| `aurora_version` | Aurora version to use. The latest version published on npm is presented as the default. | `1.0.0-alpha.5` |
 
 ## Development
 
