@@ -170,7 +170,7 @@ stack-status:  ## Local Stack: Check Status
 	@docker compose -f docker-compose.yml ps
 
 .PHONY: stack-stop
-stack-stop:  ##  Local Stack: Stop Services
+stack-stop:  ## Local Stack: Stop Services
 	@echo "Stop local Docker stack"
 	@docker compose -f docker-compose.yml stop
 
