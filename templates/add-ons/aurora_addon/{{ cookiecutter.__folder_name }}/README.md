@@ -122,8 +122,9 @@ acceptance-frontend-dev-start    Start acceptance frontend in development mode
 acceptance-frontend-prod-start   Start acceptance frontend in production mode
 acceptance-backend-start         Start backend acceptance server
 ci-acceptance-backend-start      Start backend acceptance server in headless mode for CI
-acceptance-test                  Start Cypress in interactive mode
-ci-acceptance-test               Run cypress tests in headless mode for CI
+install-acceptance               Install the Playwright browsers used by the acceptance tests
+acceptance-test                  Start the acceptance tests in interactive (UI) mode
+ci-acceptance-test               Run the acceptance tests in headless mode for CI
 ```
 
 ### Development environment set up
@@ -196,7 +197,7 @@ In the second session, start the backend acceptance server.
 make acceptance-backend-start
 ```
 
-In the third session, start the Cypress interactive test runner.
+In the third session, start the acceptance test runner (Playwright UI).
 
 ```shell
 make acceptance-test
