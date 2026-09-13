@@ -35,11 +35,14 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.60.0",
     "@plone/registry": "workspace:*",
     "@plone/scripts": "workspace:*",
     "@plone/types": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "playwright": "^1.60.0",
     "release-it": "{{ versions.frontend_release_it }}",
     "typescript": "catalog:",
     "vitest": "catalog:"

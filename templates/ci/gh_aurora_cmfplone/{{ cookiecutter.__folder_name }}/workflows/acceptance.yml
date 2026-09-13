@@ -1,4 +1,4 @@
-name: Playwright Acceptance Tests
+name: Acceptance Tests
 
 on:
   workflow_call:
@@ -8,8 +8,8 @@ on:
         type: string
 
 jobs:
-  playwright-acceptance:
-    name: Playwright Acceptance
+  acceptance:
+    name: Acceptance
     runs-on: ubuntu-latest
 
     defaults:
@@ -78,7 +78,7 @@ jobs:
         if: {{ "${{ !cancelled() }}" }}
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-acceptance-report
+          name: acceptance-report
           path: |
             frontend/playwright-report
             frontend/acceptance/results

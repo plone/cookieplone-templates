@@ -41,10 +41,7 @@
     "{{ cookiecutter.__npm_package_name }}": "workspace:*"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
-    "@playwright/test": "^1.60.0",
-    "mrs-developer": "{{ versions.frontend_mrs_developer }}",
-    "playwright": "^1.60.0"
+    "mrs-developer": "{{ versions.frontend_mrs_developer }}"
   },
   "packageManager": "pnpm@{{ versions.frontend_aurora_pnpm }}"
 }
