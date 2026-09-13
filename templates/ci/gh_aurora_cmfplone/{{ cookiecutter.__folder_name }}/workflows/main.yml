@@ -83,7 +83,7 @@ jobs:
 
   playwright-acceptance:
     name: "Playwright Acceptance"
-    uses: ./.github/workflows/playwright.yml
+    uses: ./.github/workflows/acceptance.yml
     needs:
         - config
         - frontend
