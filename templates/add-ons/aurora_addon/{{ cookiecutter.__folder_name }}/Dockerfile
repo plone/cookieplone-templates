@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG AURORA_VERSION={{ cookiecutter.frontend_base_version }}
+ARG AURORA_VERSION={{ cookiecutter.aurora_version }}
 FROM plone/aurora-builder:${AURORA_VERSION} AS builder
 
 COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
