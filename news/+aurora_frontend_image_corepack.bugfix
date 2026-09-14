@@ -1,0 +1,1 @@
+Fix the Aurora frontend image build: set `CI=true` in the runtime corepack step so a `node_modules` reconcile cannot abort on a modules-purge confirmation prompt (no TTY), and give `ARG AURORA_VERSION` a default to silence the `InvalidDefaultArgInFrom` buildkit warning. @sneridagh
