@@ -1,0 +1,1 @@
+Fix the Aurora acceptance CI job timing out on a uv cache lock: disable setup-uv's shared cache so the long-lived `uv run robot-server` process no longer contends on `setup-uv-cache/.lock`. @sneridagh

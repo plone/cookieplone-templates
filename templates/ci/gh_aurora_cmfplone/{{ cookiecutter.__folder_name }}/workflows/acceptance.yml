@@ -29,6 +29,13 @@ jobs:
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
+        with:
+          # The acceptance backend runs as a long-lived `uv run robot-server`
+          # process that holds a lock on uv's cache for its whole lifetime.
+          # setup-uv's shared, restored cache turns that into a `.lock`
+          # contention that times out ("another uv process running?"), so keep
+          # uv on its default (non-shared) cache for this job.
+          enable-cache: false
 
       - name: Get pnpm store directory
         shell: bash

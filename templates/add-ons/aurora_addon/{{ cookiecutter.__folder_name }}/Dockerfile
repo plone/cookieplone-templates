@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG AURORA_VERSION
+ARG AURORA_VERSION={{ cookiecutter.aurora_version }}
 FROM plone/aurora-builder:${AURORA_VERSION} AS builder
 
 COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
@@ -32,6 +32,10 @@ COPY --from=builder /app/ /app/
 
 RUN <<EOT
     set -e
+    # CI=true keeps corepack/pnpm non-interactive: if it decides to reconcile the
+    # copied node_modules it must not block on a modules-purge confirmation
+    # prompt (there is no TTY during the image build).
+    export CI=true
     corepack enable pnpm
     corepack use pnpm@{{ versions.frontend_aurora_pnpm }}
     corepack prepare pnpm@{{ versions.frontend_aurora_pnpm }} --activate
