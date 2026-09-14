@@ -44,7 +44,7 @@ jobs:
     outputs:
       matrix: ${{ steps.collect.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: collect
         name: "Collect templates from cookieplone-config.json"
         run: |
@@ -76,7 +76,7 @@ jobs:
       name: "collective.addon"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Generate
         uses: ./.github/actions/generate
@@ -118,10 +118,10 @@ jobs:
       name: "volto-add-on"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.node-version }}
 
@@ -237,10 +237,10 @@ jobs:
       name: "volto-add-on"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js ${{ env.node-version-prerelease }}
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.node-version-prerelease }}
 
@@ -371,10 +371,10 @@ jobs:
           --health-retries 5
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.node-version }}
 
@@ -478,10 +478,10 @@ jobs:
           --health-retries 5
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.node-version }}
 
@@ -569,10 +569,10 @@ jobs:
       python-version: "3.13"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.node-version }}
 
