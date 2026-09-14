@@ -85,7 +85,7 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: Restore uv cache
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: ${{ env.UV_CACHE_DIR }}
           key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'templates/add-ons/backend/collective.addon/pyproject.toml') }}
@@ -141,7 +141,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v5.0.5
+      - uses: actions/cache@v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -151,7 +151,7 @@ jobs:
 
       - name: Cache Cypress Binary
         id: cache-cypress-binary
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.cache/Cypress
           key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
@@ -261,7 +261,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v5.0.5
+      - uses: actions/cache@v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -271,7 +271,7 @@ jobs:
 
       - name: Cache Cypress Binary
         id: cache-cypress-binary
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.cache/Cypress
           key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
@@ -394,7 +394,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
 
-      - uses: actions/cache@v5.0.5
+      - uses: actions/cache@v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -501,7 +501,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
 
-      - uses: actions/cache@v5.0.5
+      - uses: actions/cache@v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -592,7 +592,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
 
-      - uses: actions/cache@v5.0.5
+      - uses: actions/cache@v6.1.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
