@@ -1,1 +1,0 @@
-Remove README sections that belong to cookieplone. @ksuess
