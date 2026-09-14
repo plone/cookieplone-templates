@@ -10,15 +10,17 @@ env:
 
 jobs:
   build:
+    # Dependabot pull requests, and those labeled "skip changelog", need no news fragment
+    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' && !contains(github.event.pull_request.labels.*.name, 'skip changelog') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Fetch all history
           fetch-depth: '0'
 
       - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v8.0.0
+        uses: astral-sh/setup-uv@v10.1.0
         with:
           python-version: ${{ env.python-version }}
           cache-suffix: changelog-${{ env.python-version }}

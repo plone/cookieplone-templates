@@ -1,0 +1,1 @@
+Skipped the change log check for pull requests labeled `skip changelog` and for Dependabot pull requests, which now get that label. @ericof

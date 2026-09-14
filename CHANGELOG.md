@@ -10,6 +10,81 @@
 
 <!-- towncrier release notes start -->
 
+## 20260914.1 (2026-09-14)
+
+
+### New features:
+
+- Migrated the `projects/monorepo` template to the cookieplone v2 schema (`cookieplone.json`), declaring validators inline, sourcing version pins from the repository-level `cookieplone-config.json`, and converting boolean choice fields (`use_prerelease_versions`, `devops_cache`, `devops_ansible`, `devops_gha_deploy`, `initialize_documentation`) to native `boolean` properties. @ericof [#359](https://github.com/plone/cookieplone-templates/issues/359)
+- Migrated `add-ons/monorepo` and `sub/addon_settings` templates to cookieplone v2 schema. @ericof [#362](https://github.com/plone/cookieplone-templates/issues/362)
+- Migrated CI templates (`gh_backend_addon`, `gh_frontend_addon`, `gh_monorepo_addon`, `gh_project`, `gh_classic_project`) to the cookieplone v2 schema. @ericof [#364](https://github.com/plone/cookieplone-templates/issues/364)
+- Migrated `agents/instructions` and `ide/vscode` templates to the cookieplone v2 schema. @ericof [#365](https://github.com/plone/cookieplone-templates/issues/365)
+- Migrated `sub/cache`, `sub/frontend_project`, `sub/project_settings`, and `sub/classic_project_settings` templates to the cookieplone v2 schema. @ericof [#366](https://github.com/plone/cookieplone-templates/issues/366)
+- Migrated `devops/ansible` template to the cookieplone v2 schema. @ericof [#367](https://github.com/plone/cookieplone-templates/issues/367)
+- Migrated `docs/starter` template to the cookieplone v2 schema. @ericof [#368](https://github.com/plone/cookieplone-templates/issues/368)
+- Migrated `add-ons/backend`, `add-ons/frontend`, and `add-ons/seven_addon` templates to the cookieplone v2 schema. @ericof [#369](https://github.com/plone/cookieplone-templates/issues/369)
+- Migrated `projects/classic` template to the cookieplone v2 schema. @ericof [#370](https://github.com/plone/cookieplone-templates/issues/370)
+- Use both the README and the CHANGELOG for the rendered version of the README for pypi @erral [#387](https://github.com/plone/cookieplone-templates/issues/387)
+- Bumped cookieplone to 2.0.0b3 and adopted the built-in post-generation summary screen, configurable via `config.summary` in `cookieplone-config.json`. @ericof [#411](https://github.com/plone/cookieplone-templates/issues/411)
+- Upgrade `config.versions.devops_db_version` to 18, and fix volume mappings @ericof [#418](https://github.com/plone/cookieplone-templates/issues/418)
+- Upgrade `config.versions.gha_version_cache` to v6, `config.versions.gha_version_checkout` to v7,  `config.versions.gha_version_node` to 24, `config.versions.gha_version_pages_deploy` to v4.8.0, `config.versions.gha_version_setup_node` to v6.4.0,`config.versions.gha_version_upload_artifact` to v7.0.1  @ericof [#418](https://github.com/plone/cookieplone-templates/issues/418)
+- Upgrade `config.versions.devops_varnish_version` to 8.0. @ericof [#418](https://github.com/plone/cookieplone-templates/issues/418)
+- Upgrade `config.versions.devops_traefik_version` to v3.7 and fix label annotations in stack files. @ericof [#418](https://github.com/plone/cookieplone-templates/issues/418)
+- Upgrade `config.versions.backend_python` to 3.14 @ericof [#418](https://github.com/plone/cookieplone-templates/issues/418)
+- Refine descriptions in user dialog. @ksuess [#425](https://github.com/plone/cookieplone-templates/issues/425)
+- Remove README sections that belong to cookieplone. @ksuess [#426](https://github.com/plone/cookieplone-templates/issues/426)
+- Recommend the `ms-python.vscode-python-envs` VSCode extension and set a default for `python-envs.workspaceSearchPaths` pointing at the backend virtual environment. @ericof [#428](https://github.com/plone/cookieplone-templates/issues/428)
+- Ship the towncrier changelog template inside each generated codebase, unify the towncrier settings and news fragment types across backend, frontend and project codebases, and simplify the Changelog GitHub Actions workflows, which no longer install the frontend toolchain just to check for news fragments. @ericof [#429](https://github.com/plone/cookieplone-templates/issues/429)
+- Compute a `storybook-deploy` flag in the CI `config` workflow (deploy only for public repositories) and pass it through to the storybook job, instead of always deploying. @ericof [#430](https://github.com/plone/cookieplone-templates/issues/430)
+- Add a Playwright acceptance test setup to the Aurora frontend add-on template (``acceptance/`` harness with a backend reset fixture, login/content/accessibility helpers and homepage/content tests, plus ``Makefile`` targets and ``package.json`` scripts), and wire it into the ``aurora_cmfplone`` project with an ``acceptance.yml`` GitHub Actions workflow and root ``Makefile`` targets. 
+- Add an ``aurora_cmfplone`` project template combining an Aurora frontend with a Python CMFPlone backend, monorepo tooling, GitHub Actions, and functional integration coverage. 
+- Added GitHub Actions for generated Volto projects using Nick as backend, including backend, frontend, and changelog checks. @sneridagh 
+- Added `min_version` configuration to `cookieplone-config.json`. @ericof 
+- Added `renderer` configuration to `cookieplone-config.json`. @ericof 
+- Added a Plone Aurora project template using Nick as backend, with dedicated GitHub Actions, generation tests, and an Aurora/Nick functional test. @sneridagh 
+- Added a user-facing Aurora version parameter, resolved from the latest @plone/aurora release on npm, and used it to pin Aurora in mrs.developer.json. 
+- Flexible docker image name generation depending on the container registry. 
+- In the project template, ask the "Support headless Plone?" question earlier and skip Volto-specific questions (version and addon name) if Classic UI is selected. 
+- Restructured the `volto_nick` project as a monorepo with the Nick server in `backend`, a Volto 19 workspace in `frontend`, and root-level project and repoplone configuration. @sneridagh 
+- Unify monorepo and classic templates into a single source of truth, using the `feature_headless` flag to toggle between architectures. 
+
+
+### Bug fixes:
+
+- Fixed `make format` and `make lint` on the `next` branch so they no longer fail with `Failed to spawn: ruff` on a freshly synced project environment. The top-level `Makefile` now invokes Ruff via `uvx ruff` instead of `uv run ruff`, avoiding the need for Ruff to be declared as a project dependency. @ericof [#374](https://github.com/plone/cookieplone-templates/issues/374)
+- Fixed `Dockerfile.acceptance` in project @sneridagh [#416](https://github.com/plone/cookieplone-templates/issues/416)
+- Removed the trailing registry separator from `__container_image_prefix`, fixing the duplicated dash it produced in container image names consumed by the plone/meta GitHub Actions. The separator is now applied only where needed (Makefiles, stack files, and docs). @ericof [#421](https://github.com/plone/cookieplone-templates/issues/421)
+- Fixed the storybook job in the reusable `frontend.yml` workflows to read `node-version` from `inputs` instead of a non-existent `config` job output. @ericof [#431](https://github.com/plone/cookieplone-templates/issues/431)
+- Generate `dependabot.yml` under `.github`, where GitHub reads it from, instead of the root of the codebase, where it was ignored. The file now ships with every template under `templates/ci`, so every codebase with a CI configuration gets a working Dependabot configuration. @ericof [#436](https://github.com/plone/cookieplone-templates/issues/436)
+- Fix the Aurora acceptance CI job timing out on a uv cache lock: disable setup-uv's shared cache so the long-lived `uv run robot-server` process no longer contends on `setup-uv-cache/.lock`. @sneridagh 
+- Fix the Aurora frontend image build: set `CI=true` in the runtime corepack step so a `node_modules` reconcile cannot abort on a modules-purge confirmation prompt (no TTY), and give `ARG AURORA_VERSION` a default to silence the `InvalidDefaultArgInFrom` buildkit warning. @sneridagh 
+- Fixed per-template `Makefile`s to invoke Ruff via `uvx ruff` instead of `uv run ruff`, so that recursive `make format_templates` calls no longer fail on a freshly synced environment when Ruff is not declared as a project dependency. @ericof 
+- Fixed the name of the nick database parameters in generated `config.ts`. @sneridagh 
+
+
+### Internal:
+
+- Installed cookieplone from main branch, replacing pytest-cookies dependency. @ericof [#357](https://github.com/plone/cookieplone-templates/issues/357)
+- Use cookieplone 2.0.0a2 as default dependency. @ericof [#383](https://github.com/plone/cookieplone-templates/issues/383)
+- Updated GitHub Actions pins in `.github/workflows/` and `.github/actions/` to use current releases: `actions/checkout@v6`, `actions/cache@v5.0.5`, `actions/setup-node@v6.3.0`, `astral-sh/setup-uv@v8.0.0`, `JarvusInnovations/background-action@v1.0.7`. Switched the `setup_python` composite action to rely on `setup-uv`'s built-in caching (`enable-cache: true` + `cache-suffix`) instead of a manual `actions/cache` block. Derived the `test-template` job matrix in `main.yml` dynamically from `cookieplone-config.json` via `.scripts/list_templates.py`. @ericof [#385](https://github.com/plone/cookieplone-templates/issues/385)
+- Replaced the remaining `pipx` usages with `uvx` across templates (release-it hooks, changelog workflows, and docs), so generated projects rely consistently on `uv`. @ericof [#423](https://github.com/plone/cookieplone-templates/issues/423)
+- Added a Dependabot configuration to this repository, so the GitHub Actions used by its own workflows and composite actions are kept up to date. @ericof [#437](https://github.com/plone/cookieplone-templates/issues/437)
+- Added `.scripts/list_templates.py`, a helper that reads `cookieplone-config.json` and emits the list of templates either as bare paths (for `make` consumption) or as a JSON matrix (for GitHub Actions). Replaced the hardcoded `TOP_LEVEL_TEMPLATES` / `SUB_TEMPLATES` variables in the top-level `Makefile` with a single `TEMPLATES` list derived from the new script, so `make format_templates` no longer drifts from the canonical template list. @ericof 
+- Declared catalog-managed i18next as a peer dependency in generated Aurora add-ons to keep react-i18next instances unified. @sneridagh 
+- Ensured every template ships a `hooks/pre_prompt.py` with a `MIN_COOKIEPLONE = "2.0.0a2"` version gate. Earlier Cookieplone releases (< 2.0.0a2) do not honor the `config.min_version` field in `cookieplone-config.json`, so templates would have silently run with an incompatible CLI. Bumped the `MIN_COOKIEPLONE` constant from `1.9.9` to `2.0.0a2` on the four pre-existing hooks, and added minimal version-check hooks to the twelve templates that lacked one. @ericof 
+- Refactored all `post_gen_project.py` hooks to use the new `cookieplone.utils.post_gen` (`run_post_gen_actions`, `remove_files_by_key`, `move_files`, `run_make_format`, `initialize_git_repository`) and `cookieplone.utils.subtemplates.run_subtemplates` utilities introduced in cookieplone 2.0.0a2. Removed custom `run_actions` loops and `globals()`-based subtemplate dispatch. Propagated `global_versions=versions` to all subtemplate generation calls. @ericof 
+- Renamed the `seven_addon` template to `aurora_addon`. Kept the original `seven_addon` for backwards compatibility. @sner 
+- Updated functional CI jobs to `JarvusInnovations/background-action@v2` for the Node.js 24 action runtime. @sneridagh 
+- Updated the Aurora add-on and Aurora with Nick templates to use pnpm 11.20.0 reproducibly through Corepack. @sneridagh 
+- Upgrade cookieplone to version 2.0.0b2. @ericof 
+- Use one shared Nick backend subtemplate for the Volto and Aurora Nick project templates. @sneridagh 
+
+
+### Tests
+
+- Added a functional CI job that generates and installs `volto_nick`, initializes and runs Nick with Volto, and verifies their integration through Playwright. @sneridagh 
+- Added a test suite for the `volto_nick` project template, covering generation, variable substitution, generated file layout, and JSON-schema validation. @ericof 
+
 ## 20260810.1 (2026-08-10)
 
 
