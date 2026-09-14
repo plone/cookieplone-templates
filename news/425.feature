@@ -1,0 +1,1 @@
+Refine descriptions in user dialog. @ksuess

@@ -1,7 +1,5 @@
 """Test cookieplone generation."""
 
-import json
-
 import pytest
 
 
@@ -38,10 +36,48 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
         ["settings.json", True],
     ],
 )
-def test_created_files(cutter_result, file_path: str, exists: bool):
+def test_created_files(cutter_result, load_json, file_path: str, exists: bool):
     path = (cutter_result.project_path / file_path).resolve()
     assert path.exists() is exists
     if exists:
         assert path.is_file()
-        content = json.loads(path.read_text())  # valid JSON
+        content = load_json(path)  # valid JSON
         assert isinstance(content, dict)
+
+
+EXTENSIONS = [
+    ["extensions.json", f"recommendations/{idx}", extension]
+    for idx, extension in enumerate([
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "ms-python.vscode-python-envs",
+        "ExecutableBookProject.myst-highlight",
+        "ms-vscode-remote.remote-containers",
+        "redhat.vscode-yaml",
+        "editorconfig.editorconfig",
+        "github.vscode-github-actions",
+        "plone.plone-vs-utilities",
+    ])
+]
+
+
+@pytest.mark.parametrize(
+    "file_path,path,expected",
+    [
+        [
+            "launch.json",
+            "configurations/0/program",
+            "${workspaceFolder}/.venv/bin/runwsgi",
+        ],
+        ["launch.json", "configurations/0/cwd", "${workspaceFolder}/"],
+        ["settings.json", "python.testing.pytestArgs/0", "./tests"],
+        ["settings.json", "python-envs.workspaceSearchPaths/0", "./.venv"],
+        *EXTENSIONS,
+    ],
+)
+def test_settings(
+    cutter_result, load_json, traverse, file_path: str, path: str, expected: str
+):
+    data = load_json((cutter_result.project_path / file_path).resolve())  # valid JSON
+    result = traverse(data, path)
+    assert result == expected

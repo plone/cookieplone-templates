@@ -1,0 +1,199 @@
+name: "Compute Config variables"
+
+on:
+  workflow_call:
+    inputs:
+{%- if cookiecutter.feature_headless %}
+      node-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.node_version }}.x"
+{%- endif %}
+      python-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.python_version }}"
+    outputs:
+      acceptance:
+        description: "Flag reporting if we should run the acceptance jobs"
+        value: {{ "${{ jobs.config.outputs.acceptance }}" }}
+      backend:
+        description: "Flag reporting if we should run the backend jobs"
+        value: {{ "${{ jobs.config.outputs.backend }}" }}
+      cache:
+        description: "Flag reporting if we should run the cache jobs"
+        value: {{ "${{ jobs.config.outputs.cache }}" }}
+      devops:
+        description: "Flag reporting if we should run the devops jobs"
+        value: {{ "${{ jobs.config.outputs.devops }}" }}
+      docs:
+        description: "Flag reporting if we should run the docs jobs"
+        value: {{ "${{ jobs.config.outputs.docs }}" }}
+{%- if cookiecutter.feature_headless %}
+      frontend:
+        description: "Flag reporting if we should run the frontend jobs"
+        value: {{ "${{ jobs.config.outputs.frontend }}" }}
+{%- endif %}
+      base-tag:
+        description: "Base tag to be used when creating container images"
+        value: {{ "${{ jobs.config.outputs.base-tag }}" }}
+      image-name-prefix:
+        description: "Image name prefix for container images"
+        value: {{ "${{ jobs.config.outputs.image-name-prefix }}" }}
+{%- if cookiecutter.feature_headless %}
+      node-version:
+        description: "Node version to be used"
+        value: {{ "${{ inputs.node-version }}" }}
+{%- endif %}
+      python-version:
+        description: "Python version to be used"
+        value: {{ "${{ inputs.python-version }}" }}
+      plone-version:
+        description: "Plone version to be used"
+        value: {{ "${{ jobs.config.outputs.plone-version }}" }}
+{%- if cookiecutter.feature_headless %}
+      frontend-base-version:
+        description: "Plone frontend container base version to be used"
+        value: {{ "${{ jobs.config.outputs.frontend-base-version }}" }}
+{%- endif %}
+      path-backend:
+        description: "Path to the backend package"
+        value: {{ "${{ jobs.config.outputs.path-backend }}" }}
+{%- if cookiecutter.feature_headless %}
+      path-frontend:
+        description: "Path to the frontend package"
+        value: {{ "${{ jobs.config.outputs.path-frontend }}" }}
+{%- endif %}
+      path-root:
+        description: "Path to the root of the repository"
+        value: {{ "${{ jobs.config.outputs.path-root }}" }}
+      changelog-backend:
+        description: "Flag reporting if we should run changelog jobs for the backend"
+        value: {{ "${{ jobs.config.outputs.changelog-backend }}" }}
+{%- if cookiecutter.feature_headless %}
+      changelog-frontend:
+        description: "Flag reporting if we should run changelog jobs for the frontend"
+        value: {{ "${{ jobs.config.outputs.changelog-frontend }}" }}
+{%- endif %}
+      changelog-repository:
+        description: "Flag reporting if we should run changelog jobs for the repository"
+        value: {{ "${{ jobs.config.outputs.changelog-repository }}" }}
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}
+      backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      cache: {{ "${{ steps.filter.outputs.cache }}" }}
+      devops: {{ "${{ steps.filter.outputs.devops }}" }}
+      docs: {{ "${{ steps.filter.outputs.docs }}" }}
+{%- if cookiecutter.feature_headless %}
+      frontend: {{ "${{ steps.filter.outputs.frontend }}" }}
+{%- endif %}
+      base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
+      image-name-prefix: {{ "${{ steps.vars.outputs.image-name-prefix }}" }}
+      plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}
+{%- if cookiecutter.feature_headless %}
+      frontend-base-version: {{ "${{ steps.vars.outputs.frontend-base-version }}" }}
+{%- endif %}
+      path-backend: {{ "${{ steps.vars.outputs.path-backend }}" }}
+{%- if cookiecutter.feature_headless %}
+      path-frontend: {{ "${{ steps.vars.outputs.path-frontend }}" }}
+{%- endif %}
+      path-root: {{ "${{ steps.vars.outputs.path-root }}" }}
+      changelog-backend: {{ "${{ steps.filter.outputs.changelog-backend }}" }}
+{%- if cookiecutter.feature_headless %}
+      changelog-frontend: {{ "${{ steps.filter.outputs.changelog-frontend }}" }}
+{%- endif %}
+      changelog-repository: {{ "${{ steps.filter.outputs.changelog-repository }}" }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+
+      - name: Setup uv
+        uses: plone/meta/.github/actions/setup_uv@{{ versions.gha_version_plone_meta }}
+        with:
+          python-version: {{ "${{ inputs.python-version }}" }}
+          working-directory: '.'
+
+      - name: Compute several vars needed for the CI
+        id: vars
+        shell: bash
+        run: |
+          REPOSITORY_SETTINGS="$(uvx repoplone settings dump)"
+          # `repoplone` reports absolute paths, but the checks need them
+          # relative to the repository root.
+          ROOT="$(jq -r '.root_path' <<< "$REPOSITORY_SETTINGS")"
+          echo "image-name-prefix=$(jq -r '.container_images_prefix' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
+          {%- if cookiecutter.feature_headless %}
+          echo "frontend-base-version={{ cookiecutter.frontend_base_version }}" >> "$GITHUB_OUTPUT"
+          {%- endif %}
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "path-backend=$(jq -r '.backend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"
+          {%- if cookiecutter.feature_headless %}
+          echo "path-frontend=frontend/packages/{{ cookiecutter.frontend_addon_name }}" >> "$GITHUB_OUTPUT"
+          {%- endif %}
+          echo "path-root=." >> "$GITHUB_OUTPUT"
+
+      - uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
+        id: filter
+        with:
+          filters: |
+            acceptance:
+              - '.github/workflows/*'
+              - 'backend/**'
+              {%- if cookiecutter.feature_headless %}
+              - 'frontend/**'
+              {%- endif %}
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend*'
+            cache:
+              - 'devops/varnish/**'
+              - '.github/workflows/varnish*'
+            devops:
+              - 'devops/**'
+            docs:
+              - '.readthedocs.yaml'
+              - 'docs/**'
+              - '.github/workflows/docs.yaml'
+            {%- if cookiecutter.feature_headless %}
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/frontend*'
+            {%- endif %}
+            changelog-backend:
+              - 'backend/**'
+            {%- if cookiecutter.feature_headless %}
+            changelog-frontend:
+              - 'frontend/**'
+            {%- endif %}
+            changelog-repository:
+              - '.github/**'
+              - '.vscode/**'
+              - 'devops/**'
+              - 'docs/**'
+              - 'docker-compose.yml'
+              - 'README.md'
+
+      - name: Test vars
+        run: |
+          echo "base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}"
+          echo 'image-name-prefix: {{ "${{ steps.vars.outputs.image-name-prefix }}" }}'
+          echo 'plone-version: {{ "${{ steps.vars.outputs.plone-version }}" }}'
+{%- if cookiecutter.feature_headless %}
+          echo 'frontend-base-version: {{ "${{ steps.vars.outputs.frontend-base-version }}" }}'
+{%- endif %}
+          echo 'event-name: {{ "${{ github.event_name }}" }}'
+          echo 'Paths - acceptance: {{ "${{ steps.filter.outputs.acceptance }}" }}'
+          echo 'Paths - backend: {{ "${{ steps.filter.outputs.backend }}" }}'
+          echo 'Paths - cache: {{ "${{ steps.filter.outputs.cache }}" }}'
+          echo 'Paths - devops: {{ "${{ steps.filter.outputs.devops }}" }}'
+          echo 'Paths - docs: {{ "${{ steps.filter.outputs.docs }}" }}'
+{%- if cookiecutter.feature_headless %}
+          echo 'Paths - frontend: {{ "${{ steps.filter.outputs.frontend }}" }}'
+{%- endif %}

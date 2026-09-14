@@ -12,6 +12,7 @@ inputs:
     description: 'Use prerelease versions (frontend templates only)'
     required: false
     default: 'No'
+
 runs:
   using: "composite"
   steps:

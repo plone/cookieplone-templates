@@ -1,40 +1,48 @@
 """Post generation hook."""
 
 from collections import OrderedDict
-from copy import deepcopy
 from pathlib import Path
 
-from cookieplone.utils import console, files
+from cookieplone.utils import post_gen
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
-
-def handle_remove_files(context: OrderedDict, output_dir: Path):
-    files_to_remove = [
-        "backend/mx.ini",
+POST_GEN_TO_REMOVE = {
+    "unnecessary": [
         "backend/src/packagename/profiles/uninstall",
         "backend/tests/setup/test_setup_uninstall.py",
+    ],
+    "classic": [
+        "frontend",
+    ],
+}
+
+
+def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
+    """Return action handlers."""
+    feature_headless = bool(context.get("feature_headless", True))
+    actions: list[post_gen.PostGenAction] = [
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "unnecessary"),
+            "title": "Remove unnecessary files",
+            "enabled": True,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(POST_GEN_TO_REMOVE, "classic"),
+            "title": "Remove frontend files for Classic UI",
+            "enabled": not feature_headless,
+        },
     ]
-    output_dir = output_dir
-    files.remove_files(output_dir, files_to_remove)
+    return actions
 
 
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    actions = [
-        [
-            handle_remove_files,
-            "Remove unnecessary files",
-            True,
-        ],
-    ]
-    for func, title, enabled in actions:
-        if not int(enabled):
-            continue
-        new_context = deepcopy(context)
-        console.print(f" -> {title}")
-        func(new_context, output_dir)
+
+    # Action handlers
+    post_gen.run_post_gen_actions(context, output_dir, action_handlers(context))
 
 
 if __name__ == "__main__":

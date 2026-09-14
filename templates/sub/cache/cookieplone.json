@@ -1,0 +1,59 @@
+{
+    "id": "sub/cache",
+    "schema": {
+        "title": "Subtemplate: Cache",
+        "description": "Varnish caching layer configuration for a Plone project.",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Project Title",
+                "default": "Project Title",
+                "validator": "",
+                "format": "computed"
+            },
+            "project_slug": {
+                "type": "string",
+                "title": "Project Slug",
+                "default": "{{ cookiecutter.title | slugify }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "default": "Plone Foundation",
+                "validator": "",
+                "format": "computed"
+            },
+            "email": {
+                "type": "string",
+                "title": "Author E-mail",
+                "default": "collective@plone.org",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "{{ cookiecutter.project_slug }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.extract_host",
+            "cookieplone.filters.image_prefix"
+        ],
+        "no_render": []
+    }
+}

@@ -4,7 +4,7 @@
 .galaxy_install_info
 .Python
 .vagrant
-.vault_pass.txt
+.vault_pass
 *.retry
 etc/keys/*
 !etc/keys/.gitkeep

@@ -24,7 +24,7 @@ author = "{{ cookiecutter.author }}"
 trademark_name = "{{ cookiecutter.github_organization }}"
 now = datetime.now()
 year = str(now.year)
-copyright = year
+copyright = year  # noqa: A001
 
 
 # The version info for the project you're documenting, acts as replacement for
@@ -101,7 +101,8 @@ linkcheck_ignore = [
     # Ignore other specific anchors
 ]
 linkcheck_allowed_redirects = {  # TODO: Confirm usage of linkcheck_allowed_redirects
-    # All HTTP redirections from the source URI to the canonical URI will be treated as "working".
+    # Treat all HTTP redirections from the source URI to the canonical URI as
+    # working.
 }
 linkcheck_anchors = True
 linkcheck_timeout = 5
@@ -131,7 +132,8 @@ suppress_warnings = []
 html_theme = "plone_sphinx_theme"  # This can be configured
 html_logo = "_static/logo.svg"
 html_favicon = "_static/favicon.ico"
-# The default value includes icon-links, so override it with that one omitted, and add it to html_theme_options[footer_content_items].
+# The default value includes icon-links. Override it with that item omitted,
+# then add it to html_theme_options[footer_content_items].
 html_sidebars = {
     "**": [
         "navbar-logo",
@@ -141,8 +143,10 @@ html_sidebars = {
 }
 html_theme_options = {
     "article_header_start": ["toggle-primary-sidebar"],
-    # "extra_footer": """<p>Example `extra_footer` content. License info. Trademark info and usage.</p>
-    # <p>Pull request previews by <a href="https://readthedocs.org/">Read the Docs</a>.</p>""",
+    # "extra_footer": (
+    #     "<p>Example `extra_footer` content. License and trademark info.</p>"
+    #     '<p>PR previews by <a href="https://readthedocs.org/">RTD</a>.</p>'
+    # ),
     "footer_content_items": [
         "author",
         "copyright",
@@ -247,7 +251,7 @@ sitemap_filename = "sitemap-custom.xml"
 myst_enable_extensions = [
     "attrs_block",  # Support parsing of block attributes.
     "attrs_inline",  # Support parsing of inline attributes.
-    "colon_fence",  # You can also use ::: delimiters to denote code fences, instead of ```.
+    "colon_fence",  # Use ::: delimiters for code fences instead of ```.
     "deflist",  # Support definition lists. https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#definition-lists
     "html_image",  # For inline images. See https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#html-images
     "linkify",  # Identify "bare" web URLs and add hyperlinks.

@@ -15,7 +15,7 @@ jobs:
 
   build:
     name: "Docs: Build"
-    uses: plone/meta/.github/workflows/docs-build.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/docs-build.yml@{{ versions.gha_version_plone_meta }}
     with:
       python-version: {{ "${{ inputs.python-version }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}

@@ -1,0 +1,161 @@
+/**
+ * Config
+ * @module config
+ */
+
+// External imports
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const {
+  ALLOWED_ORIGINS,
+  API_RATE_LIMIT,
+  AUTH_RATE_LIMIT,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+  SECRET,
+  TRUST_PROXY,
+} = process.env;
+
+export const config = {
+  connection: {
+    port: DB_PORT || 5432,
+    host: DB_HOST || 'localhost',
+    database: DB_NAME || 'nick',
+    user: DB_USER || 'nick',
+    password: DB_PASSWORD || 'nick',
+  },
+  blobs: 'file',
+  blobsDir: `${__dirname}/var/blobstorage`,
+  s3: {
+    bucket: 'my-bucket-name',
+    region: 'my-region',
+    accessKeyId: 'my-access-key-id>',
+    secretAccessKey: 'my-secret-access-key',
+  },
+  localesDir: `${__dirname}/src/develop/nick/locales`,
+  port: 8080,
+  secret: SECRET || 'secret',
+  systemUsers: ['admin', 'anonymous'],
+  systemGroups: ['Owner'],
+  cors: {
+    allowOrigin: ALLOWED_ORIGINS || 'http://localhost:3000',
+    allowMethods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+    allowHeaders: 'Content-Type,Authorization,Accept',
+    allowCredentials: true,
+    exposeHeaders: 'Content-Length,Content-Type',
+    maxAge: 3600,
+  },
+  xss: { stripIgnoreTagBody: ['script'] },
+  imageScales: {
+    large: [768, 768],
+    preview: [400, 400],
+    mini: [200, 200],
+    thumb: [128, 128],
+    tile: [64, 64],
+    icon: [32, 32],
+    listing: [16, 16],
+  },
+  health: {
+    long_running: 3,
+    stalled: 30,
+  },
+  frontendUrl: 'http://localhost:3000',
+  prefix: '',
+  userRegistration: false,
+  profiles: [
+    '@plone/nick:core',
+    /* '@plone/nick:ai', */
+    /* '@plone/nick:examplecontent', */
+    '{{ cookiecutter.project_slug }}:default',
+    /* '@plone/nick:multilingual', */
+    /* '@plone/nick:multilingualcontent', */
+  ],
+  push: {
+    enabled: false,
+    user: 'admin',
+    password: 'admin',
+    url: 'https://somehost/push',
+  },
+  requestLimit: {
+    api: '1mb',
+    files: '10mb',
+    chunk: '1mb',
+  },
+  rateLimit: {
+    api: API_RATE_LIMIT || 100,
+    auth: AUTH_RATE_LIMIT || 5,
+    trustProxy: TRUST_PROXY || 1,
+  },
+  recyclebin: false,
+  routes: false,
+  tasks: false,
+  cache: {
+    enabled: false,
+    anonymousOnly: true,
+    etag: false,
+    xkeys: false,
+    purge: {
+      enabled: false,
+      urls: ['http://localhost:9000'],
+    },
+    policies: {
+      alter: {
+        method: 'no-cache',
+      },
+      manage: {
+        method: 'no-cache',
+      },
+      content: {
+        method: 'no-cache',
+      },
+      dynamic: {
+        method: 'public',
+        maxAge: 10,
+        sMaxAge: 0,
+      },
+      resource: {
+        method: 'public',
+        maxAge: 86400,
+        sMaxAge: 0,
+      },
+      stable: {
+        method: 'public',
+        maxAge: 31536000,
+        sMaxAge: 0,
+      },
+      static: {
+        method: 'public',
+        maxAge: 31536000,
+        sMaxAge: 0,
+      },
+    },
+  },
+  ai: {
+    models: {
+      embed: {
+        name: 'nomic-embed-text-v2-moe',
+        api: 'http://localhost:11434/api/embed',
+        dimensions: 768,
+        minSimilarity: 0.3,
+        enabled: false,
+      },
+      llm: {
+        name: 'qwen3',
+        api: 'http://localhost:11434/api/chat',
+        contextSize: 10,
+        enabled: false,
+      },
+      vision: {
+        name: 'llava',
+        api: 'http://localhost:11434/api/generate',
+        enabled: false,
+      },
+    },
+  },
+};

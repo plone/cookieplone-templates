@@ -24,6 +24,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "hostname": "plone.org.br",
             "author": "PloneGov-BR",
             "email": "gov@plone.org.br",
+            "feature_headless": True,
             "use_prerelease_versions": "Yes",
             "plone_version": PLONE_VERSION,
             "volto_version": VOLTO_VERSION,
@@ -34,6 +35,11 @@ def context(annotate_context, cookieplone_root) -> dict:
             "__project_git_initialize": "1",
             "container_registry": "github",
             "devops_storage": "relstorage",
+            "__node_version": "22",
+            "__npm_package_name": "volto-ploneorgbr",
+            "__frontend_package_name": "volto-ploneorgbr",
+            "__version_plone_volto": VOLTO_VERSION,
+            "__version_pnpm": "10.20.0",
         },
         cookieplone_root,
         "project",
@@ -44,7 +50,7 @@ def context(annotate_context, cookieplone_root) -> dict:
 def context_devops_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_cache"] = "1"
+    new_context["devops_cache"] = True
     return new_context
 
 
@@ -60,7 +66,7 @@ def context_no_git(context) -> dict:
 def context_devops_no_cache(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_cache"] = "0"
+    new_context["devops_cache"] = False
     return new_context
 
 
@@ -68,7 +74,7 @@ def context_devops_no_cache(context) -> dict:
 def context_devops_no_ansible(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_ansible"] = "0"
+    new_context["devops_ansible"] = False
     return new_context
 
 
@@ -76,7 +82,7 @@ def context_devops_no_ansible(context) -> dict:
 def context_devops_no_gha_deploy(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["devops_gha_deploy"] = "0"
+    new_context["devops_gha_deploy"] = False
     return new_context
 
 
@@ -84,7 +90,7 @@ def context_devops_no_gha_deploy(context) -> dict:
 def context_no_docs(context) -> dict:
     """Cookiecutter context."""
     new_context = deepcopy(context)
-    new_context["initialize_documentation"] = "0"
+    new_context["initialize_documentation"] = False
     return new_context
 
 

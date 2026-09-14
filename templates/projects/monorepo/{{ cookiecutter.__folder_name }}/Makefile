@@ -16,7 +16,9 @@ REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 PROJECT_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
+{%- if cookiecutter.feature_headless %}
 VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
+{%- endif %}
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
 
@@ -40,12 +42,15 @@ help: ## This help message
 debug-settings:  ## Debug settings
 	@echo "Debug settings"
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
+	{%- if cookiecutter.feature_headless %}
 	@echo "VOLTO_VERSION: $(VOLTO_VERSION)"
+	{%- endif %}
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 
 ###########################################
 # Frontend
 ###########################################
+{%- if cookiecutter.feature_headless %}
 .PHONY: frontend-install
 frontend-install:  ## Install React Frontend
 	$(MAKE) -C "./frontend/" install
@@ -62,6 +67,7 @@ frontend-start:  ## Start React Frontend
 frontend-test:  ## Test frontend codebase
 	@echo "Test frontend"
 	$(MAKE) -C "./frontend/" test
+{%- endif %}
 
 ###########################################
 # Backend
@@ -97,15 +103,19 @@ backend-test:  ## Test backend codebase
 ###########################################
 .PHONY: install
 install:  ## Install
-	@echo "Install Backend & Frontend"
+	@echo "Install Backend{% if cookiecutter.feature_headless %} & Frontend{% endif %}"
 	$(MAKE) backend-install
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) frontend-install
+	{%- endif %}
 
 .PHONY: clean
 clean:  ## Clean installation
 	@echo "Clean installation"
 	$(MAKE) -C "./backend/" clean
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) -C "./frontend/" clean
+	{%- endif %}
 
 ###########################################
 # QA
@@ -114,13 +124,17 @@ clean:  ## Clean installation
 format:  ## Format codebase
 	@echo "Format the codebase"
 	$(MAKE) -C "./backend/" format
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) -C "./frontend/" format
+	{%- endif %}
 
 .PHONY: lint
 lint:  ## Format codebase
 	@echo "Lint the codebase"
 	$(MAKE) -C "./backend/" lint
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) -C "./frontend/" lint
+	{%- endif %}
 
 .PHONY: check
 check:  format lint ## Lint and Format codebase
@@ -132,13 +146,15 @@ check:  format lint ## Lint and Format codebase
 i18n:  ## Update locales
 	@echo "Update locales"
 	$(MAKE) -C "./backend/" i18n
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) -C "./frontend/" i18n
+	{%- endif %}
 
 ###########################################
 # Testing
 ###########################################
 .PHONY: test
-test:  backend-test frontend-test ## Test codebase
+test:  backend-test{% if cookiecutter.feature_headless %} frontend-test{% endif %} ## Test codebase
 
 ###########################################
 # Container images
@@ -147,7 +163,9 @@ test:  backend-test frontend-test ## Test codebase
 build-images:  ## Build container images
 	@echo "Build"
 	$(MAKE) -C "./backend/" build-image
+	{%- if cookiecutter.feature_headless %}
 	$(MAKE) -C "./frontend/" build-image
+	{%- endif %}
 
 ###########################################
 # Local Stack
@@ -156,12 +174,12 @@ build-images:  ## Build container images
 stack-create-site:  ## Local Stack: Create a new site
 	@echo "Create a new site in the local Docker stack"
 	@echo "(Stack must not be running already.)"
-	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
+	{% if cookiecutter.feature_headless %}VOLTO_VERSION=$(VOLTO_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
 
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
-	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
+	{% if cookiecutter.feature_headless %}VOLTO_VERSION=$(VOLTO_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://{{ cookiecutter.__project_slug }}.localhost"
 
 .PHONY: stack-status
@@ -184,6 +202,7 @@ stack-rm:  ## Local Stack: Remove Services and Volumes
 ###########################################
 # Acceptance
 ###########################################
+{%- if cookiecutter.feature_headless %}
 .PHONY: acceptance-backend-start
 acceptance-backend-start:
 	@echo "Start acceptance backend"
@@ -243,6 +262,7 @@ ci-acceptance-test:
 	pnpm dlx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
 	$(MAKE) -C "./frontend/" ci-acceptance-test
 	$(MAKE) acceptance-containers-stop
+{%- endif %}
 
 ###########################################
 # Release

@@ -1,0 +1,1 @@
+Fixed `make format` and `make lint` on the `next` branch so they no longer fail with `Failed to spawn: ruff` on a freshly synced project environment. The top-level `Makefile` now invokes Ruff via `uvx ruff` instead of `uv run ruff`, avoiding the need for Ruff to be declared as a project dependency. @ericof

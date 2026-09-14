@@ -27,7 +27,7 @@ jobs:
 
   lint:
     name: "Backend: Lint"
-    uses: plone/meta/.github/workflows/backend-lint.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/backend-lint.yml@{{ versions.gha_version_plone_meta }}
     with:
       python-version: {{ "${{ inputs.python-version }}" }}
       plone-version: {{ "${{ inputs.plone-version }}" }}
@@ -35,7 +35,7 @@ jobs:
 
   test:
     name: "Backend: Test"
-    uses: plone/meta/.github/workflows/backend-pytest.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/backend-pytest.yml@{{ versions.gha_version_plone_meta }}
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +48,7 @@ jobs:
 
   coverage:
     name: "Backend: Coverage"
-    uses: plone/meta/.github/workflows/backend-pytest-coverage.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/backend-pytest-coverage.yml@{{ versions.gha_version_plone_meta }}
     with:
       python-version: {{ "${{ inputs.python-version }}" }}
       plone-version: {{ "${{ inputs.plone-version }}" }}
@@ -56,7 +56,7 @@ jobs:
 
   release:
     name: "Backend: Build and publish Container Image"
-    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ cookiecutter.__gha_version_plone_meta }}
+    uses: plone/meta/.github/workflows/container-image-build-push.yml@{{ versions.gha_version_plone_meta }}
     needs:
       - lint
       - test

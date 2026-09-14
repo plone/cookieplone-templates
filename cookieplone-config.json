@@ -1,0 +1,273 @@
+{
+  "version": "1.0",
+  "title": "Plone Community Templates",
+  "description": "Official Cookieplone templates for the Plone community",
+  "extends": "",
+  "groups": {
+    "projects": {
+      "title": "Projects",
+      "description": "Generate new Plone project",
+      "templates": [
+        "project",
+        "aurora_cmfplone",
+        "volto_nick",
+        "aurora_nick",
+        "aurora_nick_embedded"
+      ],
+      "hidden": false
+    },
+    "add-ons": {
+      "title": "Add-ons",
+      "description": "Generate add-on extending Plone",
+      "templates": [
+        "monorepo_addon",
+        "backend_addon",
+        "frontend_addon",
+        "aurora_addon",
+        "seven_addon"
+      ],
+      "hidden": false
+    },
+    "documentation": {
+      "title": "Documentation",
+      "description": "Generate documentation for Plone projects or add-ons",
+      "templates": ["documentation_starter"],
+      "hidden": false
+    },
+    "devops": {
+      "title": "DevOps",
+      "description": "DevOps templates for Plone projects",
+      "templates": ["devops_ansible"],
+      "hidden": false
+    },
+    "ci": {
+      "title": "CI / CD",
+      "description": "Continuous Integration and Continuous Deployment templates for Plone projects",
+      "templates": [
+        "ci_gh_backend_addon",
+        "ci_gh_frontend_addon",
+        "ci_gh_monorepo_addon",
+        "ci_gh_aurora_cmfplone",
+        "ci_gh_volto_nick",
+        "ci_gh_aurora_nick",
+        "ci_gh_project"
+      ],
+      "hidden": true
+    },
+    "other": {
+      "title": "Other",
+      "description": "Other templates used by our community",
+      "templates": ["agents_instructions", "ide_vscode"],
+      "hidden": true
+    },
+    "sub": {
+      "title": "Sub-Templates",
+      "description": "Templates used only for internal purposes",
+      "templates": [
+        "sub/cache",
+        "sub/frontend_project",
+        "sub/nick_backend",
+        "sub/project_settings",
+        "sub/addon_settings"
+      ],
+      "hidden": true
+    }
+  },
+  "templates": {
+    "project": {
+      "path": "./templates/projects/monorepo",
+      "title": "Plone 6 Project",
+      "description": "Create a new Plone 6 project (Volto or Classic UI)",
+      "hidden": false
+    },
+    "aurora_cmfplone": {
+      "path": "./templates/projects/aurora_cmfplone",
+      "title": "Plone Aurora (alpha) with Plone backend",
+      "description": "Create a Plone Aurora project with a Python CMFPlone backend",
+      "hidden": false
+    },
+    "backend_addon": {
+      "path": "./templates/add-ons/backend",
+      "title": "Plone 6 Backend Add-on (Python)",
+      "description": "Create a new Python backend package",
+      "hidden": false
+    },
+    "frontend_addon": {
+      "path": "./templates/add-ons/frontend",
+      "title": "Plone 6 Frontend Add-on",
+      "description": "Create a new Node.js frontend package",
+      "hidden": false
+    },
+    "monorepo_addon": {
+      "path": "./templates/add-ons/monorepo",
+      "title": "Plone 6 Add-on (Frontend and Backend)",
+      "description": "Create a new codebase for a Plone 6 add-on that includes both frontend and backend",
+      "hidden": false
+    },
+    "aurora_addon": {
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
+      "hidden": false
+    },
+    "seven_addon": {
+      "path": "./templates/add-ons/aurora_addon",
+      "title": "Plone Aurora Frontend Add-on",
+      "description": "Create a new Node.js Plone Aurora frontend package",
+      "hidden": true
+    },
+    "volto_nick": {
+      "path": "./templates/projects/volto_nick",
+      "title": "Plone Volto using Nick as backend",
+      "description": "Create a Plone Volto project using Nick as backend",
+      "hidden": false
+    },
+    "aurora_nick": {
+      "path": "./templates/projects/aurora_nick",
+      "title": "Plone Aurora (alpha) using Nick as backend",
+      "description": "Plone Aurora (alpha) using Nick as backend",
+      "hidden": false
+    },
+    "aurora_nick_embedded": {
+      "path": "./templates/projects/aurora_nick_embedded",
+      "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+      "description": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+      "hidden": false
+    },
+    "sub/cache": {
+      "path": "./templates/sub/cache",
+      "title": "Cache settings for a Plone 6 project",
+      "description": "Subtemplate with cache settings to be applied to a Plone 6 project.",
+      "hidden": true
+    },
+    "sub/frontend_project": {
+      "path": "./templates/sub/frontend_project",
+      "title": "A Plone 6 frontend project (used in Container images)",
+      "description": "Subtemplate with configuration used in container images for a Plone 6 frontend project.",
+      "hidden": true
+    },
+    "sub/nick_backend": {
+      "path": "./templates/sub/nick_backend",
+      "title": "Shared Nick backend scaffold",
+      "description": "Subtemplate with the Nick backend shared by frontend project templates.",
+      "hidden": true
+    },
+    "sub/project_settings": {
+      "path": "./templates/sub/project_settings",
+      "title": "Project settings to be applied on top of a Plone 6 project",
+      "description": "Subtemplate with configuration and settings for a Plone 6 project.",
+      "hidden": true
+    },
+    "sub/addon_settings": {
+      "path": "./templates/sub/addon_settings",
+      "title": "Add-on settings to be applied on top of a Plone 6 project.",
+      "description": "Subtemplate with configuration and settings for a Plone 6 project.",
+      "hidden": true
+    },
+    "documentation_starter": {
+      "path": "./templates/docs/starter",
+      "title": "Documentation scaffold for Plone projects",
+      "description": "Create a new documentation scaffold for Plone projects",
+      "hidden": false
+    },
+    "devops_ansible": {
+      "path": "./templates/devops/ansible",
+      "title": "Ansible Playbooks for Plone",
+      "description": "Ansible setup to manage a Docker Swarm cluster for Plone hosting.",
+      "hidden": true
+    },
+    "ci_gh_backend_addon": {
+      "path": "./templates/ci/gh_backend_addon",
+      "title": "CI: GitHub Actions for Backend Add-on",
+      "description": "GitHub Actions configuration for CI of a Plone Backend Add-on",
+      "hidden": true
+    },
+    "ci_gh_frontend_addon": {
+      "path": "./templates/ci/gh_frontend_addon",
+      "title": "CI: GitHub Actions for Frontend Add-on",
+      "description": "GitHub Actions configuration for CI of a Volto Frontend Add-on",
+      "hidden": true
+    },
+    "ci_gh_monorepo_addon": {
+      "path": "./templates/ci/gh_monorepo_addon",
+      "title": "CI: GitHub Actions for Monorepo Add-on",
+      "description": "GitHub Actions configuration for CI of a Plone Monorepo Add-on",
+      "hidden": true
+    },
+    "ci_gh_aurora_cmfplone": {
+      "path": "./templates/ci/gh_aurora_cmfplone",
+      "title": "CI: GitHub Actions for Aurora with Plone backend",
+      "description": "GitHub Actions configuration for an Aurora project using a Python CMFPlone backend",
+      "hidden": true
+    },
+    "ci_gh_volto_nick": {
+      "path": "./templates/ci/gh_volto_nick",
+      "title": "CI: GitHub Actions for Volto with Nick",
+      "description": "GitHub Actions configuration for a Volto project using Nick as backend",
+      "hidden": true
+    },
+    "ci_gh_aurora_nick": {
+      "path": "./templates/ci/gh_aurora_nick",
+      "title": "CI: GitHub Actions for Aurora with Nick",
+      "description": "GitHub Actions configuration for an Aurora project using Nick as backend",
+      "hidden": true
+    },
+    "ci_gh_project": {
+      "path": "./templates/ci/gh_project",
+      "title": "CI: GitHub Actions for Project",
+      "description": "GitHub Actions configuration for CI of a Plone Project (Volto or Classic UI)",
+      "hidden": true
+    },
+    "agents_instructions": {
+      "path": "./templates/agents/instructions",
+      "title": "Agents / LLM: Instructions",
+      "description": "Instructions for Agents / LLM used in Plone projects",
+      "hidden": true
+    },
+    "ide_vscode": {
+      "path": "./templates/ide/vscode",
+      "title": "VSCode IDE Configuration",
+      "description": "Configuration files for Visual Studio Code IDE used in Plone projects",
+      "hidden": true
+    }
+  },
+  "config": {
+    "renderer": "rich",
+    "min_version": "2.0.0b3",
+    "summary": {
+      "enabled": true,
+      "message": "Now, code it, create a git repository, push to your organization.",
+      "thanks": "Sorry for the convenience,",
+      "signature": {
+        "text": "The Plone Community",
+        "url": "https://plone.org"
+      }
+    },
+    "versions": {
+      "backend_python": "3.14",
+      "devops_cronjob_version": "1.14",
+      "devops_db_version": "18",
+      "devops_traefik_version": "v3.7",
+      "devops_varnish_version": "8.0",
+      "devops_zeo_version": "6.0.0",
+      "frontend_aurora_pnpm": "11.20.0",
+      "frontend_mrs_developer": "^2.2.0",
+      "frontend_pnpm": "10.20.0",
+      "frontend_release_it": "^19.0.5",
+      "frontend_testing_library_react": "^16.2.0",
+      "frontend_typescript": "^5.7.3",
+      "frontend_vitest": "^3.1.2",
+      "gha_version_background_action": "v2",
+      "gha_version_cache": "v6",
+      "gha_version_checkout": "v7",
+      "gha_version_docker_stack": "v1.4.0",
+      "gha_version_node": "24.x",
+      "gha_version_pages_deploy": "v4.8.0",
+      "gha_version_paths_filter": "v4.0.1",
+      "gha_version_plone_meta": "2.x",
+      "gha_version_setup_node": "v6.4.0",
+      "gha_version_upload_artifact": "v7.0.1",
+      "tools_pre_commit": "3.7.1"
+    }
+  }
+}

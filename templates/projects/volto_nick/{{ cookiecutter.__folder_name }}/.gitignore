@@ -1,0 +1,7 @@
+!.vscode
+node_modules
+backend/develop
+backend/core
+frontend/core
+frontend/public
+*.mo

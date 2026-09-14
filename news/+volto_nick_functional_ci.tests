@@ -1,0 +1,1 @@
+Added a functional CI job that generates and installs `volto_nick`, initializes and runs Nick with Volto, and verifies their integration through Playwright. @sneridagh

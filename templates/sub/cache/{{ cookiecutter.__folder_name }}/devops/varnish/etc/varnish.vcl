@@ -1,4 +1,4 @@
-vcl 4.0;
+vcl 4.1;
 
 import std;
 import directors;
@@ -13,8 +13,6 @@ backend traefik_loadbalancer {
 
 /* Only allow PURGE from localhost and API-Server */
 acl purge {
-  "localhost";
-  "backend";
   "127.0.0.1";
   "172.16.0.0/12";
   "10.0.0.0/8";
