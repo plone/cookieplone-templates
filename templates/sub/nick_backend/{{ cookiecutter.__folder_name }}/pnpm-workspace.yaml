@@ -1,0 +1,6 @@
+packages:
+  - 'src/develop/nick'
+
+onlyBuiltDependencies:
+  - bcrypt
+  - esbuild

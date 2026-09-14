@@ -7,12 +7,12 @@
       "type": "debugpy",
       "request": "launch",
       "python":"${command:python.interpreterPath}",
-      "program": "${workspaceFolder}{{ cookiecutter.backend_path }}/.venv/bin/runwsgi",
+      "program": "{{ cookiecutter.__backend_launch_path }}/.venv/bin/runwsgi",
       "args": [
         "instance/etc/zope.ini"
       ],
       "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}{{cookiecutter.backend_path}}",
+      "cwd": "{{cookiecutter.__backend_launch_path}}",
       "justMyCode": false,
       "subProcess": true
     }

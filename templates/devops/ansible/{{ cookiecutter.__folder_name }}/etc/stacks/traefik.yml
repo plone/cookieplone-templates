@@ -62,13 +62,12 @@ services:
       - vol-traefik-certs:/certificates
 
     command:
-      - --providers.docker
-      - --providers.docker.watch
-      - --providers.docker.endpoint=tcp://socket-proxy:2375
-      - --providers.docker.swarmmode
-      - --providers.docker.exposedbydefault=false
-      - --providers.docker.network={{ cookiecutter.__devops_swarm_public_network }}
-      - --providers.docker.constraints=Label(`traefik.constraint-label`, `public`)
+      - --providers.swarm
+      - --providers.swarm.watch
+      - --providers.swarm.endpoint=tcp://socket-proxy:2375
+      - --providers.swarm.exposedbydefault=false
+      - --providers.swarm.network={{ cookiecutter.__devops_swarm_public_network }}
+      - --providers.swarm.constraints=Label(`traefik.constraint-label`, `public`)
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --certificatesresolvers.le.acme.email=${TRAEFIK_EMAIL}

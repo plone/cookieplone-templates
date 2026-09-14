@@ -1,0 +1,39 @@
+services:
+  nick-backend:
+    build:
+      context: .
+    depends_on:
+      - db
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: nick
+      DB_PASSWORD: nick
+      DB_NAME: nick
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    command: >
+      sh -c "
+      pnpm install &&
+      pnpm bootstrap &&
+      pnpm start
+      "
+
+
+  db:
+    image: postgres:18-alpine
+    container_name: nick-db
+    environment:
+      POSTGRES_DB: nick
+      POSTGRES_USER: nick
+      POSTGRES_PASSWORD: nick
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:

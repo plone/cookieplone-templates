@@ -15,9 +15,6 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-IMAGE_NAME_PREFIX={{ cookiecutter.__container_image_prefix }}
-IMAGE_TAG=latest
-
 # Python checks
 UV?=uv
 
@@ -28,11 +25,15 @@ endif
 
 REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')
+IMAGE_NAME_SEPARATOR := {{ cookiecutter.__container_registry_prefix_separator }}
+IMAGE_NAME_PREFIX_WITH_SEPARATOR := $(IMAGE_NAME_PREFIX)$(IMAGE_NAME_SEPARATOR)
+
 IMAGE_TAG=latest
-IMAGE_NAME=$(IMAGE_NAME_PREFIX)-backend:$(IMAGE_TAG)
+IMAGE_NAME=$(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend:$(IMAGE_TAG)
 
 PLONE_SITE_ID=Plone
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+PYTHON_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.python_version')
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 EXAMPLE_CONTENT_FOLDER := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.code_path')/setuphandlers/examplecontent
 PACKAGE_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.name')
@@ -56,10 +57,16 @@ help: ## This help message
 .PHONY: debug-settings
 debug-settings:  ## Debug settings
 	@echo "Virtual Environment: $(VENV_FOLDER)"
+	@echo "PYTHON_VERSION: $(PYTHON_VERSION)"
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 	@echo "PACKAGE_NAME: $(PACKAGE_NAME)"
 	@echo "EXAMPLE_CONTENT_FOLDER: $(EXAMPLE_CONTENT_FOLDER)"
 	@echo "IMAGE_NAME: $(IMAGE_NAME)"
+
+mxdev:
+	@echo "$(GREEN)==> Run mxdev to get deps from source$(RESET)"
+	@uvx mxdev[uv] -c mx.ini
+	@rm requirements-mxdev.txt
 
 ############################################
 # Config
@@ -85,7 +92,7 @@ sync: update-constraints ## Sync project dependencies
 	@uv sync
 
 .PHONY: install
-install: sync config ## Install Plone and dependencies
+install: mxdev sync config ## Install Plone and dependencies
 
 .PHONY: clean
 clean: ## Clean installation and instance
@@ -164,18 +171,18 @@ test-coverage: $(VENV_FOLDER) ## run tests with coverage
 .PHONY: build-image
 build-image:  ## Build Container Images
 	@echo "$(GREEN)==> Building image $(IMAGE_NAME) $(RESET)"
-	@docker build . -t $(IMAGE_NAME) --progress plain -f Dockerfile
+	@docker build . -t $(IMAGE_NAME) --build-arg PYTHON_VERSION=$(PYTHON_VERSION) --progress plain -f Dockerfile
 
 ############################################
 # Acceptance Tests
 ############################################
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
-	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="plone.restapi,plone.volto,plone.volto.cors,$(PACKAGE_NAME)" $(BIN_FOLDER)/robot-server plone.app.robotframework.testing.VOLTO_ROBOT_TESTING
+	ZSERVER_HOST=0.0.0.0 ZSERVER_PORT=55001 LISTEN_PORT=55001 APPLY_PROFILES="$(PACKAGE_NAME):default" CONFIGURE_PACKAGES="{% if cookiecutter.feature_headless %}plone.restapi,plone.volto,plone.volto.cors,{% endif %}$(PACKAGE_NAME)" uv run robot-server plone.app.robotframework.testing.{{ "VOLTO" if cookiecutter.feature_headless else "PLONE" }}_ROBOT_TESTING
 
 .PHONY: acceptance-image-build
 acceptance-image-build:  ## Build Docker Images
-	@docker build . -t $(IMAGE_NAME_PREFIX)-backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+	@docker build . -t $(IMAGE_NAME_PREFIX_WITH_SEPARATOR)backend-acceptance:$(IMAGE_TAG) -f Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION) --build-arg PYTHON_VERSION=$(PYTHON_VERSION)
 
 ############################################
 # Plone CLI

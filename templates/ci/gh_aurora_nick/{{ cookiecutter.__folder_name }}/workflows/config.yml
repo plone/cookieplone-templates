@@ -1,0 +1,72 @@
+name: Compute CI config
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.node_version }}"
+      python-version:
+        required: false
+        type: string
+        default: "{{ cookiecutter.python_version }}"
+    outputs:
+      backend:
+        description: Whether backend checks should run
+        value: {{ "${{ jobs.config.outputs.backend }}" }}
+      frontend:
+        description: Whether frontend checks should run
+        value: {{ "${{ jobs.config.outputs.frontend }}" }}
+      changelog-frontend:
+        description: Whether the frontend changelog should be checked
+        value: {{ "${{ jobs.config.outputs.changelog-frontend }}" }}
+      changelog-repository:
+        description: Whether the repository changelog should be checked
+        value: {{ "${{ jobs.config.outputs.changelog-repository }}" }}
+      node-version:
+        description: Node.js version used by the checks
+        value: {{ "${{ inputs.node-version }}" }}
+      python-version:
+        description: Python version used by Towncrier
+        value: {{ "${{ inputs.python-version }}" }}
+      path-frontend:
+        description: Path to the frontend package
+        value: {{ "${{ jobs.config.outputs.path-frontend }}" }}
+      path-root:
+        description: Path to the repository root
+        value: {{ "${{ jobs.config.outputs.path-root }}" }}
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: {{ "${{ steps.filter.outputs.backend }}" }}
+      frontend: {{ "${{ steps.filter.outputs.frontend }}" }}
+      changelog-frontend: {{ "${{ steps.filter.outputs.changelog-frontend }}" }}
+      changelog-repository: {{ "${{ steps.filter.outputs.changelog-repository }}" }}
+      path-frontend: frontend/packages/{{ cookiecutter.frontend_package_name }}
+      path-root: .
+    steps:
+      - name: Checkout
+        uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+      - name: Filter changed paths
+        uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/backend*'
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/frontend*'
+            changelog-frontend:
+              - 'frontend/**'
+            changelog-repository:
+              - '.github/**'
+              - '.vscode/**'
+              - 'README.md'
+              - 'repository.toml'
+              - 'towncrier.toml'

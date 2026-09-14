@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/**"
+      - "*.md"
+      - "*.toml"
+      - "Makefile"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/**"
+      - "*.md"
+      - "*.toml"
+      - "Makefile"
+  workflow_dispatch:
+
+jobs:
+  config:
+    uses: ./.github/workflows/config.yml
+
+  backend:
+    needs: config
+    if: {{ "${{ needs.config.outputs.backend == 'true' }}" }}
+    uses: ./.github/workflows/backend.yml
+    with:
+      node-version: {{ "${{ needs.config.outputs.node-version }}" }}
+
+  frontend:
+    needs: config
+    if: {{ "${{ needs.config.outputs.frontend == 'true' }}" }}
+    uses: ./.github/workflows/frontend.yml
+    with:
+      node-version: {{ "${{ needs.config.outputs.node-version }}" }}
+
+  report:
+    name: Final report
+    if: {{ "${{ always() }}" }}
+    runs-on: ubuntu-latest
+    needs:
+      - config
+      - backend
+      - frontend
+    steps:
+      - name: Write report
+        run: |
+          echo '# Workflow Report' >> "$GITHUB_STEP_SUMMARY"
+          echo '| Job ID | Conclusion |' >> "$GITHUB_STEP_SUMMARY"
+          echo '| --- | --- |' >> "$GITHUB_STEP_SUMMARY"
+          echo '| config | {{ "${{ needs.config.result }}" }} |' >> "$GITHUB_STEP_SUMMARY"
+          echo '| backend | {{ "${{ needs.backend.result }}" }} |' >> "$GITHUB_STEP_SUMMARY"
+          echo '| frontend | {{ "${{ needs.frontend.result }}" }} |' >> "$GITHUB_STEP_SUMMARY"

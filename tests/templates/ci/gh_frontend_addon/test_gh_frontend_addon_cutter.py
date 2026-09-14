@@ -41,6 +41,7 @@ def test_json_schema(
 @pytest.mark.parametrize(
     "file_path",
     [
+        "dependabot.yml",
         "instructions/general/docs.md",
         "instructions/docs.instructions.md",
         "instructions/volto.instructions.md",
@@ -53,3 +54,34 @@ def test_created_files(cutter_result, file_path: str):
     path = (cutter_result.project_path / file_path).resolve()
     assert path.exists()
     assert path.is_file()
+
+
+@pytest.mark.parametrize(
+    "file_path,text,expected",
+    [
+        # The towncrier invocations are covered in detail by the
+        # test_*_changelog.py module of this suite.
+        ("workflows/changelog.yml", "uvx towncrier check", True),
+        ("workflows/changelog.yml", "pipx", False),
+        (
+            "workflows/config.yml",
+            "echo 'node-version: ${{ inputs.node-version }}",
+            True,
+        ),
+        ("workflows/main.yml", "uses: ./.github/workflows/config.yml", True),
+        (
+            "workflows/config.yml",
+            "storybook-deploy=${{ github.event.repository.private == false }}",
+            True,
+        ),
+        (
+            "workflows/main.yml",
+            "deploy: ${{ needs.config.outputs.storybook-deploy == 'true' }}",
+            True,
+        ),
+    ],
+)
+def test_content(cutter_result, file_path: str, text: str, expected: bool):
+    path = (cutter_result.project_path / file_path).resolve()
+    contents = path.read_text()
+    assert (text in contents) is expected

@@ -1,0 +1,1 @@
+Ship the towncrier changelog template inside each generated codebase, unify the towncrier settings and news fragment types across backend, frontend and project codebases, and simplify the Changelog GitHub Actions workflows, which no longer install the frontend toolchain just to check for news fragments. @ericof

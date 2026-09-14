@@ -1,0 +1,16 @@
+.*project
+.settings/
+.vscode
+*~
+acceptance/cypress/videos/
+acceptance/node_modules
+acceptance/results/
+playwright-report/
+test-results/
+.storybook-build
+build
+core
+node_modules
+results
+yarn.lock
+/public

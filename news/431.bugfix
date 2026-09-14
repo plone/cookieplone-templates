@@ -1,0 +1,1 @@
+Fixed the storybook job in the reusable `frontend.yml` workflows to read `node-version` from `inputs` instead of a non-existent `config` job output. @ericof

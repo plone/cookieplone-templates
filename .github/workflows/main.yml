@@ -1,13 +1,14 @@
 name: "Cookieplone Templates: CI"
-description: "Main workflow for cookieplone-templates"
 
 on:
   push:
     branches:
       - main
+      - next
   pull_request:
     branches:
       - main
+      - next
   workflow_dispatch:
 
 env:
@@ -16,6 +17,7 @@ env:
   python-version: "3.10"
 
 jobs:
+
   report-keys:
     name: "Report keys usage"
     uses: ./.github/workflows/report.yml
@@ -36,54 +38,30 @@ jobs:
     with:
       python-version: ${{ matrix.python-version }}
 
+  list-templates:
+    name: "List templates"
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.collect.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: collect
+        name: "Collect templates from cookieplone-config.json"
+        run: |
+          matrix=$(python3 .scripts/list_templates.py --format=matrix)
+          echo "matrix=${matrix}" >> "${GITHUB_OUTPUT}"
+
   test-template:
     name: "Test template"
     if: "${{ always() }}"
     needs:
       - test-repository
+      - list-templates
     uses: ./.github/workflows/test-template.yml
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: "project"
-            path: "templates/projects/monorepo"
-          - name: "classic_project"
-            path: "templates/projects/classic"
-          - name: "backend_addon"
-            path: "templates/add-ons/backend"
-          - name: "frontend_addon"
-            path: "templates/add-ons/frontend"
-          - name: "monorepo_addon"
-            path: "templates/add-ons/monorepo"
-          - name: "sub/cache"
-            path: "templates/sub/cache"
-          - name: "sub/frontend_project"
-            path: "templates/sub/frontend_project"
-          - name: "sub/classic_project_settings"
-            path: "templates/sub/classic_project_settings"
-          - name: "sub/project_settings"
-            path: "templates/sub/project_settings"
-          - name: "sub/addon_settings"
-            path: "templates/sub/addon_settings"
-          - name: "documentation_starter"
-            path: "templates/docs/starter"
-          - name: "devops_ansible"
-            path: "templates/devops/ansible"
-          - name: "ci_gh_backend_addon"
-            path: "templates/ci/gh_backend_addon"
-          - name: "ci_gh_frontend_addon"
-            path: "templates/ci/gh_frontend_addon"
-          - name: "ci_gh_monorepo_addon"
-            path: "templates/ci/gh_monorepo_addon"
-          - name: "ci_gh_project"
-            path: "templates/ci/gh_project"
-          - name: "ci_gh_classic_project"
-            path: "templates/ci/gh_classic_project"
-          - name: "agents_instructions"
-            path: "templates/agents/instructions"
-          - name: "ide_vscode"
-            path: "templates/ide/vscode"
+        include: ${{ fromJson(needs.list-templates.outputs.matrix) }}
     with:
       name: ${{ matrix.name }}
       tests-path: ${{ matrix.path }}
@@ -98,7 +76,7 @@ jobs:
       name: "collective.addon"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Generate
         uses: ./.github/actions/generate
@@ -107,7 +85,7 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: Restore uv cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5.0.5
         with:
           path: ${{ env.UV_CACHE_DIR }}
           key: uv-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles( 'templates/add-ons/backend/collective.addon/pyproject.toml') }}
@@ -119,6 +97,11 @@ jobs:
         working-directory: ${{ env.name }}
         run: |
           make install
+
+      - name: Lint generated package
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
@@ -135,10 +118,10 @@ jobs:
       name: "volto-add-on"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use Node.js ${{ env.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: ${{ env.node-version }}
 
@@ -158,7 +141,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5.0.5
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -168,7 +151,7 @@ jobs:
 
       - name: Cache Cypress Binary
         id: cache-cypress-binary
-        uses: actions/cache@v4
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.cache/Cypress
           key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
@@ -187,7 +170,7 @@ jobs:
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -210,7 +193,7 @@ jobs:
           make storybook-build
 
       - name: Start Servers
-        uses: JarvusInnovations/background-action@v1
+        uses: JarvusInnovations/background-action@v2
         with:
           working-directory: ${{ env.name }}
           run: |
@@ -254,10 +237,10 @@ jobs:
       name: "volto-add-on"
     steps:
       - name: Checkout codebase
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use Node.js ${{ env.node-version-prerelease }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6.3.0
         with:
           node-version: ${{ env.node-version-prerelease }}
 
@@ -278,7 +261,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5.0.5
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -288,7 +271,7 @@ jobs:
 
       - name: Cache Cypress Binary
         id: cache-cypress-binary
-        uses: actions/cache@v4
+        uses: actions/cache@v5.0.5
         with:
           path: ~/.cache/Cypress
           key: Cypress-binary-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
@@ -307,7 +290,7 @@ jobs:
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -330,7 +313,7 @@ jobs:
           make storybook-build
 
       - name: Start Servers
-        uses: JarvusInnovations/background-action@v1
+        uses: JarvusInnovations/background-action@v2
         with:
           working-directory: ${{ env.name }}
           run: |
@@ -364,6 +347,302 @@ jobs:
         run: |
           make ci-acceptance-test
 
+  volto-nick-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "volto_nick"
+      name: "project-title"
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: nick
+          POSTGRES_USER: nick
+          POSTGRES_PASSWORD: nick
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nick -d nick"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - uses: actions/cache@v5.0.5
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-volto-nick-pnpm-${{ hashFiles('project-title/backend/package.json', 'project-title/backend/mrs.developer.json', 'project-title/frontend/package.json', 'project-title/frontend/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-volto-nick-pnpm-
+
+      - name: Install generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
+      - name: Initialize Nick database
+        working-directory: ${{ env.name }}
+        run: |
+          make backend-migrate
+          make backend-seed
+
+      - name: Install Playwright
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm add --save-dev --workspace-root @playwright/test
+          pnpm exec playwright install --with-deps chromium
+          cp "$GITHUB_WORKSPACE/.github/tests/volto-nick.test.js" .
+
+      - name: Start Nick and Volto
+        uses: JarvusInnovations/background-action@v2
+        env:
+          BROWSER: none
+          RAZZLE_API_PATH: http://localhost:8080
+          RAZZLE_INTERNAL_API_PATH: http://localhost:8080
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make backend-start &
+            make frontend-start &
+          wait-on: |
+            http-get://localhost:8080
+            http://localhost:3000
+          tail: true
+          wait-for: 10m
+          log-output: stderr,stdout
+          log-output-if: failure
+
+      - name: Verify Volto and Nick integration
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright test volto-nick.test.js --reporter=line
+
+  aurora-nick-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "aurora_nick"
+      name: "project-title"
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: nick
+          POSTGRES_USER: nick
+          POSTGRES_PASSWORD: nick
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nick -d nick"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - uses: actions/cache@v5.0.5
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-aurora-nick-pnpm-${{ hashFiles('project-title/backend/package.json', 'project-title/backend/mrs.developer.json', 'project-title/frontend/package.json', 'project-title/frontend/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-aurora-nick-pnpm-
+
+      - name: Install generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
+      - name: Initialize Nick database
+        working-directory: ${{ env.name }}
+        run: |
+          make backend-migrate
+          make backend-seed
+
+      - name: Install Playwright
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          cp "$GITHUB_WORKSPACE/.github/tests/aurora-nick.test.js" .
+
+      - name: Start Nick and Aurora
+        uses: JarvusInnovations/background-action@v2
+        env:
+          PLONE_API_PATH: http://localhost:8080
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make backend-start &
+            (cd frontend && pnpm build && pnpm start:prod) &
+          wait-on: |
+            http-get://localhost:8080
+            http://localhost:3000
+          tail: true
+          wait-for: 10m
+          log-output: stderr,stdout
+          log-output-if: failure
+
+      - name: Verify Aurora and Nick integration
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright test aurora-nick.test.js --reporter=line
+
+  aurora-cmfplone-functional:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "aurora_cmfplone"
+      name: "project-title"
+      python-version: "3.13"
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
+
+      - uses: actions/cache@v5.0.5
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-aurora-cmfplone-pnpm-${{ hashFiles('project-title/frontend/package.json', 'project-title/frontend/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-aurora-cmfplone-pnpm-
+
+      - name: Install generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Lint generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Test generated project
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
+      - name: Install Playwright
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          cp "$GITHUB_WORKSPACE/.github/tests/aurora-cmfplone.test.js" .
+
+      - name: Start Plone backend and Aurora
+        uses: JarvusInnovations/background-action@v2
+        env:
+          PLONE_API_PATH: http://localhost:8080/Plone
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make backend-start &
+            (cd frontend && pnpm build && pnpm start:prod) &
+          wait-on: |
+            http-get://localhost:8080/Plone
+            http://localhost:3000
+          tail: true
+          wait-for: 10m
+          log-output: stderr,stdout
+          log-output-if: failure
+
+      - name: Verify Aurora and Plone backend integration
+        working-directory: ${{ env.name }}/frontend
+        run: |
+          pnpm exec playwright test aurora-cmfplone.test.js --reporter=line
+
   report:
     runs-on: ubuntu-latest
     needs:
@@ -372,6 +651,9 @@ jobs:
       - test-template
       - backend-functional
       - frontend-functional
+      - volto-nick-functional
+      - aurora-nick-functional
+      - aurora-cmfplone-functional
     steps:
       - name: Report
         shell: bash
@@ -384,3 +666,6 @@ jobs:
           echo '| Template Generation | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Backend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Frontend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Volto with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Aurora with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Aurora with Plone backend | ✅ |' >> $GITHUB_STEP_SUMMARY

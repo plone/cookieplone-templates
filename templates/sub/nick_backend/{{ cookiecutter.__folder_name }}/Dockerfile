@@ -1,0 +1,4 @@
+FROM node:26.2.0
+WORKDIR /app
+COPY . /app
+EXPOSE 8080

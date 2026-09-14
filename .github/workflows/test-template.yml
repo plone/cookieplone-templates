@@ -23,7 +23,7 @@ jobs:
           - "3.13"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup
         uses: ./.github/actions/setup_python

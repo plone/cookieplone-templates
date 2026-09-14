@@ -1,0 +1,63 @@
+{
+    "id": "ci_gh_backend_addon",
+    "schema": {
+        "title": "CI: GitHub Actions for Backend Add-on",
+        "description": "GitHub Actions configuration for CI of a Plone Backend Add-on",
+        "version": "2.0",
+        "properties": {
+            "plone_version": {
+                "type": "string",
+                "title": "Plone Version",
+                "default": "6.1.4",
+                "validator": "",
+                "format": "computed"
+            },
+            "python_version": {
+                "type": "string",
+                "title": "Python Version",
+                "default": "3.13",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": ".github",
+                "validator": "",
+                "format": "computed"
+            },
+            "__gha_python_versions": {
+                "type": "array",
+                "title": "__gha_python_versions",
+                "default": ["3.10", "3.11", "3.12", "3.13"],
+                "validator": "",
+                "format": "computed"
+            },
+            "__gha_plone_versions": {
+                "type": "array",
+                "title": "__gha_plone_versions",
+                "default": ["6.2-latest", "6.1-latest", "6.0-latest"],
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "agents/instructions",
+                "title": "Add instructions",
+                "enabled": "1"
+            }
+        ]
+    }
+}

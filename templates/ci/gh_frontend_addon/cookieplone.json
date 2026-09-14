@@ -1,0 +1,51 @@
+{
+    "id": "ci_gh_frontend_addon",
+    "schema": {
+        "title": "CI: GitHub Actions for Frontend Add-on",
+        "description": "GitHub Actions configuration for CI of a Volto Frontend Add-on",
+        "version": "2.0",
+        "properties": {
+            "npm_package_name": {
+                "type": "string",
+                "title": "NPM Package Name",
+                "default": "volto-addon",
+                "validator": "",
+                "format": "computed"
+            },
+            "node_version": {
+                "type": "string",
+                "title": "Node Version",
+                "default": "24.x",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": ".github",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "cookieplone.filters.unscoped_package_name"
+        ],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "agents/instructions",
+                "title": "Add instructions",
+                "enabled": "1"
+            }
+        ]
+    }
+}

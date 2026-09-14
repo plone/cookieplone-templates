@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 20
+    assert len(all_templates) == 25
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -12,28 +12,48 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
 @pytest.mark.parametrize(
     "template_id,title,hidden",
     [
-        ("project", "Volto Project", False),
-        ("classic_project", "Classic UI Project", False),
-        ("backend_addon", "Backend Add-on for Plone", False),
-        ("frontend_addon", "Frontend Add-on for Plone", False),
-        ("monorepo_addon", "Add-on for Plone (Backend + Volto)", False),
-        ("seven_addon", "Seven Frontend Add-on for Plone", False),
+        ("project", "Plone 6 Project", False),
+        (
+            "aurora_cmfplone",
+            "Plone Aurora (alpha) with Plone backend",
+            False,
+        ),
+        (
+            "volto_nick",
+            "Plone Volto using Nick as backend",
+            False,
+        ),
+        (
+            "aurora_nick",
+            "Plone Aurora (alpha) using Nick as backend",
+            False,
+        ),
+        (
+            "aurora_nick_embedded",
+            "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+            False,
+        ),
+        ("backend_addon", "Plone 6 Backend Add-on (Python)", False),
+        ("frontend_addon", "Plone 6 Frontend Add-on", False),
+        ("monorepo_addon", "Plone 6 Add-on (Frontend and Backend)", False),
+        ("aurora_addon", "Plone Aurora Frontend Add-on", False),
+        ("seven_addon", "Plone Aurora Frontend Add-on", True),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
-        ("sub/cache", "Cache settings for a monorepo Plone project", True),
-        ("sub/frontend_project", "A frontend project (used in Container images)", True),
+        ("sub/cache", "Cache settings for a Plone 6 project", True),
+        (
+            "sub/frontend_project",
+            "A Plone 6 frontend project (used in Container images)",
+            True,
+        ),
+        ("sub/nick_backend", "Shared Nick backend scaffold", True),
         (
             "sub/project_settings",
-            "Project settings to be applied on top of a mono repo project",
+            "Project settings to be applied on top of a Plone 6 project",
             True,
         ),
         (
             "sub/addon_settings",
-            "Add-on settings to be applied on top of a mono repo project",
-            True,
-        ),
-        (
-            "sub/classic_project_settings",
-            "Project settings to be applied on top of a Classic UI project",
+            "Add-on settings to be applied on top of a Plone 6 project.",
             True,
         ),
         (
@@ -57,13 +77,23 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
             True,
         ),
         (
-            "ci_gh_project",
-            "CI: GitHub Actions for Project",
+            "ci_gh_aurora_cmfplone",
+            "CI: GitHub Actions for Aurora with Plone backend",
             True,
         ),
         (
-            "ci_gh_classic_project",
-            "CI: GitHub Actions for a Classic Project",
+            "ci_gh_volto_nick",
+            "CI: GitHub Actions for Volto with Nick",
+            True,
+        ),
+        (
+            "ci_gh_aurora_nick",
+            "CI: GitHub Actions for Aurora with Nick",
+            True,
+        ),
+        (
+            "ci_gh_project",
+            "CI: GitHub Actions for Project",
             True,
         ),
         (

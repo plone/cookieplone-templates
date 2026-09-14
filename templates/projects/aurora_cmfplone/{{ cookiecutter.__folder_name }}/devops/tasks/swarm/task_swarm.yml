@@ -1,0 +1,59 @@
+# code: language=ansible
+---
+# Docker Swarm
+
+- name: "Docker Swarm: Initial Setup"
+  block:
+    - name: "Docker Swarm: Init Swarm"
+      community.docker.docker_swarm:
+        state: present
+        advertise_addr: "{{ swarm.advertise_addr }}"
+      register: swarm_info
+
+- name: "Docker Swarm: Set public network"
+  become: true
+  become_user: "{{ users.default.name }}"
+  block:
+    - name: "Docker Swarm: Check for public network"
+      community.docker.docker_network_info:
+        name: "{{ swarm.public_network }}"
+      register: docker_swarm_net_public
+
+    - name: "Docker Swarm: Create public network"
+      community.docker.docker_network:
+        name: "{{ swarm.public_network }}"
+        internal: false
+        attachable: true
+        driver: overlay
+        driver_options:
+          "com.docker.network.driver.mtu": "{{ docker.network.mtu }}"
+      when: not docker_swarm_net_public.exists
+
+- name: "Docker Swarm: Purge data"
+  become: true
+  become_user: "{{ users.default.name }}"
+  tags:
+    - cron
+    - swarm
+  block:
+    - name: "Docker Swarm: Purge old containers"
+      ansible.builtin.cron:
+        name: "Purge old containers"
+        job: "/usr/bin/docker container prune -f"
+        hour: "*"
+        minute: 5
+        state: present
+    - name: "Docker Swarm: Purge old images"
+      ansible.builtin.cron:
+        name: "Purge old images"
+        job: "/usr/bin/docker image prune -f"
+        hour: "*"
+        minute: 10
+        state: present
+    - name: "Docker Swarm: Purge old volumes"
+      ansible.builtin.cron:
+        name: "Purge old volumes"
+        job: "/usr/bin/docker volume prune -f"
+        hour: "*"
+        minute: 15
+        state: present

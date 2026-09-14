@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM varnish:{{ cookiecutter.__devops_varnish_version }}
+ARG VARNISH_VERSION={{ versions.devops_varnish_version }}
+FROM varnish:${VARNISH_VERSION}
 
 LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
       org.label-schema.name="{{ cookiecutter.project_slug }}-varnish" \

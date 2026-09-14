@@ -4,8 +4,10 @@ from collections import OrderedDict
 from pathlib import Path
 
 from cookieplone.utils import console
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 def generate_agents_instructions(context: OrderedDict, output_dir: Path):
@@ -22,35 +24,27 @@ def generate_agents_instructions(context: OrderedDict, output_dir: Path):
         "__cookieplone_repository_path": repository_path,
     })
     generator.generate_subtemplate(
-        "templates/agents/instructions", output_dir, folder_name, new_ctx
+        "templates/agents/instructions",
+        output_dir,
+        folder_name,
+        new_ctx,
+        global_versions=versions,
     )
 
 
-def _generate_subtemplates(context: OrderedDict, output_dir: Path):
-    """Generate subtemplates"""
-    # Get selected subtemplates
-    subtemplates = context.get(
-        "__cookieplone_subtemplates", []
-    )  # {{ cookiecutter.__cookieplone_subtemplates }}
-    funcs = {k: v for k, v in globals().items() if k.startswith("generate_")}
-    for template_id, title, enabled in subtemplates:
-        template_slug = template_id.replace("/", "_").replace("-", "")
-        func_name = f"generate_{template_slug}"
-        func = funcs.get(func_name)
-        if not func:
-            raise ValueError(f"No handler available for sub_template {template_id}")
-        elif not int(enabled):
-            console.print(f" -> Ignoring ({title})")
-            continue
-        func(context, output_dir)
+SUBTEMPLATE_HANDLERS = {
+    "agents/instructions": generate_agents_instructions,
+}
 
 
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
 
-    # Subtemplates
-    _generate_subtemplates(context, output_dir)
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
 
 
 if __name__ == "__main__":

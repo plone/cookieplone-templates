@@ -1,0 +1,34 @@
+{
+  "name": "{{ cookiecutter.__npm_package_name }}-nick",
+  "version": "{{ cookiecutter.__version_package }}",
+  "description": "{{ cookiecutter.description }}",
+  "main": "index.ts",
+  "license": "MIT",
+  "keywords": [
+    "plone",
+    "nick",
+    "backend",
+    "addon"
+  ],
+  "author": "{{ cookiecutter.author }}",
+  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}-nick#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.frontend_addon_name }}-nick.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
+    "dry-release": "release-it --dry-run",
+    "release": "release-it",
+    "release-major-alpha": "release-it major --preRelease=alpha",
+    "release-alpha": "release-it --preRelease=alpha"
+  },
+  "dependencies": {
+    "@robgietema/nick": "workspace:*"
+  },
+  "peerDependencies": {},
+  "devDependencies": {}
+}

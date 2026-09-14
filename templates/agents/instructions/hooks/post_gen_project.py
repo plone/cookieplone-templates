@@ -6,6 +6,7 @@ from pathlib import Path
 from cookieplone.utils import console
 
 context: OrderedDict = {{cookiecutter}}
+versions: dict | OrderedDict = {{versions}}
 
 
 def handle_docs_instructions(context: OrderedDict, output_dir: Path) -> None:

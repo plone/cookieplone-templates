@@ -3,7 +3,7 @@ name: {{ cookiecutter.__project_slug }}
 
 services:
   traefik:
-    image: traefik:{{ cookiecutter.__devops_traefik_version }}
+    image: traefik:{{ versions.devops_traefik_version }}
 
     ports:
       - 80:80
@@ -98,7 +98,7 @@ services:
       - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
   zeo:
-    image: plone/plone-zeo:{{ cookiecutter.__devops_zeo_version }}
+    image: plone/plone-zeo:{{ versions.devops_zeo_version }}
     volumes:
       - vol-site-data:/data
 
