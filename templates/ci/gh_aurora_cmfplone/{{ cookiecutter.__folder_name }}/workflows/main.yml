@@ -80,6 +80,16 @@ jobs:
     permissions:
       contents: write
       packages: write
+
+  acceptance:
+    name: "Acceptance"
+    uses: ./.github/workflows/acceptance.yml
+    needs:
+        - config
+        - frontend
+    with:
+        node-version: {{ "${{ needs.config.outputs.node-version }}" }}
+    if: {{ "${{ needs.config.outputs.acceptance == 'true' }}" }}
   {%- endif %}
 
   report:
@@ -91,6 +101,7 @@ jobs:
       - backend
       {%- if cookiecutter.feature_headless %}
       - frontend
+      - acceptance
       {%- endif %}
       {%- if cookiecutter.has_docs == '1' %}
       - docs
@@ -108,6 +119,7 @@ jobs:
           echo '| backend | {{ "${{ needs.backend.result }}" }} |' >> $GITHUB_STEP_SUMMARY
           {%- if cookiecutter.feature_headless %}
           echo '| frontend | {{ "${{ needs.frontend.result }}" }} |' >> $GITHUB_STEP_SUMMARY
+          echo '| acceptance | {{ "${{ needs.acceptance.result }}" }} |' >> $GITHUB_STEP_SUMMARY
           {%- endif %}
           {%- if cookiecutter.has_docs == '1' %}
           echo '| docs | {{ "${{ needs.docs.result }}" }} |' >> $GITHUB_STEP_SUMMARY

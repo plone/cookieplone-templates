@@ -222,7 +222,7 @@ acceptance-test:
 .PHONY: acceptance-frontend-image-build
 acceptance-frontend-image-build:
 	@echo "Build acceptance frontend image"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(FRONTEND_BASE_VERSION)
+	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg AURORA_VERSION=$(FRONTEND_BASE_VERSION)
 
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:

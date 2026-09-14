@@ -1,0 +1,84 @@
+name: Acceptance Tests
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+
+jobs:
+  acceptance:
+    name: Acceptance
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Use Node.js {{ "${{ inputs.node-version }}" }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: {{ "${{ inputs.node-version }}" }}
+
+      - name: Enable corepack
+        run: npm i -g corepack@latest && corepack enable
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: {{ "${{ env.STORE_PATH }}" }}
+          key: {{ "${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}" }}
+          restore-keys: |
+            {{ "${{ runner.os }}" }}-pnpm-store-
+
+      - name: Install backend and frontend
+        working-directory: .
+        run: make install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - uses: JarvusInnovations/background-action@v1.0.7
+        name: Start servers - Aurora frontend and Plone (acceptance)
+        with:
+          run: |
+            cd "{{ "${{ github.workspace }}" }}"
+            make acceptance-backend-start &
+            make acceptance-frontend-dev-start &
+
+          wait-on: |
+            http-get://localhost:55001/plone
+            http://localhost:3000
+
+          tail: true # true = stderr,stdout
+
+          log-output-resume: stderr
+
+          wait-for: 10m
+
+          log-output: stderr,stdout # same as true
+
+          log-output-if: failure
+
+      - name: Run Playwright acceptance tests
+        run: pnpm exec playwright test -c playwright-acceptance.config.ts --reporter=list,html
+
+      - name: Upload Playwright artifacts
+        if: {{ "${{ !cancelled() }}" }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: acceptance-report
+          path: |
+            frontend/playwright-report
+            frontend/acceptance/results

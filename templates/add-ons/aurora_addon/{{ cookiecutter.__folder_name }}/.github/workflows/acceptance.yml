@@ -5,13 +5,12 @@ on:
       - "*.js"
       - "*.json"
       - "*.yaml"
-      - "cypress/**"
+      - "acceptance/**"
       - "packages/**"
       - ".github/workflows/acceptance.yml"
 
 env:
   NODE_VERSION: {{ versions.gha_version_node }}
-  CYPRESS_RETRIES: 2
 
 jobs:
 
@@ -43,20 +42,11 @@ jobs:
           restore-keys: |
             {{ "${{ runner.os }}" }}-pnpm-store-
 
-      - name: Cache Cypress Binary
-        id: cache-cypress-binary
-        uses: actions/cache@{{ versions.gha_version_cache }}
-        with:
-          path: ~/.cache/Cypress
-          key: binary-{{ "${{ env.NODE_VERSION }}" }}-{{ "${{ hashFiles('pnpm-lock.yaml') }}" }}
-
       - name: Install dependencies
         run: make install
 
-      - name: Install Cypress if not in cache
-        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
-        working-directory: core/packages/volto
-        run: make cypress-install
+      - name: Install Playwright browsers
+        run: make install-acceptance
 
       - uses: JarvusInnovations/background-action@{{ versions.gha_version_background_action }}
         name: Start Servers
@@ -89,16 +79,11 @@ jobs:
 
       - run: make ci-acceptance-test
 
-      # Upload Cypress screenshots
+      # Upload Playwright report and traces
       - uses: actions/upload-artifact@{{ versions.gha_version_upload_artifact }}
-        if: failure()
+        if: {{ "${{ !cancelled() }}" }}
         with:
-          name: cypress-screenshots-acceptance
-          path: acceptance/cypress/screenshots
-
-      # Upload Cypress videos
-      - uses: actions/upload-artifact@{{ versions.gha_version_upload_artifact }}
-        if: failure()
-        with:
-          name: cypress-videos-acceptance
-          path: acceptance/cypress/videos
+          name: playwright-acceptance-report
+          path: |
+            playwright-report
+            acceptance/results

@@ -141,10 +141,15 @@ acceptance-backend-start: ## Start backend acceptance server
 ci-acceptance-backend-start: ## Start backend acceptance server in headless mode for CI
 	docker run -i --rm -p 55001:55001 $(DOCKER_IMAGE_ACCEPTANCE)
 
+## Acceptance tests (Playwright)
+.PHONY: install-acceptance
+install-acceptance: ## Install the Playwright browsers used by the acceptance tests
+	pnpm exec playwright install --with-deps chromium
+
 .PHONY: acceptance-test
-acceptance-test: ## Start Cypress in interactive mode
-	pnpm --filter @plone/tooling exec cypress open --config-file $(CURRENT_DIR)/core/packages/tooling/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
+acceptance-test: ## Start the acceptance tests in interactive (UI) mode
+	pnpm exec playwright test -c $(CURRENT_DIR)/playwright-acceptance.config.ts --ui
 
 .PHONY: ci-acceptance-test
-ci-acceptance-test: ## Run cypress tests in headless mode for CI
-	pnpm --filter @plone/tooling exec cypress run --config-file $(CURRENT_DIR)/core/packages/tooling/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
+ci-acceptance-test: ## Run the acceptance tests in headless mode for CI
+	pnpm exec playwright test -c $(CURRENT_DIR)/playwright-acceptance.config.ts --reporter=list,html

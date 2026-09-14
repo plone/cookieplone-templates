@@ -36,7 +36,7 @@
             "frontend_base_version": {
                 "type": "string",
                 "title": "Frontend container base version",
-                "default": "19.0.0",
+                "default": "1.0.0-alpha.8",
                 "validator": "",
                 "format": "computed"
             },

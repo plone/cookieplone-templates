@@ -88,8 +88,8 @@
             "frontend_base_version": {
                 "type": "string",
                 "title": "Frontend Container Base Version",
-                "description": "Version of the Plone frontend container base used to build Aurora.",
-                "default": "19.0.0",
+                "description": "Version of the Aurora frontend container base used to build Aurora.",
+                "default": "1.0.0-alpha.8",
                 "validator": ""
             },
             "frontend_addon_name": {

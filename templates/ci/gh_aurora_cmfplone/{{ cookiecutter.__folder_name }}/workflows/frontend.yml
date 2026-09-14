@@ -71,7 +71,7 @@ jobs:
       image-name-suffix: {{ "${{ inputs.image-name-suffix }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
       build-args: |
-        VOLTO_VERSION={{ "${{ inputs.frontend-base-version }}" }}
+        AURORA_VERSION={{ "${{ inputs.frontend-base-version }}" }}
       push: {{ "${{ github.event_name != 'pull_request' }}" }}
     secrets:
       username: {{ "${{ github.actor }}" }}
