@@ -60,7 +60,7 @@ services:
     build:
       context: ./frontend
       args:
-        - VOLTO_VERSION=${FRONTEND_BASE_VERSION}
+        - AURORA_VERSION=${FRONTEND_BASE_VERSION}
     environment:
       PLONE_API_PATH: http://backend:8080/Plone
     depends_on:
