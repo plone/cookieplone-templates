@@ -245,7 +245,7 @@
     },
     "versions": {
       "backend_python": "3.14",
-      "devops_cronjob_version": "1.14",
+      "devops_cronjob_version": "1.16",
       "devops_db_version": "18",
       "devops_traefik_version": "v3.7",
       "devops_varnish_version": "8.0",
@@ -258,16 +258,15 @@
       "frontend_typescript": "^5.7.3",
       "frontend_vitest": "^3.1.2",
       "gha_version_background_action": "v2",
-      "gha_version_cache": "v6",
+      "gha_version_cache": "v6.1.0",
       "gha_version_checkout": "v7",
-      "gha_version_docker_stack": "v1.4.0",
+      "gha_version_docker_stack": "v1.5.0",
       "gha_version_node": "24.x",
-      "gha_version_pages_deploy": "v4.8.0",
-      "gha_version_paths_filter": "v4.0.1",
+      "gha_version_pages_deploy": "v4.9.0",
+      "gha_version_paths_filter": "v4.0.3",
       "gha_version_plone_meta": "2.x",
-      "gha_version_setup_node": "v6.4.0",
-      "gha_version_upload_artifact": "v7.0.1",
-      "tools_pre_commit": "3.7.1"
+      "gha_version_setup_node": "v7.0.0",
+      "gha_version_upload_artifact": "v7.0.1"
     }
   }
 }
