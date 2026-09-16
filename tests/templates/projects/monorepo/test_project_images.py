@@ -30,7 +30,7 @@ def test_image_prefix_registry(
     # Check Makefile in backend (from sub/project_settings)
     backend_makefile = result.project_path / "backend" / "Makefile"
     assert (
-        "IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')"
+        "IMAGE_NAME_PREFIX := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.container_images_prefix')"  # noqa: E501
         in backend_makefile.read_text()
     )
     # Ensure no redundant dash

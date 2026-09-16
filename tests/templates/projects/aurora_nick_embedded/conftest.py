@@ -13,7 +13,7 @@ def context(annotate_context, cookieplone_root) -> dict:
     """Cookiecutter context."""
     return annotate_context(
         {
-            "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+            "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",  # noqa: E501
             "frontend_addon_name": "aurora-nick-embedded",
             "project_slug": "aurora-nick-embedded",
             "description": "Plone Aurora using Nick as an embedded library.",
@@ -31,7 +31,7 @@ def context(annotate_context, cookieplone_root) -> dict:
 def bad_context() -> dict:
     """Cookiecutter context with invalid data."""
     return {
-        "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
+        "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",  # noqa: E501
         "frontend_addon_name": "aurora-nick-embedded",
         "project_slug": "aurora-nick-embedded",
         "description": "Plone Aurora using Nick as an embedded library.",

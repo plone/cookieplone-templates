@@ -136,45 +136,10 @@
                 "validator": "",
                 "format": "computed"
             },
-            "__version_mrs_developer": {
-                "type": "string",
-                "title": "__version_mrs_developer",
-                "default": "^2.2.0",
-                "validator": "",
-                "format": "computed"
-            },
             "__version_pnpm": {
                 "type": "string",
                 "title": "__version_pnpm",
                 "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_release_it": {
-                "type": "string",
-                "title": "__version_release_it",
-                "default": "^19.0.5",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_testing_library_react": {
-                "type": "string",
-                "title": "__version_testing_library_react",
-                "default": "^16.2.0",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_typescript": {
-                "type": "string",
-                "title": "__version_typescript",
-                "default": "^5.7.3",
-                "validator": "",
-                "format": "computed"
-            },
-            "__version_vitest": {
-                "type": "string",
-                "title": "__version_vitest",
-                "default": "^3.1.2",
                 "validator": "",
                 "format": "computed"
             },
