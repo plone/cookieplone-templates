@@ -194,6 +194,20 @@ def test_upstream_nick_configuration(cutter_result):
     assert "CI=1 pnpm run test --passWithNoTests" not in frontend_makefile
 
 
+def test_backend_toolchain_versions_from_config(cutter_result, cookieplone_root):
+    """The composed nick_backend sub-template resolves ``config.versions``."""
+    config = json.loads((cookieplone_root / "cookieplone-config.json").read_text())
+    versions = config["config"]["versions"]
+
+    package = json.loads(
+        (cutter_result.project_path / "backend/package.json").read_text()
+    )
+    assert package["devDependencies"]["typescript"] == versions["backend_typescript"]
+    assert package["devDependencies"]["vitest"] == versions["backend_vitest"]
+    assert package["devDependencies"]["@vitest/ui"] == versions["backend_vitest"]
+    assert package["packageManager"] == f"pnpm@{versions['backend_pnpm']}"
+
+
 def test_no_devops_scaffold(cutter_result):
     """Keep deployment and other monorepo extras out of this template."""
     project_path = cutter_result.project_path
