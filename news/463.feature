@@ -1,0 +1,1 @@
+Upgrade `config.versions.devops_cronjob_version` to 1.16, `config.versions.gha_version_docker_stack` to v1.5.0, `config.versions.gha_version_pages_deploy` to v4.9.0, `config.versions.gha_version_paths_filter` to v4.0.3, `config.versions.gha_version_setup_node` to v7.0.0, and `config.versions.gha_version_cache` to v6.1.0. @ericof
