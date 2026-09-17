@@ -244,7 +244,10 @@
       }
     },
     "versions": {
+      "backend_pnpm": "10.20.0",
       "backend_python": "3.14",
+      "backend_typescript": "5.9.3",
+      "backend_vitest": "4.0.18",
       "devops_cronjob_version": "1.16",
       "devops_db_version": "18",
       "devops_traefik_version": "v3.7",
