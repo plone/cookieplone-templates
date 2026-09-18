@@ -533,6 +533,7 @@ jobs:
         run: |
           pnpm exec playwright install --with-deps chromium
           cp "$GITHUB_WORKSPACE/.github/tests/aurora-nick.test.js" .
+          cp "$GITHUB_WORKSPACE/.github/tests/playwright.smoke.config.cjs" .
 
       - name: Start Nick and Aurora
         uses: JarvusInnovations/background-action@v2
@@ -554,7 +555,7 @@ jobs:
       - name: Verify Aurora and Nick integration
         working-directory: ${{ env.name }}/frontend
         run: |
-          pnpm exec playwright test aurora-nick.test.js --reporter=line
+          pnpm exec playwright test -c playwright.smoke.config.cjs --reporter=line
 
   aurora-cmfplone-functional:
     runs-on: ubuntu-latest
@@ -618,6 +619,7 @@ jobs:
         run: |
           pnpm exec playwright install --with-deps chromium
           cp "$GITHUB_WORKSPACE/.github/tests/aurora-cmfplone.test.js" .
+          cp "$GITHUB_WORKSPACE/.github/tests/playwright.smoke.config.cjs" .
 
       - name: Start Plone backend and Aurora
         uses: JarvusInnovations/background-action@v2
@@ -639,7 +641,7 @@ jobs:
       - name: Verify Aurora and Plone backend integration
         working-directory: ${{ env.name }}/frontend
         run: |
-          pnpm exec playwright test aurora-cmfplone.test.js --reporter=line
+          pnpm exec playwright test -c playwright.smoke.config.cjs --reporter=line
 
   report:
     runs-on: ubuntu-latest
