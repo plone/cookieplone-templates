@@ -1,0 +1,1 @@
+Renamed the Aurora add-on template's `playwright-acceptance.config.ts` to the default `playwright.config.ts` (dropping the now-redundant `-c` flags in CI, the `Makefile` and `package.json`), and removed the stale `@plone/providers` build rule from the `Makefile`. @sneridagh
