@@ -50,7 +50,7 @@
     "@types/nodemailer": "7.0.11",
     "@types/pdf-parse": "1.1.5",
     "@types/supertest": "6.0.3",
-    "@vitest/ui": "4.0.18",
+    "@vitest/ui": "{{ versions.backend_vitest }}",
     "eslint": "10.0.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-json": "4.0.1",
@@ -59,9 +59,9 @@
     "pofile": "1.1.4",
     "prettier": "3.8.1",
     "supertest": "7.2.2",
-    "typescript": "5.9.3",
+    "typescript": "{{ versions.backend_typescript }}",
     "typescript-eslint": "8.66.0",
-    "vitest": "4.0.18"
+    "vitest": "{{ versions.backend_vitest }}"
   },
   "dependencies": {
     "@plone/nick": "workspace:^",
@@ -69,5 +69,5 @@
     "nodemon": "3.1.14",
     "tsx": "4.21.0"
   },
-  "packageManager": "pnpm@10.20.0"
+  "packageManager": "pnpm@{{ versions.backend_pnpm }}"
 }

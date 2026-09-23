@@ -1,0 +1,1 @@
+Source the `sub/nick_backend` frontend toolchain (TypeScript, Vitest, pnpm) from `config.versions` via new `backend_*` keys instead of hardcoded literals, so the pins are centralized and auditable. @sneridagh
