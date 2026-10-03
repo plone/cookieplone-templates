@@ -27,7 +27,8 @@
     "release-alpha": "release-it --preRelease=alpha"
   },
   "dependencies": {
-    "@plone/components": "workspace:*"
+    "@plone/components": "workspace:*",
+    "@plone/icons": "workspace:*"
   },
   "peerDependencies": {
     "i18next": "catalog:",
