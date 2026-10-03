@@ -51,6 +51,12 @@ build: ## Build a production bundle for distribution of the project with the add
 core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
 	pnpm --filter @plone/registry build
 
+core/packages/icons/dist: $(shell find core/packages/icons/src -type f)
+	pnpm --filter @plone/icons build
+
+core/packages/quanta/dist: $(shell find core/packages/quanta/src -type f)
+	pnpm --filter @plone/quanta build
+
 core/packages/components/dist: $(shell find core/packages/components/src -type f)
 	pnpm --filter @plone/components build
 
@@ -64,7 +70,7 @@ core/packages/react-router/dist: $(shell find core/packages/react-router/src -ty
 	pnpm --filter @plone/react-router build
 
 .PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n

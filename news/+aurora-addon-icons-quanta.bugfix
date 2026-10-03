@@ -1,0 +1,1 @@
+Build `@plone/icons` and `@plone/quanta` in the Aurora add-on `build-deps` target, before `@plone/components`. @sneridagh
