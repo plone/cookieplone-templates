@@ -31,6 +31,7 @@ def test_variable_substitution(cutter_result, variable_pattern):
 
 
 FOLDERS = [
+    ".devcontainer",
     ".github",
     ".vscode",
     "backend",

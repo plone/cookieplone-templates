@@ -42,6 +42,9 @@ POST_GEN_TO_REMOVE: dict[str, list[str]] = {
         "devops/.env_gha",
         "devops/README-GHA.md",
     ],
+    "devcontainer-frontend": [
+        ".devcontainer/frontend",
+    ],
     "docs": [
         "docs/LICENSE.md",
         "docs/.git",
@@ -274,6 +277,13 @@ def action_handlers(context: OrderedDict) -> list[post_gen.PostGenAction]:
             "handler": post_gen.run_make_format("format", "frontend"),
             "title": "Format frontend code",
             "enabled": backend_format and feature_headless,
+        },
+        {
+            "handler": post_gen.remove_files_by_key(
+                POST_GEN_TO_REMOVE, "devcontainer-frontend"
+            ),
+            "title": "Remove frontend development container",
+            "enabled": not feature_headless,
         },
         {
             "handler": post_gen.remove_files_by_key(

@@ -1,0 +1,84 @@
+---
+# Development containers, used by .devcontainer/*/devcontainer.json.
+#
+# Images (only built, never started):
+#   *-base: the regular project images (see docker-compose.yml)
+#   *-dev:  the base images plus development tooling (.devcontainer/*/Dockerfile)
+# Build them with: docker compose -f docker-compose-devcontainers.yml build
+#
+# The services that run the *-dev images have no build section on purpose:
+# the Dev Containers tooling then uses the images as they are.
+name: {{ cookiecutter.__devops_compose_name }}-devcontainer
+
+services:
+  backend-base:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-backend-base
+    build:
+      context: ./backend
+    scale: 0
+
+  backend-dev:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-backend-dev
+    build:
+      context: ./.devcontainer/backend
+      additional_contexts:
+        {{ cookiecutter.__devops_compose_name }}-devcontainer-backend-base: service:backend-base
+    scale: 0
+{%- if cookiecutter.feature_headless %}
+
+  frontend-base:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-frontend-base
+    build:
+      context: ./frontend
+      args:
+        - VOLTO_VERSION=${VOLTO_VERSION:-{{ cookiecutter.volto_version }}}
+    scale: 0
+
+  frontend-dev:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-frontend-dev
+    build:
+      context: ./.devcontainer/frontend
+      additional_contexts:
+        {{ cookiecutter.__devops_compose_name }}-devcontainer-frontend-base: service:frontend-base
+    scale: 0
+{%- endif %}
+
+  backend:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-backend-dev
+    pull_policy: never
+    environment:
+      UV_LINK_MODE: copy
+    volumes:
+      - .:/workspace:cached
+      # Keep platform specific files out of the host checkout
+      - backend-venv:/workspace/backend/.venv
+      - backend-instance:/workspace/backend/instance
+      - backend-cache:/home/plone/.cache
+{%- if cookiecutter.feature_headless %}
+
+  frontend:
+    image: {{ cookiecutter.__devops_compose_name }}-devcontainer-frontend-dev
+    pull_policy: never
+    # Share the network with the backend, so Volto reaches Plone on localhost:8080
+    network_mode: service:backend
+    depends_on:
+      - backend
+    environment:
+      npm_config_store_dir: /home/node/.cache/pnpm/store
+    volumes:
+      - .:/workspace:cached
+      # Keep platform specific files out of the host checkout
+      - frontend-node-modules:/workspace/frontend/node_modules
+      - frontend-addon-node-modules:/workspace/frontend/packages/{{ cookiecutter.__frontend_package_name }}/node_modules
+      - frontend-cache:/home/node/.cache
+{%- endif %}
+
+volumes:
+  backend-venv: {}
+  backend-instance: {}
+  backend-cache: {}
+{%- if cookiecutter.feature_headless %}
+  frontend-node-modules: {}
+  frontend-addon-node-modules: {}
+  frontend-cache: {}
+{%- endif %}
