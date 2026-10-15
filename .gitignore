@@ -12,5 +12,8 @@ collective.plonedistribution
 __pycache__/
 .venv
 
+# Cookieplone local answers/replay files (contain personal data, never commit)
+.cookieplone_answers_*.json
+
 # Local Claude context (not for sharing)
 .claude/*.local.*
