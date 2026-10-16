@@ -122,6 +122,43 @@ def test_aurora_cmfplone_functional_job():
     assert (root / ".github/tests/aurora-cmfplone.test.js").is_file()
 
 
+def test_frontend_volto18_functional_job():
+    """Exercise the generated frontend add-on pinned to Volto 18."""
+    root = Path(__file__).parents[2]
+    workflow = yaml.safe_load((root / ".github/workflows/main.yml").read_text())
+    job = workflow["jobs"]["frontend-functional-volto18"]
+
+    assert job["env"]["template"] == "frontend_addon"
+    assert "frontend-functional-volto18" in workflow["jobs"]["report"]["needs"]
+
+    steps = {step.get("name"): step for step in job["steps"]}
+    assert steps["Resolve latest Volto 18"]["run"].strip().startswith(
+        "VOLTO_18_VERSION=$(npm view @plone/volto dist-tags.volto-18)"
+    )
+    generate_step = steps["Generate"]
+    assert (
+        generate_step["with"]["frontend-volto-version"]
+        == "${{ env.VOLTO_18_VERSION }}"
+    )
+
+    commands = {
+        line.strip()
+        for step in job["steps"]
+        for line in step.get("run", "").splitlines()
+    }
+    assert "make test" in commands
+    assert "make lint" in commands
+
+    background_step = next(
+        step
+        for step in job["steps"]
+        if step.get("uses") == "JarvusInnovations/background-action@v2"
+    )
+    assert "make ci-acceptance-backend-start &" in background_step["with"]["run"]
+    assert "make acceptance-frontend-prod-start &" in background_step["with"]["run"]
+    assert "http://localhost:3000" in background_step["with"]["wait-on"]
+
+
 def test_background_actions_use_v2():
     """Use the Node.js 24-compatible background action release."""
     root = Path(__file__).parents[2]

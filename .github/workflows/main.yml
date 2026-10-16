@@ -345,6 +345,135 @@ jobs:
         run: |
           make ci-acceptance-test
 
+  frontend-functional-volto18:
+    runs-on: ubuntu-latest
+    if: "${{ always() }}"
+    needs:
+      - test-repository
+    env:
+      template: "frontend_addon"
+      name: "volto-add-on"
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v7
+
+      - name: Use Node.js ${{ env.node-version }}
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - name: Resolve latest Volto 18
+        shell: bash
+        run: |
+          VOLTO_18_VERSION=$(npm view @plone/volto dist-tags.volto-18)
+          if [ -z "$VOLTO_18_VERSION" ]; then
+            VOLTO_18_VERSION=$(npm view @plone/volto versions --json | python3 -c "import json,sys; data=json.load(sys.stdin); v18=[v for v in data if v.startswith('18.') and '-' not in v]; print(sorted(v18, key=lambda v: tuple(map(int, v.split('.'))))[-1])")
+          fi
+          echo "VOLTO_18_VERSION=$VOLTO_18_VERSION" >> $GITHUB_ENV
+
+      - name: Generate
+        uses: ./.github/actions/generate
+        with:
+          template: ${{ env.template }}
+          python-version: ${{ env.python-version }}
+          frontend-volto-version: ${{ env.VOLTO_18_VERSION }}
+
+      - name: Enable corepack
+        run: |
+          npm install -g --force corepack@latest
+          corepack enable
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v6.1.0
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-volto18-pnpm-store-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-volto18-pnpm-store-
+
+      - name: Cache Cypress Binary
+        id: cache-cypress-binary
+        uses: actions/cache@v6.1.0
+        with:
+          path: ~/.cache/Cypress
+          key: Cypress-binary-volto18-${{ env.node-version }}-${{ hashFiles('volto-add-on/pnpm-lock.yaml', 'volto-add-on/package.json','volto-add-on/mrs.developer.json') }}
+
+      - name: Install generated package
+        working-directory: ${{ env.name }}
+        run: |
+          make install
+
+      - name: Install Cypress if not in cache
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        working-directory: ${{ env.name }}
+        shell: bash
+        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
+
+      - name: Run unit tests
+        working-directory: ${{ env.name }}
+        run: |
+          make test
+
+      - name: Run i18n tests
+        working-directory: ${{ env.name }}
+        run: |
+          make i18n
+
+      - name: Run linting
+        working-directory: ${{ env.name }}
+        run: |
+          make lint
+
+      - name: Run formatting
+        working-directory: ${{ env.name }}
+        run: |
+          make format
+
+      - name: Run Storybook
+        working-directory: ${{ env.name }}
+        run: |
+          make storybook-build
+
+      - name: Start Servers
+        uses: JarvusInnovations/background-action@v2
+        with:
+          working-directory: ${{ env.name }}
+          run: |
+            make ci-acceptance-backend-start &
+            make acceptance-frontend-prod-start &
+          # your step-level and job-level environment variables are available to your commands as-is
+          # npm install will count towards the wait-for timeout
+          # whenever possible, move unrelated scripts to a different step
+          # to background multiple processes: add & to the end of the command
+
+          wait-on: |
+            http-get://localhost:55001/plone
+            http://localhost:3000
+          # IMPORTANT: to use environment variables in wait-on, you must use this form: ${{ env.VAR }}
+          # See wait-on section below for all resource types and prefixes
+
+          tail: true # true = stderr,stdout
+          # This will allow you to monitor the progress live
+
+          log-output-resume: stderr
+          # Eliminates previosuly output stderr log entries from post-run output
+
+          wait-for: 10m
+
+          log-output: stderr,stdout # same as true
+
+          log-output-if: failure
+
+      - name: Run acceptance tests
+        working-directory: ${{ env.name }}
+        run: |
+          make ci-acceptance-test
+
   volto-nick-functional:
     runs-on: ubuntu-latest
     if: "${{ always() }}"
@@ -651,6 +780,7 @@ jobs:
       - test-template
       - backend-functional
       - frontend-functional
+      - frontend-functional-volto18
       - volto-nick-functional
       - aurora-nick-functional
       - aurora-cmfplone-functional
@@ -666,6 +796,7 @@ jobs:
           echo '| Template Generation | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Backend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Frontend add-on | ✅ |' >> $GITHUB_STEP_SUMMARY
+          echo '| Functional: Frontend add-on (Volto 18) | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Volto with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Aurora with Nick backend | ✅ |' >> $GITHUB_STEP_SUMMARY
           echo '| Functional: Aurora with Plone backend | ✅ |' >> $GITHUB_STEP_SUMMARY
