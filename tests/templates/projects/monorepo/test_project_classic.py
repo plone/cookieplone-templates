@@ -1,4 +1,5 @@
 import pytest
+import yaml
 
 
 @pytest.fixture(scope="session")
@@ -38,6 +39,14 @@ def test_classic_generation(cutter_result_classic):
     # Check that frontend folder does not exist
     frontend_dir = cutter_result_classic.project_path / "frontend"
     assert not frontend_dir.exists()
+
+    # Check only the backend development container exists
+    devcontainer_dir = cutter_result_classic.project_path / ".devcontainer"
+    assert (devcontainer_dir / "backend" / "devcontainer.json").is_file()
+    assert not (devcontainer_dir / "frontend").exists()
+    compose = cutter_result_classic.project_path / "docker-compose-devcontainers.yml"
+    services = yaml.safe_load(compose.read_text())["services"]
+    assert set(services) == {"backend-base", "backend-dev", "backend"}
 
     # Check README.md
     readme = cutter_result_classic.project_path / "README.md"

@@ -5,6 +5,11 @@ import json
 import pytest
 
 TOP_LEVEL_FILES = [
+    ".devcontainer/README.md",
+    ".devcontainer/backend/Dockerfile",
+    ".devcontainer/backend/devcontainer.json",
+    ".devcontainer/frontend/Dockerfile",
+    ".devcontainer/frontend/devcontainer.json",
     ".editorconfig",
     ".github/instructions/docs.instructions.md",
     ".github/instructions/volto.instructions.md",
@@ -16,6 +21,7 @@ TOP_LEVEL_FILES = [
     "CHANGELOG.md",
     "Makefile",
     "README.md",
+    "docker-compose-devcontainers.yml",
     "repository.toml",
     "version.txt",
 ]
@@ -57,6 +63,7 @@ def test_valid_json_files(cutter_result, filepath: str):
         [".github/workflows/manual_deploy.yml", "github-workflow"],
         [".github/workflows/varnish.yml", "github-workflow"],
         ["docker-compose.yml", "docker-compose"],
+        ["docker-compose-devcontainers.yml", "docker-compose"],
         ["frontend/package.json", "package"],
         ["frontend/packages/volto-ploneorgbr/package.json", "package"],
         ["frontend/packages/volto-ploneorgbr/tsconfig.json", "tsconfig"],

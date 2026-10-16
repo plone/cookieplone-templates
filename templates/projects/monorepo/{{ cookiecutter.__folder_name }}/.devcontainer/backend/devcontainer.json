@@ -1,0 +1,32 @@
+{
+  "name": "{{ cookiecutter.title }}: Backend",
+  "dockerComposeFile": ["../../docker-compose-devcontainers.yml"],
+  "initializeCommand": "docker compose -f docker-compose-devcontainers.yml build backend-dev",
+  "service": "backend",
+  "runServices": ["backend"],
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "none",
+  "remoteUser": "plone",
+  "postCreateCommand": "sudo chown -R plone:plone backend/.venv backend/instance ~/.cache && make backend-install",
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Plone backend"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "editorconfig.editorconfig",
+        "ms-python.python",
+        "ms-python.vscode-python-envs",
+        "plone.plone-vs-utilities",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspace/backend/.venv/bin/python"
+      }
+    }
+  }
+}

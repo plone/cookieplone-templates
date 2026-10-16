@@ -1,0 +1,34 @@
+{%- if cookiecutter.feature_headless -%}
+{
+  "name": "{{ cookiecutter.title }}: Frontend",
+  "dockerComposeFile": ["../../docker-compose-devcontainers.yml"],
+  "initializeCommand": "docker compose -f docker-compose-devcontainers.yml build backend-dev frontend-dev",
+  "service": "frontend",
+  "runServices": ["backend", "frontend"],
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "none",
+  "remoteUser": "node",
+  "postCreateCommand": "sudo chown -R node:node frontend/node_modules frontend/packages/{{ cookiecutter.__frontend_package_name }}/node_modules ~/.cache && make frontend-install",
+  "forwardPorts": [3000, 3001],
+  "portsAttributes": {
+    "3000": {
+      "label": "Volto"
+    },
+    "3001": {
+      "label": "Volto hot reload",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "plone.plone-vs-utilities",
+        "stylelint.vscode-stylelint"
+      ]
+    }
+  }
+}
+{%- endif %}
