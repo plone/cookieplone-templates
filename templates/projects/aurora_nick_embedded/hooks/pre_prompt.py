@@ -12,7 +12,6 @@ except ModuleNotFoundError:
     sys.exit(1)
 from packaging.version import Version
 
-
 SUPPORTED_NODE_VERSIONS = [
     "18",
     "19",
@@ -20,6 +19,7 @@ SUPPORTED_NODE_VERSIONS = [
     "21",
     "22",
     "24",
+    "26",
 ]
 MIN_COOKIEPLONE = "2.0.0a2"
 COOKIEPLONE_INSTALLATION = (

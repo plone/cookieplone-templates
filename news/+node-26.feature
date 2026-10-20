@@ -1,0 +1,1 @@
+Add Node.js 26 to the supported Node.js versions of the Aurora (`aurora_addon`, `aurora_nick`, `aurora_nick_embedded`) and Volto (`frontend_addon`, `volto_nick`) templates, in preparation for Node.js 26 becoming LTS. @sneridagh
