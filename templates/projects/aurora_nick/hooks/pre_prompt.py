@@ -12,6 +12,7 @@ except ModuleNotFoundError:
     sys.exit(1)
 from packaging.version import Version
 
+
 SUPPORTED_NODE_VERSIONS = [
     "20",
     "22",
