@@ -541,7 +541,7 @@ jobs:
       - name: Test generated project
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Initialize Nick database
         working-directory: ${{ env.name }}
@@ -648,7 +648,7 @@ jobs:
       - name: Test generated project
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Initialize Nick database
         working-directory: ${{ env.name }}
@@ -740,7 +740,7 @@ jobs:
       - name: Test generated project
         working-directory: ${{ env.name }}
         run: |
-          make ci-test
+          make test
 
       - name: Install Playwright
         working-directory: ${{ env.name }}/frontend
