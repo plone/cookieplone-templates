@@ -20,6 +20,7 @@ SUPPORTED_NODE_VERSIONS = [
     "21",
     "22",
     "24",
+    "26",
 ]
 MIN_COOKIEPLONE = "2.0.0a2"
 COOKIEPLONE_INSTALLATION = (
