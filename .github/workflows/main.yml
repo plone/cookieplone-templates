@@ -15,7 +15,6 @@ env:
   python-version: "3.10"
 
 jobs:
-
   report-keys:
     name: "Report keys usage"
     uses: ./.github/workflows/report.yml
@@ -163,12 +162,12 @@ jobs:
         if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
         working-directory: ${{ env.name }}
         shell: bash
-        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
+        run: "NODEBIN=$(pnpm bin) && $NODEBIN/cypress install"
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make test
+          make ci-test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -247,7 +246,7 @@ jobs:
         with:
           template: ${{ env.template }}
           python-version: ${{ env.python-version }}
-          frontend-use-prerelease-versions: 'Yes'
+          frontend-use-prerelease-versions: "Yes"
 
       - name: Enable corepack
         run: |
@@ -283,12 +282,12 @@ jobs:
         if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
         working-directory: ${{ env.name }}
         shell: bash
-        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
+        run: "NODEBIN=$(pnpm bin) && $NODEBIN/cypress install"
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make test
+          make ci-test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
@@ -412,12 +411,12 @@ jobs:
         if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
         working-directory: ${{ env.name }}
         shell: bash
-        run: 'NODEBIN=$(pnpm bin) && $NODEBIN/cypress install'
+        run: "NODEBIN=$(pnpm bin) && $NODEBIN/cypress install"
 
       - name: Run unit tests
         working-directory: ${{ env.name }}
         run: |
-          make test
+          make ci-test
 
       - name: Run i18n tests
         working-directory: ${{ env.name }}
