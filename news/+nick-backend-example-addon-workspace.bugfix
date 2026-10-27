@@ -1,0 +1,1 @@
+Add Nick's `packages/nick-example-addon` to the `sub/nick_backend` pnpm workspace, so installing against Nick `main` resolves its new `@plone/nick-example-addon` `workspace:*` devDependency. @sneridagh

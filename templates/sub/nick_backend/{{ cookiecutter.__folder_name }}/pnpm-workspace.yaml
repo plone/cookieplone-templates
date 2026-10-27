@@ -1,5 +1,7 @@
 packages:
   - 'src/develop/nick'
+  # Nick's own workspace packages, required by its devDependencies
+  - 'src/develop/nick/packages/nick-example-addon'
 
 onlyBuiltDependencies:
   - bcrypt
