@@ -69,5 +69,5 @@
     "nodemon": "3.1.14",
     "tsx": "4.21.0"
   },
-  "packageManager": "pnpm@10.20.0"
+  "packageManager": "pnpm@10.34.9"
 }
