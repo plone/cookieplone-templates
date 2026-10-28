@@ -64,6 +64,7 @@
       "title": "Sub-Templates",
       "description": "Templates used only for internal purposes",
       "templates": [
+        "sub/aurora_project",
         "sub/cache",
         "sub/frontend_project",
         "sub/nick_backend",
@@ -133,6 +134,12 @@
       "title": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
       "description": "Plone Aurora (alpha) using Nick as an embedded library (experimental)",
       "hidden": false
+    },
+    "sub/aurora_project": {
+      "path": "./templates/sub/aurora_project",
+      "title": "A Plone Aurora frontend project (used in Container images)",
+      "description": "Subtemplate with configuration used in container images for a Plone Aurora frontend project.",
+      "hidden": true
     },
     "sub/cache": {
       "path": "./templates/sub/cache",
