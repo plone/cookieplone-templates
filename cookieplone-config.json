@@ -252,7 +252,7 @@
     },
     "versions": {
       "backend_nick": "2.9.0",
-      "backend_pnpm": "10.20.0",
+      "backend_pnpm": "10.34.9",
       "backend_python": "3.14",
       "backend_typescript": "5.9.3",
       "backend_vitest": "4.0.18",
