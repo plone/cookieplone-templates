@@ -185,7 +185,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path) -> Pat
     settings_context = _fix_frontend_addon_name(context.copy())
     # The shared settings schema still requires this legacy internal key even
     # when its frontend payload is excluded.
-    settings_context["volto_version"] = settings_context["frontend_base_version"]
+    settings_context["volto_version"] = settings_context["aurora_version"]
     # Generate into staging first: removing frontend directly from a merge
     # targeting output_dir would also remove the existing Aurora workspace.
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -211,7 +211,6 @@ def generate_ci_gh_aurora_cmfplone(
         "feature_headless": feature_headless,
         "python_version": versions["backend_python"],
         "node_version": context.get("__node_version", ""),
-        "frontend_base_version": context.get("frontend_base_version", ""),
         "frontend_addon_name": frontend_context["frontend_addon_name"],
         "has_cache": "1" if context["devops_cache"] else "0",
         "has_docs": "1" if context["initialize_documentation"] else "0",

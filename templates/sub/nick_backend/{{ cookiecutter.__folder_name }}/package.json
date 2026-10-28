@@ -6,7 +6,8 @@
   "version": "0.0.1",
   "private": true,
   "workspaces": [
-    "src/develop/nick"
+    "src/develop/nick",
+    "src/develop/nick/packages/nick-example-addon"
   ],
   "keywords": [
     "cms"
