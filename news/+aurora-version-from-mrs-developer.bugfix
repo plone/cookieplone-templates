@@ -1,0 +1,1 @@
+Read the Aurora container base image version from the `core.tag` in `frontend/mrs.developer.json` in the `aurora_cmfplone` project `Makefile` and GitHub CI, instead of a hardcoded `frontend_base_version`, so the Docker images always match the checked out Aurora version. @sneridagh
