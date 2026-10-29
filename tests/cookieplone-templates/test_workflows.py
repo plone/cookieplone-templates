@@ -29,7 +29,7 @@ def test_all_functional_jobs_run_generated_developer_commands():
             for line in step.get("run", "").splitlines()
         }
         assert "make lint" in commands, name
-        assert "make test" in commands, name
+        assert "make test" in commands or "make ci-test" in commands, name
 
 
 def test_volto_nick_functional_job():
@@ -146,7 +146,7 @@ def test_frontend_volto18_functional_job():
         for step in job["steps"]
         for line in step.get("run", "").splitlines()
     }
-    assert "make test" in commands
+    assert "make ci-test" in commands
     assert "make lint" in commands
 
     background_step = next(

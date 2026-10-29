@@ -1,0 +1,1 @@
+Run generated project tests using `make ci-test` instead of `make test`. @davisagli
