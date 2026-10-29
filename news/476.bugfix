@@ -1,0 +1,1 @@
+Fixed `sub/frontend_project` failing in its post-generation hook with "A valid repository could not be found", by generating the frontend add-on through `run_subtemplates` with a path relative to the repository root. @ericof

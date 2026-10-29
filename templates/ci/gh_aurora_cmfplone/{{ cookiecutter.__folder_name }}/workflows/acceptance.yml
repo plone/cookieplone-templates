@@ -79,7 +79,7 @@ jobs:
           log-output-if: failure
 
       - name: Run Playwright acceptance tests
-        run: pnpm exec playwright test -c playwright-acceptance.config.ts --reporter=list,html
+        run: pnpm exec playwright test --reporter=list,html
 
       - name: Upload Playwright artifacts
         if: {{ "${{ !cancelled() }}" }}

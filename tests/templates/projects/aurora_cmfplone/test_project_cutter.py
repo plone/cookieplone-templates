@@ -111,7 +111,14 @@ def test_python_backend_and_aurora_ci(cutter_result):
     assert "backend-pytest.yml" in backend
     assert 'name: "Frontend: Lint, test, and build"' in frontend
     assert "@plone/aurora" not in backend
-    assert "frontend-base-version" in config
-    assert "FRONTEND_BASE_VERSION" in makefile
+    # The Aurora container base image version is read from mrs.developer.json
+    mrs_tag = "jq -r '.core.tag'"
+    mrs_file = "frontend/mrs.developer.json"
+    assert f"aurora-version=$({mrs_tag} {mrs_file})" in config
+    assert "AURORA_VERSION=${{ inputs.aurora-version }}" in frontend
+    assert f"AURORA_VERSION := $(shell {mrs_tag} $(CURRENT_DIR)/{mrs_file})" in makefile
+    assert "--build-arg AURORA_VERSION=$(AURORA_VERSION)" in makefile
+    assert "frontend-base-version" not in config
+    assert "FRONTEND_BASE_VERSION" not in makefile
     assert "volto_version" not in config
     assert "volto_version" not in makefile

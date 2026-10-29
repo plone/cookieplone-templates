@@ -1,0 +1,1 @@
+Restore `--passWithNoTests` flag everywhere that Jest is called. @davisagli

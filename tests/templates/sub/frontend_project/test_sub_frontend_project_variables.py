@@ -1,5 +1,15 @@
-ALLOWED_MISSING = []
-ALLOWED_NOT_USED = []
+# Used by the add-ons/frontend subtemplate, which computes them itself
+# or receives them from the post generation hook.
+ALLOWED_MISSING = [
+    "description",
+    "frontend_addon_name",
+    "github_organization",
+    "initialize_ci",
+    "initialize_documentation",
+    "npm_package_name",
+    "use_prerelease_versions",
+]
+ALLOWED_NOT_USED = ["__generator_sha"]
 
 
 def test_no_missing_variables(variables_missing):

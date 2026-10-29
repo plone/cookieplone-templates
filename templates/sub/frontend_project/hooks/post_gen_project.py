@@ -5,6 +5,7 @@ from pathlib import Path
 
 from cookieplone import generator
 from cookieplone.utils import files
+from cookieplone.utils.subtemplates import run_subtemplates
 
 context: OrderedDict = {{cookiecutter}}
 versions: dict | OrderedDict = {{versions}}
@@ -12,25 +13,31 @@ versions: dict | OrderedDict = {{versions}}
 
 LOCAL_FILES_FOLDER_NAME = "_project_files"
 
+TEMPLATES_FOLDER: str = "templates"
 
 TO_REMOVE = [".github", "packages/volto-addon"]
 
 
-def generate_addon(context, output_dir):
+def generate_addons_frontend(context: OrderedDict, output_dir: Path) -> Path:
     """Run volto generator."""
     folder_name = output_dir.name
     output_dir = output_dir.parent
     context["frontend_addon_name"] = "volto-addon"
     context["initialize_documentation"] = False
     context["initialize_ci"] = False
-    generator.generate_subtemplate(
-        "../../add-ons/frontend",
+    return generator.generate_subtemplate(
+        f"{TEMPLATES_FOLDER}/add-ons/frontend",
         output_dir,
         folder_name,
         context,
         TO_REMOVE,
         global_versions=versions,
     )
+
+
+SUBTEMPLATE_HANDLERS = {
+    "add-ons/frontend": generate_addons_frontend,
+}
 
 
 def cleanup(context, output_dir):
@@ -50,8 +57,10 @@ def cleanup(context, output_dir):
 def main():
     """Final fixes."""
     output_dir = Path().cwd()
-    # Setup frontend
-    generate_addon(context, output_dir)
+    # {{ cookiecutter.__cookieplone_subtemplates }}
+    run_subtemplates(
+        context, output_dir, handlers=SUBTEMPLATE_HANDLERS, global_versions=versions
+    )
     # Cleanup
     cleanup(context, output_dir)
 

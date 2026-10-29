@@ -5,7 +5,7 @@ running against a Plone **acceptance** backend (with `RobotRemote` enabled, so
 the backend can be reset between tests) and a running Aurora frontend.
 
 They live in `tests/` and are configured through
-`../playwright-acceptance.config.ts`.
+`../playwright.config.ts`.
 
 ## Layout
 

@@ -12,6 +12,10 @@ inputs:
     description: 'Use prerelease versions (frontend templates only)'
     required: false
     default: 'No'
+  frontend-volto-version:
+    description: 'Volto version override as full semver (frontend templates only, e.g. 18.36.0)'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -24,4 +28,8 @@ runs:
     - name: Generate codebase
       shell: bash
       run: |
-        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} use_prerelease_versions=${{ inputs.frontend-use-prerelease-versions }} --no-input
+        ARGS="use_prerelease_versions=${{ inputs.frontend-use-prerelease-versions }}"
+        if [ -n "${{ inputs.frontend-volto-version }}" ]; then
+          ARGS="$ARGS volto_version=${{ inputs.frontend-volto-version }}"
+        fi
+        COOKIEPLONE_REPOSITORY=$(pwd) uv run cookieplone ${{ inputs.template }} $ARGS --no-input

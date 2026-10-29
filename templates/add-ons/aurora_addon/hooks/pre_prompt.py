@@ -19,6 +19,7 @@ SUPPORTED_NODE_VERSIONS = [
     "21",
     "22",
     "24",
+    "26",
 ]
 
 

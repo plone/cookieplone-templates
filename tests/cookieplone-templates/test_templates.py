@@ -2,7 +2,7 @@ import pytest
 
 
 def test_total_templates(all_templates):
-    assert len(all_templates) == 25
+    assert len(all_templates) == 26
 
 
 def test_all_templates_should_be_listed(all_templates, templates_by_path):
@@ -39,6 +39,11 @@ def test_all_templates_should_be_listed(all_templates, templates_by_path):
         ("aurora_addon", "Plone Aurora Frontend Add-on", False),
         ("seven_addon", "Plone Aurora Frontend Add-on", True),
         ("documentation_starter", "Documentation scaffold for Plone projects", False),
+        (
+            "sub/aurora_project",
+            "A Plone Aurora frontend project (used in Container images)",
+            True,
+        ),
         ("sub/cache", "Cache settings for a Plone 6 project", True),
         (
             "sub/frontend_project",

@@ -60,6 +60,13 @@
         "extensions": [
             "cookieplone.filters.latest_volto"
         ],
-        "no_render": []
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "add-ons/frontend",
+                "title": "Setup Frontend",
+                "enabled": "1"
+            }
+        ]
     }
 }

@@ -75,7 +75,7 @@ jobs:
         image-name-prefix: {{ "${{ needs.config.outputs.image-name-prefix }}" }}
         image-name-suffix: frontend
         node-version: {{ "${{ needs.config.outputs.node-version }}" }}
-        frontend-base-version: {{ "${{ needs.config.outputs.frontend-base-version }}" }}
+        aurora-version: {{ "${{ needs.config.outputs.aurora-version }}" }}
     if: {{ "${{ needs.config.outputs.frontend == 'true' }}" }}
     permissions:
       contents: write
