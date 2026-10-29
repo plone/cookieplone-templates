@@ -12,6 +12,7 @@ except ModuleNotFoundError:
 from packaging.version import Version
 
 SUPPORTED_PYTHON_VERSIONS = ["3.10", "3.11", "3.12", "3.13"]
+SUPPORTED_NODE_VERSIONS = ["20", "22", "24", "26"]
 MIN_COOKIEPLONE = "2.0.0a2"
 COOKIEPLONE_INSTALLATION = (
     "https://github.com/plone/cookieplone/blob/main/README.md#installation-"
@@ -44,7 +45,7 @@ def sanity_check() -> data.SanityCheckResults:
         data.SanityCheck(
             "Node",
             commands.check_node_version,
-            [],
+            [SUPPORTED_NODE_VERSIONS],
             "error",
         ),
         data.SanityCheck("git", commands.check_command_is_available, ["git"], "error"),
