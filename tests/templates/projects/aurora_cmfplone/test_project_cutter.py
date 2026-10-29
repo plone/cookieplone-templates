@@ -86,7 +86,7 @@ def test_aurora_frontend_configuration(cutter_result):
     package = json.loads((project / "frontend/package.json").read_text())
     repository = (project / "repository.toml").read_text()
     assert package["dependencies"]["@plone/aurora"] == "workspace:*"
-    assert package["packageManager"] == "pnpm@11.20.0"
+    assert package["packageManager"] == "pnpm@12.14.0"
     assert "[frontend.package]" not in repository
     assert "@plone/volto" not in repository
     assert 'base_package = "Products.CMFPlone"' in repository
