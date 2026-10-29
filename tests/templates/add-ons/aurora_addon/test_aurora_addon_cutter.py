@@ -149,7 +149,7 @@ def test_pnpm_11_configuration(cutter_result):
     package = json.loads((project_path / "package.json").read_text())
     workspace = yaml.safe_load((project_path / "pnpm-workspace.yaml").read_text())
 
-    assert package["packageManager"] == "pnpm@11.20.0"
+    assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
     assert workspace["overrides"] == {
         "react": "^19.2.0",
