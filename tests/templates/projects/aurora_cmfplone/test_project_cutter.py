@@ -91,9 +91,54 @@ def test_aurora_frontend_configuration(cutter_result):
     assert "@plone/volto" not in repository
     assert 'base_package = "Products.CMFPlone"' in repository
     makefile = (project / "frontend/Makefile").read_text()
-    assert "REPOSITORY_SETTINGS :=" not in makefile
     assert "pnpm dlx mrs-developer" in makefile
+    assert "volto_version" not in makefile
+    assert ".frontend." not in makefile
     assert not (project / "frontend/volto.config.js").exists()
+
+
+@pytest.mark.parametrize(
+    "target",
+    [
+        "debug-settings",
+        "clean",
+        "install",
+        "build",
+        "format",
+        "lint",
+        "i18n",
+        "test",
+        "ci-test",
+        "build-image",
+        "acceptance-frontend-dev-start",
+        "ci-acceptance-test",
+    ],
+)
+def test_aurora_frontend_makefile_targets(cutter_result, target: str):
+    """Provide the frontend targets called by the project Makefile and CI."""
+    makefile = (cutter_result.project_path / "frontend/Makefile").read_text()
+    assert f"\n.PHONY: {target}\n{target}:" in makefile
+
+
+def test_aurora_frontend_project_files(cutter_result):
+    """Use project-level frontend files instead of the add-on ones."""
+    project = cutter_result.project_path
+    frontend = project / "frontend"
+    assert not (project / "_frontend_project_files").exists()
+    makefile = (frontend / "Makefile").read_text()
+    mrs_tag = "jq -r '.core.tag' $(CURRENT_DIR)/mrs.developer.json"
+    assert f"AURORA_VERSION := $(shell {mrs_tag})" in makefile
+    assert "PLONE_VERSION=6" not in makefile
+    assert ".backend.base_package_version" in makefile
+    assert ".container_images_prefix" in makefile
+    assert "--build-arg AURORA_VERSION=$(AURORA_VERSION)" in makefile
+    assert "@plone/volto" not in makefile
+    assert "jest-addon.config.js" not in makefile
+    dockerignore = (frontend / ".dockerignore").read_text().splitlines()
+    assert {"core", "node_modules"} <= set(dockerignore)
+    readme = (frontend / "README.md").read_text()
+    assert "npmjs.com" not in readme
+    assert "Volto" not in readme
 
     mrs = json.loads((project / "frontend/mrs.developer.json").read_text())
     assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
