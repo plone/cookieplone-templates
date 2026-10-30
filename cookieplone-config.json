@@ -251,6 +251,7 @@
       }
     },
     "versions": {
+      "backend_nick": "2.9.0",
       "backend_python": "3.14",
       "devops_cronjob_version": "1.16",
       "devops_db_version": "18",

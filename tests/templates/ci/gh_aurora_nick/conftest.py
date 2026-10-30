@@ -15,6 +15,7 @@ def context(annotate_context, cookieplone_root) -> dict:
         {
             "python_version": "3.14",
             "node_version": "24",
+            "image_name_prefix": "ghcr.io/collective/plone",
             "frontend_package_name": "aurora-plone",
         },
         cookieplone_root,

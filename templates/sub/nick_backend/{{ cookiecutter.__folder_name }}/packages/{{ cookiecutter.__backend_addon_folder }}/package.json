@@ -1,0 +1,40 @@
+{
+  "name": "{{ cookiecutter.backend_addon_name }}",
+  "description": "Nick add-on of {{ cookiecutter.title }}",
+  "type": "module",
+  "license": "MIT",
+  "version": "1.0.0-alpha.0",
+  "private": true,
+  "keywords": [
+    "nick",
+    "nick-addon"
+  ],
+  "author": "{{ cookiecutter.author }} <{{ cookiecutter.email }}>",
+  "homepage": "https://github.com/{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nick": {
+    "profiles": "src/profiles",
+    "migrations": "src/migrations",
+    "schema": "{{ cookiecutter.__backend_addon_schema }}"
+  },
+  "engines": {
+    "node": "^22 || ^24 || ^25 || ^26"
+  },
+  "peerDependencies": {
+    "@plone/nick": "workspace:^"
+  },
+  "devDependencies": {
+    "@plone/nick": "workspace:^"
+  }
+}

@@ -30,7 +30,9 @@ def test_shared_nick_backend_contains_scaffold(templates_folder):
 
     assert (backend / "package.json").is_file()
     assert (backend / "config.ts").is_file()
-    assert (backend / "src/profiles/default/metadata.json").is_file()
+    addon = backend / "packages" / "{{ cookiecutter.__backend_addon_folder }}"
+    assert (addon / "package.json").is_file()
+    assert (addon / "src/profiles/default/metadata.json").is_file()
 
 
 def test_shared_nick_backend_selects_frontend_profile(templates_folder):
@@ -40,6 +42,8 @@ def test_shared_nick_backend_selects_frontend_profile(templates_folder):
         / "sub"
         / "nick_backend"
         / "{{ cookiecutter.__folder_name }}"
+        / "packages"
+        / "{{ cookiecutter.__backend_addon_folder }}"
         / "src/profiles/default/documents/_root.json"
     ).read_text()
 
