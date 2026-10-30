@@ -1,0 +1,10 @@
+*.log
+.storybook-build
+acceptance
+build
+cache
+core
+node_modules
+playwright-report
+test-results
+Dockerfile

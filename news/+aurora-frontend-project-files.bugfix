@@ -1,0 +1,1 @@
+Use project-level `frontend/Makefile`, `frontend/README.md`, and `frontend/.dockerignore` in the `aurora_cmfplone` template, reading the Aurora version from `mrs.developer.json` and the Plone version and image prefix from the repository settings. @sneridagh
