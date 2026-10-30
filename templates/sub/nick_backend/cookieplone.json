@@ -54,6 +54,13 @@
         "validator": "",
         "format": "computed"
       },
+      "backend_addon_name": {
+        "type": "string",
+        "title": "Nick Add-on Name",
+        "default": "nick-{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
       "__generator_signature": {
         "type": "string",
         "title": "__generator_signature",
@@ -75,6 +82,20 @@
         "validator": "",
         "format": "computed"
       },
+      "__backend_addon_folder": {
+        "type": "string",
+        "title": "__backend_addon_folder",
+        "default": "{{ cookiecutter.backend_addon_name | unscoped_package_name }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__backend_addon_schema": {
+        "type": "string",
+        "title": "__backend_addon_schema",
+        "default": "{{ cookiecutter.__backend_addon_folder | replace('-', '_') | replace('.', '_') }}",
+        "validator": "",
+        "format": "computed"
+      },
       "__cookieplone_repository_path": {
         "type": "string",
         "title": "__cookieplone_repository_path",
@@ -85,7 +106,7 @@
     }
   },
   "config": {
-    "extensions": [],
+    "extensions": ["cookieplone.filters.unscoped_package_name"],
     "no_render": []
   }
 }

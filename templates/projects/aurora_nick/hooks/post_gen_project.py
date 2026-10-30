@@ -101,6 +101,9 @@ def generate_ci_gh_aurora_nick(context: OrderedDict, output_dir: Path) -> Path:
         {
             "python_version": versions["backend_python"],
             "node_version": context["__node_version"],
+            "image_name_prefix": (
+                f"ghcr.io/{context['github_organization']}/{context['project_slug']}"
+            ),
             "frontend_package_name": context["__frontend_package_name"],
             "__cookieplone_repository_path": context[
                 "__cookieplone_repository_path"
@@ -144,7 +147,6 @@ def main():
         Configure the PostgreSQL connection in `backend/config.ts`, then run:
 
         make backend-migrate
-        make backend-seed
 
         Start the backend and frontend in separate terminals:
 

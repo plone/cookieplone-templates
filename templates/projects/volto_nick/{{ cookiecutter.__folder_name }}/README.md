@@ -21,11 +21,11 @@ cd {{ cookiecutter.__project_slug }}
 make install
 ```
 
-Configure the PostgreSQL connection in `backend/config.ts`, then initialize it:
+Configure the PostgreSQL connection in `backend/config.ts`, then run the
+migrations and install the profiles:
 
 ```shell
 make backend-migrate
-make backend-seed
 ```
 
 Start the Nick backend and Volto frontend in separate terminal sessions:
@@ -39,7 +39,8 @@ The backend is available at http://localhost:8080 and Volto at http://localhost:
 
 ## Project structure
 
-- `backend`: the Plone API powered by Nick.
+- `backend`: the Plone API powered by Nick, with the project's Nick add-on in
+  `backend/packages/{{ cookiecutter.__backend_addon_folder }}`.
 - `frontend`: the Volto application and project add-on.
 - `news`: project-level Towncrier entries.
 

@@ -72,7 +72,7 @@ export const config = {
     '@plone/nick:core',
     /* '@plone/nick:ai', */
     /* '@plone/nick:examplecontent', */
-    '{{ cookiecutter.project_slug }}:default',
+    '{{ cookiecutter.backend_addon_name }}:default',
     /* '@plone/nick:multilingual', */
     /* '@plone/nick:multilingualcontent', */
   ],

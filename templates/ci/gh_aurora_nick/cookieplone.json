@@ -19,6 +19,13 @@
         "validator": "",
         "format": "computed"
       },
+      "image_name_prefix": {
+        "type": "string",
+        "title": "Container image name prefix",
+        "default": "ghcr.io/collective/project-title",
+        "validator": "",
+        "format": "computed"
+      },
       "frontend_package_name": {
         "type": "string",
         "title": "Frontend package folder",

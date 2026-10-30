@@ -1,0 +1,7 @@
+{
+  "id": "{{ cookiecutter.backend_addon_name }}:default",
+  "title": "{{ cookiecutter.title }}",
+  "description": "Default content of {{ cookiecutter.title }}",
+  "version": 1000,
+  "dependencies": ["@plone/nick:core"]
+}
