@@ -204,7 +204,7 @@ def test_aurora_frontend_uses_pnpm_11(cutter_result):
     package = json.loads((frontend / "package.json").read_text())
     workspace = yaml.safe_load((frontend / "pnpm-workspace.yaml").read_text())
 
-    assert package["packageManager"] == "pnpm@11.20.0"
+    assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
     assert workspace["overrides"]["jotai"] == "^2.12.5"
     assert workspace["allowBuilds"]["@tailwindcss/oxide"] is True
