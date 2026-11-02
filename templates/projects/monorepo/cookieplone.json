@@ -510,7 +510,7 @@
                         "__version_pnpm": {
                             "type": "string",
                             "title": "__version_pnpm",
-                            "default": "{{ '10.20.0' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
+                            "default": "{{ '10.34.9' if cookiecutter.volto_version >= '19' else '9.15.9' }}",
                             "validator": "",
                             "format": "computed"
                         },
