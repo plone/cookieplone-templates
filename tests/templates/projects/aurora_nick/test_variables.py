@@ -3,6 +3,7 @@ ALLOWED_MISSING: list[str] = [
     "backend_path",
     "frontend_package_name",
     "frontend_path",
+    "image_name_prefix",
     "node_version",
     "python_version",
 ]

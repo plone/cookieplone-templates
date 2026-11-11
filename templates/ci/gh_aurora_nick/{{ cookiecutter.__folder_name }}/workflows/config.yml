@@ -27,6 +27,12 @@ on:
       node-version:
         description: Node.js version used by the checks
         value: {{ "${{ inputs.node-version }}" }}
+      base-tag:
+        description: Tag used when creating the container images
+        value: {{ "${{ jobs.config.outputs.base-tag }}" }}
+      image-name-prefix:
+        description: Prefix used for the container images
+        value: {{ "${{ jobs.config.outputs.image-name-prefix }}" }}
       python-version:
         description: Python version used by Towncrier
         value: {{ "${{ inputs.python-version }}" }}
@@ -47,9 +53,18 @@ jobs:
       changelog-repository: {{ "${{ steps.filter.outputs.changelog-repository }}" }}
       path-frontend: frontend/packages/{{ cookiecutter.frontend_package_name }}
       path-root: .
+      base-tag: {{ "${{ steps.vars.outputs.base-tag }}" }}
+      image-name-prefix: {{ "${{ steps.vars.outputs.image-name-prefix }}" }}
     steps:
       - name: Checkout
         uses: actions/checkout@{{ versions.gha_version_checkout }}
+
+      - name: Compute image variables
+        id: vars
+        shell: bash
+        run: |
+          echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "image-name-prefix={{ cookiecutter.image_name_prefix }}" >> "$GITHUB_OUTPUT"
 
       - name: Filter changed paths
         uses: dorny/paths-filter@{{ versions.gha_version_paths_filter }}

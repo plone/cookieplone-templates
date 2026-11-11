@@ -62,6 +62,13 @@
         "default": "volto-{{ cookiecutter.project_slug }}",
         "validator": "cookieplone.validators.npm_package_name"
       },
+      "backend_addon_name": {
+        "type": "string",
+        "title": "Nick Add-on Name",
+        "description": "Name of the Nick backend add-on package, also the prefix of its profiles.",
+        "default": "nick-{{ cookiecutter.project_slug }}",
+        "validator": "cookieplone.validators.npm_package_name"
+      },
       "nick_frontend": {
         "type": "string",
         "title": "Nick frontend",
@@ -157,6 +164,20 @@
         "type": "string",
         "title": "__folder_name",
         "default": "{{ cookiecutter.project_slug }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__backend_addon_folder": {
+        "type": "string",
+        "title": "__backend_addon_folder",
+        "default": "{{ cookiecutter.backend_addon_name | unscoped_package_name }}",
+        "validator": "",
+        "format": "computed"
+      },
+      "__backend_addon_schema": {
+        "type": "string",
+        "title": "__backend_addon_schema",
+        "default": "{{ cookiecutter.__backend_addon_folder | replace('-', '_') | replace('.', '_') }}",
         "validator": "",
         "format": "computed"
       },
