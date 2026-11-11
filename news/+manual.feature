@@ -1,0 +1,1 @@
+Create a domain-manual.pot file and use it when building the po files @erral
