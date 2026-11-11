@@ -237,6 +237,18 @@ def test_backend_image(cutter_result):
     assert "container-image-build-push.yml" in backend_ci
     main_ci = (project_path / ".github/workflows/main.yml").read_text()
     assert "image-name-suffix: backend" in main_ci
+def test_backend_toolchain_versions_from_config(cutter_result, cookieplone_root):
+    """The composed nick_backend sub-template resolves ``config.versions``."""
+    config = json.loads((cookieplone_root / "cookieplone-config.json").read_text())
+    versions = config["config"]["versions"]
+
+    package = json.loads(
+        (cutter_result.project_path / "backend/package.json").read_text()
+    )
+    assert package["devDependencies"]["typescript"] == versions["backend_typescript"]
+    assert package["devDependencies"]["vitest"] == versions["backend_vitest"]
+    assert package["devDependencies"]["@vitest/ui"] == versions["backend_vitest"]
+    assert package["packageManager"] == f"pnpm@{versions['backend_pnpm']}"
 
 
 def test_no_devops_scaffold(cutter_result):

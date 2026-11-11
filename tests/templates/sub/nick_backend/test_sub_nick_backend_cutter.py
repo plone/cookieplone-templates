@@ -1,8 +1,15 @@
 """Test standalone generation of the shared Nick backend scaffold."""
 
 import json
+from pathlib import Path
 
 import pytest
+
+
+def _config_versions(cookieplone_root: Path) -> dict:
+    """Return the ``config.versions`` mapping from the repository config."""
+    config = json.loads((cookieplone_root / "cookieplone-config.json").read_text())
+    return config["config"]["versions"]
 
 
 def test_creation(cookies, template_path, context: dict):
@@ -66,3 +73,17 @@ def test_nick_configuration(cutter_result):
         (project_path / "packages/nick-project-title/package.json").read_text()
     )
     assert addon["nick"]["schema"] == "nick_project_title"
+    assert "src/**/*.{js,jsx,ts,tsx}" in lint
+
+
+def test_frontend_toolchain_versions_from_config(cutter_result, cookieplone_root):
+    """Toolchain pins should be sourced from ``config.versions``, not literals."""
+    versions = _config_versions(cookieplone_root)
+    package = json.loads(
+        (cutter_result.project_path / "package.json").read_text()
+    )
+
+    assert package["devDependencies"]["typescript"] == versions["backend_typescript"]
+    assert package["devDependencies"]["vitest"] == versions["backend_vitest"]
+    assert package["devDependencies"]["@vitest/ui"] == versions["backend_vitest"]
+    assert package["packageManager"] == f"pnpm@{versions['backend_pnpm']}"
