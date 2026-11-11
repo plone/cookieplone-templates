@@ -20,6 +20,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "email": "collective@plone.org",
             "github_organization": "collective",
             "npm_package_name": "project-title",
+            "backend_addon_name": "nick-project-title",
             "nick_frontend": "volto",
         },
         cookieplone_root,

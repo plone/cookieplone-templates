@@ -1,39 +1,41 @@
+# The production image of the backend, built from the Dockerfile, with a
+# PostgreSQL database. It migrates and installs the profiles when it starts.
 services:
-  nick-backend:
+  backend:
     build:
       context: .
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      NODE_ENV: development
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: nick
       DB_PASSWORD: nick
       DB_NAME: nick
+      SECRET: secret
+      ALLOWED_ORIGINS: http://localhost:3000
     ports:
       - "8080:8080"
     volumes:
-      - .:/app
-    command: >
-      sh -c "
-      pnpm install &&
-      pnpm bootstrap &&
-      pnpm start
-      "
-
+      - blobs:/app/var/blobstorage
 
   db:
     image: postgres:18-alpine
-    container_name: nick-db
     environment:
       POSTGRES_DB: nick
       POSTGRES_USER: nick
       POSTGRES_PASSWORD: nick
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "nick", "-d", "nick"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql
 
 volumes:
+  blobs:
   pgdata:
