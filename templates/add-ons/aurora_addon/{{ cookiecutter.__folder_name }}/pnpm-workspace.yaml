@@ -15,8 +15,8 @@ publicHoistPattern:
   - '*playwright*'
 
 overrides:
-  react: ^19.2.0
-  react-dom: ^19.2.0
+  react: ^19.2.7
+  react-dom: ^19.2.7
   jotai: ^2.12.5
 
 allowBuilds:
