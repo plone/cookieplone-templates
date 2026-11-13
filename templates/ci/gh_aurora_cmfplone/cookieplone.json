@@ -33,13 +33,6 @@
                 "validator": "",
                 "format": "computed"
             },
-            "frontend_base_version": {
-                "type": "string",
-                "title": "Frontend container base version",
-                "default": "1.0.0-alpha.8",
-                "validator": "",
-                "format": "computed"
-            },
             "frontend_addon_name": {
                 "type": "string",
                 "title": "Aurora frontend package name",

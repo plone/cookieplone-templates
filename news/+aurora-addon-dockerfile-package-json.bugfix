@@ -1,0 +1,1 @@
+Copy the frontend's own `package.json` into the image as-is in the Aurora add-on and project Dockerfiles, instead of merging its dependencies into the `plone/aurora-builder` one, so it matches the frontend's `pnpm-lock.yaml`. @sneridagh

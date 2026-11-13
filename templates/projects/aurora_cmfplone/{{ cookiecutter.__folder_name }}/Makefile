@@ -17,7 +17,8 @@ PROJECT_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
 {%- if cookiecutter.feature_headless %}
-FRONTEND_BASE_VERSION := {{ cookiecutter.frontend_base_version }}
+# Aurora version checked out by mrs-developer, also the container base image tag
+AURORA_VERSION := $(shell jq -r '.core.tag' $(CURRENT_DIR)/frontend/mrs.developer.json)
 {%- endif %}
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
@@ -43,7 +44,7 @@ debug-settings:  ## Debug settings
 	@echo "Debug settings"
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
 	{%- if cookiecutter.feature_headless %}
-	@echo "FRONTEND_BASE_VERSION: $(FRONTEND_BASE_VERSION)"
+	@echo "AURORA_VERSION: $(AURORA_VERSION)"
 	{%- endif %}
 	@echo "PLONE_VERSION: $(PLONE_VERSION)"
 
@@ -174,12 +175,12 @@ build-images:  ## Build container images
 stack-create-site:  ## Local Stack: Create a new site
 	@echo "Create a new site in the local Docker stack"
 	@echo "(Stack must not be running already.)"
-	{% if cookiecutter.feature_headless %}FRONTEND_BASE_VERSION=$(FRONTEND_BASE_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
+	{% if cookiecutter.feature_headless %}AURORA_VERSION=$(AURORA_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
 
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
-	{% if cookiecutter.feature_headless %}FRONTEND_BASE_VERSION=$(FRONTEND_BASE_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
+	{% if cookiecutter.feature_headless %}AURORA_VERSION=$(AURORA_VERSION) {% endif %}PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://{{ cookiecutter.__project_slug }}.localhost"
 
 .PHONY: stack-status
@@ -222,7 +223,7 @@ acceptance-test:
 .PHONY: acceptance-frontend-image-build
 acceptance-frontend-image-build:
 	@echo "Build acceptance frontend image"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg AURORA_VERSION=$(FRONTEND_BASE_VERSION)
+	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg AURORA_VERSION=$(AURORA_VERSION)
 
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:

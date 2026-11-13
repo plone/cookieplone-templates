@@ -1,0 +1,37 @@
+{
+  "name": "project-dev",
+  "version": "1.0.0-alpha.0",
+  "description": "A new project with Plone & Aurora",
+  "author": "{{ cookiecutter.author }}",
+  "homepage": "https://plone.org",
+  "license": "MIT",
+  "keywords": [
+    "aurora",
+    "plone",
+    "react"
+  ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start:prod": "pnpm --filter @plone/aurora start:prod",
+    "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora build",
+    "build:deps": "pnpm --filter @plone/registry --filter @plone/icons --filter @plone/quanta --filter @plone/components build",
+    "lint": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
+    "prettier": "prettier --check 'packages/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write 'packages/**/*.{js,jsx,ts,tsx}' ",
+    "stylelint": "stylelint 'packages/**/*.{css,scss,less}' --allow-empty-input",
+    "stylelint:fix": "stylelint 'packages/**/*.{css,scss,less}' --fix --allow-empty-input",
+    "test:acceptance": "playwright test",
+    "test:acceptance:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@plone/registry": "workspace:*",
+    "@plone/aurora": "workspace:*"
+  },
+  "devDependencies": {
+    "mrs-developer": "{{ versions.frontend_mrs_developer }}"
+  },
+  "packageManager": "pnpm@{{ versions.frontend_aurora_pnpm }}"
+}

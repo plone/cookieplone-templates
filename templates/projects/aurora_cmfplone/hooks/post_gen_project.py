@@ -60,6 +60,10 @@ POST_GEN_TO_REMOVE: dict[str, list[str]] = {
 
 TEMPLATES_FOLDER: str = "templates"
 
+# Project-level frontend files rendered with the project, then moved over the
+# generated Aurora add-on workspace (like sub/project_settings does for Volto).
+FRONTEND_PROJECT_FILES_FOLDER: str = "_frontend_project_files"
+
 
 def _fix_frontend_addon_name(context: OrderedDict) -> OrderedDict:
     """Fix frontend_addon_name if it is a scoped package."""
@@ -81,6 +85,16 @@ def _find_replace_in_folder(folder: Path, replacements: dict[str, str]):
         for find, replace in replacements.items():
             content = content.replace(find, replace)
         file_path.write_text(content)
+
+
+def _apply_frontend_project_files(output_dir: Path, frontend_path: Path):
+    """Replace add-on files in the Aurora workspace with project-level ones."""
+    project_files_folder = output_dir / FRONTEND_PROJECT_FILES_FOLDER
+    if not project_files_folder.is_dir():
+        return
+    for src in project_files_folder.iterdir():
+        src.replace(frontend_path / src.name)
+    project_files_folder.rmdir()
 
 
 def handle_backend_cleanup(context: OrderedDict, output_dir: Path):
@@ -149,6 +163,7 @@ def generate_addons_aurora(context: OrderedDict, output_dir: Path) -> Path:
         frontend_addon_repo_git: "{{ cookiecutter.__repository_git }}",
     }
     _find_replace_in_folder(path, replacements)
+    _apply_frontend_project_files(output_dir, path)
     return path
 
 
@@ -185,7 +200,7 @@ def generate_sub_project_settings(context: OrderedDict, output_dir: Path) -> Pat
     settings_context = _fix_frontend_addon_name(context.copy())
     # The shared settings schema still requires this legacy internal key even
     # when its frontend payload is excluded.
-    settings_context["volto_version"] = settings_context["frontend_base_version"]
+    settings_context["volto_version"] = settings_context["aurora_version"]
     # Generate into staging first: removing frontend directly from a merge
     # targeting output_dir would also remove the existing Aurora workspace.
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -211,7 +226,6 @@ def generate_ci_gh_aurora_cmfplone(
         "feature_headless": feature_headless,
         "python_version": versions["backend_python"],
         "node_version": context.get("__node_version", ""),
-        "frontend_base_version": context.get("frontend_base_version", ""),
         "frontend_addon_name": frontend_context["frontend_addon_name"],
         "has_cache": "1" if context["devops_cache"] else "0",
         "has_docs": "1" if context["initialize_documentation"] else "0",

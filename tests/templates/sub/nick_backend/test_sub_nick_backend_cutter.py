@@ -1,8 +1,15 @@
 """Test standalone generation of the shared Nick backend scaffold."""
 
 import json
+from pathlib import Path
 
 import pytest
+
+
+def _config_versions(cookieplone_root: Path) -> dict:
+    """Return the ``config.versions`` mapping from the repository config."""
+    config = json.loads((cookieplone_root / "cookieplone-config.json").read_text())
+    return config["config"]["versions"]
 
 
 def test_creation(cookies, template_path, context: dict):
@@ -17,14 +24,16 @@ def test_creation(cookies, template_path, context: dict):
 @pytest.mark.parametrize(
     "file_path",
     [
+        ".dockerignore",
         ".prettierrc",
         "Dockerfile",
         "docker-compose.yml",
         "config.ts",
         "package.json",
-        "src/events/index.ts",
-        "src/profiles/default/documents/_root.json",
-        "src/profiles/default/metadata.json",
+        "packages/nick-project-title/package.json",
+        "packages/nick-project-title/src/profiles/default/documents/_root.json",
+        "packages/nick-project-title/src/profiles/default/index.ts",
+        "packages/nick-project-title/src/profiles/default/metadata.json",
     ],
 )
 def test_backend_files_generated(cutter_result, file_path: str):
@@ -43,7 +52,8 @@ def test_nick_configuration(cutter_result):
     assert "password: DB_PASSWORD || 'nick'" in config
 
     root_profile = (
-        project_path / "src/profiles/default/documents/_root.json"
+        project_path
+        / "packages/nick-project-title/src/profiles/default/documents/_root.json"
     ).read_text()
     assert root_profile.startswith("{")
     assert root_profile.endswith("}\n")
@@ -54,4 +64,26 @@ def test_nick_configuration(cutter_result):
     package = json.loads((project_path / "package.json").read_text())
     lint = package["scripts"]["lint"]
     assert "--no-error-on-unmatched-pattern" in lint
+    assert "packages/*/src/**/*.{js,jsx,ts,tsx}" in lint
+    assert package["dependencies"]["nick-project-title"] == "workspace:*"
+
+    assert "'nick-project-title:default'" in config
+
+    addon = json.loads(
+        (project_path / "packages/nick-project-title/package.json").read_text()
+    )
+    assert addon["nick"]["schema"] == "nick_project_title"
     assert "src/**/*.{js,jsx,ts,tsx}" in lint
+
+
+def test_frontend_toolchain_versions_from_config(cutter_result, cookieplone_root):
+    """Toolchain pins should be sourced from ``config.versions``, not literals."""
+    versions = _config_versions(cookieplone_root)
+    package = json.loads(
+        (cutter_result.project_path / "package.json").read_text()
+    )
+
+    assert package["devDependencies"]["typescript"] == versions["backend_typescript"]
+    assert package["devDependencies"]["vitest"] == versions["backend_vitest"]
+    assert package["devDependencies"]["@vitest/ui"] == versions["backend_vitest"]
+    assert package["packageManager"] == f"pnpm@{versions['backend_pnpm']}"

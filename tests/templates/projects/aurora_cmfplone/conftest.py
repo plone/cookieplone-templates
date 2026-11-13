@@ -5,7 +5,6 @@ from copy import deepcopy
 import pytest
 
 PLONE_VERSION = "6.0.10"
-FRONTEND_BASE_VERSION = "19.0.0"
 
 
 @pytest.fixture(scope="module")
@@ -28,7 +27,6 @@ def context(annotate_context, cookieplone_root) -> dict:
             # Aurora must still resolve while Plone prereleases are disabled.
             "use_prerelease_versions": "No",
             "plone_version": PLONE_VERSION,
-            "frontend_base_version": FRONTEND_BASE_VERSION,
             "python_package_name": "plonegov.ploneorgbr",
             "frontend_addon_name": "aurora-ploneorgbr",
             "language_code": "en",
@@ -115,7 +113,6 @@ def bad_context() -> dict:
         "python_package_name": "plone-org-br",  # error
         "frontend_addon_name": "aurora-ploneorgbr",
         "plone_version": "5.2.8",  # error
-        "frontend_base_version": "19.0.0",
         "language_code": "en-",  # error
         "github_organization": "plonegovbr",
         "container_registry": " ",  # error

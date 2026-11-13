@@ -1,0 +1,58 @@
+{
+    "id": "sub/aurora_project",
+    "schema": {
+        "title": "Subtemplate: Aurora Project",
+        "description": "Standalone Plone Aurora frontend project, without an add-on, used by other templates and for OCI image generation.",
+        "version": "2.0",
+        "properties": {
+            "title": {
+                "type": "string",
+                "title": "Project name",
+                "default": "Aurora Project",
+                "validator": "",
+                "format": "computed"
+            },
+            "aurora_version": {
+                "type": "string",
+                "title": "Plone Aurora Version",
+                "default": "{{ '' | latest_aurora }}",
+                "validator": "",
+                "format": "computed"
+            },
+            "author": {
+                "type": "string",
+                "title": "Author",
+                "default": "Plone Community",
+                "validator": "",
+                "format": "computed"
+            },
+            "__folder_name": {
+                "type": "string",
+                "title": "__folder_name",
+                "default": "app",
+                "validator": "",
+                "format": "computed"
+            },
+            "__cookieplone_repository_path": {
+                "type": "string",
+                "title": "__cookieplone_repository_path",
+                "default": "",
+                "validator": "",
+                "format": "computed"
+            }
+        }
+    },
+    "config": {
+        "extensions": [
+            "latest_aurora.latest_aurora"
+        ],
+        "no_render": [],
+        "subtemplates": [
+            {
+                "id": "add-ons/aurora_addon",
+                "title": "Setup Aurora frontend",
+                "enabled": "1"
+            }
+        ]
+    }
+}

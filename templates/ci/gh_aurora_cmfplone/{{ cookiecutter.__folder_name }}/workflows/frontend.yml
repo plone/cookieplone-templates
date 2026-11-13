@@ -15,8 +15,8 @@ on:
       node-version:
         required: true
         type: string
-      frontend-base-version:
-        description: Version of the Plone frontend container base image
+      aurora-version:
+        description: Aurora version, also the container base image tag
         required: true
         type: string
       working-directory:
@@ -71,7 +71,7 @@ jobs:
       image-name-suffix: {{ "${{ inputs.image-name-suffix }}" }}
       working-directory: {{ "${{ inputs.working-directory }}" }}
       build-args: |
-        AURORA_VERSION={{ "${{ inputs.frontend-base-version }}" }}
+        AURORA_VERSION={{ "${{ inputs.aurora-version }}" }}
       push: {{ "${{ github.event_name != 'pull_request' }}" }}
     secrets:
       username: {{ "${{ github.actor }}" }}
