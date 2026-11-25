@@ -1,0 +1,1 @@
+Build `@plone/devtools` in the Aurora project and add-on `build-deps` targets and `build:deps` scripts, because the Aurora 1.0.0-alpha.27 Vite config imports it. @sneridagh
