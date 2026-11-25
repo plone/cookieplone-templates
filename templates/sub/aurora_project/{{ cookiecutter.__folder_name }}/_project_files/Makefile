@@ -65,8 +65,11 @@ core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
 core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
 	pnpm --filter @plone/react-router build
 
+core/packages/devtools/dist: $(shell find core/packages/devtools/src -type f)
+	pnpm --filter @plone/devtools build
+
 .PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist core/packages/devtools/dist ## Build dependencies
 
 .PHONY: format
 format: ## Format codebase

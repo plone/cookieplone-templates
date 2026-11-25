@@ -16,7 +16,7 @@
     "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
     "start:prod": "pnpm --filter @plone/aurora start:prod",
     "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora build",
-    "build:deps": "pnpm --filter @plone/registry --filter @plone/icons --filter @plone/quanta --filter @plone/components build",
+    "build:deps": "pnpm --filter @plone/registry --filter @plone/icons --filter @plone/quanta --filter @plone/components --filter @plone/devtools build",
     "lint": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/*.{js,jsx,ts,tsx}'",
