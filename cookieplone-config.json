@@ -267,7 +267,6 @@
       "frontend_release_it": "^19.0.5",
       "frontend_testing_library_react": "^16.2.0",
       "frontend_typescript": "^5.7.3",
-      "frontend_vitest": "^3.1.2",
       "gha_version_background_action": "v2",
       "gha_version_cache": "v6.1.0",
       "gha_version_checkout": "v7",

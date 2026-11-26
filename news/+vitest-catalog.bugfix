@@ -1,0 +1,1 @@
+The `add-ons/frontend` template now takes Vitest from Volto's catalog, instead of pinning Vitest 3, so that add-ons and projects use the same Vitest version as Volto. With Volto 19.9.0, this is Vitest 4.1.12, which fixes several security advisories that affect Vitest 3. @sneridagh
