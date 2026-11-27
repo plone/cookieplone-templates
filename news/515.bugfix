@@ -1,0 +1,1 @@
+Required zpretty 5.0.0 in the generated backend Makefiles and dropped the lxml pin, so generated ZCML files keep their namespace declarations. @ericof
