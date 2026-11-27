@@ -1,40 +1,33 @@
 # syntax=docker/dockerfile:1
-ARG AURORA_VERSION={{ cookiecutter.aurora_version }}
-FROM plone/aurora-builder:${AURORA_VERSION} AS builder
+ARG NODE_VERSION=24
 
-COPY --chown=node packages/{{cookiecutter.frontend_addon_name}} /app/packages/{{cookiecutter.frontend_addon_name}}
-COPY --chown=node registry.config.ts /app/
-COPY --chown=node Makefile /app/Makefile
-COPY --chown=node pnpm-workspace.yaml /app/pnpm-workspace.yaml
-COPY --chown=node .pnpmfile.cjs /app/.pnpmfile.cjs
-COPY --chown=node package.json /app/package.json
-COPY --chown=node pnpm-lock.yaml /app/pnpm-lock.yaml
+FROM node:${NODE_VERSION}-slim AS builder
+WORKDIR /app
+ENV CI=true
+RUN npm install --global corepack@latest && corepack enable
 
-RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
+# The app and its add-ons in `packages/`, without what `.dockerignore` lists.
+COPY --chown=node . .
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
+
+RUN <<EOT
     set -e
-    pnpm install && make build-deps
     pnpm build
-    # This is necessary because the build is trying to recreate the node_modules folder
-    # by telling it to CI=1 it will just recreate them
-    CI=1 pnpm install --prod
+    # Keep only what the server needs at runtime.
+    pnpm install --prod --frozen-lockfile
 EOT
 
-FROM plone/aurora-prod-config:${AURORA_VERSION}
+FROM node:${NODE_VERSION}-slim
 
 LABEL maintainer="{{ cookiecutter.author }} <{{ cookiecutter.email }}>" \
       org.label-schema.name="{{ cookiecutter.project_slug }}-frontend" \
       org.label-schema.description="{{ cookiecutter.title }} frontend image." \
       org.label-schema.vendor="{{ cookiecutter.author }}"
 
-COPY --from=builder /app/ /app/
-
-RUN <<EOT
-    set -e
-    # CI=true keeps corepack/pnpm non-interactive: if it decides to reconcile the
-    # copied node_modules it must not block on a modules-purge confirmation
-    # prompt (there is no TTY during the image build).
-    export CI=true
-    corepack enable pnpm
-    corepack use pnpm@{{ versions.frontend_aurora_pnpm }}
-    corepack prepare pnpm@{{ versions.frontend_aurora_pnpm }} --activate
-EOT
+WORKDIR /app
+ENV NODE_ENV=production PORT=3000
+COPY --from=builder --chown=node /app /app
+USER node
+EXPOSE 3000
+CMD ["node", "server.js", "./build/server/index.js"]

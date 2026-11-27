@@ -26,20 +26,34 @@ ROOT_FILES = [
     *VSCODE_SETTINGS,
     ".storybook/main.js",
     ".storybook/preview.jsx",
+    "app/entry.client.tsx",
+    "app/entry.server.tsx",
+    "app/root.tsx",
+    "app/routes.ts",
+    ".dockerignore",
     "Dockerfile",
     "eslint.config.mjs",
     ".gitignore",
     ".npmignore",
-    ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
     ".stylelintrc",
     "Makefile",
-    "mrs.developer.json",
     "package.json",
     "pnpm-workspace.yaml",
+    "public/favicon.ico",
     "README.md",
+    "react-router.config.ts",
     "registry.config.ts",
+    "server.js",
+    "tsconfig.json",
+    "vite.config.ts",
+]
+
+# The files of the core checkout, which the thin app doesn't need.
+NOT_GENERATED = [
+    ".pnpmfile.cjs",
+    "mrs.developer.json",
 ]
 
 
@@ -59,6 +73,7 @@ PKG_SRC_FILES = [
     "towncrier.toml",
     "tsconfig.json",
     "types.d.ts",
+    "vitest.config.ts",
 ]
 
 
@@ -91,6 +106,12 @@ def test_root_files_generated(cutter_result, file_path):
     path = cutter_result.project_path / file_path
     assert path.exists()
     assert path.is_file()
+
+
+@pytest.mark.parametrize("file_path", NOT_GENERATED)
+def test_root_files_not_generated(cutter_result, file_path):
+    """Check that the core checkout files are not generated."""
+    assert not (cutter_result.project_path / file_path).exists()
 
 
 @pytest.mark.parametrize("file_path", PKG_SRC_FILES)
@@ -143,14 +164,17 @@ def test_content(cutter_result, file_path: str, text: str, expected: bool):
     assert (text in contents) is expected
 
 
-def test_pnpm_11_configuration(cutter_result):
-    """Use Aurora's pnpm 11 package-manager and workspace configuration."""
+def test_pnpm_configuration(cutter_result):
+    """Use Aurora's pnpm version, and a catalog instead of the core checkout."""
     project_path = cutter_result.project_path
     package = json.loads((project_path / "package.json").read_text())
     workspace = yaml.safe_load((project_path / "pnpm-workspace.yaml").read_text())
 
     assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
+    assert workspace["packages"] == ["packages/*", "packages/**/packages/*"]
+    assert workspace["catalog"]["react-router"] == "8.5.0"
+    assert workspace["catalog"]["@react-router/dev"] == "8.5.0"
     assert workspace["overrides"] == {
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
@@ -158,14 +182,13 @@ def test_pnpm_11_configuration(cutter_result):
     }
     assert workspace["allowBuilds"]["@swc/core"] is True
     assert "cypress" not in workspace["allowBuilds"]
-    assert "*cypress*" not in workspace["publicHoistPattern"]
-    assert "*playwright*" in workspace["publicHoistPattern"]
     assert not (project_path / ".npmrc").exists()
 
-    addon = json.loads(
-        (project_path / "packages/seven-addon/package.json").read_text()
-    )
+    addon = json.loads((project_path / "packages/seven-addon/package.json").read_text())
     assert addon["peerDependencies"]["i18next"] == "catalog:"
+    for field in ("dependencies", "peerDependencies", "devDependencies"):
+        for name, version in addon.get(field, {}).items():
+            assert not version.startswith("workspace:"), name
 
     for workflow in GITHUB_ACTIONS:
         contents = (project_path / workflow).read_text()
@@ -173,11 +196,33 @@ def test_pnpm_11_configuration(cutter_result):
         assert "corepack enable" in contents
 
 
-def test_aurora_version(cutter_result):
-    """Pin the generated Aurora checkout to the resolved npm version."""
+def test_thin_app(cutter_result):
+    """The repository is a React Router app that installs @plone/aurora."""
     project_path = cutter_result.project_path
-    mrs = json.loads((project_path / "mrs.developer.json").read_text())
+    package = json.loads((project_path / "package.json").read_text())
+
+    assert package["private"] is True
+    assert package["type"] == "module"
+    assert package["scripts"]["dev"] == "react-router dev"
+    assert package["scripts"]["build"] == "react-router build"
+    assert "workspace:*" in package["dependencies"].values()
+    assert "REGISTRYCONFIG" not in json.dumps(package["scripts"])
+    assert "@plone/aurora" not in json.dumps(package["scripts"])
+    assert "ploneAurora()" in (project_path / "react-router.config.ts").read_text()
+    assert "PloneAuroraVitePlugin()" in (project_path / "vite.config.ts").read_text()
+
+    makefile = (project_path / "Makefile").read_text()
+    assert "core/" not in makefile
+    assert "build-deps" not in makefile
+    assert "mrs-developer" not in makefile
+    assert "core" not in (project_path / ".gitignore").read_text().split()
+    assert "./core/" not in (project_path / "eslint.config.mjs").read_text()
+
+
+def test_aurora_version(cutter_result):
+    """Depend on the resolved npm version of @plone/aurora."""
+    project_path = cutter_result.project_path
+    package = json.loads((project_path / "package.json").read_text())
 
     assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
-    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
-    assert "branch" not in mrs["core"]
+    assert package["dependencies"]["@plone/aurora"] == "1.0.0-alpha.5"

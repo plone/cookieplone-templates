@@ -36,44 +36,19 @@ help: ## Show this help
 .PHONY: install
 install: ## Installs the add-on in a development environment
 	@echo "$(GREEN)Install$(RESET)"
-	pnpm dlx mrs-developer missdev --no-config --fetch-https
-	pnpm i
-	make build-deps
+	pnpm install
 
 .PHONY: start
-start: ## Starts Volto, allowing reloading of the add-on during development
+start: ## Starts Plone Aurora in development mode, reloading the add-on on changes
 	pnpm start
 
 .PHONY: build
 build: ## Build a production bundle for distribution of the project with the add-on
 	pnpm build
 
-core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
-	pnpm --filter @plone/registry build
-
-core/packages/icons/dist: $(shell find core/packages/icons/src -type f)
-	pnpm --filter @plone/icons build
-
-core/packages/quanta/dist: $(shell find core/packages/quanta/src -type f)
-	pnpm --filter @plone/quanta build
-
-core/packages/components/dist: $(shell find core/packages/components/src -type f)
-	pnpm --filter @plone/components build
-
-core/packages/client/dist: $(shell find core/packages/client/src -type f)
-	pnpm --filter @plone/client build
-
-core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
-	pnpm --filter @plone/helpers build
-
-core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
-	pnpm --filter @plone/react-router build
-
-core/packages/devtools/dist: $(shell find core/packages/devtools/src -type f)
-	pnpm --filter @plone/devtools build
-
-.PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist core/packages/devtools/dist ## Build dependencies
+.PHONY: typecheck
+typecheck: ## Check the types of the app and the add-on
+	pnpm typecheck
 
 .PHONY: i18n
 i18n: ## Sync i18n
@@ -109,9 +84,7 @@ test: ## Run unit tests
 
 .PHONY: ci-test
 ci-test: ## Run unit tests in CI
-	# Unit Tests need the i18n to be built
-	VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n
-	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm run --filter @plone/volto test --passWithNoTests
+	CI=1 pnpm test --run
 
 .PHONY: backend-docker-start
 backend-docker-start:	## Starts a Docker-based backend for development

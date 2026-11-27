@@ -53,7 +53,7 @@ on:
         value: {{ "${{ jobs.config.outputs.plone-version }}" }}
 {%- if cookiecutter.feature_headless %}
       aurora-version:
-        description: "Aurora version (from frontend/mrs.developer.json) to be used"
+        description: "Aurora version (from frontend/package.json) to be used"
         value: {{ "${{ jobs.config.outputs.aurora-version }}" }}
 {%- endif %}
       path-backend:
@@ -130,7 +130,7 @@ jobs:
           echo "image-name-prefix=$(jq -r '.container_images_prefix' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           echo "plone-version=$(jq -r '.backend.base_package_version' <<< "$REPOSITORY_SETTINGS")" >> "$GITHUB_OUTPUT"
           {%- if cookiecutter.feature_headless %}
-          echo "aurora-version=$(jq -r '.core.tag' frontend/mrs.developer.json)" >> "$GITHUB_OUTPUT"
+          echo "aurora-version=$(jq -r '.dependencies["@plone/aurora"]' frontend/package.json)" >> "$GITHUB_OUTPUT"
           {%- endif %}
           echo "base-tag=sha-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           echo "path-backend=$(jq -r '.backend.path' <<< "$REPOSITORY_SETTINGS" | sed "s|^${ROOT}/||")" >> "$GITHUB_OUTPUT"

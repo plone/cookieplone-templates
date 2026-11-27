@@ -17,8 +17,8 @@ PROJECT_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
 STACK_NAME={{ cookiecutter.__devops_stack_name }}
 
 {%- if cookiecutter.feature_headless %}
-# Aurora version checked out by mrs-developer, also the container base image tag
-AURORA_VERSION := $(shell jq -r '.core.tag' $(CURRENT_DIR)/frontend/mrs.developer.json)
+# The version of @plone/aurora that the frontend app depends on
+AURORA_VERSION := $(shell jq -r '.dependencies["@plone/aurora"]' $(CURRENT_DIR)/frontend/package.json)
 {%- endif %}
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
@@ -223,7 +223,7 @@ acceptance-test:
 .PHONY: acceptance-frontend-image-build
 acceptance-frontend-image-build:
 	@echo "Build acceptance frontend image"
-	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile --build-arg AURORA_VERSION=$(AURORA_VERSION)
+	@docker build frontend -t {{ cookiecutter.github_organization }}/{{ cookiecutter.__project_slug }}-frontend:acceptance -f frontend/Dockerfile
 
 .PHONY: acceptance-backend-image-build
 acceptance-backend-image-build:

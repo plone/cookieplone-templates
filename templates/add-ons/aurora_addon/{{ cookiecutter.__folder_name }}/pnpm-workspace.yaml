@@ -1,19 +1,46 @@
 packages:
-  # all packages in direct subdirs of packages/
-  - 'core/apps/aurora'
-  - 'core/packages/*'
+  # The add-ons of this repository
   - 'packages/*'
   # Support for external packages in another repos
   - 'packages/**/packages/*'
-  - '!core/packages/volto*'
-  - '!core/packages/coresandbox'
 
-publicHoistPattern:
-  - '*eslint*'
-  - '*prettier*'
-  - '*stylelint*'
-  - '*playwright*'
+# The versions that the app and the add-ons share. Keep `react-router` and
+# `@react-router/dev` at the version that `@plone/aurora` uses.
+# See https://pnpm.io/catalogs
+catalog:
+  '@axe-core/playwright': ^4.12.1
+  '@playwright/test': ^1.60.0
+  '@plone/icons': ^1.0.0-alpha.3
+  '@plone/registry': ^4.0.0-alpha.9
+  '@plone/scripts': ^4.0.0
+  '@plone/types': ^3.0.0-alpha.11
+  '@react-router/dev': 8.5.0
+  '@types/node': ^24.0.0
+  '@types/react': ^19.2.0
+  '@types/react-dom': ^19.2.0
+  axe-core: ^4.11.0
+  eslint: ^9.20.1
+  eslint-config-prettier: ^10.1.1
+  eslint-plugin-jsx-a11y: ^6.10.2
+  eslint-plugin-react: ^7.37.4
+  eslint-plugin-react-hooks: ^5.0.1
+  globals: ^16.0.0
+  i18next: ^26.3.6
+  playwright: ^1.60.0
+  prettier: ^3.9.6
+  react: ^19.2.7
+  react-dom: ^19.2.7
+  react-router: 8.5.0
+  release-it: {{ versions.frontend_release_it }}
+  stylelint: ^16.14.1
+  stylelint-config-idiomatic-order: 10.0.0
+  stylelint-prettier: 5.0.3
+  typescript: ^5.9.2
+  typescript-eslint: ^8.41.0
+  vite: ^8.0.8
+  vitest: ^4.1.0
 
+# The same overrides as Plone Aurora: one copy of React and Jotai.
 overrides:
   react: ^19.2.7
   react-dom: ^19.2.7
@@ -26,8 +53,3 @@ allowBuilds:
   lightningcss-cli: true
   msgpackr-extract: true
   unrs-resolver: true
-
-# The default pnpm catalog is loaded from `core/catalog.json` using `.pnpmfile.cjs`.
-# If you want to customize the versions of the catalog, do it in there.
-# You can also add your own custom pnpm catalog using the pnpm named catalogs
-# by defining them here. See https://pnpm.io/catalogs#named-catalogs

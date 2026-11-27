@@ -13,63 +13,20 @@
 
 ## Installation
 
-To install your project, you must choose the method appropriate to your version of Volto.
+Add `{{ cookiecutter.__npm_package_name }}` to the dependencies of your Plone Aurora app:
 
-
-### Volto 17 and earlier
-
-Create a new Volto project (you can skip this step if you already have one):
-
-```
-npm install -g yo @plone/generator-volto
-yo @plone/volto my-volto-project --addon {{ cookiecutter.__npm_package_name }}
-cd my-volto-project
+```shell
+pnpm add {{ cookiecutter.__npm_package_name }}
 ```
 
-Add `{{ cookiecutter.__npm_package_name }}` to your package.json:
+Then add it to the add-ons in the app's `registry.config.ts`:
 
-```JSON
-"addons": [
-    "{{ cookiecutter.__npm_package_name }}"
-],
+```ts
+import { addons } from '@plone/aurora/registry.config';
 
-"dependencies": {
-    "{{ cookiecutter.__npm_package_name }}": "*"
-}
-```
+addons.push('{{ cookiecutter.__npm_package_name }}');
 
-Download and install the new add-on by running:
-
-```
-yarn install
-```
-
-Start volto with:
-
-```
-yarn start
-```
-
-### Volto 18 and later
-
-Add `{{ cookiecutter.__npm_package_name }}` to your `package.json`:
-
-```json
-"dependencies": {
-    "{{ cookiecutter.__npm_package_name }}": "*"
-}
-```
-
-Add `{{ cookiecutter.__npm_package_name }}` to your `volto.config.js`:
-
-```javascript
-const addons = ['{{ cookiecutter.__npm_package_name }}'];
-```
-
-If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
-
-```javascript
-const theme = '{{ cookiecutter.__npm_package_name }}';
+export { addons };
 ```
 
 ## Test installation
@@ -79,8 +36,9 @@ Visit http://localhost:3000/ in a browser, login, and check the awesome new feat
 
 ## Development
 
-The development of this add-on is done in isolation using a new approach using pnpm workspaces and latest `mrs-developer` and other Volto core improvements.
-For this reason, it only works with pnpm and Volto 18 (currently in alpha).
+This repository is a Plone Aurora app that installs the add-on from `packages/{{ cookiecutter.frontend_addon_name }}`.
+It's a standard React Router app: `app/`, `react-router.config.ts` and `vite.config.ts` come with `@plone/aurora`, from npm.
+The add-on and the app share their dependency versions through the pnpm catalog in `pnpm-workspace.yaml`.
 
 
 ### Pre-requisites
@@ -105,8 +63,9 @@ Run `make help` to list the available commands.
 ```text
 help                             Show this help
 install                          Installs the add-on in a development environment
-start                            Starts Volto, allowing reloading of the add-on during development
+start                            Starts Plone Aurora in development mode, reloading the add-on on changes
 build                            Build a production bundle for distribution of the project with the add-on
+typecheck                        Check the types of the app and the add-on
 i18n                             Sync i18n
 ci-i18n                          Check if i18n is not synced
 format                           Format codebase
@@ -181,7 +140,7 @@ Run unit tests.
 make test
 ```
 
-### Run Cypress tests
+### Run acceptance tests
 
 Run each of these steps in separate terminal sessions.
 

@@ -1,0 +1,9 @@
+node_modules
+**/node_modules
+build
+.react-router
+.plone
+acceptance
+playwright-report
+test-results
+.git

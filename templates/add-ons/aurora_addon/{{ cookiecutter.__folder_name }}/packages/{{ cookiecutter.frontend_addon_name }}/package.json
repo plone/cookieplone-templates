@@ -5,8 +5,8 @@
   "main": "index.ts",
   "license": "MIT",
   "keywords": [
-    "volto-addon",
-    "volto",
+    "aurora-addon",
+    "aurora",
     "plone",
     "react"
   ],
@@ -26,25 +26,20 @@
     "release-major-alpha": "release-it major --preRelease=alpha",
     "release-alpha": "release-it --preRelease=alpha"
   },
-  "dependencies": {
-    "@plone/components": "workspace:*",
-    "@plone/icons": "workspace:*"
-  },
   "peerDependencies": {
+    "@plone/registry": "catalog:",
     "i18next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
-    "@playwright/test": "^1.60.0",
-    "@plone/registry": "workspace:*",
-    "@plone/scripts": "workspace:*",
-    "@plone/types": "workspace:*",
+    "@plone/icons": "catalog:",
+    "@plone/registry": "catalog:",
+    "@plone/scripts": "catalog:",
+    "@plone/types": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "playwright": "^1.60.0",
-    "release-it": "{{ versions.frontend_release_it }}",
+    "release-it": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

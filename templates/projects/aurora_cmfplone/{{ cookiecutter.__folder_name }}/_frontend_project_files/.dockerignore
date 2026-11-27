@@ -1,10 +1,12 @@
 *.log
+.plone
+.react-router
 .storybook-build
 acceptance
 build
 cache
-core
 node_modules
+**/node_modules
 playwright-report
 test-results
 Dockerfile

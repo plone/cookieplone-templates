@@ -32,9 +32,7 @@ help: ## Show this help
 .PHONY: install
 install: ## Installs the project in a development environment
 	@echo "$(GREEN)Install$(RESET)"
-	pnpm dlx mrs-developer missdev --no-config --fetch-https
-	pnpm i
-	make build-deps
+	pnpm install
 
 .PHONY: start
 start: ## Starts Aurora in development mode
@@ -44,32 +42,9 @@ start: ## Starts Aurora in development mode
 build: ## Build a production bundle of the project
 	pnpm build
 
-core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
-	pnpm --filter @plone/registry build
-
-core/packages/icons/dist: $(shell find core/packages/icons/src -type f)
-	pnpm --filter @plone/icons build
-
-core/packages/quanta/dist: $(shell find core/packages/quanta/src -type f)
-	pnpm --filter @plone/quanta build
-
-core/packages/components/dist: $(shell find core/packages/components/src -type f)
-	pnpm --filter @plone/components build
-
-core/packages/client/dist: $(shell find core/packages/client/src -type f)
-	pnpm --filter @plone/client build
-
-core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
-	pnpm --filter @plone/helpers build
-
-core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
-	pnpm --filter @plone/react-router build
-
-core/packages/devtools/dist: $(shell find core/packages/devtools/src -type f)
-	pnpm --filter @plone/devtools build
-
-.PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist core/packages/devtools/dist ## Build dependencies
+.PHONY: typecheck
+typecheck: ## Check the types of the app
+	pnpm typecheck
 
 .PHONY: format
 format: ## Format codebase

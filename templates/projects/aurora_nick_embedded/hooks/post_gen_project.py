@@ -62,10 +62,14 @@ def _add_nick_configuration(path: Path, context: OrderedDict) -> None:
     root_package = _read_json(root_package_path)
     root_package["scripts"].update(NICK_SCRIPTS)
     root_package["dependencies"]["@robgietema/nick"] = "workspace:*"
+    # mrs-developer checks out Nick into `nick/`, a package of the workspace.
+    root_package["devDependencies"]["mrs-developer"] = versions[
+        "frontend_mrs_developer"
+    ]
     _write_json(root_package_path, root_package)
 
     mrs_developer_path = path / "mrs.developer.json"
-    mrs_developer = _read_json(mrs_developer_path)
+    mrs_developer = {}
     mrs_developer["nick"] = {
         "output": "./",
         "package": "@robgietema/nick",
@@ -80,15 +84,24 @@ def _add_nick_configuration(path: Path, context: OrderedDict) -> None:
         path / "packages" / context["frontend_addon_name"] / "package.json"
     )
     addon_package = _read_json(addon_package_path)
-    addon_package["dependencies"]["@robgietema/nick"] = "workspace:*"
+    addon_dependencies = addon_package.setdefault("dependencies", {})
+    addon_dependencies["@robgietema/nick"] = "workspace:*"
     _write_json(addon_package_path, addon_package)
 
     _replace_once(
         path / "pnpm-workspace.yaml",
-        "  - 'core/apps/aurora'\n",
-        "  - 'core/apps/aurora'\n  - 'nick'\n",
+        "  - 'packages/*'\n",
+        "  - 'packages/*'\n  - 'nick'\n",
     )
-    _replace_once(path / ".gitignore", "core\n", "core\n/nick\n")
+    _replace_once(
+        path / ".gitignore", "\nnode_modules\n", "\nnode_modules\n/nick\n"
+    )
+    _replace_once(
+        path / "Makefile",
+        "\tpnpm install\n",
+        "\tpnpm dlx mrs-developer missdev --no-config --fetch-https\n"
+        "\tpnpm install\n",
+    )
 
     registry_config_path = path / "registry.config.ts"
     _replace_once(
