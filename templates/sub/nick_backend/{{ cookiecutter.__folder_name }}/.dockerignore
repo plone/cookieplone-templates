@@ -1,0 +1,7 @@
+**/node_modules
+src/develop
+var
+config.ts
+docker-compose.yml
+Dockerfile
+.dockerignore

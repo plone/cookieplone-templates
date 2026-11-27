@@ -5,10 +5,6 @@
   "license": "MIT",
   "version": "0.0.1",
   "private": true,
-  "workspaces": [
-    "src/develop/nick",
-    "src/develop/nick/packages/nick-example-addon"
-  ],
   "keywords": [
     "cms"
   ],
@@ -19,22 +15,17 @@
     "url": "git@github.com:{{ cookiecutter.github_organization }}/{{ cookiecutter.project_slug }}.git"
   },
   "scripts": {
-    "develop": "missdev --config=tsconfig.json --fetch-https",
-    "bootstrap": "pnpm preinstall && pnpm install && pnpm migrate && pnpm seed",
-    "convert": "tsx scripts/convert.ts",
+    "develop": "mkdir -p src && missdev --config=tsconfig.json --fetch-https",
+    "bootstrap": "pnpm install && pnpm migrate",
     "i18n": "tsx src/develop/nick/scripts/i18n.ts",
     "i18n:ci": "pnpm i18n && git diff -G'^[^\\\"POT]' --exit-code",
-    "knex": "tsx ./node_modules/knex/bin/cli.js",
-    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 --no-error-on-unmatched-pattern 'src/**/*.{js,jsx,ts,tsx}'",
-    "migrate": "pnpm knex migrate:latest",
-    "prettier": "./node_modules/.bin/prettier --single-quote --check 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "seed": "tsx src/develop/nick/scripts/seed.ts run",
+    "lint": "./node_modules/eslint/bin/eslint.js --max-warnings=0 --no-error-on-unmatched-pattern 'packages/*/src/**/*.{js,jsx,ts,tsx}'",
+    "migrate": "nick --modules=migrate",
+    "nick": "nick",
+    "prettier": "./node_modules/.bin/prettier --single-quote --check 'packages/*/src/**/*.{js,jsx,ts,tsx,json}'",
     "seed:status": "tsx src/develop/nick/scripts/seed.ts status",
-    "seed:upgrade": "tsx src/develop/nick/scripts/seed.ts upgrade",
-    "start": "nodemon --exec 'tsx src/develop/nick/src/server.ts'",
-    "rollback": "pnpm knex migrate:rollback --all",
-    "reset": "pnpm rollback && pnpm migrate && pnpm seed",
-    "test": "AUTH_RATE_LIMIT=1000 vitest run --dir ./src --exclude 'develop/**' --passWithNoTests"
+    "start": "nodemon --watch packages --watch config.ts --ext ts,json --exec 'nick'",
+    "test": "AUTH_RATE_LIMIT=1000 vitest run --dir ./packages --passWithNoTests"
   },
   "engines": {
     "node": "^22 || ^24 || ^25 || ^26"
@@ -66,7 +57,7 @@
   },
   "dependencies": {
     "@plone/nick": "workspace:^",
-    "knex": "3.1.0",
+    "{{ cookiecutter.backend_addon_name }}": "workspace:*",
     "nodemon": "3.1.14",
     "tsx": "4.21.0"
   },

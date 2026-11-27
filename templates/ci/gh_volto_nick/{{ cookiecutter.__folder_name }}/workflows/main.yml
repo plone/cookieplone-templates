@@ -28,7 +28,13 @@ jobs:
     if: {{ "${{ needs.config.outputs.backend == 'true' }}" }}
     uses: ./.github/workflows/backend.yml
     with:
+      base-tag: {{ "${{ needs.config.outputs.base-tag }}" }}
+      image-name-prefix: {{ "${{ needs.config.outputs.image-name-prefix }}" }}
+      image-name-suffix: backend
       node-version: {{ "${{ needs.config.outputs.node-version }}" }}
+    permissions:
+      contents: read
+      packages: write
 
   frontend:
     needs: config

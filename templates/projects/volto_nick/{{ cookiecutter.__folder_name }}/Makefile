@@ -16,12 +16,12 @@ backend-start: ## Start the Nick backend
 	$(MAKE) -C backend start
 
 .PHONY: backend-migrate
-backend-migrate: ## Run Nick database migrations
+backend-migrate: ## Run Nick database migrations and install the profiles
 	$(MAKE) -C backend migrate
 
-.PHONY: backend-seed
-backend-seed: ## Seed the Nick database
-	$(MAKE) -C backend seed
+.PHONY: backend-build-image
+backend-build-image: ## Build the Nick backend image, on the official plone/nick image
+	$(MAKE) -C backend build-image
 
 .PHONY: backend-test
 backend-test: ## Test the Nick backend

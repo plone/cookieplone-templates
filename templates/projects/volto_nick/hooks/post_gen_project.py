@@ -162,7 +162,6 @@ def main():
         Configure the PostgreSQL connection in `backend/config.ts`, then run:
 
         make backend-migrate
-        make backend-seed
 
         Start the backend and frontend in separate terminals:
 

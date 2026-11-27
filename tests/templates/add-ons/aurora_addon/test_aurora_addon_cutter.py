@@ -152,8 +152,8 @@ def test_pnpm_11_configuration(cutter_result):
     assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
     assert workspace["overrides"] == {
-        "react": "^19.2.0",
-        "react-dom": "^19.2.0",
+        "react": "^19.2.7",
+        "react-dom": "^19.2.7",
         "jotai": "^2.12.5",
     }
     assert workspace["allowBuilds"]["@swc/core"] is True

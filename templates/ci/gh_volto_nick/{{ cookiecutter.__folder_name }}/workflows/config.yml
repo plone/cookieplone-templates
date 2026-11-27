@@ -28,10 +28,10 @@ on:
         description: Node.js version used by the checks
         value: {{ "${{ inputs.node-version }}" }}
       base-tag:
-        description: Tag used when creating the frontend container image
+        description: Tag used when creating the container images
         value: {{ "${{ jobs.config.outputs.base-tag }}" }}
       image-name-prefix:
-        description: Prefix used for the frontend container image
+        description: Prefix used for the container images
         value: {{ "${{ jobs.config.outputs.image-name-prefix }}" }}
       volto-version:
         description: Volto version used to build the frontend image

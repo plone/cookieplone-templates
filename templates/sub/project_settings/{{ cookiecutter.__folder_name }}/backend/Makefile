@@ -2,7 +2,7 @@
 #     https://tech.davis-hansson.com/p/make/
 SHELL:=bash
 .ONESHELL:
-.SHELLFLAGS:=-xeu -o pipefail -O inherit_errexit -c
+.SHELLFLAGS:=-eu -o pipefail -O inherit_errexit -c
 .SILENT:
 .DELETE_ON_ERROR:
 MAKEFLAGS+=--warn-undefined-variables
@@ -131,20 +131,23 @@ update-example-content: $(VENV_FOLDER) ## Export example content inside package
 ############################################
 # QA
 ############################################
+# lxml is pinned below 6.2 because lxml 6.2.0 makes zpretty drop the XML
+# namespace declarations of ZCML files. Remove the pin once a fixed lxml or
+# zpretty release is available.
 .PHONY: lint
 lint: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Lint codebase$(RESET)"
 	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx pyroma@latest -d .
 	@uvx check-python-versions@latest .
-	@uvx zpretty@latest --check src
+	@uvx --with 'lxml<6.2' zpretty@latest --check src
 
 .PHONY: format
 format: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
-	@uvx zpretty@latest -i src
+	@uvx --with 'lxml<6.2' zpretty@latest -i src
 
 ############################################
 # i18n

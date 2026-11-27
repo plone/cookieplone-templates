@@ -547,7 +547,6 @@ jobs:
         working-directory: ${{ env.name }}
         run: |
           make backend-migrate
-          make backend-seed
 
       - name: Install Playwright
         working-directory: ${{ env.name }}/frontend
@@ -654,7 +653,6 @@ jobs:
         working-directory: ${{ env.name }}
         run: |
           make backend-migrate
-          make backend-seed
 
       - name: Install Playwright
         working-directory: ${{ env.name }}/frontend
