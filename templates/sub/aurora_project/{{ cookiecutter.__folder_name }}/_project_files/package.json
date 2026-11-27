@@ -1,10 +1,12 @@
 {
   "name": "project-dev",
+  "private": true,
   "version": "1.0.0-alpha.0",
   "description": "A new project with Plone & Aurora",
   "author": "{{ cookiecutter.author }}",
   "homepage": "https://plone.org",
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "aurora",
     "plone",
@@ -12,13 +14,13 @@
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
-    "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
-    "start:prod": "pnpm --filter @plone/aurora start:prod",
-    "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora build",
-    "build:deps": "pnpm --filter @plone/registry --filter @plone/icons --filter @plone/quanta --filter @plone/components --filter @plone/devtools build",
-    "lint": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
+    "dev": "react-router dev",
+    "start": "react-router dev",
+    "build": "react-router build",
+    "start:prod": "node server.js ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
     "prettier": "prettier --check 'packages/**/*.{js,jsx,ts,tsx}'",
     "prettier:fix": "prettier --write 'packages/**/*.{js,jsx,ts,tsx}' ",
     "stylelint": "stylelint 'packages/**/*.{css,scss,less}' --allow-empty-input",
@@ -27,11 +29,33 @@
     "test:acceptance:ui": "playwright test --ui"
   },
   "dependencies": {
-    "@plone/registry": "workspace:*",
-    "@plone/aurora": "workspace:*"
+    "@plone/aurora": "{{ cookiecutter.aurora_version }}",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "catalog:"
   },
   "devDependencies": {
-    "mrs-developer": "{{ versions.frontend_mrs_developer }}"
+    "@axe-core/playwright": "catalog:",
+    "@playwright/test": "catalog:",
+    "@react-router/dev": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "axe-core": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "globals": "catalog:",
+    "playwright": "catalog:",
+    "prettier": "catalog:",
+    "stylelint": "catalog:",
+    "stylelint-config-idiomatic-order": "catalog:",
+    "stylelint-prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:"
   },
   "packageManager": "pnpm@{{ versions.frontend_aurora_pnpm }}"
 }

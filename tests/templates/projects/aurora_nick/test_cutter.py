@@ -96,13 +96,14 @@ def test_backend_files_generated(cutter_result, file_path: str):
 @pytest.mark.parametrize(
     "file_path",
     [
-        ".pnpmfile.cjs",
         "Dockerfile",
         "eslint.config.mjs",
         "Makefile",
         "package.json",
         "pnpm-workspace.yaml",
+        "react-router.config.ts",
         "registry.config.ts",
+        "vite.config.ts",
         "packages/aurora-plone/package.json",
     ],
 )
@@ -186,39 +187,33 @@ def test_aurora_frontend_configuration(cutter_result):
     """Generate Aurora from the Aurora add-on scaffold without its standalone CI."""
     project_path = cutter_result.project_path
     package_json = (project_path / "frontend/package.json").read_text()
-    assert '"@plone/aurora": "workspace:*"' in package_json
-    assert "@plone/aurora dev" in package_json
+    assert '"@plone/aurora": "1.0.0-alpha.5"' in package_json
+    assert '"dev": "react-router dev"' in package_json
     assert (project_path / "frontend/registry.config.ts").is_file()
     server_config = (
         project_path / "frontend/packages/aurora-plone/config/server.ts"
     ).read_text()
     assert "process.env.PLONE_API_PATH || 'http://localhost:8080'" in server_config
     assert not (project_path / ".github/workflows/acceptance.yml").exists()
-
-    mrs = json.loads((project_path / "frontend/mrs.developer.json").read_text())
     assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
-    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
-    assert "branch" not in mrs["core"]
+    assert not (project_path / "frontend/mrs.developer.json").exists()
 
 
-def test_aurora_frontend_uses_pnpm_11(cutter_result):
-    """Generate Aurora with its pnpm 11 workspace configuration."""
+def test_aurora_frontend_uses_pnpm_catalog(cutter_result):
+    """Generate Aurora with its pnpm version and catalog."""
     frontend = cutter_result.project_path / "frontend"
     package = json.loads((frontend / "package.json").read_text())
     workspace = yaml.safe_load((frontend / "pnpm-workspace.yaml").read_text())
 
     assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
+    assert workspace["catalog"]["react-router"] == "8.5.0"
     assert workspace["overrides"]["jotai"] == "^2.12.5"
     assert workspace["allowBuilds"]["@tailwindcss/oxide"] is True
     assert "cypress" not in workspace["allowBuilds"]
-    assert "*cypress*" not in workspace["publicHoistPattern"]
-    assert "*playwright*" in workspace["publicHoistPattern"]
     assert not (frontend / ".npmrc").exists()
 
-    addon = json.loads(
-        (frontend / "packages/aurora-plone/package.json").read_text()
-    )
+    addon = json.loads((frontend / "packages/aurora-plone/package.json").read_text())
     assert addon["peerDependencies"]["i18next"] == "catalog:"
 
 

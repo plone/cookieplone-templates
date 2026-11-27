@@ -1,0 +1,1 @@
+The Plone Aurora templates generate a thin React Router app that installs `@plone/aurora` and the other `@plone/*` packages from npm, instead of checking out Aurora core with mrs-developer. A platform such as Vercel builds it like any React Router app. It needs a `@plone/aurora` release that has `@plone/aurora/vite` and `@plone/aurora/preset`. @sneridagh

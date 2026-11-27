@@ -21,8 +21,8 @@ YELLOW=`tput setaf 3`
 
 REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
 
-# Aurora version checked out by mrs-developer, also the container base image tag
-AURORA_VERSION := $(shell jq -r '.core.tag' $(CURRENT_DIR)/mrs.developer.json)
+# The version of @plone/aurora that the app depends on
+AURORA_VERSION := $(shell jq -r '.dependencies["@plone/aurora"]' $(CURRENT_DIR)/package.json)
 PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
 
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
@@ -50,15 +50,13 @@ debug-settings:  ## Debug settings
 # Dev Helpers
 .PHONY: clean
 clean: ## Clean environment
-	@echo "$(RED)==> Cleaning Aurora core and node_modules$(RESET)"
-	rm -rf core node_modules
+	@echo "$(RED)==> Cleaning node_modules and the build$(RESET)"
+	rm -rf node_modules build .react-router .plone
 
 .PHONY: install
 install: ## Installs the project frontend in a development environment
 	@echo "$(GREEN)Install$(RESET)"
-	pnpm dlx mrs-developer missdev --no-config --fetch-https
-	pnpm i
-	make build-deps
+	pnpm install
 
 .PHONY: start
 start: ## Starts Aurora, allowing reloading of the add-on during development
@@ -67,33 +65,6 @@ start: ## Starts Aurora, allowing reloading of the add-on during development
 .PHONY: build
 build: ## Build a production bundle of the project
 	pnpm build
-
-core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
-	pnpm --filter @plone/registry build
-
-core/packages/icons/dist: $(shell find core/packages/icons/src -type f)
-	pnpm --filter @plone/icons build
-
-core/packages/quanta/dist: $(shell find core/packages/quanta/src -type f)
-	pnpm --filter @plone/quanta build
-
-core/packages/components/dist: $(shell find core/packages/components/src -type f)
-	pnpm --filter @plone/components build
-
-core/packages/client/dist: $(shell find core/packages/client/src -type f)
-	pnpm --filter @plone/client build
-
-core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
-	pnpm --filter @plone/helpers build
-
-core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
-	pnpm --filter @plone/react-router build
-
-core/packages/devtools/dist: $(shell find core/packages/devtools/src -type f)
-	pnpm --filter @plone/devtools build
-
-.PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/icons/dist core/packages/quanta/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist core/packages/devtools/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n
@@ -181,4 +152,4 @@ ci-acceptance-test: ## Run the acceptance tests in headless mode for CI
 ## Container images
 .PHONY: build-image
 build-image:  ## Build Docker Image
-	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg AURORA_VERSION=$(AURORA_VERSION)
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile

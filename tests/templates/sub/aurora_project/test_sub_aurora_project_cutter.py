@@ -31,8 +31,11 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
         [".github", False],
         ["_project_files", False],
         ["packages/aurora-addon", False],
-        ["mrs.developer.json", True],
+        ["mrs.developer.json", False],
+        [".pnpmfile.cjs", False],
         ["pnpm-workspace.yaml", True],
+        ["react-router.config.ts", True],
+        ["app/root.tsx", True],
     ],
 )
 def test_paths(cutter_result, file_path: str, exists: bool):
@@ -49,7 +52,8 @@ def test_paths(cutter_result, file_path: str, exists: bool):
         ["package.json", "project-dev", True],
         ["registry.config.ts", "aurora-addon", False],
         ["registry.config.ts", "addons.push", False],
-        ["mrs.developer.json", '"tag": "1.0.0-alpha.19"', True],
+        ["package.json", '"@plone/aurora": "1.0.0-alpha.19"', True],
+        ["package.json", "workspace:", False],
     ],
 )
 def test_root_files_do_not_mention_addon(

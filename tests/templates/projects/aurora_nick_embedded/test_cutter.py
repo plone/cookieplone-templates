@@ -20,7 +20,6 @@ ROOT_FILES = [
     ".storybook/preview.jsx",
     ".gitignore",
     ".npmignore",
-    ".pnpmfile.cjs",
     ".prettierignore",
     ".prettierrc",
     ".stylelintrc",
@@ -31,7 +30,9 @@ ROOT_FILES = [
     "package.json",
     "pnpm-workspace.yaml",
     "README.md",
+    "react-router.config.ts",
     "registry.config.ts",
+    "vite.config.ts",
 ]
 
 
@@ -140,12 +141,16 @@ def test_json_schema(
             True,
         ),
         (".github/workflows/changelog.yml", "pipx", False),
-        ("package.json", '"@plone/aurora": "workspace:*"', True),
+        ("package.json", '"@plone/aurora": "1.0.0-alpha.5"', True),
+        ("package.json", '"mrs-developer"', True),
         ("package.json", '"@robgietema/nick": "workspace:*"', True),
         ("package.json", '"seven": "workspace:*"', False),
-        ("mrs.developer.json", "git@github.com:plone/aurora.git", True),
+        ("mrs.developer.json", "git@github.com:plone/aurora.git", False),
         ("mrs.developer.json", "git@github.com:robgietema/nick.git", True),
-        ("pnpm-workspace.yaml", "core/apps/aurora", True),
+        ("pnpm-workspace.yaml", "core/apps/aurora", False),
+        ("Makefile", "pnpm dlx mrs-developer missdev", True),
+        (".gitignore", "/nick", True),
+        ("acceptance/tests/basic.test.ts", "core/", False),
         ("pnpm-workspace.yaml", "- 'nick'", True),
         (
             "registry.config.ts",
@@ -162,11 +167,11 @@ def test_content(cutter_result, file_path: str, text: str, expected: bool):
 
 
 def test_aurora_version(cutter_result):
-    """Pin the generated Aurora checkout to the resolved npm version."""
-    mrs = json.loads(
-        (cutter_result.project_path / "mrs.developer.json").read_text()
-    )
+    """Depend on the resolved npm version of @plone/aurora, and check out Nick."""
+    project_path = cutter_result.project_path
+    package = json.loads((project_path / "package.json").read_text())
+    mrs = json.loads((project_path / "mrs.developer.json").read_text())
 
     assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
-    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
-    assert "branch" not in mrs["core"]
+    assert package["dependencies"]["@plone/aurora"] == "1.0.0-alpha.5"
+    assert list(mrs) == ["nick"]

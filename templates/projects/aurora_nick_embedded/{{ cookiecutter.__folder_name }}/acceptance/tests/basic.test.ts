@@ -1,4 +1,4 @@
-import { expect, test } from '../../core/packages/tooling/playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('renders Plone Aurora on the homepage', async ({ page }) => {
   await page.goto('/');

@@ -66,12 +66,14 @@ def test_git_initialization_not_set(cookies, template_path, context_no_git):
 @pytest.mark.parametrize(
     "file_path",
     [
-        ".pnpmfile.cjs",
         "Dockerfile",
         "Makefile",
         "package.json",
         "pnpm-workspace.yaml",
+        "react-router.config.ts",
         "registry.config.ts",
+        "vite.config.ts",
+        "app/root.tsx",
         "packages/aurora-ploneorgbr/package.json",
     ],
 )
@@ -85,13 +87,16 @@ def test_aurora_frontend_configuration(cutter_result):
     project = cutter_result.project_path
     package = json.loads((project / "frontend/package.json").read_text())
     repository = (project / "repository.toml").read_text()
-    assert package["dependencies"]["@plone/aurora"] == "workspace:*"
+    assert package["dependencies"]["@plone/aurora"] == "1.0.0-alpha.5"
     assert package["packageManager"] == "pnpm@12.14.0"
     assert "[frontend.package]" not in repository
     assert "@plone/volto" not in repository
     assert 'base_package = "Products.CMFPlone"' in repository
     makefile = (project / "frontend/Makefile").read_text()
-    assert "pnpm dlx mrs-developer" in makefile
+    assert "mrs-developer" not in makefile
+    assert "build-deps" not in makefile
+    assert not (project / "frontend/mrs.developer.json").exists()
+    assert not (project / "frontend/.pnpmfile.cjs").exists()
     assert "volto_version" not in makefile
     assert ".frontend." not in makefile
     assert not (project / "frontend/volto.config.js").exists()
@@ -126,24 +131,24 @@ def test_aurora_frontend_project_files(cutter_result):
     frontend = project / "frontend"
     assert not (project / "_frontend_project_files").exists()
     makefile = (frontend / "Makefile").read_text()
-    mrs_tag = "jq -r '.core.tag' $(CURRENT_DIR)/mrs.developer.json"
-    assert f"AURORA_VERSION := $(shell {mrs_tag})" in makefile
+    version = """jq -r '.dependencies["@plone/aurora"]' $(CURRENT_DIR)/package.json"""
+    assert f"AURORA_VERSION := $(shell {version})" in makefile
     assert "PLONE_VERSION=6" not in makefile
     assert ".backend.base_package_version" in makefile
     assert ".container_images_prefix" in makefile
-    assert "--build-arg AURORA_VERSION=$(AURORA_VERSION)" in makefile
+    assert "--build-arg AURORA_VERSION" not in makefile
     assert "@plone/volto" not in makefile
     assert "jest-addon.config.js" not in makefile
     dockerignore = (frontend / ".dockerignore").read_text().splitlines()
-    assert {"core", "node_modules"} <= set(dockerignore)
+    assert {"node_modules", "**/node_modules"} <= set(dockerignore)
+    assert "core" not in dockerignore
     readme = (frontend / "README.md").read_text()
     assert "npmjs.com" not in readme
     assert "Volto" not in readme
 
-    mrs = json.loads((project / "frontend/mrs.developer.json").read_text())
+    package = json.loads((frontend / "package.json").read_text())
     assert cutter_result.context["aurora_version"] == "1.0.0-alpha.5"
-    assert mrs["core"]["tag"] == cutter_result.context["aurora_version"]
-    assert "branch" not in mrs["core"]
+    assert package["dependencies"]["@plone/aurora"] == "1.0.0-alpha.5"
 
 
 def test_python_backend_and_aurora_ci(cutter_result):
@@ -156,13 +161,14 @@ def test_python_backend_and_aurora_ci(cutter_result):
     assert "backend-pytest.yml" in backend
     assert 'name: "Frontend: Lint, test, and build"' in frontend
     assert "@plone/aurora" not in backend
-    # The Aurora container base image version is read from mrs.developer.json
-    mrs_tag = "jq -r '.core.tag'"
-    mrs_file = "frontend/mrs.developer.json"
-    assert f"aurora-version=$({mrs_tag} {mrs_file})" in config
-    assert "AURORA_VERSION=${{ inputs.aurora-version }}" in frontend
-    assert f"AURORA_VERSION := $(shell {mrs_tag} $(CURRENT_DIR)/{mrs_file})" in makefile
-    assert "--build-arg AURORA_VERSION=$(AURORA_VERSION)" in makefile
+    # The Aurora version is the version of @plone/aurora in the frontend app
+    version = """jq -r '.dependencies["@plone/aurora"]'"""
+    package_file = "frontend/package.json"
+    assert f"aurora-version=$({version} {package_file})" in config
+    aurora_version = f"$(shell {version} $(CURRENT_DIR)/{package_file})"
+    assert f"AURORA_VERSION := {aurora_version}" in makefile
+    assert "mrs.developer.json" not in config
+    assert "--build-arg AURORA_VERSION" not in makefile
     assert "frontend-base-version" not in config
     assert "FRONTEND_BASE_VERSION" not in makefile
     assert "volto_version" not in config

@@ -3,7 +3,7 @@
 {{ cookiecutter.description }}
 
 This folder contains the Plone Aurora frontend of [{{ cookiecutter.title }}](../README.md).
-It is a pnpm workspace that checks out Aurora core with `mrs-developer`, and develops the `{{ cookiecutter.__npm_package_name }}` package in `packages/{{ cookiecutter.frontend_addon_name | unscoped_package_name }}`.
+It is a React Router app that installs `@plone/aurora` from npm, and a pnpm workspace that develops the `{{ cookiecutter.__npm_package_name }}` package in `packages/{{ cookiecutter.frontend_addon_name | unscoped_package_name }}`.
 
 
 ## Prerequisites
@@ -25,9 +25,8 @@ corepack enable
 
 ## Aurora version
 
-The Aurora version is the `core.tag` value in `mrs.developer.json`.
-The Makefiles read it from there, both for the checkout and for the `plone/aurora-builder` and `plone/aurora-prod-config` container base images.
-To upgrade Aurora, change that tag, then run `make install`.
+The Aurora version is the version of `@plone/aurora` in the `dependencies` of `package.json`.
+To upgrade Aurora, change it, and the versions of the pnpm catalog in `pnpm-workspace.yaml` that the release notes mention, then run `make install`.
 
 
 ## Make convenience commands

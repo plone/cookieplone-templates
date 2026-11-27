@@ -1,6 +1,6 @@
 {
   "plugins": {
-    "../../core/packages/scripts/prepublish.js": {}
+    "@plone/scripts/prepublish.js": {}
   },
   "hooks": {
     "after:bump": [

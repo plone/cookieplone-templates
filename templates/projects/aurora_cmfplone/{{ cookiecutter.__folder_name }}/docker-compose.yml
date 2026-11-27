@@ -59,8 +59,6 @@ services:
   frontend:
     build:
       context: ./frontend
-      args:
-        - AURORA_VERSION=${AURORA_VERSION}
     environment:
       PLONE_API_PATH: http://backend:8080/Plone
     depends_on:
