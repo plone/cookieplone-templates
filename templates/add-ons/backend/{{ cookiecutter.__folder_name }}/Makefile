@@ -102,23 +102,20 @@ create-site: $(VENV_FOLDER) instance/etc/zope.ini ## Create a new site from scra
 	@$(BIN_FOLDER)/zconsole run instance/etc/zope.conf ./scripts/create_site.py
 
 # QA
-# lxml is pinned below 6.2 because lxml 6.2.0 makes zpretty drop the XML
-# namespace declarations of ZCML files. Remove the pin once a fixed lxml or
-# zpretty release is available.
 .PHONY: lint
 lint: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Lint codebase$(RESET)"
 	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx pyroma@latest -d .
 	@uvx check-python-versions@latest .
-	@uvx --with 'lxml<6.2' zpretty@latest --check src
+	@uvx --python '>=3.11' --from 'zpretty>=5.0.0' zpretty --check src
 
 .PHONY: format
 format: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
-	@uvx --with 'lxml<6.2' zpretty@latest -i src
+	@uvx --python '>=3.11' --from 'zpretty>=5.0.0' zpretty -i src
 
 .PHONY: check
 check: format lint ## Check and fix code base according to Plone standards
