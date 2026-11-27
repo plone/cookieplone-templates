@@ -34,6 +34,8 @@ jobs:
       - name: Run tests
         env:
           REPORT_OUTPUT: md_report.md
+          # Keeps the zpretty formatter run by cookieplone on lxml < 6.2 (see the constraints file)
+          UV_CONSTRAINT: ${{ github.workspace }}/.github/constraints/zpretty.txt
         shell: bash
         run: |
           echo "REPORT_FILE=${REPORT_OUTPUT}" >> "$GITHUB_ENV"

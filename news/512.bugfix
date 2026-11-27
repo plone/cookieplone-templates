@@ -1,0 +1,1 @@
+Pinned lxml below 6.2 for the zpretty formatter, so generated ZCML files keep their namespace declarations and the generated backend lint passes again. @ericof
