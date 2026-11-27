@@ -1,0 +1,4 @@
+# lxml 6.2.0 (2026-11-27) makes zpretty drop the namespace declarations of
+# ZCML files (xmlns, xmlns:i18n), which breaks generated add-ons and projects.
+# Keep lxml on the 6.1 line until a fixed lxml or zpretty is released.
+lxml<6.2
