@@ -108,14 +108,14 @@ lint: ## Check and fix code base according to Plone standards
 	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx pyroma@latest -d .
 	@uvx check-python-versions@latest .
-	@uvx --from 'zpretty>=5.0.0' zpretty --check src
+	@uvx --python '>=3.11' --from 'zpretty>=5.0.0' zpretty --check src
 
 .PHONY: format
 format: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Format codebase$(RESET)"
 	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
 	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
-	@uvx --from 'zpretty>=5.0.0' zpretty -i src
+	@uvx --python '>=3.11' --from 'zpretty>=5.0.0' zpretty -i src
 
 .PHONY: check
 check: format lint ## Check and fix code base according to Plone standards
