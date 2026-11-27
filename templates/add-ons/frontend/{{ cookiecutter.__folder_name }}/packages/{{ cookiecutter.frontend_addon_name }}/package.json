@@ -45,7 +45,7 @@
 {%- else %}
     "@testing-library/react": "{{ versions.frontend_testing_library_react }}",
     "release-it": "{{ versions.frontend_release_it }}",
-    "vitest": "{{ versions.frontend_vitest }}"
+    "vitest": "catalog:"
 {%- endif %}
   }
 }

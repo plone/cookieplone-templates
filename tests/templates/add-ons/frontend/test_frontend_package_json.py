@@ -96,7 +96,6 @@ def test_root_mrs_developer_from_config(
     "package,key",
     [
         ("@testing-library/react", "frontend_testing_library_react"),
-        ("vitest", "frontend_vitest"),
     ],
 )
 def test_vitest_package_versions_from_config(
@@ -111,3 +110,18 @@ def test_vitest_package_versions_from_config(
     config = load_config(package_path)
     result = traverse(config, f"devDependencies/'{package}'")
     assert result == pinned_versions[key]
+
+
+def test_vitest_version_from_volto_catalog(
+    traverse, cutter_result_volto_19, load_config
+):
+    """Test /packages/<package_name>/package.json takes vitest from Volto's catalog.
+
+    The add-on runs its tests with Volto's shared Vitest configuration and setup
+    files, so it must use the same Vitest version as the Volto checked out in
+    ``core``. ``.pnpmfile.cjs`` loads that version from ``core/catalog.json``.
+    """
+    package_path = cutter_result_volto_19.project_path / "packages" / "volto-addon"
+    config = load_config(package_path)
+    result = traverse(config, "devDependencies/'vitest'")
+    assert result == "catalog:"
