@@ -3,6 +3,7 @@
 import json
 
 import pytest
+import yaml
 
 GITHUB_ACTIONS = [
     ".github/workflows/changelog.yml",
@@ -139,3 +140,39 @@ def test_release_it_settings(cutter_result):
     assert data["github"]["release"] is True
     assert data["npm"]["publish"] is False
     assert data["plonePrePublish"]["publish"] is True
+
+
+@pytest.fixture(scope="module")
+def cutter_result_volto_19(template_path, cookies_module, context):
+    """Cookiecutter result for Volto 19."""
+    return cookies_module.bake(
+        extra_context={**context, "volto_version": "19.7.0"},
+        template=template_path,
+    )
+
+
+def test_pnpm_12_configuration(cutter_result_volto_19):
+    """Volto 19 uses pnpm 12 and gets its settings from the pnpm plugin."""
+    project_path = cutter_result_volto_19.project_path
+    package = json.loads((project_path / "package.json").read_text())
+    workspace = yaml.safe_load((project_path / "pnpm-workspace.yaml").read_text())
+    npmrc = (project_path / ".npmrc").read_text()
+
+    assert package["packageManager"] == "pnpm@12.18.0"
+    assert "pnpm" not in package
+    assert workspace["configDependencies"] == {"@plone/pnpm-plugin-volto": "^19.0.0"}
+    assert workspace["minimumReleaseAgeExclude"] == ["@plone/pnpm-plugin-volto"]
+    assert "public-hoist-pattern" not in npmrc
+
+
+def test_pnpm_9_configuration(cutter_result):
+    """Volto 18 keeps pnpm 9 and its settings in package.json and .npmrc."""
+    project_path = cutter_result.project_path
+    package = json.loads((project_path / "package.json").read_text())
+    workspace = yaml.safe_load((project_path / "pnpm-workspace.yaml").read_text())
+    npmrc = (project_path / ".npmrc").read_text()
+
+    assert package["packageManager"] == "pnpm@9.15.9"
+    assert package["pnpm"]["overrides"]["react-refresh"] == "^0.14.2"
+    assert "configDependencies" not in workspace
+    assert "public-hoist-pattern[]=*eslint*" in npmrc

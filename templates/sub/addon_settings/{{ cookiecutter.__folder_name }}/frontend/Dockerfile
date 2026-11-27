@@ -11,7 +11,22 @@ COPY --chown=node pnpm-lock.yaml /app/pnpm-lock.yaml
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     set -e
-    python3 -c "import json; orig_data = json.load(open('package.json.temp')); orig_deps = orig_data['dependencies']; data = json.load(open('package.json')); data['dependencies'].update(orig_deps); json.dump(data, open('package.json', 'w'), indent=2)"
+    python3 <<'PYTHON'
+import json
+
+with open("package.json.temp") as fh:
+    project = json.load(fh)
+with open("package.json") as fh:
+    data = json.load(fh)
+data["dependencies"].update(project["dependencies"])
+# Use the project's pnpm version and settings, not the image's ones
+data["packageManager"] = project["packageManager"]
+data.pop("pnpm", None)
+if "pnpm" in project:
+    data["pnpm"] = project["pnpm"]
+with open("package.json", "w") as fh:
+    json.dump(data, fh, indent=2)
+PYTHON
     rm package.json.temp
     pnpm dlx mrs-developer missdev --no-config --fetch-https
     pnpm install && pnpm build:deps

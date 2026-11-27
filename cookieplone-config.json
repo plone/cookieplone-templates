@@ -263,7 +263,7 @@
       "devops_zeo_version": "6.0.0",
       "frontend_aurora_pnpm": "12.14.0",
       "frontend_mrs_developer": "^2.2.0",
-      "frontend_pnpm": "10.20.0",
+      "frontend_pnpm": "12.18.0",
       "frontend_release_it": "^19.0.5",
       "frontend_testing_library_react": "^16.2.0",
       "frontend_typescript": "^5.7.3",

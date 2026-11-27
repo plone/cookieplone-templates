@@ -44,24 +44,13 @@
   "devDependencies": {
     "mrs-developer": "{{ versions.frontend_mrs_developer }}"
   },
+{%- if cookiecutter.volto_version < '19' %}
   "pnpm": {
     "overrides": {
       "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
       "react-refresh": "^0.14.2"
-    }{%- if cookiecutter.volto_version >= '19' %},
-    "ignoredBuiltDependencies": [
-      "@parcel/watcher"
-    ],
-    "onlyBuiltDependencies": [
-      "core-js",
-      "core-js-pure",
-      "cypress",
-      "es5-ext",
-      "esbuild",
-      "lightningcss-cli",
-      "unrs-resolver"
-    ]
-    {%- endif %}
+    }
   },
+{%- endif %}
   "packageManager": "pnpm@{{ cookiecutter.__version_pnpm }}"
 }

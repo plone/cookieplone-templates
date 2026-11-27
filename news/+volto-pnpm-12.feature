@@ -1,0 +1,1 @@
+Updated the Volto 19 templates (`frontend_addon`, `monorepo_addon`, `project`, `volto_nick` and `sub/frontend_project`) to use pnpm 12.18.0, and to get the shared pnpm settings from `@plone/pnpm-plugin-volto`. Volto 18 projects still use pnpm 9. @sneridagh

@@ -3,3 +3,17 @@ packages:
   - 'core/packages/*'
   - 'packages/*'
   - 'packages/**/packages/*'
+{%- if cookiecutter.volto_version >= '19' %}
+
+# Gets the pnpm settings shared by all Volto projects and add-ons:
+# `overrides`, `allowBuilds` and `publicHoistPattern`.
+# See https://www.npmjs.com/package/@plone/pnpm-plugin-volto
+# Your own settings in this file win over the shared ones.
+configDependencies:
+  '@plone/pnpm-plugin-volto': ^19.0.0
+
+# pnpm doesn't install versions published less than a day ago.
+# The shared settings can carry security fixes, so get them as soon as they're released.
+minimumReleaseAgeExclude:
+  - '@plone/pnpm-plugin-volto'
+{%- endif %}

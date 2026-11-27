@@ -39,7 +39,7 @@ def context(annotate_context, cookieplone_root) -> dict:
             "__npm_package_name": "volto-ploneorgbr",
             "__frontend_package_name": "volto-ploneorgbr",
             "__version_plone_volto": VOLTO_VERSION,
-            "__version_pnpm": "10.20.0",
+            "__version_pnpm": "12.18.0",
         },
         cookieplone_root,
         "project",
