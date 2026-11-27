@@ -1,1 +1,1 @@
-Required zpretty 5.0.0 in the generated backend Makefiles and dropped the lxml pin, so generated ZCML files keep their namespace declarations. @ericof
+Required zpretty 5.0.0, run with Python 3.11 or later, in the generated backend Makefiles, so generated ZCML files keep their namespace declarations. @ericof
