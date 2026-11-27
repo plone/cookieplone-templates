@@ -1,0 +1,1 @@
+Updated Vitest in the `sub/nick_backend` template from 4.0.18 to 4.1.12, which fixes the `@vitest/mocker` security advisories GHSA-82fw-gwwq-j7x9 and GHSA-qxg6-89mg-rqv8. @sneridagh
