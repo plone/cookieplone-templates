@@ -31,6 +31,7 @@ ROOT_FILES = [
     "app/root.tsx",
     "app/routes.ts",
     ".dockerignore",
+    ".pnpmfile.cjs",
     "Dockerfile",
     "eslint.config.mjs",
     ".gitignore",
@@ -52,7 +53,6 @@ ROOT_FILES = [
 
 # The files of the core checkout, which the thin app doesn't need.
 NOT_GENERATED = [
-    ".pnpmfile.cjs",
     "mrs.developer.json",
 ]
 
@@ -172,7 +172,12 @@ def test_pnpm_configuration(cutter_result):
 
     assert package["packageManager"] == "pnpm@12.14.0"
     assert "pnpm" not in package
-    assert workspace["packages"] == ["packages/*", "packages/**/packages/*"]
+    assert workspace["packages"] == [
+        "packages/*",
+        "packages/**/packages/*",
+        "core/packages/*",
+        "!core/packages/volto*",
+    ]
     assert workspace["catalog"]["react-router"] == "8.5.0"
     assert workspace["catalog"]["@react-router/dev"] == "8.5.0"
     assert workspace["overrides"] == {
@@ -212,11 +217,32 @@ def test_thin_app(cutter_result):
     assert "PloneAuroraVitePlugin()" in (project_path / "vite.config.ts").read_text()
 
     makefile = (project_path / "Makefile").read_text()
-    assert "core/" not in makefile
+    assert "core/packages/registry/dist" not in makefile
     assert "build-deps" not in makefile
     assert "mrs-developer" not in makefile
-    assert "core" not in (project_path / ".gitignore").read_text().split()
     assert "./core/" not in (project_path / "eslint.config.mjs").read_text()
+
+
+def test_core_overlay(cutter_result):
+    """A Plone Aurora checkout in core/ replaces the released packages, opt-in."""
+    project_path = cutter_result.project_path
+    pnpmfile = (project_path / ".pnpmfile.cjs").read_text()
+    assert "config.overrides[name] = 'workspace:*'" in pnpmfile
+    assert "config.lockfile = false" in pnpmfile
+    assert "if (!hasCore) return config;" in pnpmfile
+
+    makefile = (project_path / "Makefile").read_text()
+    assert "\ncore:" in makefile
+    assert "\nbuild-core:" in makefile
+    assert "\nremove-core:" in makefile
+    install = makefile.split("\ninstall:")[1].split("\n\n")[0]
+    assert "core" not in install
+
+    assert "/core" in (project_path / ".gitignore").read_text().split()
+    assert "core" in (project_path / ".dockerignore").read_text().split()
+    assert "'core/'," in (project_path / "eslint.config.mjs").read_text()
+    tsconfig = json.loads((project_path / "tsconfig.json").read_text())
+    assert "core" in tsconfig["exclude"]
 
 
 def test_aurora_version(cutter_result):

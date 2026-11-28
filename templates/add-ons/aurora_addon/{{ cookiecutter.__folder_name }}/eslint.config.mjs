@@ -14,6 +14,7 @@ export default tseslint.config(
       '**/dist/',
       '.react-router/',
       '.plone/',
+      'core/',
     ],
   },
   tseslint.configs.recommended,

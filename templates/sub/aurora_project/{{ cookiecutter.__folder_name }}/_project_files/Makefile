@@ -34,6 +34,29 @@ install: ## Installs the project in a development environment
 	@echo "$(GREEN)Install$(RESET)"
 	pnpm install
 
+# Plone Aurora core overlay
+
+CORE_REPOSITORY ?= https://github.com/plone/aurora.git
+CORE_BRANCH ?= main
+
+.PHONY: core
+core: ## Check out Plone Aurora in core/, and develop against it instead of the released packages
+	@echo "$(GREEN)Check out Plone Aurora $(CORE_BRANCH) in core/$(RESET)"
+	test -d core || git clone --filter=blob:none --branch $(CORE_BRANCH) $(CORE_REPOSITORY) core
+	pnpm install
+	$(MAKE) build-core
+
+.PHONY: build-core
+build-core: ## Build the packages of the Plone Aurora checkout in core/
+	@test -d core || (echo "$(RED)No core/ checkout. Run make core first.$(RESET)" && exit 1)
+	pnpm --filter './core/packages/*' --if-present run build
+	pnpm --filter @plone/controlpanels build:css
+
+.PHONY: remove-core
+remove-core: ## Remove the core/ checkout, and use the released packages again
+	rm -rf core
+	pnpm install
+
 .PHONY: start
 start: ## Starts Aurora in development mode
 	pnpm start

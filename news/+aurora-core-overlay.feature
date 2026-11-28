@@ -1,0 +1,1 @@
+Develop an Aurora add-on or project against an unreleased Plone Aurora: `make core` checks it out in `core/`, and `.pnpmfile.cjs` links the `@plone/*` packages to the checkout, without changing the lock file. `make remove-core` goes back to the released packages. @sneridagh
