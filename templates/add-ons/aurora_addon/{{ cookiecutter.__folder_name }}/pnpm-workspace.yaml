@@ -3,6 +3,9 @@ packages:
   - 'packages/*'
   # Support for external packages in another repos
   - 'packages/**/packages/*'
+  # The packages of a Plone Aurora checkout in `core/`, if any: see `.pnpmfile.cjs`
+  - 'core/packages/*'
+  - '!core/packages/volto*'
 
 # The versions that the app and the add-ons share. Keep `react-router` and
 # `@react-router/dev` at the version that `@plone/aurora` uses.

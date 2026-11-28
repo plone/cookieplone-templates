@@ -98,7 +98,8 @@ def _add_nick_configuration(path: Path, context: OrderedDict) -> None:
     )
     _replace_once(
         path / "Makefile",
-        "\tpnpm install\n",
+        'Install$(RESET)"\n\tpnpm install\n',
+        'Install$(RESET)"\n'
         "\tpnpm dlx mrs-developer missdev --no-config --fetch-https\n"
         "\tpnpm install\n",
     )

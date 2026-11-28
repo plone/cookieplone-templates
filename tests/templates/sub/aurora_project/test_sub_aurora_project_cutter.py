@@ -32,7 +32,7 @@ def test_variable_substitution(build_files_list, variable_pattern, cutter_result
         ["_project_files", False],
         ["packages/aurora-addon", False],
         ["mrs.developer.json", False],
-        [".pnpmfile.cjs", False],
+        [".pnpmfile.cjs", True],
         ["pnpm-workspace.yaml", True],
         ["react-router.config.ts", True],
         ["app/root.tsx", True],

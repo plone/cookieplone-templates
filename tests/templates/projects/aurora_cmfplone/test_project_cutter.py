@@ -96,7 +96,8 @@ def test_aurora_frontend_configuration(cutter_result):
     assert "mrs-developer" not in makefile
     assert "build-deps" not in makefile
     assert not (project / "frontend/mrs.developer.json").exists()
-    assert not (project / "frontend/.pnpmfile.cjs").exists()
+    assert (project / "frontend/.pnpmfile.cjs").exists()
+    assert "\nremove-core:" in makefile
     assert "volto_version" not in makefile
     assert ".frontend." not in makefile
     assert not (project / "frontend/volto.config.js").exists()

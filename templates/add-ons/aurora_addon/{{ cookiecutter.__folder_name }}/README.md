@@ -108,6 +108,35 @@ In a separate terminal session, start the frontend.
 make start
 ```
 
+### Develop against an unreleased Plone Aurora
+
+The app installs the released Plone Aurora packages from npm.
+To develop against a branch of Plone Aurora that isn't released yet, check it out in `core/`.
+
+```shell
+make core
+```
+
+It clones the `main` branch of Plone Aurora in `core/`, links every `@plone/*` package to the one in `core/packages`, and builds them.
+Choose another branch, or your fork, with `CORE_BRANCH` and `CORE_REPOSITORY`.
+
+```shell
+make core CORE_BRANCH=my-feature CORE_REPOSITORY=git@github.com:me/aurora.git
+```
+
+`make start` then uses the source of the checkout, and reloads when you change it.
+After you pull changes in `core/`, run `make install build-core`.
+
+`pnpm-lock.yaml` doesn't change while `core/` exists, so you can't commit the checkout's versions by mistake.
+`.pnpmfile.cjs` does the linking, and only when `core/` exists.
+CI and the Docker image use the released packages: a frozen install refuses the checkout, and `.dockerignore` leaves it out.
+
+To use the released packages again, remove the checkout.
+
+```shell
+make remove-core
+```
+
 ### Lint code
 
 Run ESlint, Prettier, and Stylelint in analyze mode.

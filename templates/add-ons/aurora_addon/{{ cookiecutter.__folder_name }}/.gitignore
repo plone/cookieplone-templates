@@ -14,4 +14,6 @@ results
 .plone
 # The add-on locales, generated for the app
 /public/locales/
+# The Plone Aurora checkout of `make core`
+/core
 /stats*

@@ -7,3 +7,4 @@ acceptance
 playwright-report
 test-results
 .git
+core
